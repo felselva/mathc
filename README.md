@@ -11,11 +11,15 @@ CMath is a simple math library for 2D and 3D programming. It contains implementa
 
 # Float
 
-Every structure and function uses `float`, because it is the most used value on 2D and 3D programming with OpenGL.
+Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
 
 # 4D vectors and Quaternions
 
 Their structures are the same, however they have different functions.
+
+# Matrices
+
+Matrices are 4×4.
 
 # Easing Functions
 
