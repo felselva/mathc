@@ -38,7 +38,7 @@ int nearly_equal(const float a, const float b, const float epsilon)
 	float diff = fabs(a - b);
 	if (a == b) {
 		result = TRUE;
-	} else if (a == 0 || b == 0 || diff < FLT_MIN) {
+	} else if (a == 0.0f || b == 0.0f || diff < FLT_MIN) {
 		result = diff < (epsilon * FLT_MIN);
 	} else {
 		result = diff / fminf((abs_a + abs_b), FLT_MAX) < epsilon;
@@ -154,16 +154,8 @@ cvector2 vector2_max(const cvector2 a, const cvector2 b)
 cvector2 vector2_min(const cvector2 a, const cvector2 b)
 {
 	cvector2 result;
-	if (a.x < b.x) {
-		result.x = a.x;
-	} else {
-		result.x = b.x;
-	}
-	if (a.y < b.y) {
-		result.y = a.y;
-	} else {
-		result.y = b.y;
-	}
+	result.x = fminf(a.x, b.x);
+	result.y = fminf(a.y, b.y);
 	return result;
 }
 
@@ -191,7 +183,7 @@ cvector2 vector2_normalize(const cvector2 a)
 {
 	cvector2 result;
 	float length = a.x * a.x + a.y * a.y;
-	/* For better performance, only call sqrtf() if length is not 0 */
+	/* For better performance, only call sqrtf() if length is not 0.0f */
 	if (length != 0.0f) {
 		length = sqrtf(length);
 		result.x = a.x / length;
@@ -380,21 +372,9 @@ cvector3 vector3_max(const cvector3 a, const cvector3 b)
 cvector3 vector3_min(const cvector3 a, const cvector3 b)
 {
 	cvector3 result;
-	if (a.x < b.x) {
-		result.x = a.x;
-	} else {
-		result.x = b.x;
-	}
-	if (a.y < b.y) {
-		result.y = a.y;
-	} else {
-		result.y = b.y;
-	}
-	if (a.z < b.z) {
-		result.z = a.z;
-	} else {
-		result.z = b.z;
-	}
+	result.x = fminf(a.x, b.x);
+	result.y = fminf(a.y, b.y);
+	result.z = fminf(a.z, b.z);
 	return result;
 }
 
@@ -426,8 +406,8 @@ cvector3 vector3_normalize(const cvector3 a)
 {
 	cvector3 result;
 	float length = a.x * a.x + a.y * a.y + a.z * a.z;
-	/* For better performance, only call sqrtf() if length is not 0 */
-	if (length != 0) {
+	/* For better performance, only call sqrtf() if length is not 0.0f */
+	if (length != 0.0f) {
 		length = sqrtf(length);
 		result.x = a.x / length;
 		result.y = a.y / length;
@@ -617,26 +597,10 @@ cvector4 vector4_max(const cvector4 a, const cvector4 b)
 cvector4 vector4_min(const cvector4 a, const cvector4 b)
 {
 	cvector4 result;
-	if (a.x < b.x) {
-		result.x = a.x;
-	} else {
-		result.x = b.x;
-	}
-	if (a.y < b.y) {
-		result.y = a.y;
-	} else {
-		result.y = b.y;
-	}
-	if (a.z < b.z) {
-		result.z = a.z;
-	} else {
-		result.z = b.z;
-	}
-	if (a.w < b.w) {
-		result.w = a.w;
-	} else {
-		result.w = b.w;
-	}
+	result.x = fminf(a.x, b.x);
+	result.y = fminf(a.y, b.y);
+	result.z = fminf(a.z, b.z);
+	result.w = fminf(a.w, b.w);
 	return result;
 }
 
@@ -659,8 +623,8 @@ cvector4 vector4_normalize(const cvector4 a)
 {
 	cvector4 result;
 	float length = a.x * a.x + a.y * a.y + a.z * a.z + a.w * a.w;
-	/* For better performance, only call sqrtf() if length is not 0 */
-	if (length != 0) {
+	/* For better performance, only call sqrtf() if length is not 0.0f */
+	if (length != 0.0f) {
 		length = sqrtf(length);
 		result.x = a.x / length;
 		result.y = a.y / length;
@@ -872,26 +836,10 @@ cquaternion quaternion_max(const cquaternion a, const cquaternion b)
 cquaternion quaternion_min(const cquaternion a, const cquaternion b)
 {
 	cquaternion result;
-	if (a.x < b.x) {
-		result.x = a.x;
-	} else {
-		result.x = b.x;
-	}
-	if (a.y < b.y) {
-		result.y = a.y;
-	} else {
-		result.y = b.y;
-	}
-	if (a.z < b.z) {
-		result.z = a.z;
-	} else {
-		result.z = b.z;
-	}
-	if (a.w < b.w) {
-		result.w = a.w;
-	} else {
-		result.w = b.w;
-	}
+	result.x = fminf(a.x, b.x);
+	result.y = fminf(a.y, b.y);
+	result.z = fminf(a.z, b.z);
+	result.w = fminf(a.w, b.w);
 	return result;
 }
 
