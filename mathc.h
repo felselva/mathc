@@ -72,6 +72,9 @@ struct cmatrix {
 	float m44;
 };
 
+/* Utils */
+int nearly_equal(const float a, const float b, const float epsilon);
+
 /* Vector 2D */
 cvector2 to_vector2(const float x, const float y);
 cvector2 vector2_add(const cvector2 a, const cvector2 b);

@@ -19,7 +19,32 @@ the following restrictions:
 */
 
 #include <math.h>
+#include <float.h>
 #include "mathc.h"
+
+#ifndef TRUE
+#define TRUE 1
+#endif
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+/* Utils */
+int nearly_equal(const float a, const float b, const float epsilon)
+{
+	int result = FALSE;
+	float abs_a = fabs(a);
+	float abs_b = fabs(b);
+	float diff = fabs(a - b);
+	if (a == b) {
+		result = TRUE;
+	} else if (a == 0 || b == 0 || diff < FLT_MIN) {
+		result = diff < (epsilon * FLT_MIN);
+	} else {
+		result = diff / fminf((abs_a + abs_b), FLT_MAX) < epsilon;
+	}
+	return result;
+}
 
 /* Vector 2D */
 cvector2 to_vector2(const float x, const float y)
