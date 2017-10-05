@@ -18,6 +18,9 @@ the following restrictions:
   3. This notice may not be removed or altered from any source distribution.
 */
 
+#ifndef MATHC_H
+#define MATHC_H
+
 typedef struct cvector2 cvector2;
 typedef struct cvector3 cvector3;
 typedef struct cvector4 cvector4;
@@ -221,3 +224,5 @@ float back_ease_in_out(const float p);
 float bounce_ease_in(const float p);
 float bounce_ease_out(const float p);
 float bounce_ease_in_out(const float p);
+
+#endif
