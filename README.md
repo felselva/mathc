@@ -23,7 +23,7 @@ Matrices are 4×4.
 
 # Easing Functions
 
-The easing functions are an implementation of the functions presented in [easing.net](easings.net).
+The easing functions are an implementation of the functions presented in [easing.net](http://easings.net/).
 
 # Contributing
 
