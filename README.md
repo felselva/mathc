@@ -29,6 +29,11 @@ cmatrix view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
 	to_vector3(0.0f, 1.0f, 0.0f));
 cmatrix pv = matrix_multiply_matrix(projection, view);
 
+/* Pass by pointer and return a value or modify the passed value */
+/* Return the multiplication of two matrices */
+cmatrix a;
+cmatrix b;
+cmatrix multiplied_matrix = pmatrix_multiply_matrix(&a, &b);
 /* Create an identity matrix */
 cmatrix identity_matrix;
 pmatrix_identity(&identity_matrix);
@@ -38,10 +43,6 @@ pmatrix_rotation_z(&rotation_matrix, 0.0f);
 /* Change the matrix to a translation matrix */
 cmatrix translation_matrix;
 pmatrix_translation(&translation_matrix, &position);
-/* Return the multiplication of two matrices */
-cmatrix a;
-cmatrix b;
-cmatrix multiplied_matrix = pmatrix_multiply_matrix(&a, &b);
 ```
 
 # 4D vectors and Quaternions
