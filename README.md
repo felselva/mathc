@@ -1,6 +1,6 @@
-# C Math
+# MathC
 
-CMath is a simple math library for 2D and 3D programming. It contains implementations for:
+MathC is a simple math library for 2D and 3D programming. It contains implementations for:
 
 - 2D vectors
 - 3D vectors
@@ -9,9 +9,40 @@ CMath is a simple math library for 2D and 3D programming. It contains implementa
 - Matrices
 - Easing functions
 
+It support C99 standard or later.
+
 # Float
 
 Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
+
+# Passing Arguments as Value or Pointer
+
+For every function **that takes a structure**, there are two versions. One that you pass structures as value and other that you pass as pointer. The functions that pass the value by pointer have a prefix `p`. You can decide which one you want to use.
+
+Examples:
+
+```c
+/* Pass by value and return a value */
+cmatrix projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
+cmatrix view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
+	to_vector3(0.0f, 0.0f, 0.0f),
+	to_vector3(0.0f, 1.0f, 0.0f));
+cmatrix pv = matrix_multiply_matrix(projection, view);
+
+/* Create an identity matrix */
+cmatrix identity_matrix;
+pmatrix_identity(&identity_matrix);
+/* Change the matrix to a rotation matrix */
+cmatrix rotation_matrix;
+pmatrix_rotation_z(&rotation_matrix, 0.0f);
+/* Change the matrix to a translation matrix */
+cmatrix translation_matrix;
+pmatrix_translation(&translation_matrix, &position);
+/* Return the multiplication of two matrices */
+cmatrix a;
+cmatrix b;
+cmatrix multiplied_matrix = pmatrix_multiply_matrix(&a, &b);
+```
 
 # 4D vectors and Quaternions
 
@@ -23,12 +54,16 @@ Matrices are 4×4.
 
 # Easing Functions
 
-The easing functions are an implementation of the functions presented in [easing.net](http://easings.net/).
+The easing functions are an implementation of the functions presented in [easing.net](http://easings.net/). They are mainly useful for animations.
+
+Easing functions take a value that range from `0.0f` to `1.0f` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range.
 
 # Contributing
 
+- Before sending any pull request, open an issue asking of the feature or fix is already being worked on.
 - If you find any error, you can open an issue.
 - You can request more useful functions in the issues regarding 2D vectors, 3D vectors, 4D vectors, quaternions and matrices. If you have already an implementation or know where to find, better.
+- Everything here will stay licensed under ZLIB, which is a ***very*** permissive license.
 
 # LICENSE
 

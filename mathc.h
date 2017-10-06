@@ -77,6 +77,31 @@ int nearly_equal(const float a, const float b, const float epsilon);
 
 /* Vector 2D */
 cvector2 to_vector2(const float x, const float y);
+cvector2 pvector2_add(const cvector2 *a, const cvector2 *b);
+cvector2 pvector2_subtract(const cvector2 *a, const cvector2 *b);
+cvector2 pvector2_scale(const cvector2 *a, const float scale);
+cvector2 pvector2_multiply(const cvector2 *a, const cvector2 *b);
+cvector2 pvector2_divide(const cvector2 *a, const cvector2 *b);
+cvector2 pvector2_negative(const cvector2 *a);
+cvector2 pvector2_abs(const cvector2 *a);
+cvector2 pvector2_floor(const cvector2 *a);
+cvector2 pvector2_ceil(const cvector2 *a);
+cvector2 pvector2_round(const cvector2 *a);
+cvector2 pvector2_max(const cvector2 *a, const cvector2 *b);
+cvector2 pvector2_min(const cvector2 *a, const cvector2 *b);
+float pvector2_dot(const cvector2 *a, const cvector2 *b);
+float pvector2_angle(const cvector2 *a);
+float pvector2_length_squared(const cvector2 *a);
+float pvector2_length(const cvector2 *a);
+cvector2 pvector2_normalize(const cvector2 *a);
+cvector2 pvector2_slide(const cvector2 *a, const cvector2 *b);
+cvector2 pvector2_reflect(const cvector2 *direction, const cvector2 *normal);
+cvector2 pvector2_tangent(const cvector2 *a);
+cvector2 pvector2_rotate(const cvector2 *a, const float angle);
+float pvector2_distance_to(const cvector2 *a, const cvector2 *b);
+float pvector2_distance_squared_to(const cvector2 *a, const cvector2 *b);
+cvector2 pvector2_linear_interpolation(const cvector2 *a, const cvector2 *b, const float p);
+
 cvector2 vector2_add(const cvector2 a, const cvector2 b);
 cvector2 vector2_subtract(const cvector2 a, const cvector2 b);
 cvector2 vector2_scale(const cvector2 a, const float scale);
@@ -104,6 +129,29 @@ cvector2 vector2_linear_interpolation(const cvector2 a, const cvector2 b, const 
 
 /* Vector 3D */
 cvector3 to_vector3(const float x, const float y, const float z);
+cvector3 pvector3_add(const cvector3 *a, const cvector3 *b);
+cvector3 pvector3_subtract(const cvector3 *a, const cvector3 *b);
+cvector3 pvector3_scale(const cvector3 *a, const float scale);
+cvector3 pvector3_multiply(const cvector3 *a, const cvector3 *b);
+cvector3 pvector3_divide(const cvector3 *a, const cvector3 *b);
+cvector3 pvector3_negative(const cvector3 *a);
+cvector3 pvector3_abs(const cvector3 *a);
+cvector3 pvector3_floor(const cvector3 *a);
+cvector3 pvector3_ceil(const cvector3 *a);
+cvector3 pvector3_round(const cvector3 *a);
+cvector3 pvector3_max(const cvector3 *a, const cvector3 *b);
+cvector3 pvector3_min(const cvector3 *a, const cvector3 *b);
+float pvector3_dot(const cvector3 *a, const cvector3 *b);
+cvector3 pvector3_cross(const cvector3 *a, const cvector3 *b);
+float pvector3_length_squared(const cvector3 *a);
+float pvector3_length(const cvector3 *a);
+cvector3 pvector3_normalize(const cvector3 *a);
+cvector3 pvector3_slide(const cvector3 *a, const cvector3 *b);
+cvector3 pvector3_reflect(const cvector3 *direction, const cvector3 *normal);
+float pvector3_distance_to(const cvector3 *a, const cvector3 *b);
+float pvector3_distance_squared_to(const cvector3 *a, const cvector3 *b);
+cvector3 pvector3_linear_interpolation(const cvector3 *a, const cvector3 *b, const float p);
+
 cvector3 vector3_add(const cvector3 a, const cvector3 b);
 cvector3 vector3_subtract(const cvector3 a, const cvector3 b);
 cvector3 vector3_scale(const cvector3 a, const float scale);
@@ -129,6 +177,28 @@ cvector3 vector3_linear_interpolation(const cvector3 a, const cvector3 b, const 
 
 /* Vector 4D */
 cvector4 to_vector4(const float x, const float y, const float z, const float w);
+cvector4 pvector4_add(const cvector4 *a, const cvector4 *b);
+cvector4 pvector4_subtract(const cvector4 *a, const cvector4 *b);
+cvector4 pvector4_scale(const cvector4 *a, const float scale);
+cvector4 pvector4_multiply(const cvector4 *a, const cvector4 *b);
+cvector4 pvector4_divide(const cvector4 *a, const cvector4 *b);
+cvector4 pvector4_negative(const cvector4 *a);
+cvector4 pvector4_abs(const cvector4 *a);
+cvector4 pvector4_floor(const cvector4 *a);
+cvector4 pvector4_ceil(const cvector4 *a);
+cvector4 pvector4_round(const cvector4 *a);
+cvector4 pvector4_max(const cvector4 *a, const cvector4 *b);
+cvector4 pvector4_min(const cvector4 *a, const cvector4 *b);
+float pvector4_dot(const cvector4 *a, const cvector4 *b);
+float pvector4_length_squared(const cvector4 *a);
+float pvector4_length(const cvector4 *a);
+cvector4 pvector4_normalize(const cvector4 *a);
+cvector4 pvector4_slide(const cvector4 *a, const cvector4 *b);
+cvector4 pvector4_reflect(const cvector4 *direction, const cvector4 *normal);
+float pvector4_distance_to(const cvector4 *a, const cvector4 *b);
+float pvector4_distance_squared_to(const cvector4 *a, const cvector4 *b);
+cvector4 pvector4_linear_interpolation(const cvector4 *a, const cvector4 *b, const float p);
+
 cvector4 vector4_add(const cvector4 a, const cvector4 b);
 cvector4 vector4_subtract(const cvector4 a, const cvector4 b);
 cvector4 vector4_scale(const cvector4 a, const float scale);
@@ -153,6 +223,29 @@ cvector4 vector4_linear_interpolation(const cvector4 a, const cvector4 b, const 
 
 /* Quaternion */
 cquaternion to_quaternion(const float x, const float y, const float z, const float w);
+cquaternion pquaternion_add(const cquaternion *a, const cquaternion *b);
+cquaternion pquaternion_subtract(const cquaternion *a, const cquaternion *b);
+cquaternion pquaternion_scale(const cquaternion *a, const float scale);
+cquaternion pquaternion_multiply(const cquaternion *a, const cquaternion *b);
+cquaternion pquaternion_divide(const cquaternion *a, const cquaternion *b);
+cquaternion pquaternion_negative(const cquaternion *a);
+cquaternion pquaternion_abs(const cquaternion *a);
+cquaternion pquaternion_floor(const cquaternion *a);
+cquaternion pquaternion_ceil(const cquaternion *a);
+cquaternion pquaternion_round(const cquaternion *a);
+cquaternion pquaternion_max(const cquaternion *a, const cquaternion *b);
+cquaternion pquaternion_min(const cquaternion *a, const cquaternion *b);
+float pquaternion_dot(const cquaternion *a, const cquaternion *b);
+cquaternion pquaternion_inverse(const cquaternion *a);
+float pquaternion_length_squared(const cquaternion *a);
+float pquaternion_length(const cquaternion *a);
+cquaternion pquaternion_normalize(const cquaternion *a);
+cquaternion pquaternion_conjugate(const cquaternion *a);
+cquaternion pquaternion_axis_angle(const cvector3 *a, const float angle);
+cquaternion pquaternion_rotation_matrix(const cmatrix *m);
+cquaternion pquaternion_yaw_pitch_roll(const float yaw, const float pitch, const float roll);
+cquaternion pquaternion_linear_interpolation(const cquaternion *a, const cquaternion *b, const float p);
+
 cquaternion quaternion_add(const cquaternion a, const cquaternion b);
 cquaternion quaternion_subtract(const cquaternion a, const cquaternion b);
 cquaternion quaternion_scale(const cquaternion a, const float scale);
@@ -177,6 +270,25 @@ cquaternion quaternion_yaw_pitch_roll(const float yaw, const float pitch, const 
 cquaternion quaternion_linear_interpolation(const cquaternion a, const cquaternion b, const float p);
 
 /* Matrix */
+void pmatrix_identity(cmatrix *m);
+void pmatrix_ortho(cmatrix *m, const float l, const float r, const float b, const float t, const float n, const float f);
+void pmatrix_perspective(cmatrix *m, const float y_fov, const float aspect, const float n, const float f);
+void pmatrix_rotation_x(cmatrix *m, const float angle);
+void pmatrix_rotation_y(cmatrix *m, const float angle);
+void pmatrix_rotation_z(cmatrix *m, const float angle);
+void pmatrix_rotation_axis(cmatrix *m, const cvector3 *a, const float angle);
+void pmatrix_rotation_quaternion(cmatrix *m, const cquaternion *q);
+void pmatrix_look_at(cmatrix *m, const cvector3 *pos, const cvector3 *target, const cvector3 *up);
+void pmatrix_scale(cmatrix *m, const cvector3 *v);
+cvector3 pmatrix_get_scale(const cmatrix *m);
+void pmatrix_translation(cmatrix *m, const cvector3 *v);
+cvector3 pmatrix_get_translation(const cmatrix *m);
+cmatrix pmatrix_negative(const cmatrix *m);
+cmatrix pmatrix_multiply(const cmatrix *m, const float s);
+cmatrix pmatrix_multiply_matrix(const cmatrix *a, const cmatrix *b);
+void pmatrix_multiply_f4(const cmatrix *m, float *v);
+void pmatrix_to_array(const cmatrix *m, float *f);
+
 cmatrix matrix_identity(void);
 cmatrix matrix_ortho(const float l, const float r, const float b, const float t, const float n, const float f);
 cmatrix matrix_perspective(const float y_fov, const float aspect, const float n, const float f);
