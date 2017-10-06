@@ -49,9 +49,6 @@ the following restrictions:
 #define FALSE 0
 #endif
 
-#define M_PIF 3.14159265358979f
-#define M_PIF_2 1.57079632679489f
-
 /* Utils */
 int nearly_equal(const float a, const float b, const float epsilon)
 {
@@ -325,8 +322,8 @@ MATHC_EXTERN_INLINE cvector2 vector2_reflect(const cvector2 direction, const cve
 cvector2 pvector2_tangent(const cvector2 *a)
 {
 	cvector2 result;
-	result.x = -a->y;
-	result.y = a->x;
+	result.x = a->y;
+	result.y = -a->x;
 	return result;
 }
 

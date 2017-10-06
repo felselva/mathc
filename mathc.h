@@ -21,6 +21,9 @@ the following restrictions:
 #ifndef MATHC_H
 #define MATHC_H
 
+#define M_PIF 3.14159265358979f
+#define M_PIF_2 1.57079632679489f
+
 typedef struct cvector2 cvector2;
 typedef struct cvector3 cvector3;
 typedef struct cvector4 cvector4;
