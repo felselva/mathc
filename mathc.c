@@ -1056,14 +1056,10 @@ MATHC_EXTERN_INLINE cquaternion quaternion_scale(const cquaternion a, const floa
 cquaternion pquaternion_multiply(const cquaternion *a, const cquaternion *b)
 {
 	cquaternion result;
-	const float u = (a->y * b->z) - (a->z * b->y);
-	const float i = (a->z * b->x) - (a->x * b->z);
-	const float o = (a->x * b->y) - (a->y * b->x);
-	const float p = ((a->x * b->x) + (a->y * b->y)) + (a->z * b->z);
-	result.x = ((a->x * b->w) + (b->x * a->w)) + u;
-	result.y = ((a->y * b->w) + (b->y * a->w)) + i;
-	result.z = ((a->z * b->w) + (b->z * a->w)) + o;
-	result.w = (a->w * b->w) - p;
+	result.w = a->w * b->w - a->x * b->x - a->y * b->y - a->z * b->z;
+	result.x = a->w * b->x + a->x * b->w + a->y * b->z - a->z * b->y;
+	result.y = a->w * b->y + a->y * b->w + a->z * b->x - a->x * b->z;
+	result.z = a->w * b->z + a->z * b->w + a->x * b->y - a->y * b->x;
 	return result;
 }
 
@@ -1216,6 +1212,17 @@ MATHC_EXTERN_INLINE float quaternion_dot(const cquaternion a, const cquaternion 
 	return pquaternion_dot(&a, &b);
 }
 
+float pquaternion_angle(const cquaternion *a, const cquaternion *b)
+{
+	const float s = sqrtf(pquaternion_length_squared(a) * pquaternion_length_squared(b));
+	return acosf(pquaternion_dot(a, b) / s);
+}
+
+MATHC_EXTERN_INLINE float quaternion_angle(const cquaternion a, const cquaternion b)
+{
+	return pquaternion_angle(&a, &b);
+}
+
 cquaternion pquaternion_inverse(const cquaternion *a)
 {
 	cquaternion result;
@@ -1282,6 +1289,26 @@ cquaternion pquaternion_conjugate(const cquaternion *a)
 MATHC_EXTERN_INLINE cquaternion quaternion_conjugate(const cquaternion a)
 {
 	return pquaternion_conjugate(&a);
+}
+
+cquaternion pquaternion_power(cquaternion *a, const float exponent)
+{
+	cquaternion result = *a;
+	if (fabsf(result.w) < 0.9999f) {
+		float alpha = acosf(result.w);
+		float new_alpha = alpha * exponent;
+		float s = sinf(new_alpha) / sinf(alpha);
+		result.w = cosf(new_alpha);
+		result.x = result.x * s;
+		result.y = result.y * s;
+		result.z = result.z * s;
+	}
+	return result;
+}
+
+MATHC_EXTERN_INLINE cquaternion quaternion_power(cquaternion a, const float exponent)
+{
+	return pquaternion_power(&a, exponent);
 }
 
 cquaternion pquaternion_axis_angle(const cvector3 *a, const float angle)
@@ -1371,34 +1398,44 @@ MATHC_EXTERN_INLINE cquaternion quaternion_yaw_pitch_roll(const float yaw, const
 
 cquaternion pquaternion_linear_interpolation(const cquaternion *a, const cquaternion *b, const float p)
 {
-	cquaternion result;
-	float n1 = 1.0f - p;
-	float n2;
-	float n3;
-	float n4 = a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w;
-	if (n4 >= 0.0f) {
-		result.x = (n1 * a->x) + (p * b->x);
-		result.y = (n1 * a->y) + (p * b->y);
-		result.z = (n1 * a->z) + (p * b->z);
-		result.w = (n1 * a->w) + (p * b->w);
-	} else {
-		result.x = (n1 * a->x) - (p * b->x);
-		result.y = (n1 * a->y) - (p * b->y);
-		result.z = (n1 * a->z) - (p * b->z);
-		result.w = (n1 * a->w) - (p * b->w);
-	}
-	n3 = result.x * result.x + result.y * result.y + result.z * result.z + result.w * result.w;
-	n2 = 1.0f / sqrtf(n3);
-	result.x = result.x * n2;
-	result.y = result.y * n2;
-	result.z = result.z * n2;
-	result.w = result.w * n2;
-	return result;
+	return quaternion_add(pquaternion_scale(a, 1.0f - p), pquaternion_scale(b, p));
 }
 
 MATHC_EXTERN_INLINE cquaternion quaternion_linear_interpolation(const cquaternion a, const cquaternion b, const float p)
 {
 	return pquaternion_linear_interpolation(&a, &b, p);
+}
+
+cquaternion pquaternion_spherical_linear_interpolation(const cquaternion *a, const cquaternion *b, const float p)
+{
+	cquaternion result;
+	cquaternion tmp_a = *a;
+	cquaternion tmp_b = *b;
+	float cos_theta = pquaternion_dot(a, b);
+	float k0;
+	float k1;
+	/* Take shortest arc */
+	if (cos_theta < 0.0f) {
+		tmp_b = pquaternion_negative(&tmp_b);
+		cos_theta = -cos_theta;
+	}
+	/* Check if quaternions are close */
+	if (cos_theta > 0.9999f) {
+		/* Use linear interpolation */
+		k0 = 1.0f - p;
+		k1 = p;
+	} else {
+		float theta = acosf(cos_theta);
+		float sin_theta = sinf(theta);
+		k0 = sinf((1.f - p) * theta) / sin_theta;
+		k1 = sinf(p * theta) / sin_theta;
+	}
+	return quaternion_add(pquaternion_scale(&tmp_a, k0), pquaternion_scale(&tmp_b, k1));
+}
+
+MATHC_EXTERN_INLINE cquaternion quaternion_spherical_linear_interpolation(const cquaternion a, const cquaternion b, const float p)
+{
+	return pquaternion_spherical_linear_interpolation(&a, &b, p);
 }
 
 /* Matrix */

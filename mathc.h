@@ -239,15 +239,18 @@ cquaternion pquaternion_round(const cquaternion *a);
 cquaternion pquaternion_max(const cquaternion *a, const cquaternion *b);
 cquaternion pquaternion_min(const cquaternion *a, const cquaternion *b);
 float pquaternion_dot(const cquaternion *a, const cquaternion *b);
+float pquaternion_angle(const cquaternion *a, const cquaternion *b);
 cquaternion pquaternion_inverse(const cquaternion *a);
 float pquaternion_length_squared(const cquaternion *a);
 float pquaternion_length(const cquaternion *a);
 cquaternion pquaternion_normalize(const cquaternion *a);
 cquaternion pquaternion_conjugate(const cquaternion *a);
+cquaternion pquaternion_power(cquaternion *a, const float exponent);
 cquaternion pquaternion_axis_angle(const cvector3 *a, const float angle);
 cquaternion pquaternion_rotation_matrix(const cmatrix *m);
 cquaternion pquaternion_yaw_pitch_roll(const float yaw, const float pitch, const float roll);
 cquaternion pquaternion_linear_interpolation(const cquaternion *a, const cquaternion *b, const float p);
+cquaternion pquaternion_spherical_linear_interpolation(const cquaternion *a, const cquaternion *b, const float p);
 
 cquaternion quaternion_add(const cquaternion a, const cquaternion b);
 cquaternion quaternion_subtract(const cquaternion a, const cquaternion b);
@@ -262,15 +265,18 @@ cquaternion quaternion_round(const cquaternion a);
 cquaternion quaternion_max(const cquaternion a, const cquaternion b);
 cquaternion quaternion_min(const cquaternion a, const cquaternion b);
 float quaternion_dot(const cquaternion a, const cquaternion b);
+float quaternion_angle(const cquaternion a, const cquaternion b);
 cquaternion quaternion_inverse(const cquaternion a);
 float quaternion_length_squared(const cquaternion a);
 float quaternion_length(const cquaternion a);
 cquaternion quaternion_normalize(const cquaternion a);
 cquaternion quaternion_conjugate(const cquaternion a);
+cquaternion quaternion_power(cquaternion a, const float exponent);
 cquaternion quaternion_axis_angle(const cvector3 a, const float angle);
 cquaternion quaternion_rotation_matrix(const cmatrix m);
 cquaternion quaternion_yaw_pitch_roll(const float yaw, const float pitch, const float roll);
 cquaternion quaternion_linear_interpolation(const cquaternion a, const cquaternion b, const float p);
+cquaternion quaternion_spherical_linear_interpolation(const cquaternion a, const cquaternion b, const float p);
 
 /* Matrix */
 void pmatrix_identity(cmatrix *m);
