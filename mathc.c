@@ -1408,7 +1408,6 @@ MATHC_EXTERN_INLINE cquaternion quaternion_linear_interpolation(const cquaternio
 
 cquaternion pquaternion_spherical_linear_interpolation(const cquaternion *a, const cquaternion *b, const float p)
 {
-	cquaternion result;
 	cquaternion tmp_a = *a;
 	cquaternion tmp_b = *b;
 	float cos_theta = pquaternion_dot(a, b);
