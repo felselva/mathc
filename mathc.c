@@ -29,7 +29,7 @@ the following restrictions:
     #if __STDC_VERSION__ >= 199901L
       #define PREDEF_STANDARD_C99
     #endif
-    #if __STDC_VERSION__ >= 199901L
+    #if __STDC_VERSION__ >= 201112L
       #define PREDEF_STANDARD_C11
     #endif
   #endif
