@@ -61,7 +61,7 @@ Easing functions take a value that range from `0.0f` to `1.0f` and usually will 
 
 # Contributing
 
-- Before sending any pull request, open an issue asking of the feature or fix is already being worked on.
+- Before sending any pull request, open an issue asking if the feature or fix is already being worked on.
 - If you find any error, you can open an issue.
 - You can request more useful functions in the issues regarding 2D vectors, 3D vectors, 4D vectors, quaternions and matrices. If you have already an implementation or know where to find, better.
 - Everything here will stay licensed under ZLIB, which is a ***very*** permissive license.
