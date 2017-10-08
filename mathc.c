@@ -1529,8 +1529,8 @@ void pmatrix_rotation_x(float angle, cmatrix *result)
 	float c = cosf(angle);
 	float s = sinf(angle);
 	result->m22 = c;
-	result->m23 = s;
-	result->m32 = -s;
+	result->m23 = -s;
+	result->m32 = s;
 	result->m33 = c;
 }
 
@@ -1547,8 +1547,8 @@ void pmatrix_rotation_y(float angle, cmatrix *result)
 	float c = cosf(angle);
 	float s = sinf(angle);
 	result->m11 = c;
-	result->m13 = -s;
-	result->m31 = s;
+	result->m13 = s;
+	result->m31 = -s;
 	result->m33 = c;
 }
 
@@ -1565,8 +1565,8 @@ void pmatrix_rotation_z(float angle, cmatrix *result)
 	float c = cosf(angle);
 	float s = sinf(angle);
 	result->m11 = c;
-	result->m12 = s;
-	result->m21 = -s;
+	result->m12 = -s;
+	result->m21 = s;
 	result->m22 = c;
 }
 
