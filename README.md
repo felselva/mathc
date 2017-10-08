@@ -17,7 +17,9 @@ Every structure and function uses `float`, because it is the most used type on 2
 
 # Passing Arguments as Value or Pointer
 
-For every function **that takes a structure**, there are two versions. One that you pass structures as value and other that you pass as pointer. The functions that pass the value by pointer have a prefix `p`. You can decide which one you want to use.
+For every function **that takes a structure**, there are two versions. One that you pass structures as value and other that you pass as pointer. The functions that pass the value by pointer have a prefix `p` and the result is the `*result` argument or a returned `float`.
+
+You can decide which one you want to use.
 
 Examples:
 
@@ -29,20 +31,17 @@ cmatrix view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
 	to_vector3(0.0f, 1.0f, 0.0f));
 cmatrix pv = matrix_multiply_matrix(projection, view);
 
-/* Pass by pointer and return a value or modify the passed value */
-/* Return the multiplication of two matrices */
-cmatrix a;
-cmatrix b;
-cmatrix multiplied_matrix = pmatrix_multiply_matrix(&a, &b);
-/* Create an identity matrix */
-cmatrix identity_matrix;
-pmatrix_identity(&identity_matrix);
-/* Change the matrix to a rotation matrix */
-cmatrix rotation_matrix;
-pmatrix_rotation_z(&rotation_matrix, 0.0f);
-/* Change the matrix to a translation matrix */
-cmatrix translation_matrix;
-pmatrix_translation(&translation_matrix, &position);
+/* Pass by pointer */
+cmatrix projection;
+cmatrix view;
+cvector3 pos;
+cvector3 target;
+cvector3 up;
+cmatrix multiplied_matrix;
+
+pmatrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f, &projection);
+pmatrix_look_at(&pos, &target, &up, &view);
+pmatrix_multiply_matrix(&projection, &view, &multiplied_matrix);
 ```
 
 # 4D vectors and Quaternions
