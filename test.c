@@ -28,7 +28,7 @@ void vector2_tests()
 	cvector2 b;
 	cvector2 r;
 	float p;
-	printf("Making tests with 2D vectors...\n");
+	printf("\nMaking tests with 2D vectors...\n");
 	printf("\n# Add two vectors\n");
 	a = to_vector2(1.11f, 2.5f);
 	b = to_vector2(0.9f, 1.3f);
@@ -151,7 +151,7 @@ void vector2_tests()
 	a = to_vector2(5.3f, 9.7f);
 	b = to_vector2(3.66f, 8.0f);
 	r = vector2_reflect(a, b);
-	printf("  Expected: %0.4f, %0.4f\n", -168.870789f, -1013.913208f);
+	printf("  Expected: %0.4f, %0.4f\n", -704.7254f, -1542.268f);
 	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
 	printf("\n# Vector tangent\n");
 	a = to_vector2(1.3f, 7.7f);
