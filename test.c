@@ -20,178 +20,213 @@ the following restrictions:
 
 #include <stdio.h>
 #include <float.h>
+#include <stdint.h>
 #include "mathc.h"
 
-void vector2_tests()
+const float epsilon = FLT_EPSILON;
+const float epsilon_greater = FLT_EPSILON * 10.0f;
+
+struct cerror {
+	int32_t failed;
+	int32_t passed;
+	int32_t passed_with_greater_error_margin;
+};
+
+void printf_1f_test(struct cerror *error, char *msg, float e1, float r1)
+{
+	printf("%s...\n\tExpected % .4f\n\t  Actual  %0.4f\t", msg, e1, r1);
+	if (nearly_equal(e1, r1, epsilon)) {
+		error->passed = error->passed + 1;
+		printf("~passed~\n\n");
+	} else {
+		/* Try with greater error margin */
+		if (nearly_equal(e1, r1, epsilon_greater)) {
+			error->passed_with_greater_error_margin = error->passed_with_greater_error_margin + 1;
+			printf("~passed with greater error margin~\n\n");
+		} else {
+			error->failed = error->failed + 1;
+			printf("~failed~\n\n");
+		}
+	}
+}
+
+void printf_2f_test(struct cerror *error, char *msg, float e1, float e2, float r1, float r2)
+{
+	printf("%s...\n\tExpected % .4f, % .4f\n\t  Actual % .4f, % .4f\t", msg, e1, e2, r1, r2);
+	if (nearly_equal(e1, r1, epsilon) && nearly_equal(e2, r2, epsilon)) {
+		error->passed = error->passed + 1;
+		printf("~passed~\n\n");
+	} else {
+		/* Try with greater error margin */
+		if (nearly_equal(e1, r1, epsilon_greater) && nearly_equal(e2, r2, epsilon_greater)) {
+			error->passed_with_greater_error_margin = error->passed_with_greater_error_margin + 1;
+			printf("~passed with greater error margin~\n\n");
+		} else {
+			error->failed = error->failed + 1;
+			printf("~failed~\n\n");
+		}
+	}
+}
+
+void printf_3f_test(struct cerror *error, char *msg, float e1, float e2, float e3, float r1, float r2, float r3)
+{
+	printf("%s...\n\tExpected (%0.4f, %0.4f, %0.4f)\n\t  Actual (%0.4f, %0.4f, %0.4f)\t", msg, e1, e2, e3, r1, r2, r3);
+	if (nearly_equal(e1, r1, epsilon) && nearly_equal(e2, r2, epsilon) && nearly_equal(e3, r3, epsilon)) {
+		error->passed = error->passed + 1;
+		printf("~passed~\n\n");
+	} else {
+		/* Try with greater error margin */
+		if (nearly_equal(e1, r1, epsilon_greater) && nearly_equal(e2, r2, epsilon_greater) && nearly_equal(e3, r3, epsilon_greater)) {
+			error->passed_with_greater_error_margin = error->passed_with_greater_error_margin + 1;
+			printf("~passed with greater error margin~\n\n");
+		} else {
+			error->failed = error->failed + 1;
+			printf("~failed~\n\n");
+		}
+	}
+}
+
+void vector2_tests(struct cerror *error)
 {
 	cvector2 a;
 	cvector2 b;
 	cvector2 r;
 	float p;
-	printf("\nMaking tests with 2D vectors...\n");
-	printf("\n# Add two vectors\n");
+	printf("\n# Making tests with 2D vectors...\n");
 	a = to_vector2(1.11f, 2.5f);
 	b = to_vector2(0.9f, 1.3f);
 	r = vector2_add(a, b);
-	printf("  Expected: %0.4f, %0.4f\n", 2.01f, 3.8f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Subtract two vectors\n");
+	printf_2f_test(error, "Add two vectors", 2.01f, 3.8f, r.x, r.y);
 	a = to_vector2(1.11f, 2.5f);
 	b = to_vector2(0.9f, 1.3f);
 	r = vector2_subtract(a, b);
-	printf("  Expected: %0.4f, %0.4f\n", 0.21f, 1.2f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Scale a vector\n");
+	printf_2f_test(error, "Subtract two vectors", 0.21f, 1.2f, r.x, r.y);
 	a = to_vector2(1.11f, 2.5f);
 	r = vector2_scale(a, 3.3f);
-	printf("  Expected: %0.4f, %0.4f\n", 3.663f, 8.25f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Multiply two vectors\n");
 	a = to_vector2(1.11f, 2.5f);
 	b = to_vector2(0.9f, 1.3f);
 	r = vector2_multiply(a, b);
-	printf("  Expected: %0.4f, %0.4f\n", 0.999f, 3.25f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Divide two vectors\n");
+	printf_2f_test(error, "Multiply two vectors", 0.999f, 3.25f, r.x, r.y);
 	a = to_vector2(1.11f, 2.5f);
 	b = to_vector2(0.9f, 1.3f);
 	r = vector2_divide(a, b);
-	printf("  Expected: %0.4f, %0.4f\n", 1.2333333333f, 1.9230769231f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Negative vector\n");
+	printf_2f_test(error, "Divide two vectors", 1.2333333333f, 1.9230769231f, r.x, r.y);
 	a = to_vector2(1.11f, 2.5f);
 	r = vector2_negative(a);
-	printf("  Expected: %0.4f, %0.4f\n", -1.11f, -2.5f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Absolute vector\n");
+	printf_2f_test(error, "Negative vector", -1.11f, -2.5f, r.x, r.y);
 	a = to_vector2(-3.33f, 1.1f);
 	r = vector2_abs(a);
-	printf("  Expected: %0.4f, %0.4f\n", 3.33f, 1.1f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	a = to_vector2(3.33f, -1.1f);
-	r = vector2_abs(a);
-	printf("  Expected: %0.4f, %0.4f\n", 3.33f, 1.1f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	a = to_vector2(-3.33f, -1.1f);
-	r = vector2_abs(a);
-	printf("  Expected: %0.4f, %0.4f\n", 3.33f, 1.1f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Floor vector\n");
+	printf_2f_test(error, "Absolute vector", 3.33f, 1.1f, r.x, r.y);
 	a = to_vector2(1.11f, -2.5f);
 	r = vector2_floor(a);
-	printf("  Expected: %0.4f, %0.4f\n", 1.0f, -3.0f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Ceil vector\n");
+	printf_2f_test(error, "Floor vector", 1.0f, -3.0f, r.x, r.y);
+	a = to_vector2(-0.00011f, 3.999999f);
+	r = vector2_floor(a);
+	printf_2f_test(error, "Floor vector", -1.0f, 3.0f, r.x, r.y);
 	a = to_vector2(1.11f, -2.5f);
 	r = vector2_ceil(a);
-	printf("  Expected: %0.4f, %0.4f\n", 2.0f, -2.0f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Round vector\n");
+	printf_2f_test(error, "Ceil vector", 2.0f, -2.0f, r.x, r.y);
+	a = to_vector2(-0.00011f, 3.999999f);
+	r = vector2_ceil(a);
+	printf_2f_test(error, "Ceil vector", 0.0f, 4.0f, r.x, r.y);
 	a = to_vector2(1.11f, -2.55f);
 	r = vector2_round(a);
-	printf("  Expected: %0.4f, %0.4f\n", 1.0f, -3.0f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Maximum value between two vector\n");
+	printf_2f_test(error, "Round vector", 1.0f, -3.0f, r.x, r.y);
 	a = to_vector2(4.31f, -6.65f);
 	b = to_vector2(-3.41f, 2.7f);
 	r = vector2_max(a, b);
-	printf("  Expected: %0.4f, %0.4f\n", 4.31f, 2.7f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Minimum value between two vector\n");
+	printf_2f_test(error, "Maximum of vectors", 4.31f, 2.7f, r.x, r.y);
 	a = to_vector2(4.31f, -6.65f);
 	b = to_vector2(-3.41f, 2.7f);
 	r = vector2_min(a, b);
-	printf("  Expected: %0.4f, %0.4f\n", -3.41f, -6.65f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Dot value of two vectors\n");
+	printf_2f_test(error, "Minimum of vectors", -3.41f, -6.65f, r.x, r.y);
 	a = to_vector2(4.31f, -6.65f);
 	b = to_vector2(-3.41f, 2.7f);
 	p = vector2_dot(a, b);
-	printf("  Expected: %0.4f\n", -32.6521f);
-	printf("    Actual: %0.4f\n", p);
-	printf("\n# Angle of a vector\n");
-	a = to_vector2(3.0f, 2.0f);
+	printf_1f_test(error, "Dot value of vectors", -32.6521f, p);
+	a = to_vector2(2.0f, 2.0f);
 	p = vector2_angle(a);
-	printf("  Expected: %0.4f (radians)\n", 0.5880031703f);
-	printf("    Actual: %0.4f (radians)\n", p);
+	printf_1f_test(error, "Angle (radians) of vector", 0.78539816339745f, p);
 	a = to_vector2(4.31f, -6.65f);
 	p = vector2_angle(a);
-	printf("  Expected: %0.4f (radians)\n", -0.9957434995f);
-	printf("    Actual: %0.4f (radians)\n", p);
-	a = to_vector2(-4.31f, 6.65f);
-	p = vector2_angle(a);
-	printf("  Expected: %0.4f (radians)\n", 2.145847409f);
-	printf("    Actual: %0.4f (radians)\n", p);
+	printf_1f_test(error, "Angle (radians) of vector", -0.99574364682817f, p);
 	a = to_vector2(-5.31f, -7.33f);
 	p = vector2_angle(a);
-	printf("  Expected: %0.4f (radians)\n", -2.19771859f);
-	printf("    Actual: %0.4f (radians)\n", p);
-	printf("\n# Length squared of a vector\n");
+	printf_1f_test(error, "Angle (radians) of vector", -2.1977243674756f, p);
 	a = to_vector2(3.33f, 2.0f);
 	p = vector2_length_squared(a);
-	printf("  Expected: %0.4f\n", 15.0888741136f);
-	printf("    Actual: %0.4f\n", p);
-	printf("\n# Length of a vector\n");
+	printf_1f_test(error, "Length squared of vector", 15.0889f, p);
 	a = to_vector2(3.33f, 2.0f);
 	p = vector2_length(a);
-	printf("  Expected: %0.4f\n", 3.88444f);
-	printf("    Actual: %0.4f\n", p);
-	printf("\n# Normalized vector\n");
+	printf_1f_test(error, "Length of vector", 3.8844433321f, p);
 	a = to_vector2(3.33f, 2.0f);
 	r = vector2_normalize(a);
-	printf("  Expected: %0.4f, %0.4f\n", 0.8572664271f, 0.514874731f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Slide a vector by another\n");
-	a = to_vector2(1.3f, 7.7f);
-	b = to_vector2(3.66f, 8.0f);
+	printf_2f_test(error, "Normalize vector", 0.8572664271f, 0.514874731f, r.x, r.y);
+	a = to_vector2(1.0f, -1.0f);
+	b = to_vector2(0.0f, 1.0f);
 	r = vector2_slide(a, b);
-	printf("  Expected: %0.4f, %0.4f\n", -82.605392f, -502.956604f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Reflect a vector by another\n");
-	a = to_vector2(5.3f, 9.7f);
-	b = to_vector2(3.66f, 8.0f);
+	printf_2f_test(error, "Slide vector by normal", 1.0f, 0.0f, r.x, r.y);
+	a = to_vector2(-2.0f, 0.0f);
+	b = vector2_normalize(to_vector2(1.0f, 1.0f));
+	r = vector2_slide(a, b);
+	printf_2f_test(error, "Slide vector by normal", -1.0f, 1.0f, r.x, r.y);
+	a = to_vector2(1.0f, -1.0f);
+	b = to_vector2(-1.0f, 0.0f);
 	r = vector2_reflect(a, b);
-	printf("  Expected: %0.4f, %0.4f\n", -704.7254f, -1542.268f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Vector tangent\n");
-	a = to_vector2(1.3f, 7.7f);
+	printf_2f_test(error, "Reflect vector by another", -1.0f, -1.0f, r.x, r.y);
+	a = to_vector2(1.0f, 1.0f);
+	b = to_vector2(0.0f, -1.0f);
+	r = vector2_reflect(a, b);
+	printf_2f_test(error, "Reflect vector by another", 1.0f, -1.0f, r.x, r.y);
+	a = to_vector2(2.0f, 1.0f);
 	r = vector2_tangent(a);
-	printf("  Expected: %0.4f, %0.4f\n", 7.7f, -1.3f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Rotate vector\n");
-	a = to_vector2(7.7f, 0.0f);
-	r = vector2_rotate(a, (90.0f * M_PIF) / 180.0f);
-	printf("  Expected: %0.4f, %0.4f\n", 0.0f, 7.7f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	a = to_vector2(7.7f, 0.0f);
-	r = vector2_rotate(a, (180.0f * M_PIF) / 180.0f);
-	printf("  Expected: %0.4f, %0.4f\n", -7.7f, 0.0f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
-	printf("\n# Distance between two vectors\n");
+	printf_2f_test(error, "Vector tangent", 1.0f, -2.0f, r.x, r.y);
+	a = to_vector2(1.0f, 0.0f);
+	r = vector2_rotate(a, 90.0f * M_PIF / 180.0f);
+	printf_2f_test(error, "Rotate vector", 0.0f, 1.0f, r.x, r.y);
+	a = to_vector2(1.0f, 0.0f);
+	r = vector2_rotate(a, 45.0f * M_PIF / 180.0f);
+	printf_2f_test(error, "Rotate vector", 0.707106781f,0.707106781f, r.x, r.y);
+	a = to_vector2(1.0f, 0.0f);
+	r = vector2_rotate(a, 130.0f * M_PIF / 180.0f);
+	printf_2f_test(error, "Rotate vector", -0.64278761f,0.766044443f, r.x, r.y);
 	a = to_vector2(-7.0f, -4.0f);
 	b = to_vector2(17.0f, 6.5f);
 	p = vector2_distance_to(a, b);
-	printf("  Expected: %0.4f\n", 26.196374f);
-	printf("    Actual: %0.4f\n", p);
-	printf("\n# Distance squared between two vectors\n");
+	printf_1f_test(error, "Distance between vector", 26.196374f, p);
 	a = to_vector2(-7.0f, -4.0f);
 	b = to_vector2(17.0f, 6.5f);
 	p = vector2_distance_squared_to(a, b);
-	printf("  Expected: %0.4f\n", 686.2500107479f);
-	printf("    Actual: %0.4f\n", p);
-	printf("\n# Interpolation between two vectors\n");
+	printf_1f_test(error, "Distance squared between vector", 686.2500107479f, p);
 	a = to_vector2(-7.0f, -4.0f);
 	b = to_vector2(17.0f, 6.5f);
-	r = vector2_linear_interpolation(a, b, 0.0f);
-	printf("  Expected: %0.4f, %0.4f\n", -7.0f, -4.0f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
 	r = vector2_linear_interpolation(a, b, 0.33f);
-	printf("  Expected: %0.4f, %0.4f\n", 0.92f, -0.535f);
-	printf("    Actual: %0.4f, %0.4f\n", r.x, r.y);
+	printf_2f_test(error, "Linear interpolation between vectors", 0.92f, -0.535f, r.x, r.y);
+}
+
+void quaternion_tests()
+{
+	cquaternion a;
+	cquaternion b;
+	cquaternion r;
+	cvector3 v;
+	float p;
+	printf("\nMaking tests with quaternions...\n");
+	printf("\n# Spherical interpolation between two quaternions\n");
+	a = to_quaternion(0.0f, 0.0f, 1.0f, 1.0f);
+	v = vector3_normalize(to_vector3(0.0f, 1.0f, 1.0f));
+	b = to_quaternion(v.x, v.y, v.z, 1.0f);
+	r = quaternion_spherical_linear_interpolation(a, b, 0.25f);
+	printf("  Expected: %0.4f, %0.4f, %0.4f, %0.4f\n", -0.0f, -0.086583f, -0.449766f, 0.88894f);
+	printf("    Actual: %0.4f, %0.4f, %0.4f, %0.4f\n", r.x, r.y, r.z, r.w);
 }
 
 int main(int argc, char **args)
 {
-	vector2_tests();
-	return 0;
+	struct cerror error = {0};
+	vector2_tests(&error);
+	printf("\nTotal of failed tests: %d\n", error.failed);
+	printf("Tests of tests that passed: %d\n", error.passed);
+	printf("Tests of tests that passed with greater error margin: %d\n", error.passed_with_greater_error_margin);
+	return error.failed;
 }

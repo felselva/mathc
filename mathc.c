@@ -58,10 +58,10 @@ int nearly_equal(float a, float b, float epsilon)
 	float diff = fabsf(a - b);
 	if (a == b) {
 		result = TRUE;
-	} else if (a == 0.0f || b == 0.0f || diff < FLT_MIN) {
-		result = diff < (epsilon * FLT_MIN);
+	} else if (a == 0.0f || b == 0.0f || diff < FLT_EPSILON) {
+		result = diff < epsilon;
 	} else {
-		result = diff / fminf((abs_a + abs_b), FLT_MAX) < epsilon;
+		result = diff / fminf(abs_a + abs_b, FLT_MAX) < epsilon;
 	}
 	return result;
 }
