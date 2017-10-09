@@ -274,7 +274,6 @@ MATHC_EXTERN_INLINE float vector2_length(cvector2 a)
 void pvector2_normalize(cvector2 *a, cvector2 *result)
 {
 	float length = a->x * a->x + a->y * a->y;
-	/* For better performance, only call sqrtf() if length is not 0.0f */
 	if (length != 0.0f) {
 		length = sqrtf(length);
 		result->x = a->x / length;
@@ -292,31 +291,31 @@ MATHC_EXTERN_INLINE cvector2 vector2_normalize(cvector2 a)
 	return result;
 }
 
-void pvector2_slide(cvector2 *a, cvector2 *b, cvector2 *result)
+void pvector2_slide(cvector2 *a, cvector2 *normal, cvector2 *result)
 {
-	float d = pvector2_dot(a, b);
-	result->x = b->x - a->x * d;
-	result->y = b->y - a->y * d;
+	float d = pvector2_dot(a, normal);
+	result->x = a->x - normal->x * d;
+	result->y = a->y - normal->y * d;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_slide(cvector2 a, cvector2 b)
+MATHC_EXTERN_INLINE cvector2 vector2_slide(cvector2 a, cvector2 normal)
 {
 	cvector2 result;
-	pvector2_slide(&a, &b, &result);
+	pvector2_slide(&a, &normal, &result);
 	return result;
 }
 
-void pvector2_reflect(cvector2 *direction, cvector2 *normal, cvector2 *result)
+void pvector2_reflect(cvector2 *a, cvector2 *normal, cvector2 *result)
 {
-	float d = 2.0f * pvector2_dot(direction, normal);
-	result->x = direction->x - normal->x * d;
-	result->y = direction->y - normal->y * d;
+	float d = 2.0f * pvector2_dot(a, normal);
+	result->x = a->x - normal->x * d;
+	result->y = a->y - normal->y * d;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_reflect(cvector2 direction, cvector2 normal)
+MATHC_EXTERN_INLINE cvector2 vector2_reflect(cvector2 a, cvector2 normal)
 {
 	cvector2 result;
-	pvector2_reflect(&direction, &normal, &result);
+	pvector2_reflect(&a, &normal, &result);
 	return result;
 }
 
@@ -606,7 +605,6 @@ MATHC_EXTERN_INLINE float vector3_length(cvector3 a)
 void pvector3_normalize(cvector3 *a, cvector3 *result)
 {
 	float length = a->x * a->x + a->y * a->y + a->z * a->z;
-	/* For better performance, only call sqrtf() if length is not 0.0f */
 	if (length != 0.0f) {
 		length = sqrtf(length);
 		result->x = a->x / length;
@@ -626,33 +624,33 @@ MATHC_EXTERN_INLINE cvector3 vector3_normalize(cvector3 a)
 	return result;
 }
 
-void pvector3_slide(cvector3 *a, cvector3 *b, cvector3 *result)
+void pvector3_slide(cvector3 *a, cvector3 *normal, cvector3 *result)
 {
-	float d = pvector3_dot(a, b);
-	result->x = b->x - a->x * d;
-	result->y = b->y - a->y * d;
-	result->z = b->z - a->z * d;
+	float d = pvector3_dot(a, normal);
+	result->x = a->x - normal->x * d;
+	result->y = a->y - normal->y * d;
+	result->y = a->z - normal->z * d;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_slide(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE cvector3 vector3_slide(cvector3 a, cvector3 normal)
 {
 	cvector3 result;
-	pvector3_slide(&a, &b, &result);
+	pvector3_slide(&a, &normal, &result);
 	return result;
 }
 
-void pvector3_reflect(cvector3 *direction, cvector3 *normal, cvector3 *result)
+void pvector3_reflect(cvector3 *a, cvector3 *normal, cvector3 *result)
 {
-	float d = 2.0f * pvector3_dot(direction, normal);
-	result->x = direction->x - normal->x * d;
-	result->y = direction->y - normal->y * d;
-	result->z = direction->z - normal->z * d;
+	float d = 2.0f * pvector3_dot(a, normal);
+	result->x = a->x - normal->x * d;
+	result->y = a->y - normal->y * d;
+	result->z = a->z - normal->z * d;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_reflect(cvector3 direction, cvector3 normal)
+MATHC_EXTERN_INLINE cvector3 vector3_reflect(cvector3 a, cvector3 normal)
 {
 	cvector3 result;
-	pvector3_reflect(&direction, &normal, &result);
+	pvector3_reflect(&a, &normal, &result);
 	return result;
 }
 
@@ -914,7 +912,6 @@ MATHC_EXTERN_INLINE float vector4_length(cvector4 a)
 void pvector4_normalize(cvector4 *a, cvector4 *result)
 {
 	float length = a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w;
-	/* For better performance, only call sqrtf() if length is not 0.0f */
 	if (length != 0.0f) {
 		length = sqrtf(length);
 		result->x = a->x / length;
@@ -933,38 +930,6 @@ MATHC_EXTERN_INLINE cvector4 vector4_normalize(cvector4 a)
 {
 	cvector4 result;
 	pvector4_normalize(&a, &result);
-	return result;
-}
-
-void pvector4_slide(cvector4 *a, cvector4 *b, cvector4 *result)
-{
-	float d = pvector4_dot(a, b);
-	result->x = b->x - a->x * d;
-	result->y = b->y - a->y * d;
-	result->z = b->z - a->z * d;
-	result->w = b->w - a->w * d;
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_slide(cvector4 a, cvector4 b)
-{
-	cvector4 result;
-	pvector4_slide(&a, &b, &result);
-	return result;
-}
-
-void pvector4_reflect(cvector4 *direction, cvector4 *normal, cvector4 *result)
-{
-	float d = 2.0f * pvector4_dot(direction, normal);
-	result->x = direction->x - normal->x * d;
-	result->y = direction->y - normal->y * d;
-	result->z = direction->z - normal->z * d;
-	result->w = direction->w - normal->w * d;
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_reflect(cvector4 direction, cvector4 normal)
-{
-	cvector4 result;
-	pvector4_reflect(&direction, &normal, &result);
 	return result;
 }
 
