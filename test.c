@@ -209,7 +209,7 @@ int main(int argc, char **args)
 	struct cerror error = {0};
 	vector2_tests(&error);
 	printf("\nTotal of failed tests: %d\n", error.failed);
-	printf("Tests of tests that passed: %d\n", error.passed);
-	printf("Tests of tests that passed with greater error margin: %d\n", error.passed_with_greater_error_margin);
+	printf("Total of tests that passed: %d\n", error.passed);
+	printf("Total of tests that passed with greater error margin: %d\n", error.passed_with_greater_error_margin);
 	return error.failed;
 }
