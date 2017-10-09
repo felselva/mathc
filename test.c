@@ -204,23 +204,6 @@ void vector2_tests(struct cerror *error)
 	printf_2f_test(error, "Linear interpolation between vectors", 0.92f, -0.535f, r.x, r.y);
 }
 
-void quaternion_tests()
-{
-	cquaternion a;
-	cquaternion b;
-	cquaternion r;
-	cvector3 v;
-	float p;
-	printf("\nMaking tests with quaternions...\n");
-	printf("\n# Spherical interpolation between two quaternions\n");
-	a = to_quaternion(0.0f, 0.0f, 1.0f, 1.0f);
-	v = vector3_normalize(to_vector3(0.0f, 1.0f, 1.0f));
-	b = to_quaternion(v.x, v.y, v.z, 1.0f);
-	r = quaternion_spherical_linear_interpolation(a, b, 0.25f);
-	printf("  Expected: %0.4f, %0.4f, %0.4f, %0.4f\n", -0.0f, -0.086583f, -0.449766f, 0.88894f);
-	printf("    Actual: %0.4f, %0.4f, %0.4f, %0.4f\n", r.x, r.y, r.z, r.w);
-}
-
 int main(int argc, char **args)
 {
 	struct cerror error = {0};
