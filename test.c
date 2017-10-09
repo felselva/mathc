@@ -70,7 +70,7 @@ void printf_2f_test(struct cerror *error, char *msg, float e1, float e2, float r
 
 void printf_3f_test(struct cerror *error, char *msg, float e1, float e2, float e3, float r1, float r2, float r3)
 {
-	printf("%s...\n\tExpected (%0.4f, %0.4f, %0.4f)\n\t  Actual (%0.4f, %0.4f, %0.4f)\t", msg, e1, e2, e3, r1, r2, r3);
+	printf("%s...\n\tExpected %0.4f, %0.4f, %0.4f\n\t  Actual %0.4f, %0.4f, %0.4f\t", msg, e1, e2, e3, r1, r2, r3);
 	if (nearly_equal(e1, r1, epsilon) && nearly_equal(e2, r2, epsilon) && nearly_equal(e3, r3, epsilon)) {
 		error->passed = error->passed + 1;
 		printf("~passed~\n\n");
@@ -86,6 +86,23 @@ void printf_3f_test(struct cerror *error, char *msg, float e1, float e2, float e
 	}
 }
 
+void printf_4f_test(struct cerror *error, char *msg, float e1, float e2, float e3, float e4, float r1, float r2, float r3, float r4)
+{
+	printf("%s...\n\tExpected %0.4f, %0.4f, %0.4f, %0.4f\n\t  Actual %0.4f, %0.4f, %0.4f, %0.4f\t", msg, e1, e2, e3, e4, r1, r2, r3, r4);
+	if (nearly_equal(e1, r1, epsilon) && nearly_equal(e2, r2, epsilon) && nearly_equal(e3, r3, epsilon)) {
+		error->passed = error->passed + 1;
+		printf("~passed~\n\n");
+	} else {
+		/* Try with greater error margin */
+		if (nearly_equal(e1, r1, epsilon_greater) && nearly_equal(e2, r2, epsilon_greater) && nearly_equal(e3, r3, epsilon_greater) && nearly_equal(e4, r4, epsilon_greater)) {
+			error->passed_with_greater_error_margin = error->passed_with_greater_error_margin + 1;
+			printf("~passed with greater error margin~\n\n");
+		} else {
+			error->failed = error->failed + 1;
+			printf("~failed~\n\n");
+		}
+	}
+}
 void vector2_tests(struct cerror *error)
 {
 	cvector2 a;
@@ -204,10 +221,65 @@ void vector2_tests(struct cerror *error)
 	printf_2f_test(error, "Linear interpolation between vectors", 0.92f, -0.535f, r.x, r.y);
 }
 
+void vector3_tests(struct cerror *error)
+{
+	cvector3 a;
+	cvector3 b;
+	cvector3 r;
+	float p;
+	printf("\n# Making tests with 3D vectors...\n");
+	a = to_vector3(1.0f, 1.0f, 1.0f);
+	b = to_vector3(1.0f, 1.0f, 1.0f);
+	r = vector3_add(a, b);
+	printf_3f_test(error, "Add two vectors", 2.0f, 2.0f, 2.0f, r.x, r.y, r.z);
+}
+
+void vector4_tests(struct cerror *error)
+{
+	cvector4 a;
+	cvector4 b;
+	cvector4 r;
+	float p;
+	printf("\n# Making tests with 4D vectors...\n");
+	a = to_vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	b = to_vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	r = vector4_add(a, b);
+	printf_4f_test(error, "Add two vectors", 2.0f, 2.0f, 2.0f, 2.0f, r.x, r.y, r.z, r.w);
+}
+
+void quaternion_tests(struct cerror *error)
+{
+	cquaternion a;
+	cquaternion b;
+	cquaternion r;
+	float p;
+	printf("\n# Making tests with quaternions...\n");
+	a = to_quaternion(1.0f, 1.0f, 1.0f, 1.0f);
+	b = to_quaternion(1.0f, 1.0f, 1.0f, 1.0f);
+	r = quaternion_add(a, b);
+	printf_4f_test(error, "Add two quaternions", 2.0f, 2.0f, 2.0f, 2.0f, r.x, r.y, r.z, r.w);
+}
+
+void matrix_tests(struct cerror *error)
+{
+	cmatrix a;
+	cmatrix b;
+	cmatrix r;
+	float p;
+	printf("\n# Making tests with matrices...\n");
+	a = matrix_identity();
+	b = matrix_identity();
+	r = matrix_multiply_matrix(a, b);
+}
+
 int main(int argc, char **args)
 {
 	struct cerror error = {0};
 	vector2_tests(&error);
+	vector3_tests(&error);
+	vector4_tests(&error);
+	quaternion_tests(&error);
+	matrix_tests(&error);
 	printf("\nTotal of failed tests: %d\n", error.failed);
 	printf("Total of tests that passed: %d\n", error.passed);
 	printf("Total of tests that passed with greater error margin: %d\n", error.passed_with_greater_error_margin);
