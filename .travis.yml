@@ -4,7 +4,4 @@ compiler:
   - gcc
 
 script:
-  - clang test.c -include mathc.h -c mathc.c -lm && clang -o test_clang test.o mathc.o && chmod +x test_clang
-  - ./test_clang
-  - gcc -o test_gcc test.c mathc.c -I. -lm && chmod +x test_gcc
-  - ./test_gcc
+  - ./run_tests.sh
