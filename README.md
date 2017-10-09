@@ -1,5 +1,7 @@
 # MathC
 
+[![Build Status](https://travis-ci.org/ferreiradaselva/mathc.svg?branch=master)](https://travis-ci.org/ferreiradaselva/mathc)
+
 MathC is a simple math library for 2D and 3D programming. It contains implementations for:
 
 - 2D vectors
