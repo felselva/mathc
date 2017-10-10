@@ -67,9 +67,9 @@ int nearly_equal(float a, float b, float epsilon)
 }
 
 /* Vector 2D */
-cvector to_vector2(float x, float y)
+struct vec to_vector2(float x, float y)
 {
-	cvector result;
+	struct vec result;
 	result.x = x;
 	result.y = y;
 	result.z = 0.0f;
@@ -77,203 +77,203 @@ cvector to_vector2(float x, float y)
 	return result;
 }
 
-void pvector2_add(cvector *a, cvector *b, cvector *result)
+void pvector2_add(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x + b->x;
 	result->y = a->y + b->y;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_add(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector2_add(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector2_add(&a, &b, &result);
 	return result;
 }
 
-void pvector2_subtract(cvector *a, cvector *b, cvector *result)
+void pvector2_subtract(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x - b->x;
 	result->y = a->y - b->y;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_subtract(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector2_subtract(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector2_subtract(&a, &b, &result);
 	return result;
 }
 
-void pvector2_scale(cvector *a, float scale, cvector *result)
+void pvector2_scale(struct vec *a, float scale, struct vec *result)
 {
 	result->x = a->x * scale;
 	result->y = a->y * scale;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_scale(cvector a, float scale)
+MATHC_EXTERN_INLINE struct vec vector2_scale(struct vec a, float scale)
 {
-	cvector result;
+	struct vec result;
 	pvector2_scale(&a, scale, &result);
 	return result;
 }
 
-void pvector2_multiply(cvector *a, cvector *b, cvector *result)
+void pvector2_multiply(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x * b->x;
 	result->y = a->y * b->y;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_multiply(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector2_multiply(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector2_multiply(&a, &b, &result);
 	return result;
 }
 
-void pvector2_divide(cvector *a, cvector *b, cvector *result)
+void pvector2_divide(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x / b->x;
 	result->y = a->y / b->y;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_divide(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector2_divide(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector2_divide(&a, &b, &result);
 	return result;
 }
 
-void pvector2_negative(cvector *a, cvector *result)
+void pvector2_negative(struct vec *a, struct vec *result)
 {
 	result->x = -a->x;
 	result->y = -a->y;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_negative(cvector a)
+MATHC_EXTERN_INLINE struct vec vector2_negative(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector2_negative(&a, &result);
 	return result;
 }
 
-void pvector2_abs(cvector *a, cvector *result)
+void pvector2_abs(struct vec *a, struct vec *result)
 {
 	result->x = fabsf(a->x);
 	result->y = fabsf(a->y);
 }
 
-MATHC_EXTERN_INLINE cvector vector2_abs(cvector a)
+MATHC_EXTERN_INLINE struct vec vector2_abs(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector2_abs(&a, &result);
 	return result;
 }
 
-void pvector2_floor(cvector *a, cvector *result)
+void pvector2_floor(struct vec *a, struct vec *result)
 {
 	result->x = floorf(a->x);
 	result->y = floorf(a->y);
 }
 
-MATHC_EXTERN_INLINE cvector vector2_floor(cvector a)
+MATHC_EXTERN_INLINE struct vec vector2_floor(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector2_floor(&a, &result);
 	return result;
 }
 
-void pvector2_ceil(cvector *a, cvector *result)
+void pvector2_ceil(struct vec *a, struct vec *result)
 {
 	result->x = ceilf(a->x);
 	result->y = ceilf(a->y);
 }
 
-MATHC_EXTERN_INLINE cvector vector2_ceil(cvector a)
+MATHC_EXTERN_INLINE struct vec vector2_ceil(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector2_ceil(&a, &result);
 	return result;
 }
 
-void pvector2_round(cvector *a, cvector *result)
+void pvector2_round(struct vec *a, struct vec *result)
 {
 	result->x = roundf(a->x);
 	result->y = roundf(a->y);
 }
 
-MATHC_EXTERN_INLINE cvector vector2_round(cvector a)
+MATHC_EXTERN_INLINE struct vec vector2_round(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector2_round(&a, &result);
 	return result;
 }
 
-void pvector2_max(cvector *a, cvector *b, cvector *result)
+void pvector2_max(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = fmaxf(a->x, b->x);
 	result->y = fmaxf(a->y, b->y);
 }
 
-MATHC_EXTERN_INLINE cvector vector2_max(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector2_max(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector2_max(&a, &b, &result);
 	return result;
 }
 
-void pvector2_min(cvector *a, cvector *b, cvector *result)
+void pvector2_min(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = fminf(a->x, b->x);
 	result->y = fminf(a->y, b->y);
 }
 
-MATHC_EXTERN_INLINE cvector vector2_min(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector2_min(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector2_min(&a, &b, &result);
 	return result;
 }
 
-float pvector2_dot(cvector *a, cvector *b)
+float pvector2_dot(struct vec *a, struct vec *b)
 {
 	return a->x * b->x + a->y * b->y;
 }
 
-MATHC_EXTERN_INLINE float vector2_dot(cvector a, cvector b)
+MATHC_EXTERN_INLINE float vector2_dot(struct vec a, struct vec b)
 {
 	return pvector2_dot(&a, &b);
 }
 
-float pvector2_angle(cvector *a)
+float pvector2_angle(struct vec *a)
 {
 	return atan2f(a->y, a->x);
 }
 
-MATHC_EXTERN_INLINE float vector2_angle(cvector a)
+MATHC_EXTERN_INLINE float vector2_angle(struct vec a)
 {
 	return pvector2_angle(&a);
 }
 
-float pvector2_length_squared(cvector *a)
+float pvector2_length_squared(struct vec *a)
 {
 	return a->x * a->x + a->y * a->y;
 }
 
-MATHC_EXTERN_INLINE float vector2_length_squared(cvector a)
+MATHC_EXTERN_INLINE float vector2_length_squared(struct vec a)
 {
 	return pvector2_length_squared(&a);
 }
 
-float pvector2_length(cvector *a)
+float pvector2_length(struct vec *a)
 {
 	return sqrtf(a->x * a->x + a->y * a->y);
 }
 
-MATHC_EXTERN_INLINE float vector2_length(cvector a)
+MATHC_EXTERN_INLINE float vector2_length(struct vec a)
 {
 	return pvector2_length(&a);
 }
 
-void pvector2_normalize(cvector *a, cvector *result)
+void pvector2_normalize(struct vec *a, struct vec *result)
 {
 	float length = a->x * a->x + a->y * a->y;
 	if (length != 0.0f) {
@@ -286,55 +286,55 @@ void pvector2_normalize(cvector *a, cvector *result)
 	}
 }
 
-MATHC_EXTERN_INLINE cvector vector2_normalize(cvector a)
+MATHC_EXTERN_INLINE struct vec vector2_normalize(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector2_normalize(&a, &result);
 	return result;
 }
 
-void pvector2_slide(cvector *a, cvector *normal, cvector *result)
+void pvector2_slide(struct vec *a, struct vec *normal, struct vec *result)
 {
 	float d = pvector2_dot(a, normal);
 	result->x = a->x - normal->x * d;
 	result->y = a->y - normal->y * d;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_slide(cvector a, cvector normal)
+MATHC_EXTERN_INLINE struct vec vector2_slide(struct vec a, struct vec normal)
 {
-	cvector result;
+	struct vec result;
 	pvector2_slide(&a, &normal, &result);
 	return result;
 }
 
-void pvector2_reflect(cvector *a, cvector *normal, cvector *result)
+void pvector2_reflect(struct vec *a, struct vec *normal, struct vec *result)
 {
 	float d = 2.0f * pvector2_dot(a, normal);
 	result->x = a->x - normal->x * d;
 	result->y = a->y - normal->y * d;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_reflect(cvector a, cvector normal)
+MATHC_EXTERN_INLINE struct vec vector2_reflect(struct vec a, struct vec normal)
 {
-	cvector result;
+	struct vec result;
 	pvector2_reflect(&a, &normal, &result);
 	return result;
 }
 
-void pvector2_tangent(cvector *a, cvector *result)
+void pvector2_tangent(struct vec *a, struct vec *result)
 {
 	result->x = a->y;
 	result->y = -a->x;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_tangent(cvector a)
+MATHC_EXTERN_INLINE struct vec vector2_tangent(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector2_tangent(&a, &result);
 	return result;
 }
 
-void pvector2_rotate(cvector *a, float angle, cvector *result)
+void pvector2_rotate(struct vec *a, float angle, struct vec *result)
 {
 	float cs = cosf(angle);
 	float sn = sinf(angle);
@@ -342,50 +342,50 @@ void pvector2_rotate(cvector *a, float angle, cvector *result)
 	result->y = a->x * sn + a->y * cs;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_rotate(cvector a, float angle)
+MATHC_EXTERN_INLINE struct vec vector2_rotate(struct vec a, float angle)
 {
-	cvector result;
+	struct vec result;
 	pvector2_rotate(&a, angle, &result);
 	return result;
 }
 
-float pvector2_distance_to(cvector *a, cvector *b)
+float pvector2_distance_to(struct vec *a, struct vec *b)
 {
 	return sqrtf((a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y));
 }
 
-MATHC_EXTERN_INLINE float vector2_distance_to(cvector a, cvector b)
+MATHC_EXTERN_INLINE float vector2_distance_to(struct vec a, struct vec b)
 {
 	return pvector2_distance_to(&a, &b);
 }
 
-float pvector2_distance_squared_to(cvector *a, cvector *b)
+float pvector2_distance_squared_to(struct vec *a, struct vec *b)
 {
 	return (a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y);
 }
 
-MATHC_EXTERN_INLINE float vector2_distance_squared_to(cvector a, cvector b)
+MATHC_EXTERN_INLINE float vector2_distance_squared_to(struct vec a, struct vec b)
 {
 	return pvector2_distance_squared_to(&a, &b);
 }
 
-void pvector2_linear_interpolation(cvector *a, cvector *b, float p, cvector *result)
+void pvector2_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result)
 {
 	result->x = a->x + (b->x - a->x) * p;
 	result->y = a->y + (b->y - a->y) * p;
 }
 
-MATHC_EXTERN_INLINE cvector vector2_linear_interpolation(cvector a, cvector b, float p)
+MATHC_EXTERN_INLINE struct vec vector2_linear_interpolation(struct vec a, struct vec b, float p)
 {
-	cvector result;
+	struct vec result;
 	pvector2_linear_interpolation(&a, &b, p, &result);
 	return result;
 }
 
 /* Vector 3D */
-cvector to_vector3(float x, float y, float z)
+struct vec to_vector3(float x, float y, float z)
 {
-	cvector result;
+	struct vec result;
 	result.x = x;
 	result.y = y;
 	result.z = z;
@@ -393,219 +393,219 @@ cvector to_vector3(float x, float y, float z)
 	return result;
 }
 
-void pvector3_add(cvector *a, cvector *b, cvector *result)
+void pvector3_add(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x + b->x;
 	result->y = a->y + b->y;
 	result->z = a->z + b->z;
 }
 
-MATHC_EXTERN_INLINE cvector vector3_add(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector3_add(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector3_add(&a, &b, &result);
 	return result;
 }
 
-void pvector3_subtract(cvector *a, cvector *b, cvector *result)
+void pvector3_subtract(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x - b->x;
 	result->y = a->y - b->y;
 	result->z = a->z - b->z;
 }
 
-MATHC_EXTERN_INLINE cvector vector3_subtract(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector3_subtract(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector3_subtract(&a, &b, &result);
 	return result;
 }
 
-void pvector3_scale(cvector *a, float scale, cvector *result)
+void pvector3_scale(struct vec *a, float scale, struct vec *result)
 {
 	result->x = a->x * scale;
 	result->y = a->y * scale;
 	result->z = a->z * scale;
 }
 
-MATHC_EXTERN_INLINE cvector vector3_scale(cvector a, float scale)
+MATHC_EXTERN_INLINE struct vec vector3_scale(struct vec a, float scale)
 {
-	cvector result;
+	struct vec result;
 	pvector3_scale(&a, scale, &result);
 	return result;
 }
 
-void pvector3_multiply(cvector *a, cvector *b, cvector *result)
+void pvector3_multiply(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x * b->x;
 	result->y = a->y * b->y;
 	result->z = a->z * b->z;
 }
 
-MATHC_EXTERN_INLINE cvector vector3_multiply(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector3_multiply(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector3_multiply(&a, &b, &result);
 	return result;
 }
 
-void pvector3_divide(cvector *a, cvector *b, cvector *result)
+void pvector3_divide(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x / b->x;
 	result->y = a->y / b->y;
 	result->z = a->z / b->z;
 }
 
-MATHC_EXTERN_INLINE cvector vector3_divide(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector3_divide(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector3_divide(&a, &b, &result);
 	return result;
 }
 
-void pvector3_negative(cvector *a, cvector *result)
+void pvector3_negative(struct vec *a, struct vec *result)
 {
 	result->x = -a->x;
 	result->y = -a->y;
 	result->z = -a->z;
 }
 
-MATHC_EXTERN_INLINE cvector vector3_negative(cvector a)
+MATHC_EXTERN_INLINE struct vec vector3_negative(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector3_negative(&a, &result);
 	return result;
 }
 
-void pvector3_abs(cvector *a, cvector *result)
+void pvector3_abs(struct vec *a, struct vec *result)
 {
 	result->x = fabsf(a->x);
 	result->y = fabsf(a->y);
 	result->z = fabsf(a->z);
 }
 
-MATHC_EXTERN_INLINE cvector vector3_abs(cvector a)
+MATHC_EXTERN_INLINE struct vec vector3_abs(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector3_abs(&a, &result);
 	return result;
 }
 
-void pvector3_floor(cvector *a, cvector *result)
+void pvector3_floor(struct vec *a, struct vec *result)
 {
 	result->x = floorf(a->x);
 	result->y = floorf(a->y);
 	result->z = floorf(a->z);
 }
 
-MATHC_EXTERN_INLINE cvector vector3_floor(cvector a)
+MATHC_EXTERN_INLINE struct vec vector3_floor(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector3_floor(&a, &result);
 	return result;
 }
 
-void pvector3_ceil(cvector *a, cvector *result)
+void pvector3_ceil(struct vec *a, struct vec *result)
 {
 	result->x = ceilf(a->x);
 	result->y = ceilf(a->y);
 	result->z = ceilf(a->z);
 }
 
-MATHC_EXTERN_INLINE cvector vector3_ceil(cvector a)
+MATHC_EXTERN_INLINE struct vec vector3_ceil(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector3_ceil(&a, &result);
 	return result;
 }
 
-void pvector3_round(cvector *a, cvector *result)
+void pvector3_round(struct vec *a, struct vec *result)
 {
 	result->x = roundf(a->x);
 	result->y = roundf(a->y);
 	result->z = roundf(a->z);
 }
 
-MATHC_EXTERN_INLINE cvector vector3_round(cvector a)
+MATHC_EXTERN_INLINE struct vec vector3_round(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector3_round(&a, &result);
 	return result;
 }
 
-void pvector3_max(cvector *a, cvector *b, cvector *result)
+void pvector3_max(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = fmaxf(a->x, b->x);
 	result->y = fmaxf(a->y, b->y);
 	result->z = fmaxf(a->z, b->z);
 }
 
-MATHC_EXTERN_INLINE cvector vector3_max(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector3_max(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector3_max(&a, &b, &result);
 	return result;
 }
 
-void pvector3_min(cvector *a, cvector *b, cvector *result)
+void pvector3_min(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = fminf(a->x, b->x);
 	result->y = fminf(a->y, b->y);
 	result->z = fminf(a->z, b->z);
 }
 
-MATHC_EXTERN_INLINE cvector vector3_min(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector3_min(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector3_min(&a, &b, &result);
 	return result;
 }
 
-float pvector3_dot(cvector *a, cvector *b)
+float pvector3_dot(struct vec *a, struct vec *b)
 {
 	return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
-MATHC_EXTERN_INLINE float vector3_dot(cvector a, cvector b)
+MATHC_EXTERN_INLINE float vector3_dot(struct vec a, struct vec b)
 {
 	return pvector3_dot(&a, &b);
 }
 
-void pvector3_cross(cvector *a, cvector *b, cvector *result)
+void pvector3_cross(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->y * b->z - a->z * b->y;
 	result->y = a->z * b->x - a->x * b->z;
 	result->z = a->x * b->y - a->y * b->x;
 }
 
-MATHC_EXTERN_INLINE cvector vector3_cross(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec vector3_cross(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pvector3_cross(&a, &b, &result);
 	return result;
 }
 
-float pvector3_length_squared(cvector *a)
+float pvector3_length_squared(struct vec *a)
 {
 	return a->x * a->x + a->y * a->y + a->z * a->z;
 }
 
-MATHC_EXTERN_INLINE float vector3_length_squared(cvector a)
+MATHC_EXTERN_INLINE float vector3_length_squared(struct vec a)
 {
 	return pvector3_length_squared(&a);
 }
 
-float pvector3_length(cvector *a)
+float pvector3_length(struct vec *a)
 {
 	return sqrtf(a->x * a->x + a->y * a->y + a->z * a->z);
 }
 
-MATHC_EXTERN_INLINE float vector3_length(cvector a)
+MATHC_EXTERN_INLINE float vector3_length(struct vec a)
 {
 	return pvector3_length(&a);
 }
 
-void pvector3_normalize(cvector *a, cvector *result)
+void pvector3_normalize(struct vec *a, struct vec *result)
 {
 	float length = a->x * a->x + a->y * a->y + a->z * a->z;
 	if (length != 0.0f) {
@@ -620,14 +620,14 @@ void pvector3_normalize(cvector *a, cvector *result)
 	}
 }
 
-MATHC_EXTERN_INLINE cvector vector3_normalize(cvector a)
+MATHC_EXTERN_INLINE struct vec vector3_normalize(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pvector3_normalize(&a, &result);
 	return result;
 }
 
-void pvector3_slide(cvector *a, cvector *normal, cvector *result)
+void pvector3_slide(struct vec *a, struct vec *normal, struct vec *result)
 {
 	float d = pvector3_dot(a, normal);
 	result->x = a->x - normal->x * d;
@@ -635,14 +635,14 @@ void pvector3_slide(cvector *a, cvector *normal, cvector *result)
 	result->y = a->z - normal->z * d;
 }
 
-MATHC_EXTERN_INLINE cvector vector3_slide(cvector a, cvector normal)
+MATHC_EXTERN_INLINE struct vec vector3_slide(struct vec a, struct vec normal)
 {
-	cvector result;
+	struct vec result;
 	pvector3_slide(&a, &normal, &result);
 	return result;
 }
 
-void pvector3_reflect(cvector *a, cvector *normal, cvector *result)
+void pvector3_reflect(struct vec *a, struct vec *normal, struct vec *result)
 {
 	float d = 2.0f * pvector3_dot(a, normal);
 	result->x = a->x - normal->x * d;
@@ -650,51 +650,51 @@ void pvector3_reflect(cvector *a, cvector *normal, cvector *result)
 	result->z = a->z - normal->z * d;
 }
 
-MATHC_EXTERN_INLINE cvector vector3_reflect(cvector a, cvector normal)
+MATHC_EXTERN_INLINE struct vec vector3_reflect(struct vec a, struct vec normal)
 {
-	cvector result;
+	struct vec result;
 	pvector3_reflect(&a, &normal, &result);
 	return result;
 }
 
-float pvector3_distance_to(cvector *a, cvector *b)
+float pvector3_distance_to(struct vec *a, struct vec *b)
 {
 	return sqrtf((a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y) + (a->z - b->z) * (a->z - b->z));
 }
 
-MATHC_EXTERN_INLINE float vector3_distance_to(cvector a, cvector b)
+MATHC_EXTERN_INLINE float vector3_distance_to(struct vec a, struct vec b)
 {
 	return pvector3_distance_to(&a, &b);
 }
 
-float pvector3_distance_squared_to(cvector *a, cvector *b)
+float pvector3_distance_squared_to(struct vec *a, struct vec *b)
 {
 	return (a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y) + (a->z - b->z) * (a->z - b->z);
 }
 
-MATHC_EXTERN_INLINE float vector3_distance_squared_to(cvector a, cvector b)
+MATHC_EXTERN_INLINE float vector3_distance_squared_to(struct vec a, struct vec b)
 {
 	return pvector3_distance_squared_to(&a, &b);
 }
 
-void pvector3_linear_interpolation(cvector *a, cvector *b, float p, cvector *result)
+void pvector3_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result)
 {
 	result->x = a->x + (b->x - a->x) * p;
 	result->y = a->y + (b->y - a->y) * p;
 	result->z = a->z + (b->z - a->z) * p;
 }
 
-MATHC_EXTERN_INLINE cvector vector3_linear_interpolation(cvector a, cvector b, float p)
+MATHC_EXTERN_INLINE struct vec vector3_linear_interpolation(struct vec a, struct vec b, float p)
 {
-	cvector result;
+	struct vec result;
 	pvector3_linear_interpolation(&a, &b, p, &result);
 	return result;
 }
 
 /* Quaternion */
-cvector to_quaternion(float x, float y, float z, float w)
+struct vec to_quaternion(float x, float y, float z, float w)
 {
-	cvector result;
+	struct vec result;
 	result.x = x;
 	result.y = y;
 	result.z = z;
@@ -702,7 +702,7 @@ cvector to_quaternion(float x, float y, float z, float w)
 	return result;
 }
 
-void pquaternion_add(cvector *a, cvector *b, cvector *result)
+void pquaternion_add(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x + b->x;
 	result->y = a->y + b->y;
@@ -710,14 +710,14 @@ void pquaternion_add(cvector *a, cvector *b, cvector *result)
 	result->w = a->w + b->w;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_add(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec quaternion_add(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_add(&a, &b, &result);
 	return result;
 }
 
-void pquaternion_subtract(cvector *a, cvector *b, cvector *result)
+void pquaternion_subtract(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x - b->x;
 	result->y = a->y - b->y;
@@ -725,14 +725,14 @@ void pquaternion_subtract(cvector *a, cvector *b, cvector *result)
 	result->y = a->w - b->w;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_subtract(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec quaternion_subtract(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_subtract(&a, &b, &result);
 	return result;
 }
 
-void pquaternion_scale(cvector *a, float scale, cvector *result)
+void pquaternion_scale(struct vec *a, float scale, struct vec *result)
 {
 	result->x = a->x * scale;
 	result->y = a->y * scale;
@@ -740,14 +740,14 @@ void pquaternion_scale(cvector *a, float scale, cvector *result)
 	result->w = a->w * scale;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_scale(cvector a, float scale)
+MATHC_EXTERN_INLINE struct vec quaternion_scale(struct vec a, float scale)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_scale(&a, scale, &result);
 	return result;
 }
 
-void pquaternion_multiply(cvector *a, cvector *b, cvector *result)
+void pquaternion_multiply(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->w = a->w * b->w - a->x * b->x - a->y * b->y - a->z * b->z;
 	result->x = a->w * b->x + a->x * b->w + a->y * b->z - a->z * b->y;
@@ -755,14 +755,14 @@ void pquaternion_multiply(cvector *a, cvector *b, cvector *result)
 	result->z = a->w * b->z + a->z * b->w + a->x * b->y - a->y * b->x;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_multiply(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec quaternion_multiply(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_multiply(&a, &b, &result);
 	return result;
 }
 
-void pquaternion_divide(cvector *a, cvector *b, cvector *result)
+void pquaternion_divide(struct vec *a, struct vec *b, struct vec *result)
 {
 	float x = a->x;
 	float y = a->y;
@@ -784,14 +784,14 @@ void pquaternion_divide(cvector *a, cvector *b, cvector *result)
 	result->w = w * n6 - n10;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_divide(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec quaternion_divide(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_divide(&a, &b, &result);
 	return result;
 }
 
-void pquaternion_negative(cvector *a, cvector *result)
+void pquaternion_negative(struct vec *a, struct vec *result)
 {
 	result->x = -a->x;
 	result->y = -a->y;
@@ -799,14 +799,14 @@ void pquaternion_negative(cvector *a, cvector *result)
 	result->w = -a->w;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_negative(cvector a)
+MATHC_EXTERN_INLINE struct vec quaternion_negative(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_negative(&a, &result);
 	return result;
 }
 
-void pquaternion_abs(cvector *a, cvector *result)
+void pquaternion_abs(struct vec *a, struct vec *result)
 {
 	result->x = fabsf(a->x);
 	result->y = fabsf(a->y);
@@ -814,14 +814,14 @@ void pquaternion_abs(cvector *a, cvector *result)
 	result->w = fabsf(a->w);
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_abs(cvector a)
+MATHC_EXTERN_INLINE struct vec quaternion_abs(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_abs(&a, &result);
 	return result;
 }
 
-void pquaternion_floor(cvector *a, cvector *result)
+void pquaternion_floor(struct vec *a, struct vec *result)
 {
 	result->x = floorf(a->x);
 	result->y = floorf(a->y);
@@ -829,14 +829,14 @@ void pquaternion_floor(cvector *a, cvector *result)
 	result->w = floorf(a->w);
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_floor(cvector a)
+MATHC_EXTERN_INLINE struct vec quaternion_floor(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_floor(&a, &result);
 	return result;
 }
 
-void pquaternion_ceil(cvector *a, cvector *result)
+void pquaternion_ceil(struct vec *a, struct vec *result)
 {
 	result->x = ceilf(a->x);
 	result->y = ceilf(a->y);
@@ -844,14 +844,14 @@ void pquaternion_ceil(cvector *a, cvector *result)
 	result->w = ceilf(a->w);
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_ceil(cvector a)
+MATHC_EXTERN_INLINE struct vec quaternion_ceil(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_ceil(&a, &result);
 	return result;
 }
 
-void pquaternion_round(cvector *a, cvector *result)
+void pquaternion_round(struct vec *a, struct vec *result)
 {
 	result->x = roundf(a->x);
 	result->y = roundf(a->y);
@@ -859,14 +859,14 @@ void pquaternion_round(cvector *a, cvector *result)
 	result->w = roundf(a->w);
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_round(cvector a)
+MATHC_EXTERN_INLINE struct vec quaternion_round(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_round(&a, &result);
 	return result;
 }
 
-void pquaternion_max(cvector *a, cvector *b, cvector *result)
+void pquaternion_max(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = fmaxf(a->x, b->x);
 	result->y = fmaxf(a->y, b->y);
@@ -874,14 +874,14 @@ void pquaternion_max(cvector *a, cvector *b, cvector *result)
 	result->w = fmaxf(a->w, b->w);
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_max(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec quaternion_max(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_max(&a, &b, &result);
 	return result;
 }
 
-void pquaternion_min(cvector *a, cvector *b, cvector *result)
+void pquaternion_min(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = fminf(a->x, b->x);
 	result->y = fminf(a->y, b->y);
@@ -889,35 +889,35 @@ void pquaternion_min(cvector *a, cvector *b, cvector *result)
 	result->w = fminf(a->w, b->w);
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_min(cvector a, cvector b)
+MATHC_EXTERN_INLINE struct vec quaternion_min(struct vec a, struct vec b)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_min(&a, &b, &result);
 	return result;
 }
 
-float pquaternion_dot(cvector *a, cvector *b)
+float pquaternion_dot(struct vec *a, struct vec *b)
 {
 	return a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w;
 }
 
-MATHC_EXTERN_INLINE float quaternion_dot(cvector a, cvector b)
+MATHC_EXTERN_INLINE float quaternion_dot(struct vec a, struct vec b)
 {
 	return pquaternion_dot(&a, &b);
 }
 
-float pquaternion_angle(cvector *a, cvector *b)
+float pquaternion_angle(struct vec *a, struct vec *b)
 {
 	float s = sqrtf(pquaternion_length_squared(a) * pquaternion_length_squared(b));
 	return acosf(pquaternion_dot(a, b) / s);
 }
 
-MATHC_EXTERN_INLINE float quaternion_angle(cvector a, cvector b)
+MATHC_EXTERN_INLINE float quaternion_angle(struct vec a, struct vec b)
 {
 	return pquaternion_angle(&a, &b);
 }
 
-void pquaternion_inverse(cvector *a, cvector *result)
+void pquaternion_inverse(struct vec *a, struct vec *result)
 {
 	float n1 = a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w;
 	float n2 = 1.0f / n1;
@@ -927,34 +927,34 @@ void pquaternion_inverse(cvector *a, cvector *result)
 	result->w = a->w * n2;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_inverse(cvector a)
+MATHC_EXTERN_INLINE struct vec quaternion_inverse(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_inverse(&a, &result);
 	return result;
 }
 
-float pquaternion_length_squared(cvector *a)
+float pquaternion_length_squared(struct vec *a)
 {
 	return a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w;
 }
 
-MATHC_EXTERN_INLINE float quaternion_length_squared(cvector a)
+MATHC_EXTERN_INLINE float quaternion_length_squared(struct vec a)
 {
 	return pquaternion_length_squared(&a);
 }
 
-float pquaternion_length(cvector *a)
+float pquaternion_length(struct vec *a)
 {
 	return sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
 }
 
-MATHC_EXTERN_INLINE float quaternion_length(cvector a)
+MATHC_EXTERN_INLINE float quaternion_length(struct vec a)
 {
 	return pquaternion_length(&a);
 }
 
-void pquaternion_normalize(cvector *a, cvector *result)
+void pquaternion_normalize(struct vec *a, struct vec *result)
 {
 	float n = 1.0f / pquaternion_length(a);
 	result->x = a->x * n;
@@ -963,14 +963,14 @@ void pquaternion_normalize(cvector *a, cvector *result)
 	result->w = a->w * n;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_normalize(cvector a)
+MATHC_EXTERN_INLINE struct vec quaternion_normalize(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_normalize(&a, &result);
 	return result;
 }
 
-void pquaternion_conjugate(cvector *a, cvector *result)
+void pquaternion_conjugate(struct vec *a, struct vec *result)
 {
 	result->x = -a->x;
 	result->y = -a->y;
@@ -978,14 +978,14 @@ void pquaternion_conjugate(cvector *a, cvector *result)
 	result->w = a->w;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_conjugate(cvector a)
+MATHC_EXTERN_INLINE struct vec quaternion_conjugate(struct vec a)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_conjugate(&a, &result);
 	return result;
 }
 
-void pquaternion_power(cvector *a, float exponent, cvector *result)
+void pquaternion_power(struct vec *a, float exponent, struct vec *result)
 {
 	if (fabsf(a->w) < 0.9999f) {
 		float alpha = acosf(a->w);
@@ -1003,14 +1003,14 @@ void pquaternion_power(cvector *a, float exponent, cvector *result)
 	}
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_power(cvector a, float exponent)
+MATHC_EXTERN_INLINE struct vec quaternion_power(struct vec a, float exponent)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_power(&a, exponent, &result);
 	return result;
 }
 
-void pquaternion_axis_angle(cvector *a, float angle, cvector *result)
+void pquaternion_axis_angle(struct vec *a, float angle, struct vec *result)
 {
 	float half = angle * 0.5f;
 	float s = sinf(half);
@@ -1021,14 +1021,14 @@ void pquaternion_axis_angle(cvector *a, float angle, cvector *result)
 	result->w = c;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_axis_angle(cvector a, float angle)
+MATHC_EXTERN_INLINE struct vec quaternion_axis_angle(struct vec a, float angle)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_axis_angle(&a, angle, &result);
 	return result;
 }
 
-void pquaternion_rotation_matrix(cmatrix *m, cvector *result)
+void pquaternion_rotation_matrix(struct mat *m, struct vec *result)
 {
 	float sr;
 	float half;
@@ -1064,14 +1064,14 @@ void pquaternion_rotation_matrix(cmatrix *m, cvector *result)
 	}
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_rotation_matrix(cmatrix m)
+MATHC_EXTERN_INLINE struct vec quaternion_rotation_matrix(struct mat m)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_rotation_matrix(&m, &result);
 	return result;
 }
 
-void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, cvector *result)
+void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, struct vec *result)
 {
 	float half_roll = roll * 0.5f;
 	float half_pitch = pitch * 0.5f;
@@ -1088,14 +1088,14 @@ void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, cvector *res
 	result->w = (cos_yaw * cos_pitch * cos_roll) + (sin_yaw * sin_pitch * sin_roll);
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_yaw_pitch_roll(float yaw, float pitch, float roll)
+MATHC_EXTERN_INLINE struct vec quaternion_yaw_pitch_roll(float yaw, float pitch, float roll)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_yaw_pitch_roll(yaw, pitch, roll, &result);
 	return result;
 }
 
-void pquaternion_linear_interpolation(cvector *a, cvector *b, float p, cvector *result)
+void pquaternion_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result)
 {
 	result->x = a->x + (b->x - a->x) * p;
 	result->y = a->y + (b->y - a->y) * p;
@@ -1103,17 +1103,17 @@ void pquaternion_linear_interpolation(cvector *a, cvector *b, float p, cvector *
 	result->w = a->w + (b->w - a->w) * p;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_linear_interpolation(cvector a, cvector b, float p)
+MATHC_EXTERN_INLINE struct vec quaternion_linear_interpolation(struct vec a, struct vec b, float p)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_linear_interpolation(&a, &b, p, &result);
 	return result;
 }
 
-void pquaternion_spherical_linear_interpolation(cvector *a, cvector *b, float p, cvector *result)
+void pquaternion_spherical_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result)
 {
-	cvector tmp_a = *a;
-	cvector tmp_b = *b;
+	struct vec tmp_a = *a;
+	struct vec tmp_b = *b;
 	float cos_theta = pquaternion_dot(a, b);
 	float k0;
 	float k1;
@@ -1139,15 +1139,15 @@ void pquaternion_spherical_linear_interpolation(cvector *a, cvector *b, float p,
 	result->w = tmp_a.w * k0 + tmp_b.w * k1;
 }
 
-MATHC_EXTERN_INLINE cvector quaternion_spherical_linear_interpolation(cvector a, cvector b, float p)
+MATHC_EXTERN_INLINE struct vec quaternion_spherical_linear_interpolation(struct vec a, struct vec b, float p)
 {
-	cvector result;
+	struct vec result;
 	pquaternion_spherical_linear_interpolation(&a, &b, p, &result);
 	return result;
 }
 
 /* Matrix */
-void pmatrix_identity(cmatrix *result)
+void pmatrix_identity(struct mat *result)
 {
 	result->m11 = 1.0f;
 	result->m12 = 0.0f;
@@ -1167,14 +1167,14 @@ void pmatrix_identity(cmatrix *result)
 	result->m44 = 1.0f;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_identity(void)
+MATHC_EXTERN_INLINE struct mat matrix_identity(void)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_identity(&result);
 	return result;
 }
 
-void pmatrix_ortho(float l, float r, float b, float t, float n, float f, cmatrix *result)
+void pmatrix_ortho(float l, float r, float b, float t, float n, float f, struct mat *result)
 {
 	pmatrix_identity(result);
 	result->m11 = 2.0f / (r - l);
@@ -1185,14 +1185,14 @@ void pmatrix_ortho(float l, float r, float b, float t, float n, float f, cmatrix
 	result->m43 = n / (n - f);
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_ortho(float l, float r, float b, float t, float n, float f)
+MATHC_EXTERN_INLINE struct mat matrix_ortho(float l, float r, float b, float t, float n, float f)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_ortho(l, r, b, t, n, f, &result);
 	return result;
 }
 
-void pmatrix_perspective(float y_fov, float aspect, float n, float f, cmatrix *result)
+void pmatrix_perspective(float y_fov, float aspect, float n, float f, struct mat *result)
 {
 	pmatrix_identity(result);
 	/* Right-handed */
@@ -1204,14 +1204,14 @@ void pmatrix_perspective(float y_fov, float aspect, float n, float f, cmatrix *r
 	result->m43 = (n * f) / (n - f);
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_perspective(float y_fov, float aspect, float n, float f)
+MATHC_EXTERN_INLINE struct mat matrix_perspective(float y_fov, float aspect, float n, float f)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_perspective(y_fov, aspect, n, f, &result);
 	return result;
 }
 
-void pmatrix_rotation_x(float angle, cmatrix *result)
+void pmatrix_rotation_x(float angle, struct mat *result)
 {
 	pmatrix_identity(result);
 	float c = cosf(angle);
@@ -1222,14 +1222,14 @@ void pmatrix_rotation_x(float angle, cmatrix *result)
 	result->m33 = c;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_rotation_x(float angle)
+MATHC_EXTERN_INLINE struct mat matrix_rotation_x(float angle)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_rotation_x(angle, &result);
 	return result;
 }
 
-void pmatrix_rotation_y(float angle, cmatrix *result)
+void pmatrix_rotation_y(float angle, struct mat *result)
 {
 	pmatrix_identity(result);
 	float c = cosf(angle);
@@ -1240,14 +1240,14 @@ void pmatrix_rotation_y(float angle, cmatrix *result)
 	result->m33 = c;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_rotation_y(float angle)
+MATHC_EXTERN_INLINE struct mat matrix_rotation_y(float angle)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_rotation_y(angle, &result);
 	return result;
 }
 
-void pmatrix_rotation_z(float angle, cmatrix *result)
+void pmatrix_rotation_z(float angle, struct mat *result)
 {
 	pmatrix_identity(result);
 	float c = cosf(angle);
@@ -1258,14 +1258,14 @@ void pmatrix_rotation_z(float angle, cmatrix *result)
 	result->m22 = c;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_rotation_z(float angle)
+MATHC_EXTERN_INLINE struct mat matrix_rotation_z(float angle)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_rotation_z(angle, &result);
 	return result;
 }
 
-void pmatrix_rotation_axis(cvector *a, float angle, cmatrix *result)
+void pmatrix_rotation_axis(struct vec *a, float angle, struct mat *result)
 {
 	pmatrix_identity(result);
 	float c = cosf(angle);
@@ -1287,14 +1287,14 @@ void pmatrix_rotation_axis(cvector *a, float angle, cmatrix *result)
 	result->m33 = n3 + (c * (1.0f - n3));
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_rotation_axis(cvector a, float angle)
+MATHC_EXTERN_INLINE struct mat matrix_rotation_axis(struct vec a, float angle)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_rotation_axis(&a, angle, &result);
 	return result;
 }
 
-void pmatrix_rotation_quaternion(cvector *q, cmatrix *result)
+void pmatrix_rotation_quaternion(struct vec *q, struct mat *result)
 {
 	pmatrix_identity(result);
 	float n9 = q->x * q->x;
@@ -1317,18 +1317,18 @@ void pmatrix_rotation_quaternion(cvector *q, cmatrix *result)
 	result->m33 = 1.0f - 2.0f * (n8 + n9);
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_rotation_quaternion(cvector q)
+MATHC_EXTERN_INLINE struct mat matrix_rotation_quaternion(struct vec q)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_rotation_quaternion(&q, &result);
 	return result;
 }
 
-void pmatrix_look_at(cvector *pos, cvector *target, cvector *up, cmatrix *result)
+void pmatrix_look_at(struct vec *pos, struct vec *target, struct vec *up, struct mat *result)
 {
-	cvector v1;
-	cvector v2;
-	cvector v3;
+	struct vec v1;
+	struct vec v2;
+	struct vec v3;
 	pmatrix_identity(result);
 	pvector3_subtract(pos, target, &v1);
 	pvector3_normalize(&v1, &v1);
@@ -1349,14 +1349,14 @@ void pmatrix_look_at(cvector *pos, cvector *target, cvector *up, cmatrix *result
 	result->m43 = -pvector3_dot(&v1, pos);
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_look_at(cvector pos, cvector target, cvector up)
+MATHC_EXTERN_INLINE struct mat matrix_look_at(struct vec pos, struct vec target, struct vec up)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_look_at(&pos, &target, &up, &result);
 	return result;
 }
 
-void pmatrix_scale(cvector *v, cmatrix *result)
+void pmatrix_scale(struct vec *v, struct mat *result)
 {
 	pmatrix_identity(result);
 	result->m11 = v->x;
@@ -1364,28 +1364,28 @@ void pmatrix_scale(cvector *v, cmatrix *result)
 	result->m33 = v->z;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_scale(cvector v)
+MATHC_EXTERN_INLINE struct mat matrix_scale(struct vec v)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_scale(&v, &result);
 	return result;
 }
 
-void pmatrix_get_scale(cmatrix *m, cvector *result)
+void pmatrix_get_scale(struct mat *m, struct vec *result)
 {
 	result->x = m->m11;
 	result->y = m->m22;
 	result->z = m->m33;
 }
 
-MATHC_EXTERN_INLINE cvector matrix_get_scale(cmatrix m)
+MATHC_EXTERN_INLINE struct vec matrix_get_scale(struct mat m)
 {
-	cvector result;
+	struct vec result;
 	pmatrix_get_scale(&m, &result);
 	return result;
 }
 
-void pmatrix_translation(cvector *v, cmatrix *result)
+void pmatrix_translation(struct vec *v, struct mat *result)
 {
 	pmatrix_identity(result);
 	result->m14 = v->x;
@@ -1393,28 +1393,28 @@ void pmatrix_translation(cvector *v, cmatrix *result)
 	result->m34 = v->z;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_translation(cvector v)
+MATHC_EXTERN_INLINE struct mat matrix_translation(struct vec v)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_translation(&v, &result);
 	return result;
 }
 
-void pmatrix_get_translation(cmatrix *m, cvector *result)
+void pmatrix_get_translation(struct mat *m, struct vec *result)
 {
 	result->x = m->m14;
 	result->y = m->m24;
 	result->z = m->m34;
 }
 
-MATHC_EXTERN_INLINE cvector matrix_get_translation(cmatrix m)
+MATHC_EXTERN_INLINE struct vec matrix_get_translation(struct mat m)
 {
-	cvector result;
+	struct vec result;
 	pmatrix_get_translation(&m, &result);
 	return result;
 }
 
-void pmatrix_negative(cmatrix *m, cmatrix *result)
+void pmatrix_negative(struct mat *m, struct mat *result)
 {
 	result->m11 = -m->m11;
 	result->m12 = -m->m12;
@@ -1434,14 +1434,14 @@ void pmatrix_negative(cmatrix *m, cmatrix *result)
 	result->m44 = -m->m44;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_negative(cmatrix m)
+MATHC_EXTERN_INLINE struct mat matrix_negative(struct mat m)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_negative(&m, &result);
 	return result;
 }
 
-void pmatrix_multiply(cmatrix *m, float s, cmatrix *result)
+void pmatrix_multiply(struct mat *m, float s, struct mat *result)
 {
 	result->m11 = m->m11 * s;
 	result->m12 = m->m12 * s;
@@ -1461,14 +1461,14 @@ void pmatrix_multiply(cmatrix *m, float s, cmatrix *result)
 	result->m44 = m->m44 * s;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_multiply(cmatrix m, float s)
+MATHC_EXTERN_INLINE struct mat matrix_multiply(struct mat m, float s)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_multiply(&m, s, &result);
 	return result;
 }
 
-void pmatrix_multiply_matrix(cmatrix *a, cmatrix *b, cmatrix *result)
+void pmatrix_multiply_matrix(struct mat *a, struct mat *b, struct mat *result)
 {
 	result->m11 = a->m11 * b->m11 + a->m12 * b->m21 + a->m13 * b->m31 + a->m14 * b->m41;
 	result->m12 = a->m11 * b->m12 + a->m12 * b->m22 + a->m13 * b->m32 + a->m14 * b->m42;
@@ -1488,14 +1488,14 @@ void pmatrix_multiply_matrix(cmatrix *a, cmatrix *b, cmatrix *result)
 	result->m44 = a->m41 * b->m14 + a->m42 * b->m24 + a->m43 * b->m34 + a->m44 * b->m44;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_multiply_matrix(cmatrix a, cmatrix b)
+MATHC_EXTERN_INLINE struct mat matrix_multiply_matrix(struct mat a, struct mat b)
 {
-	cmatrix result;
+	struct mat result;
 	pmatrix_multiply_matrix(&a, &b, &result);
 	return result;
 }
 
-void pmatrix_multiply_f4(cmatrix *m, float *result)
+void pmatrix_multiply_f4(struct mat *m, float *result)
 {
 	float v0 = result[0];
 	float v1 = result[1];
@@ -1507,12 +1507,12 @@ void pmatrix_multiply_f4(cmatrix *m, float *result)
 	result[3] = (m->m41 * v0) + (m->m42 * v1) + (m->m43 * v2) + (m->m44 * v3);
 }
 
-MATHC_EXTERN_INLINE void matrix_multiply_f4(cmatrix m, float *result)
+MATHC_EXTERN_INLINE void matrix_multiply_f4(struct mat m, float *result)
 {
 	pmatrix_multiply_f4(&m, result);
 }
 
-void pmatrix_to_array(cmatrix *m, float *result)
+void pmatrix_to_array(struct mat *m, float *result)
 {
 	result[0] = m->m11;
 	result[1] = m->m12;
@@ -1532,7 +1532,7 @@ void pmatrix_to_array(cmatrix *m, float *result)
 	result[15] = m->m44;
 }
 
-MATHC_EXTERN_INLINE void matrix_to_array(cmatrix m, float *result)
+MATHC_EXTERN_INLINE void matrix_to_array(struct mat m, float *result)
 {
 	pmatrix_to_array(&m, result);
 }

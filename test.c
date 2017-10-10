@@ -106,9 +106,9 @@ void printf_4f_test(struct cerror *error, char *msg, float e1, float e2, float e
 
 void vector2_tests(struct cerror *error)
 {
-	cvector a;
-	cvector b;
-	cvector r;
+	struct vec a;
+	struct vec b;
+	struct vec r;
 	float p;
 	printf("\n# Making tests with 2D vectors...\n");
 	a = to_vector2(1.11f, 2.5f);
@@ -225,9 +225,9 @@ void vector2_tests(struct cerror *error)
 
 void vector3_tests(struct cerror *error)
 {
-	cvector a;
-	cvector b;
-	cvector r;
+	struct vec a;
+	struct vec b;
+	struct vec r;
 	float p;
 	printf("\n# Making tests with 3D vectors...\n");
 	a = to_vector3(1.11f, 2.5f, 0.0003f);
@@ -310,9 +310,9 @@ void vector3_tests(struct cerror *error)
 
 void quaternion_tests(struct cerror *error)
 {
-	cvector a;
-	cvector b;
-	cvector r;
+	struct vec a;
+	struct vec b;
+	struct vec r;
 	float p;
 	printf("\n# Making tests with quaternions...\n");
 	a = to_quaternion(1.0f, 1.0f, 1.0f, 1.0f);
@@ -323,9 +323,9 @@ void quaternion_tests(struct cerror *error)
 
 void matrix_tests(struct cerror *error)
 {
-	cmatrix a;
-	cmatrix b;
-	cmatrix r;
+	struct mat a;
+	struct mat b;
+	struct mat r;
 	float p;
 	printf("\n# Making tests with matrices...\n");
 	a = matrix_identity();

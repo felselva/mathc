@@ -18,25 +18,25 @@ Every structure and function uses `float`, because it is the most used type on 2
 
 # Vector Structure
 
-All vectors (2D, 3D and quaternions ) use the same structure type `cvector`.
+All vectors (2D, 3D and quaternions ) use the same structure type `struct vec`.
 
 Examples:
 
 ```c
 /* Rotate a 2D vector 90º */
-cvector direction = to_vector2(0.0f, -1.0f);
+struct vec direction = to_vector2(0.0f, -1.0f);
 direction = vector2_rotate(90.0f * M_PIF / 180.0f);
 
 /* Get the angle (radians) of a 2D vector */
 float angle = vector2_angle(direction);
 
 /* Create a 3D vector */
-cvector position = to_vector3(0.0f, 0.0f, 0.0f);
+struct vec position = to_vector3(0.0f, 0.0f, 0.0f);
 
 /* Create a quaternion */
-cvector quaternion = to_quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+struct vec quaternion = to_quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 /* Spherical interpolation between two quaternions */
-cvector interpolated = quaternion_spherical_linear_interpolation(a, b, 0.5f);
+struct vec interpolated = quaternion_spherical_linear_interpolation(a, b, 0.5f);
 ```
 
 # Passing Arguments as Value or Pointer
@@ -49,19 +49,19 @@ Examples:
 
 ```c
 /* Pass by value and return a value */
-cmatrix projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
-cmatrix view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
+struct mat projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
+struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
 	to_vector3(0.0f, 0.0f, 0.0f),
 	to_vector3(0.0f, 1.0f, 0.0f));
-cmatrix pv = matrix_multiply_matrix(projection, view);
+struct mat pv = matrix_multiply_matrix(projection, view);
 
 /* Pass by pointer */
-cmatrix projection;
-cmatrix view;
-cvector pos;
-cvector target;
-cvector up;
-cmatrix multiplied_matrix;
+struct mat projection;
+struct mat view;
+struct vec pos;
+struct vec target;
+struct vec up;
+struct mat multiplied_matrix;
 
 pmatrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f, &projection);
 pmatrix_look_at(&pos, &target, &up, &view);
