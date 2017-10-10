@@ -6,7 +6,6 @@ MathC is a simple math library for 2D and 3D programming. It contains implementa
 
 - 2D vectors
 - 3D vectors
-- 4D vectors
 - Quaternions
 - Matrices
 - Easing functions
@@ -16,6 +15,29 @@ It support C99 standard or later.
 # Float
 
 Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
+
+# Vector Structure
+
+All vectors (2D, 3D and quaternions ) use the same structure type `cvector`.
+
+Examples:
+
+```c
+/* Rotate a 2D vector 90º */
+cvector direction = to_vector2(0.0f, -1.0f);
+direction = vector2_rotate(90.0f * M_PIF / 180.0f);
+
+/* Get the angle (radians) of a 2D vector */
+float angle = vector2_angle(direction);
+
+/* Create a 3D vector */
+cvector position = to_vector3(0.0f, 0.0f, 0.0f);
+
+/* Create a quaternion */
+cvector quaternion = to_quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+/* Spherical interpolation between two quaternions */
+cvector interpolated = quaternion_spherical_linear_interpolation(a, b, 0.5f);
+```
 
 # Passing Arguments as Value or Pointer
 
@@ -36,19 +58,15 @@ cmatrix pv = matrix_multiply_matrix(projection, view);
 /* Pass by pointer */
 cmatrix projection;
 cmatrix view;
-cvector3 pos;
-cvector3 target;
-cvector3 up;
+cvector pos;
+cvector target;
+cvector up;
 cmatrix multiplied_matrix;
 
 pmatrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f, &projection);
 pmatrix_look_at(&pos, &target, &up, &view);
 pmatrix_multiply_matrix(&projection, &view, &multiplied_matrix);
 ```
-
-# 4D vectors and Quaternions
-
-Their structures are the same, however they have different functions.
 
 # Matrices
 
@@ -64,7 +82,7 @@ Easing functions take a value that range from `0.0f` to `1.0f` and usually will 
 
 - Before sending any pull request, open an issue asking if the feature or fix is already being worked on.
 - If you find any error, you can open an issue.
-- You can request more useful functions in the issues regarding 2D vectors, 3D vectors, 4D vectors, quaternions and matrices. If you have already an implementation or know where to find, better.
+- You can request more useful functions in the issues regarding 2D vectors, 3D vectors, quaternions and matrices. If you have already an implementation or know where to find, better.
 - Everything here will stay licensed under ZLIB, which is a ***very*** permissive license.
 
 # LICENSE

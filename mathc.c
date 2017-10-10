@@ -67,211 +67,213 @@ int nearly_equal(float a, float b, float epsilon)
 }
 
 /* Vector 2D */
-cvector2 to_vector2(float x, float y)
+cvector to_vector2(float x, float y)
 {
-	cvector2 result;
+	cvector result;
 	result.x = x;
 	result.y = y;
+	result.z = 0.0f;
+	result.w = 1.0f;
 	return result;
 }
 
-void pvector2_add(cvector2 *a, cvector2 *b, cvector2 *result)
+void pvector2_add(cvector *a, cvector *b, cvector *result)
 {
 	result->x = a->x + b->x;
 	result->y = a->y + b->y;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_add(cvector2 a, cvector2 b)
+MATHC_EXTERN_INLINE cvector vector2_add(cvector a, cvector b)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_add(&a, &b, &result);
 	return result;
 }
 
-void pvector2_subtract(cvector2 *a, cvector2 *b, cvector2 *result)
+void pvector2_subtract(cvector *a, cvector *b, cvector *result)
 {
 	result->x = a->x - b->x;
 	result->y = a->y - b->y;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_subtract(cvector2 a, cvector2 b)
+MATHC_EXTERN_INLINE cvector vector2_subtract(cvector a, cvector b)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_subtract(&a, &b, &result);
 	return result;
 }
 
-void pvector2_scale(cvector2 *a, float scale, cvector2 *result)
+void pvector2_scale(cvector *a, float scale, cvector *result)
 {
 	result->x = a->x * scale;
 	result->y = a->y * scale;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_scale(cvector2 a, float scale)
+MATHC_EXTERN_INLINE cvector vector2_scale(cvector a, float scale)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_scale(&a, scale, &result);
 	return result;
 }
 
-void pvector2_multiply(cvector2 *a, cvector2 *b, cvector2 *result)
+void pvector2_multiply(cvector *a, cvector *b, cvector *result)
 {
 	result->x = a->x * b->x;
 	result->y = a->y * b->y;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_multiply(cvector2 a, cvector2 b)
+MATHC_EXTERN_INLINE cvector vector2_multiply(cvector a, cvector b)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_multiply(&a, &b, &result);
 	return result;
 }
 
-void pvector2_divide(cvector2 *a, cvector2 *b, cvector2 *result)
+void pvector2_divide(cvector *a, cvector *b, cvector *result)
 {
 	result->x = a->x / b->x;
 	result->y = a->y / b->y;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_divide(cvector2 a, cvector2 b)
+MATHC_EXTERN_INLINE cvector vector2_divide(cvector a, cvector b)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_divide(&a, &b, &result);
 	return result;
 }
 
-void pvector2_negative(cvector2 *a, cvector2 *result)
+void pvector2_negative(cvector *a, cvector *result)
 {
 	result->x = -a->x;
 	result->y = -a->y;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_negative(cvector2 a)
+MATHC_EXTERN_INLINE cvector vector2_negative(cvector a)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_negative(&a, &result);
 	return result;
 }
 
-void pvector2_abs(cvector2 *a, cvector2 *result)
+void pvector2_abs(cvector *a, cvector *result)
 {
 	result->x = fabsf(a->x);
 	result->y = fabsf(a->y);
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_abs(cvector2 a)
+MATHC_EXTERN_INLINE cvector vector2_abs(cvector a)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_abs(&a, &result);
 	return result;
 }
 
-void pvector2_floor(cvector2 *a, cvector2 *result)
+void pvector2_floor(cvector *a, cvector *result)
 {
 	result->x = floorf(a->x);
 	result->y = floorf(a->y);
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_floor(cvector2 a)
+MATHC_EXTERN_INLINE cvector vector2_floor(cvector a)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_floor(&a, &result);
 	return result;
 }
 
-void pvector2_ceil(cvector2 *a, cvector2 *result)
+void pvector2_ceil(cvector *a, cvector *result)
 {
 	result->x = ceilf(a->x);
 	result->y = ceilf(a->y);
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_ceil(cvector2 a)
+MATHC_EXTERN_INLINE cvector vector2_ceil(cvector a)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_ceil(&a, &result);
 	return result;
 }
 
-void pvector2_round(cvector2 *a, cvector2 *result)
+void pvector2_round(cvector *a, cvector *result)
 {
 	result->x = roundf(a->x);
 	result->y = roundf(a->y);
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_round(cvector2 a)
+MATHC_EXTERN_INLINE cvector vector2_round(cvector a)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_round(&a, &result);
 	return result;
 }
 
-void pvector2_max(cvector2 *a, cvector2 *b, cvector2 *result)
+void pvector2_max(cvector *a, cvector *b, cvector *result)
 {
 	result->x = fmaxf(a->x, b->x);
 	result->y = fmaxf(a->y, b->y);
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_max(cvector2 a, cvector2 b)
+MATHC_EXTERN_INLINE cvector vector2_max(cvector a, cvector b)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_max(&a, &b, &result);
 	return result;
 }
 
-void pvector2_min(cvector2 *a, cvector2 *b, cvector2 *result)
+void pvector2_min(cvector *a, cvector *b, cvector *result)
 {
 	result->x = fminf(a->x, b->x);
 	result->y = fminf(a->y, b->y);
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_min(cvector2 a, cvector2 b)
+MATHC_EXTERN_INLINE cvector vector2_min(cvector a, cvector b)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_min(&a, &b, &result);
 	return result;
 }
 
-float pvector2_dot(cvector2 *a, cvector2 *b)
+float pvector2_dot(cvector *a, cvector *b)
 {
 	return a->x * b->x + a->y * b->y;
 }
 
-MATHC_EXTERN_INLINE float vector2_dot(cvector2 a, cvector2 b)
+MATHC_EXTERN_INLINE float vector2_dot(cvector a, cvector b)
 {
 	return pvector2_dot(&a, &b);
 }
 
-float pvector2_angle(cvector2 *a)
+float pvector2_angle(cvector *a)
 {
 	return atan2f(a->y, a->x);
 }
 
-MATHC_EXTERN_INLINE float vector2_angle(cvector2 a)
+MATHC_EXTERN_INLINE float vector2_angle(cvector a)
 {
 	return pvector2_angle(&a);
 }
 
-float pvector2_length_squared(cvector2 *a)
+float pvector2_length_squared(cvector *a)
 {
 	return a->x * a->x + a->y * a->y;
 }
 
-MATHC_EXTERN_INLINE float vector2_length_squared(cvector2 a)
+MATHC_EXTERN_INLINE float vector2_length_squared(cvector a)
 {
 	return pvector2_length_squared(&a);
 }
 
-float pvector2_length(cvector2 *a)
+float pvector2_length(cvector *a)
 {
 	return sqrtf(a->x * a->x + a->y * a->y);
 }
 
-MATHC_EXTERN_INLINE float vector2_length(cvector2 a)
+MATHC_EXTERN_INLINE float vector2_length(cvector a)
 {
 	return pvector2_length(&a);
 }
 
-void pvector2_normalize(cvector2 *a, cvector2 *result)
+void pvector2_normalize(cvector *a, cvector *result)
 {
 	float length = a->x * a->x + a->y * a->y;
 	if (length != 0.0f) {
@@ -284,55 +286,55 @@ void pvector2_normalize(cvector2 *a, cvector2 *result)
 	}
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_normalize(cvector2 a)
+MATHC_EXTERN_INLINE cvector vector2_normalize(cvector a)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_normalize(&a, &result);
 	return result;
 }
 
-void pvector2_slide(cvector2 *a, cvector2 *normal, cvector2 *result)
+void pvector2_slide(cvector *a, cvector *normal, cvector *result)
 {
 	float d = pvector2_dot(a, normal);
 	result->x = a->x - normal->x * d;
 	result->y = a->y - normal->y * d;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_slide(cvector2 a, cvector2 normal)
+MATHC_EXTERN_INLINE cvector vector2_slide(cvector a, cvector normal)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_slide(&a, &normal, &result);
 	return result;
 }
 
-void pvector2_reflect(cvector2 *a, cvector2 *normal, cvector2 *result)
+void pvector2_reflect(cvector *a, cvector *normal, cvector *result)
 {
 	float d = 2.0f * pvector2_dot(a, normal);
 	result->x = a->x - normal->x * d;
 	result->y = a->y - normal->y * d;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_reflect(cvector2 a, cvector2 normal)
+MATHC_EXTERN_INLINE cvector vector2_reflect(cvector a, cvector normal)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_reflect(&a, &normal, &result);
 	return result;
 }
 
-void pvector2_tangent(cvector2 *a, cvector2 *result)
+void pvector2_tangent(cvector *a, cvector *result)
 {
 	result->x = a->y;
 	result->y = -a->x;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_tangent(cvector2 a)
+MATHC_EXTERN_INLINE cvector vector2_tangent(cvector a)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_tangent(&a, &result);
 	return result;
 }
 
-void pvector2_rotate(cvector2 *a, float angle, cvector2 *result)
+void pvector2_rotate(cvector *a, float angle, cvector *result)
 {
 	float cs = cosf(angle);
 	float sn = sinf(angle);
@@ -340,269 +342,270 @@ void pvector2_rotate(cvector2 *a, float angle, cvector2 *result)
 	result->y = a->x * sn + a->y * cs;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_rotate(cvector2 a, float angle)
+MATHC_EXTERN_INLINE cvector vector2_rotate(cvector a, float angle)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_rotate(&a, angle, &result);
 	return result;
 }
 
-float pvector2_distance_to(cvector2 *a, cvector2 *b)
+float pvector2_distance_to(cvector *a, cvector *b)
 {
 	return sqrtf((a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y));
 }
 
-MATHC_EXTERN_INLINE float vector2_distance_to(cvector2 a, cvector2 b)
+MATHC_EXTERN_INLINE float vector2_distance_to(cvector a, cvector b)
 {
 	return pvector2_distance_to(&a, &b);
 }
 
-float pvector2_distance_squared_to(cvector2 *a, cvector2 *b)
+float pvector2_distance_squared_to(cvector *a, cvector *b)
 {
 	return (a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y);
 }
 
-MATHC_EXTERN_INLINE float vector2_distance_squared_to(cvector2 a, cvector2 b)
+MATHC_EXTERN_INLINE float vector2_distance_squared_to(cvector a, cvector b)
 {
 	return pvector2_distance_squared_to(&a, &b);
 }
 
-void pvector2_linear_interpolation(cvector2 *a, cvector2 *b, float p, cvector2 *result)
+void pvector2_linear_interpolation(cvector *a, cvector *b, float p, cvector *result)
 {
 	result->x = a->x + (b->x - a->x) * p;
 	result->y = a->y + (b->y - a->y) * p;
 }
 
-MATHC_EXTERN_INLINE cvector2 vector2_linear_interpolation(cvector2 a, cvector2 b, float p)
+MATHC_EXTERN_INLINE cvector vector2_linear_interpolation(cvector a, cvector b, float p)
 {
-	cvector2 result;
+	cvector result;
 	pvector2_linear_interpolation(&a, &b, p, &result);
 	return result;
 }
 
 /* Vector 3D */
-cvector3 to_vector3(float x, float y, float z)
+cvector to_vector3(float x, float y, float z)
 {
-	cvector3 result;
+	cvector result;
 	result.x = x;
 	result.y = y;
 	result.z = z;
+	result.w = 1.0f;
 	return result;
 }
 
-void pvector3_add(cvector3 *a, cvector3 *b, cvector3 *result)
+void pvector3_add(cvector *a, cvector *b, cvector *result)
 {
 	result->x = a->x + b->x;
 	result->y = a->y + b->y;
 	result->z = a->z + b->z;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_add(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE cvector vector3_add(cvector a, cvector b)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_add(&a, &b, &result);
 	return result;
 }
 
-void pvector3_subtract(cvector3 *a, cvector3 *b, cvector3 *result)
+void pvector3_subtract(cvector *a, cvector *b, cvector *result)
 {
 	result->x = a->x - b->x;
 	result->y = a->y - b->y;
 	result->z = a->z - b->z;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_subtract(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE cvector vector3_subtract(cvector a, cvector b)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_subtract(&a, &b, &result);
 	return result;
 }
 
-void pvector3_scale(cvector3 *a, float scale, cvector3 *result)
+void pvector3_scale(cvector *a, float scale, cvector *result)
 {
 	result->x = a->x * scale;
 	result->y = a->y * scale;
 	result->z = a->z * scale;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_scale(cvector3 a, float scale)
+MATHC_EXTERN_INLINE cvector vector3_scale(cvector a, float scale)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_scale(&a, scale, &result);
 	return result;
 }
 
-void pvector3_multiply(cvector3 *a, cvector3 *b, cvector3 *result)
+void pvector3_multiply(cvector *a, cvector *b, cvector *result)
 {
 	result->x = a->x * b->x;
 	result->y = a->y * b->y;
 	result->z = a->z * b->z;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_multiply(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE cvector vector3_multiply(cvector a, cvector b)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_multiply(&a, &b, &result);
 	return result;
 }
 
-void pvector3_divide(cvector3 *a, cvector3 *b, cvector3 *result)
+void pvector3_divide(cvector *a, cvector *b, cvector *result)
 {
-	result->x = a->x * b->x;
-	result->y = a->y * b->y;
-	result->z = a->z * b->z;
+	result->x = a->x / b->x;
+	result->y = a->y / b->y;
+	result->z = a->z / b->z;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_divide(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE cvector vector3_divide(cvector a, cvector b)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_divide(&a, &b, &result);
 	return result;
 }
 
-void pvector3_negative(cvector3 *a, cvector3 *result)
+void pvector3_negative(cvector *a, cvector *result)
 {
 	result->x = -a->x;
 	result->y = -a->y;
 	result->z = -a->z;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_negative(cvector3 a)
+MATHC_EXTERN_INLINE cvector vector3_negative(cvector a)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_negative(&a, &result);
 	return result;
 }
 
-void pvector3_abs(cvector3 *a, cvector3 *result)
+void pvector3_abs(cvector *a, cvector *result)
 {
 	result->x = fabsf(a->x);
 	result->y = fabsf(a->y);
 	result->z = fabsf(a->z);
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_abs(cvector3 a)
+MATHC_EXTERN_INLINE cvector vector3_abs(cvector a)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_abs(&a, &result);
 	return result;
 }
 
-void pvector3_floor(cvector3 *a, cvector3 *result)
+void pvector3_floor(cvector *a, cvector *result)
 {
 	result->x = floorf(a->x);
 	result->y = floorf(a->y);
 	result->z = floorf(a->z);
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_floor(cvector3 a)
+MATHC_EXTERN_INLINE cvector vector3_floor(cvector a)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_floor(&a, &result);
 	return result;
 }
 
-void pvector3_ceil(cvector3 *a, cvector3 *result)
+void pvector3_ceil(cvector *a, cvector *result)
 {
 	result->x = ceilf(a->x);
 	result->y = ceilf(a->y);
 	result->z = ceilf(a->z);
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_ceil(cvector3 a)
+MATHC_EXTERN_INLINE cvector vector3_ceil(cvector a)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_ceil(&a, &result);
 	return result;
 }
 
-void pvector3_round(cvector3 *a, cvector3 *result)
+void pvector3_round(cvector *a, cvector *result)
 {
 	result->x = roundf(a->x);
 	result->y = roundf(a->y);
 	result->z = roundf(a->z);
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_round(cvector3 a)
+MATHC_EXTERN_INLINE cvector vector3_round(cvector a)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_round(&a, &result);
 	return result;
 }
 
-void pvector3_max(cvector3 *a, cvector3 *b, cvector3 *result)
+void pvector3_max(cvector *a, cvector *b, cvector *result)
 {
 	result->x = fmaxf(a->x, b->x);
 	result->y = fmaxf(a->y, b->y);
 	result->z = fmaxf(a->z, b->z);
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_max(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE cvector vector3_max(cvector a, cvector b)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_max(&a, &b, &result);
 	return result;
 }
 
-void pvector3_min(cvector3 *a, cvector3 *b, cvector3 *result)
+void pvector3_min(cvector *a, cvector *b, cvector *result)
 {
 	result->x = fminf(a->x, b->x);
 	result->y = fminf(a->y, b->y);
 	result->z = fminf(a->z, b->z);
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_min(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE cvector vector3_min(cvector a, cvector b)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_min(&a, &b, &result);
 	return result;
 }
 
-float pvector3_dot(cvector3 *a, cvector3 *b)
+float pvector3_dot(cvector *a, cvector *b)
 {
 	return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
-MATHC_EXTERN_INLINE float vector3_dot(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE float vector3_dot(cvector a, cvector b)
 {
 	return pvector3_dot(&a, &b);
 }
 
-void pvector3_cross(cvector3 *a, cvector3 *b, cvector3 *result)
+void pvector3_cross(cvector *a, cvector *b, cvector *result)
 {
 	result->x = a->y * b->z - a->z * b->y;
 	result->y = a->z * b->x - a->x * b->z;
 	result->z = a->x * b->y - a->y * b->x;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_cross(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE cvector vector3_cross(cvector a, cvector b)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_cross(&a, &b, &result);
 	return result;
 }
 
-float pvector3_length_squared(cvector3 *a)
+float pvector3_length_squared(cvector *a)
 {
 	return a->x * a->x + a->y * a->y + a->z * a->z;
 }
 
-MATHC_EXTERN_INLINE float vector3_length_squared(cvector3 a)
+MATHC_EXTERN_INLINE float vector3_length_squared(cvector a)
 {
 	return pvector3_length_squared(&a);
 }
 
-float pvector3_length(cvector3 *a)
+float pvector3_length(cvector *a)
 {
 	return sqrtf(a->x * a->x + a->y * a->y + a->z * a->z);
 }
 
-MATHC_EXTERN_INLINE float vector3_length(cvector3 a)
+MATHC_EXTERN_INLINE float vector3_length(cvector a)
 {
 	return pvector3_length(&a);
 }
 
-void pvector3_normalize(cvector3 *a, cvector3 *result)
+void pvector3_normalize(cvector *a, cvector *result)
 {
 	float length = a->x * a->x + a->y * a->y + a->z * a->z;
 	if (length != 0.0f) {
@@ -617,14 +620,14 @@ void pvector3_normalize(cvector3 *a, cvector3 *result)
 	}
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_normalize(cvector3 a)
+MATHC_EXTERN_INLINE cvector vector3_normalize(cvector a)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_normalize(&a, &result);
 	return result;
 }
 
-void pvector3_slide(cvector3 *a, cvector3 *normal, cvector3 *result)
+void pvector3_slide(cvector *a, cvector *normal, cvector *result)
 {
 	float d = pvector3_dot(a, normal);
 	result->x = a->x - normal->x * d;
@@ -632,14 +635,14 @@ void pvector3_slide(cvector3 *a, cvector3 *normal, cvector3 *result)
 	result->y = a->z - normal->z * d;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_slide(cvector3 a, cvector3 normal)
+MATHC_EXTERN_INLINE cvector vector3_slide(cvector a, cvector normal)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_slide(&a, &normal, &result);
 	return result;
 }
 
-void pvector3_reflect(cvector3 *a, cvector3 *normal, cvector3 *result)
+void pvector3_reflect(cvector *a, cvector *normal, cvector *result)
 {
 	float d = 2.0f * pvector3_dot(a, normal);
 	result->x = a->x - normal->x * d;
@@ -647,331 +650,51 @@ void pvector3_reflect(cvector3 *a, cvector3 *normal, cvector3 *result)
 	result->z = a->z - normal->z * d;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_reflect(cvector3 a, cvector3 normal)
+MATHC_EXTERN_INLINE cvector vector3_reflect(cvector a, cvector normal)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_reflect(&a, &normal, &result);
 	return result;
 }
 
-float pvector3_distance_to(cvector3 *a, cvector3 *b)
+float pvector3_distance_to(cvector *a, cvector *b)
 {
 	return sqrtf((a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y) + (a->z - b->z) * (a->z - b->z));
 }
 
-MATHC_EXTERN_INLINE float vector3_distance_to(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE float vector3_distance_to(cvector a, cvector b)
 {
 	return pvector3_distance_to(&a, &b);
 }
 
-float pvector3_distance_squared_to(cvector3 *a, cvector3 *b)
+float pvector3_distance_squared_to(cvector *a, cvector *b)
 {
 	return (a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y) + (a->z - b->z) * (a->z - b->z);
 }
 
-MATHC_EXTERN_INLINE float vector3_distance_squared_to(cvector3 a, cvector3 b)
+MATHC_EXTERN_INLINE float vector3_distance_squared_to(cvector a, cvector b)
 {
 	return pvector3_distance_squared_to(&a, &b);
 }
 
-void pvector3_linear_interpolation(cvector3 *a, cvector3 *b, float p, cvector3 *result)
+void pvector3_linear_interpolation(cvector *a, cvector *b, float p, cvector *result)
 {
 	result->x = a->x + (b->x - a->x) * p;
 	result->y = a->y + (b->y - a->y) * p;
 	result->z = a->z + (b->z - a->z) * p;
 }
 
-MATHC_EXTERN_INLINE cvector3 vector3_linear_interpolation(cvector3 a, cvector3 b, float p)
+MATHC_EXTERN_INLINE cvector vector3_linear_interpolation(cvector a, cvector b, float p)
 {
-	cvector3 result;
+	cvector result;
 	pvector3_linear_interpolation(&a, &b, p, &result);
 	return result;
 }
 
-/* Vector 4D */
-cvector4 to_vector4(float x, float y, float z, float w)
-{
-	cvector4 result;
-	result.x = x;
-	result.y = y;
-	result.z = z;
-	result.w = w;
-	return result;
-}
-
-void pvector4_add(cvector4 *a, cvector4 *b, cvector4 *result)
-{
-	result->x = a->x + b->x;
-	result->y = a->y + b->y;
-	result->z = a->z + b->z;
-	result->w = a->w + b->w;
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_add(cvector4 a, cvector4 b)
-{
-	cvector4 result;
-	pvector4_add(&a, &b, &result);
-	return result;
-}
-
-void pvector4_subtract(cvector4 *a, cvector4 *b, cvector4 *result)
-{
-	result->x = a->x - b->x;
-	result->y = a->y - b->y;
-	result->z = a->z - b->z;
-	result->w = a->w - b->w;
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_subtract(cvector4 a, cvector4 b)
-{
-	cvector4 result;
-	pvector4_subtract(&a, &b, &result);
-	return result;
-}
-
-void pvector4_scale(cvector4 *a, float scale, cvector4 *result)
-{
-	result->x = a->x * scale;
-	result->y = a->y * scale;
-	result->z = a->z * scale;
-	result->w = a->w * scale;
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_scale(cvector4 a, float scale)
-{
-	cvector4 result;
-	pvector4_scale(&a, scale, &result);
-	return result;
-}
-
-void pvector4_multiply(cvector4 *a, cvector4 *b, cvector4 *result)
-{
-	result->x = a->x * b->x;
-	result->y = a->y * b->y;
-	result->z = a->z * b->z;
-	result->w = a->w * b->w;
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_multiply(cvector4 a, cvector4 b)
-{
-	cvector4 result;
-	pvector4_multiply(&a, &b, &result);
-	return result;
-}
-
-void pvector4_divide(cvector4 *a, cvector4 *b, cvector4 *result)
-{
-	result->x = a->x * b->x;
-	result->y = a->y * b->y;
-	result->z = a->z * b->z;
-	result->w = a->w * b->w;
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_divide(cvector4 a, cvector4 b)
-{
-	cvector4 result;
-	pvector4_divide(&a, &b, &result);
-	return result;
-}
-
-void pvector4_negative(cvector4 *a, cvector4 *result)
-{
-	result->x = -a->x;
-	result->y = -a->y;
-	result->z = -a->z;
-	result->w = -a->w;
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_negative(cvector4 a)
-{
-	cvector4 result;
-	pvector4_negative(&a, &result);
-	return result;
-}
-
-void pvector4_abs(cvector4 *a, cvector4 *result)
-{
-	result->x = fabsf(a->x);
-	result->y = fabsf(a->y);
-	result->z = fabsf(a->z);
-	result->w = fabsf(a->w);
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_abs(cvector4 a)
-{
-	cvector4 result;
-	pvector4_abs(&a, &result);
-	return result;
-}
-
-void pvector4_floor(cvector4 *a, cvector4 *result)
-{
-	result->x = floorf(a->x);
-	result->y = floorf(a->y);
-	result->z = floorf(a->z);
-	result->w = floorf(a->w);
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_floor(cvector4 a)
-{
-	cvector4 result;
-	pvector4_floor(&a, &result);
-	return result;
-}
-
-void pvector4_ceil(cvector4 *a, cvector4 *result)
-{
-	result->x = ceilf(a->x);
-	result->y = ceilf(a->y);
-	result->z = ceilf(a->z);
-	result->w = ceilf(a->w);
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_ceil(cvector4 a)
-{
-	cvector4 result;
-	pvector4_ceil(&a, &result);
-	return result;
-}
-
-void pvector4_round(cvector4 *a, cvector4 *result)
-{
-	result->x = roundf(a->x);
-	result->y = roundf(a->y);
-	result->z = roundf(a->z);
-	result->w = roundf(a->w);
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_round(cvector4 a)
-{
-	cvector4 result;
-	pvector4_round(&a, &result);
-	return result;
-}
-
-void pvector4_max(cvector4 *a, cvector4 *b, cvector4 *result)
-{
-	result->x = fmaxf(a->x, b->x);
-	result->y = fmaxf(a->y, b->y);
-	result->z = fmaxf(a->z, b->z);
-	result->w = fmaxf(a->w, b->w);
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_max(cvector4 a, cvector4 b)
-{
-	cvector4 result;
-	pvector4_max(&a, &b, &result);
-	return result;
-}
-
-void pvector4_min(cvector4 *a, cvector4 *b, cvector4 *result)
-{
-	result->x = fminf(a->x, b->x);
-	result->y = fminf(a->y, b->y);
-	result->z = fminf(a->z, b->z);
-	result->w = fminf(a->w, b->w);
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_min(cvector4 a, cvector4 b)
-{
-	cvector4 result;
-	pvector4_min(&a, &b, &result);
-	return result;
-}
-
-float pvector4_dot(cvector4 *a, cvector4 *b)
-{
-	return a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w;
-}
-
-MATHC_EXTERN_INLINE float vector4_dot(cvector4 a, cvector4 b)
-{
-	return pvector4_dot(&a, &b);
-}
-
-float pvector4_length_squared(cvector4 *a)
-{
-	return a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w;
-}
-
-MATHC_EXTERN_INLINE float vector4_length_squared(cvector4 a)
-{
-	return pvector4_length_squared(&a);
-}
-
-float pvector4_length(cvector4 *a)
-{
-	return sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
-}
-
-MATHC_EXTERN_INLINE float vector4_length(cvector4 a)
-{
-	return pvector4_length(&a);
-}
-
-void pvector4_normalize(cvector4 *a, cvector4 *result)
-{
-	float length = a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w;
-	if (length != 0.0f) {
-		length = sqrtf(length);
-		result->x = a->x / length;
-		result->y = a->y / length;
-		result->z = a->z / length;
-		result->w = a->w / length;
-	} else {
-		result->x = 0.0f;
-		result->y = 0.0f;
-		result->z = 0.0f;
-		result->w = 0.0f;
-	}
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_normalize(cvector4 a)
-{
-	cvector4 result;
-	pvector4_normalize(&a, &result);
-	return result;
-}
-
-float pvector4_distance_to(cvector4 *a, cvector4 *b)
-{
-	return sqrtf((a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y) + (a->z - b->z) * (a->z - b->z) + (a->w - b->w) * (a->w - b->w));
-}
-
-MATHC_EXTERN_INLINE float vector4_distance_to(cvector4 a, cvector4 b)
-{
-	return pvector4_distance_to(&a, &b);
-}
-
-float pvector4_distance_squared_to(cvector4 *a, cvector4 *b)
-{
-	return (a->x - b->x) * (a->x - b->x) + (a->y - b->y) * (a->y - b->y) + (a->z - b->z) * (a->z - b->z) + (a->w - b->w) * (a->w - b->w);
-}
-
-MATHC_EXTERN_INLINE float vector4_distance_squared_to(cvector4 a, cvector4 b)
-{
-	return pvector4_distance_squared_to(&a, &b);
-}
-
-void pvector4_linear_interpolation(cvector4 *a, cvector4 *b, float p, cvector4 *result)
-{
-	result->x = a->x + (b->x - a->x) * p;
-	result->y = a->y + (b->y - a->y) * p;
-	result->z = a->z + (b->z - a->z) * p;
-	result->w = a->w + (b->w - a->w) * p;
-}
-
-MATHC_EXTERN_INLINE cvector4 vector4_linear_interpolation(cvector4 a, cvector4 b, float p)
-{
-	cvector4 result;
-	pvector4_linear_interpolation(&a, &b, p, &result);
-	return result;
-}
-
 /* Quaternion */
-cquaternion to_quaternion(float x, float y, float z, float w)
+cvector to_quaternion(float x, float y, float z, float w)
 {
-	cquaternion result;
+	cvector result;
 	result.x = x;
 	result.y = y;
 	result.z = z;
@@ -979,7 +702,7 @@ cquaternion to_quaternion(float x, float y, float z, float w)
 	return result;
 }
 
-void pquaternion_add(cquaternion *a, cquaternion *b, cquaternion *result)
+void pquaternion_add(cvector *a, cvector *b, cvector *result)
 {
 	result->x = a->x + b->x;
 	result->y = a->y + b->y;
@@ -987,14 +710,14 @@ void pquaternion_add(cquaternion *a, cquaternion *b, cquaternion *result)
 	result->w = a->w + b->w;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_add(cquaternion a, cquaternion b)
+MATHC_EXTERN_INLINE cvector quaternion_add(cvector a, cvector b)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_add(&a, &b, &result);
 	return result;
 }
 
-void pquaternion_subtract(cquaternion *a, cquaternion *b, cquaternion *result)
+void pquaternion_subtract(cvector *a, cvector *b, cvector *result)
 {
 	result->x = a->x - b->x;
 	result->y = a->y - b->y;
@@ -1002,14 +725,14 @@ void pquaternion_subtract(cquaternion *a, cquaternion *b, cquaternion *result)
 	result->y = a->w - b->w;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_subtract(cquaternion a, cquaternion b)
+MATHC_EXTERN_INLINE cvector quaternion_subtract(cvector a, cvector b)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_subtract(&a, &b, &result);
 	return result;
 }
 
-void pquaternion_scale(cquaternion *a, float scale, cquaternion *result)
+void pquaternion_scale(cvector *a, float scale, cvector *result)
 {
 	result->x = a->x * scale;
 	result->y = a->y * scale;
@@ -1017,14 +740,14 @@ void pquaternion_scale(cquaternion *a, float scale, cquaternion *result)
 	result->w = a->w * scale;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_scale(cquaternion a, float scale)
+MATHC_EXTERN_INLINE cvector quaternion_scale(cvector a, float scale)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_scale(&a, scale, &result);
 	return result;
 }
 
-void pquaternion_multiply(cquaternion *a, cquaternion *b, cquaternion *result)
+void pquaternion_multiply(cvector *a, cvector *b, cvector *result)
 {
 	result->w = a->w * b->w - a->x * b->x - a->y * b->y - a->z * b->z;
 	result->x = a->w * b->x + a->x * b->w + a->y * b->z - a->z * b->y;
@@ -1032,14 +755,14 @@ void pquaternion_multiply(cquaternion *a, cquaternion *b, cquaternion *result)
 	result->z = a->w * b->z + a->z * b->w + a->x * b->y - a->y * b->x;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_multiply(cquaternion a, cquaternion b)
+MATHC_EXTERN_INLINE cvector quaternion_multiply(cvector a, cvector b)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_multiply(&a, &b, &result);
 	return result;
 }
 
-void pquaternion_divide(cquaternion *a, cquaternion *b, cquaternion *result)
+void pquaternion_divide(cvector *a, cvector *b, cvector *result)
 {
 	float x = a->x;
 	float y = a->y;
@@ -1061,14 +784,14 @@ void pquaternion_divide(cquaternion *a, cquaternion *b, cquaternion *result)
 	result->w = w * n6 - n10;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_divide(cquaternion a, cquaternion b)
+MATHC_EXTERN_INLINE cvector quaternion_divide(cvector a, cvector b)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_divide(&a, &b, &result);
 	return result;
 }
 
-void pquaternion_negative(cquaternion *a, cquaternion *result)
+void pquaternion_negative(cvector *a, cvector *result)
 {
 	result->x = -a->x;
 	result->y = -a->y;
@@ -1076,14 +799,14 @@ void pquaternion_negative(cquaternion *a, cquaternion *result)
 	result->w = -a->w;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_negative(cquaternion a)
+MATHC_EXTERN_INLINE cvector quaternion_negative(cvector a)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_negative(&a, &result);
 	return result;
 }
 
-void pquaternion_abs(cquaternion *a, cquaternion *result)
+void pquaternion_abs(cvector *a, cvector *result)
 {
 	result->x = fabsf(a->x);
 	result->y = fabsf(a->y);
@@ -1091,14 +814,14 @@ void pquaternion_abs(cquaternion *a, cquaternion *result)
 	result->w = fabsf(a->w);
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_abs(cquaternion a)
+MATHC_EXTERN_INLINE cvector quaternion_abs(cvector a)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_abs(&a, &result);
 	return result;
 }
 
-void pquaternion_floor(cquaternion *a, cquaternion *result)
+void pquaternion_floor(cvector *a, cvector *result)
 {
 	result->x = floorf(a->x);
 	result->y = floorf(a->y);
@@ -1106,14 +829,14 @@ void pquaternion_floor(cquaternion *a, cquaternion *result)
 	result->w = floorf(a->w);
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_floor(cquaternion a)
+MATHC_EXTERN_INLINE cvector quaternion_floor(cvector a)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_floor(&a, &result);
 	return result;
 }
 
-void pquaternion_ceil(cquaternion *a, cquaternion *result)
+void pquaternion_ceil(cvector *a, cvector *result)
 {
 	result->x = ceilf(a->x);
 	result->y = ceilf(a->y);
@@ -1121,14 +844,14 @@ void pquaternion_ceil(cquaternion *a, cquaternion *result)
 	result->w = ceilf(a->w);
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_ceil(cquaternion a)
+MATHC_EXTERN_INLINE cvector quaternion_ceil(cvector a)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_ceil(&a, &result);
 	return result;
 }
 
-void pquaternion_round(cquaternion *a, cquaternion *result)
+void pquaternion_round(cvector *a, cvector *result)
 {
 	result->x = roundf(a->x);
 	result->y = roundf(a->y);
@@ -1136,14 +859,14 @@ void pquaternion_round(cquaternion *a, cquaternion *result)
 	result->w = roundf(a->w);
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_round(cquaternion a)
+MATHC_EXTERN_INLINE cvector quaternion_round(cvector a)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_round(&a, &result);
 	return result;
 }
 
-void pquaternion_max(cquaternion *a, cquaternion *b, cquaternion *result)
+void pquaternion_max(cvector *a, cvector *b, cvector *result)
 {
 	result->x = fmaxf(a->x, b->x);
 	result->y = fmaxf(a->y, b->y);
@@ -1151,14 +874,14 @@ void pquaternion_max(cquaternion *a, cquaternion *b, cquaternion *result)
 	result->w = fmaxf(a->w, b->w);
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_max(cquaternion a, cquaternion b)
+MATHC_EXTERN_INLINE cvector quaternion_max(cvector a, cvector b)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_max(&a, &b, &result);
 	return result;
 }
 
-void pquaternion_min(cquaternion *a, cquaternion *b, cquaternion *result)
+void pquaternion_min(cvector *a, cvector *b, cvector *result)
 {
 	result->x = fminf(a->x, b->x);
 	result->y = fminf(a->y, b->y);
@@ -1166,35 +889,35 @@ void pquaternion_min(cquaternion *a, cquaternion *b, cquaternion *result)
 	result->w = fminf(a->w, b->w);
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_min(cquaternion a, cquaternion b)
+MATHC_EXTERN_INLINE cvector quaternion_min(cvector a, cvector b)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_min(&a, &b, &result);
 	return result;
 }
 
-float pquaternion_dot(cquaternion *a, cquaternion *b)
+float pquaternion_dot(cvector *a, cvector *b)
 {
 	return a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w;
 }
 
-MATHC_EXTERN_INLINE float quaternion_dot(cquaternion a, cquaternion b)
+MATHC_EXTERN_INLINE float quaternion_dot(cvector a, cvector b)
 {
 	return pquaternion_dot(&a, &b);
 }
 
-float pquaternion_angle(cquaternion *a, cquaternion *b)
+float pquaternion_angle(cvector *a, cvector *b)
 {
 	float s = sqrtf(pquaternion_length_squared(a) * pquaternion_length_squared(b));
 	return acosf(pquaternion_dot(a, b) / s);
 }
 
-MATHC_EXTERN_INLINE float quaternion_angle(cquaternion a, cquaternion b)
+MATHC_EXTERN_INLINE float quaternion_angle(cvector a, cvector b)
 {
 	return pquaternion_angle(&a, &b);
 }
 
-void pquaternion_inverse(cquaternion *a, cquaternion *result)
+void pquaternion_inverse(cvector *a, cvector *result)
 {
 	float n1 = a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w;
 	float n2 = 1.0f / n1;
@@ -1204,34 +927,34 @@ void pquaternion_inverse(cquaternion *a, cquaternion *result)
 	result->w = a->w * n2;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_inverse(cquaternion a)
+MATHC_EXTERN_INLINE cvector quaternion_inverse(cvector a)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_inverse(&a, &result);
 	return result;
 }
 
-float pquaternion_length_squared(cquaternion *a)
+float pquaternion_length_squared(cvector *a)
 {
 	return a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w;
 }
 
-MATHC_EXTERN_INLINE float quaternion_length_squared(cquaternion a)
+MATHC_EXTERN_INLINE float quaternion_length_squared(cvector a)
 {
 	return pquaternion_length_squared(&a);
 }
 
-float pquaternion_length(cquaternion *a)
+float pquaternion_length(cvector *a)
 {
 	return sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
 }
 
-MATHC_EXTERN_INLINE float quaternion_length(cquaternion a)
+MATHC_EXTERN_INLINE float quaternion_length(cvector a)
 {
 	return pquaternion_length(&a);
 }
 
-void pquaternion_normalize(cquaternion *a, cquaternion *result)
+void pquaternion_normalize(cvector *a, cvector *result)
 {
 	float n = 1.0f / pquaternion_length(a);
 	result->x = a->x * n;
@@ -1240,14 +963,14 @@ void pquaternion_normalize(cquaternion *a, cquaternion *result)
 	result->w = a->w * n;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_normalize(cquaternion a)
+MATHC_EXTERN_INLINE cvector quaternion_normalize(cvector a)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_normalize(&a, &result);
 	return result;
 }
 
-void pquaternion_conjugate(cquaternion *a, cquaternion *result)
+void pquaternion_conjugate(cvector *a, cvector *result)
 {
 	result->x = -a->x;
 	result->y = -a->y;
@@ -1255,14 +978,14 @@ void pquaternion_conjugate(cquaternion *a, cquaternion *result)
 	result->w = a->w;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_conjugate(cquaternion a)
+MATHC_EXTERN_INLINE cvector quaternion_conjugate(cvector a)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_conjugate(&a, &result);
 	return result;
 }
 
-void pquaternion_power(cquaternion *a, float exponent, cquaternion *result)
+void pquaternion_power(cvector *a, float exponent, cvector *result)
 {
 	if (fabsf(a->w) < 0.9999f) {
 		float alpha = acosf(a->w);
@@ -1280,14 +1003,14 @@ void pquaternion_power(cquaternion *a, float exponent, cquaternion *result)
 	}
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_power(cquaternion a, float exponent)
+MATHC_EXTERN_INLINE cvector quaternion_power(cvector a, float exponent)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_power(&a, exponent, &result);
 	return result;
 }
 
-void pquaternion_axis_angle(cvector3 *a, float angle, cquaternion *result)
+void pquaternion_axis_angle(cvector *a, float angle, cvector *result)
 {
 	float half = angle * 0.5f;
 	float s = sinf(half);
@@ -1298,14 +1021,14 @@ void pquaternion_axis_angle(cvector3 *a, float angle, cquaternion *result)
 	result->w = c;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_axis_angle(cvector3 a, float angle)
+MATHC_EXTERN_INLINE cvector quaternion_axis_angle(cvector a, float angle)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_axis_angle(&a, angle, &result);
 	return result;
 }
 
-void pquaternion_rotation_matrix(cmatrix *m, cquaternion *result)
+void pquaternion_rotation_matrix(cmatrix *m, cvector *result)
 {
 	float sr;
 	float half;
@@ -1341,14 +1064,14 @@ void pquaternion_rotation_matrix(cmatrix *m, cquaternion *result)
 	}
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_rotation_matrix(cmatrix m)
+MATHC_EXTERN_INLINE cvector quaternion_rotation_matrix(cmatrix m)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_rotation_matrix(&m, &result);
 	return result;
 }
 
-void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, cquaternion *result)
+void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, cvector *result)
 {
 	float half_roll = roll * 0.5f;
 	float half_pitch = pitch * 0.5f;
@@ -1365,14 +1088,14 @@ void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, cquaternion 
 	result->w = (cos_yaw * cos_pitch * cos_roll) + (sin_yaw * sin_pitch * sin_roll);
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_yaw_pitch_roll(float yaw, float pitch, float roll)
+MATHC_EXTERN_INLINE cvector quaternion_yaw_pitch_roll(float yaw, float pitch, float roll)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_yaw_pitch_roll(yaw, pitch, roll, &result);
 	return result;
 }
 
-void pquaternion_linear_interpolation(cquaternion *a, cquaternion *b, float p, cquaternion *result)
+void pquaternion_linear_interpolation(cvector *a, cvector *b, float p, cvector *result)
 {
 	result->x = a->x + (b->x - a->x) * p;
 	result->y = a->y + (b->y - a->y) * p;
@@ -1380,17 +1103,17 @@ void pquaternion_linear_interpolation(cquaternion *a, cquaternion *b, float p, c
 	result->w = a->w + (b->w - a->w) * p;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_linear_interpolation(cquaternion a, cquaternion b, float p)
+MATHC_EXTERN_INLINE cvector quaternion_linear_interpolation(cvector a, cvector b, float p)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_linear_interpolation(&a, &b, p, &result);
 	return result;
 }
 
-void pquaternion_spherical_linear_interpolation(cquaternion *a, cquaternion *b, float p, cquaternion *result)
+void pquaternion_spherical_linear_interpolation(cvector *a, cvector *b, float p, cvector *result)
 {
-	cquaternion tmp_a = *a;
-	cquaternion tmp_b = *b;
+	cvector tmp_a = *a;
+	cvector tmp_b = *b;
 	float cos_theta = pquaternion_dot(a, b);
 	float k0;
 	float k1;
@@ -1416,9 +1139,9 @@ void pquaternion_spherical_linear_interpolation(cquaternion *a, cquaternion *b, 
 	result->w = tmp_a.w * k0 + tmp_b.w * k1;
 }
 
-MATHC_EXTERN_INLINE cquaternion quaternion_spherical_linear_interpolation(cquaternion a, cquaternion b, float p)
+MATHC_EXTERN_INLINE cvector quaternion_spherical_linear_interpolation(cvector a, cvector b, float p)
 {
-	cquaternion result;
+	cvector result;
 	pquaternion_spherical_linear_interpolation(&a, &b, p, &result);
 	return result;
 }
@@ -1542,7 +1265,7 @@ MATHC_EXTERN_INLINE cmatrix matrix_rotation_z(float angle)
 	return result;
 }
 
-void pmatrix_rotation_axis(cvector3 *a, float angle, cmatrix *result)
+void pmatrix_rotation_axis(cvector *a, float angle, cmatrix *result)
 {
 	pmatrix_identity(result);
 	float c = cosf(angle);
@@ -1564,14 +1287,14 @@ void pmatrix_rotation_axis(cvector3 *a, float angle, cmatrix *result)
 	result->m33 = n3 + (c * (1.0f - n3));
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_rotation_axis(cvector3 a, float angle)
+MATHC_EXTERN_INLINE cmatrix matrix_rotation_axis(cvector a, float angle)
 {
 	cmatrix result;
 	pmatrix_rotation_axis(&a, angle, &result);
 	return result;
 }
 
-void pmatrix_rotation_quaternion(cquaternion *q, cmatrix *result)
+void pmatrix_rotation_quaternion(cvector *q, cmatrix *result)
 {
 	pmatrix_identity(result);
 	float n9 = q->x * q->x;
@@ -1594,18 +1317,18 @@ void pmatrix_rotation_quaternion(cquaternion *q, cmatrix *result)
 	result->m33 = 1.0f - 2.0f * (n8 + n9);
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_rotation_quaternion(cquaternion q)
+MATHC_EXTERN_INLINE cmatrix matrix_rotation_quaternion(cvector q)
 {
 	cmatrix result;
 	pmatrix_rotation_quaternion(&q, &result);
 	return result;
 }
 
-void pmatrix_look_at(cvector3 *pos, cvector3 *target, cvector3 *up, cmatrix *result)
+void pmatrix_look_at(cvector *pos, cvector *target, cvector *up, cmatrix *result)
 {
-	cvector3 v1;
-	cvector3 v2;
-	cvector3 v3;
+	cvector v1;
+	cvector v2;
+	cvector v3;
 	pmatrix_identity(result);
 	pvector3_subtract(pos, target, &v1);
 	pvector3_normalize(&v1, &v1);
@@ -1626,14 +1349,14 @@ void pmatrix_look_at(cvector3 *pos, cvector3 *target, cvector3 *up, cmatrix *res
 	result->m43 = -pvector3_dot(&v1, pos);
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_look_at(cvector3 pos, cvector3 target, cvector3 up)
+MATHC_EXTERN_INLINE cmatrix matrix_look_at(cvector pos, cvector target, cvector up)
 {
 	cmatrix result;
 	pmatrix_look_at(&pos, &target, &up, &result);
 	return result;
 }
 
-void pmatrix_scale(cvector3 *v, cmatrix *result)
+void pmatrix_scale(cvector *v, cmatrix *result)
 {
 	pmatrix_identity(result);
 	result->m11 = v->x;
@@ -1641,28 +1364,28 @@ void pmatrix_scale(cvector3 *v, cmatrix *result)
 	result->m33 = v->z;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_scale(cvector3 v)
+MATHC_EXTERN_INLINE cmatrix matrix_scale(cvector v)
 {
 	cmatrix result;
 	pmatrix_scale(&v, &result);
 	return result;
 }
 
-void pmatrix_get_scale(cmatrix *m, cvector3 *result)
+void pmatrix_get_scale(cmatrix *m, cvector *result)
 {
 	result->x = m->m11;
 	result->y = m->m22;
 	result->z = m->m33;
 }
 
-MATHC_EXTERN_INLINE cvector3 matrix_get_scale(cmatrix m)
+MATHC_EXTERN_INLINE cvector matrix_get_scale(cmatrix m)
 {
-	cvector3 result;
+	cvector result;
 	pmatrix_get_scale(&m, &result);
 	return result;
 }
 
-void pmatrix_translation(cvector3 *v, cmatrix *result)
+void pmatrix_translation(cvector *v, cmatrix *result)
 {
 	pmatrix_identity(result);
 	result->m14 = v->x;
@@ -1670,23 +1393,23 @@ void pmatrix_translation(cvector3 *v, cmatrix *result)
 	result->m34 = v->z;
 }
 
-MATHC_EXTERN_INLINE cmatrix matrix_translation(cvector3 v)
+MATHC_EXTERN_INLINE cmatrix matrix_translation(cvector v)
 {
 	cmatrix result;
 	pmatrix_translation(&v, &result);
 	return result;
 }
 
-void pmatrix_get_translation(cmatrix *m, cvector3 *result)
+void pmatrix_get_translation(cmatrix *m, cvector *result)
 {
 	result->x = m->m14;
 	result->y = m->m24;
 	result->z = m->m34;
 }
 
-MATHC_EXTERN_INLINE cvector3 matrix_get_translation(cmatrix m)
+MATHC_EXTERN_INLINE cvector matrix_get_translation(cmatrix m)
 {
-	cvector3 result;
+	cvector result;
 	pmatrix_get_translation(&m, &result);
 	return result;
 }
