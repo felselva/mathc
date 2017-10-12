@@ -133,6 +133,9 @@ void vector2_tests(struct cerror *error)
 	a = to_vector2(1.11f, 2.5f);
 	r = vector2_negative(a);
 	printf_2f_test(error, "Negative vector", -1.11f, -2.5f, r.x, r.y);
+	a = to_vector2(1.11f, 2.5f);
+	r = vector2_inverse(a);
+	printf_2f_test(error, "Inverse vector", 0.9009009009f, 0.4f, r.x, r.y);
 	a = to_vector2(-3.33f, 1.1f);
 	r = vector2_abs(a);
 	printf_2f_test(error, "Absolute vector", 3.33f, 1.1f, r.x, r.y);
@@ -252,6 +255,9 @@ void vector3_tests(struct cerror *error)
 	a = to_vector3(1.11f, 2.5f, 0.0003f);
 	r = vector3_negative(a);
 	printf_3f_test(error, "Negative vector", -1.11f, -2.5f, -0.0003f, r.x, r.y, r.z);
+	a = to_vector3(1.11f, 2.5f, 0.0003f);
+	r = vector3_inverse(a);
+	printf_3f_test(error, "Inverse vector", 0.9009009009f, 0.4f, 3333.3333333333f, r.x, r.y, r.z);
 	a = to_vector3(-3.33f, 1.1f, -0.00001f);
 	r = vector3_abs(a);
 	printf_3f_test(error, "Absolute vector", 3.33f, 1.1f, 0.00001f, r.x, r.y, r.z);

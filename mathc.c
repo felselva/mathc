@@ -155,6 +155,27 @@ MATHC_EXTERN_INLINE struct vec vector2_negative(struct vec a)
 	return result;
 }
 
+void pvector2_inverse(struct vec *a, struct vec *result)
+{
+	if (a->x != 0.0f) {
+		result->x = 1.0f / a->x;
+	} else {
+		result->x = 0.0f;
+	}
+	if (a->y != 0.0f) {
+		result->y = 1.0f / a->y;
+	} else {
+		result->y = 0.0f;
+	}
+}
+
+MATHC_EXTERN_INLINE struct vec vector2_inverse(struct vec a)
+{
+	struct vec result;
+	pvector2_inverse(&a, &result);
+	return result;
+}
+
 void pvector2_abs(struct vec *a, struct vec *result)
 {
 	result->x = fabsf(a->x);
@@ -474,6 +495,32 @@ MATHC_EXTERN_INLINE struct vec vector3_negative(struct vec a)
 {
 	struct vec result;
 	pvector3_negative(&a, &result);
+	return result;
+}
+
+void pvector3_inverse(struct vec *a, struct vec *result)
+{
+	if (a->x != 0.0f) {
+		result->x = 1.0f / a->x;
+	} else {
+		result->x = 0.0f;
+	}
+	if (a->y != 0.0f) {
+		result->y = 1.0f / a->y;
+	} else {
+		result->y = 0.0f;
+	}
+	if (a->z != 0.0f) {
+		result->z = 1.0f / a->z;
+	} else {
+		result->z = 0.0f;
+	}
+}
+
+MATHC_EXTERN_INLINE struct vec vector3_inverse(struct vec a)
+{
+	struct vec result;
+	pvector3_inverse(&a, &result);
 	return result;
 }
 
@@ -806,6 +853,38 @@ MATHC_EXTERN_INLINE struct vec quaternion_negative(struct vec a)
 	return result;
 }
 
+void pquaternion_conjugate(struct vec *a, struct vec *result)
+{
+	result->x = -a->x;
+	result->y = -a->y;
+	result->z = -a->z;
+	result->w = a->w;
+}
+
+MATHC_EXTERN_INLINE struct vec quaternion_conjugate(struct vec a)
+{
+	struct vec result;
+	pquaternion_conjugate(&a, &result);
+	return result;
+}
+
+void pquaternion_inverse(struct vec *a, struct vec *result)
+{
+	float n1 = sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
+	float n2 = 1.0f / n1;
+	result->x = -a->x * n2;
+	result->y = -a->y * n2;
+	result->z = -a->z * n2;
+	result->w = a->w * n2;
+}
+
+MATHC_EXTERN_INLINE struct vec quaternion_inverse(struct vec a)
+{
+	struct vec result;
+	pquaternion_inverse(&a, &result);
+	return result;
+}
+
 void pquaternion_abs(struct vec *a, struct vec *result)
 {
 	result->x = fabsf(a->x);
@@ -917,23 +996,6 @@ MATHC_EXTERN_INLINE float quaternion_angle(struct vec a, struct vec b)
 	return pquaternion_angle(&a, &b);
 }
 
-void pquaternion_inverse(struct vec *a, struct vec *result)
-{
-	float n1 = a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w;
-	float n2 = 1.0f / n1;
-	result->x = -a->x * n2;
-	result->y = -a->y * n2;
-	result->z = -a->z * n2;
-	result->w = a->w * n2;
-}
-
-MATHC_EXTERN_INLINE struct vec quaternion_inverse(struct vec a)
-{
-	struct vec result;
-	pquaternion_inverse(&a, &result);
-	return result;
-}
-
 float pquaternion_length_squared(struct vec *a)
 {
 	return a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w;
@@ -967,21 +1029,6 @@ MATHC_EXTERN_INLINE struct vec quaternion_normalize(struct vec a)
 {
 	struct vec result;
 	pquaternion_normalize(&a, &result);
-	return result;
-}
-
-void pquaternion_conjugate(struct vec *a, struct vec *result)
-{
-	result->x = -a->x;
-	result->y = -a->y;
-	result->z = -a->z;
-	result->w = a->w;
-}
-
-MATHC_EXTERN_INLINE struct vec quaternion_conjugate(struct vec a)
-{
-	struct vec result;
-	pquaternion_conjugate(&a, &result);
 	return result;
 }
 
