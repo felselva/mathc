@@ -21,8 +21,8 @@ the following restrictions:
 #ifndef MATHC_H
 #define MATHC_H
 
-#define M_PIF 3.14159265358979f
-#define M_PIF_2 1.57079632679489f
+#define M_PIF 3.1415926536f
+#define M_PIF_2 1.5707963268f
 
 struct vec {
 	float x;
@@ -180,7 +180,8 @@ float pquaternion_length_squared(struct vec *a);
 float pquaternion_length(struct vec *a);
 void pquaternion_normalize(struct vec *a, struct vec *result);
 void pquaternion_power(struct vec *a, float exponent, struct vec *result);
-void pquaternion_axis_angle(struct vec *a, float angle, struct vec *result);
+void pquaternion_from_axis_angle(struct vec *a, float angle, struct vec *result);
+void pquaternion_to_axis_angle(struct vec *a, struct vec *result);
 void pquaternion_rotation_matrix(struct mat *m, struct vec *result);
 void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, struct vec *result);
 void pquaternion_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
@@ -206,7 +207,8 @@ float quaternion_length_squared(struct vec a);
 float quaternion_length(struct vec a);
 struct vec quaternion_normalize(struct vec a);
 struct vec quaternion_power(struct vec a, float exponent);
-struct vec quaternion_axis_angle(struct vec a, float angle);
+struct vec quaternion_from_axis_angle(struct vec a, float angle);
+struct vec quaternion_to_axis_angle(struct vec a);
 struct vec quaternion_rotation_matrix(struct mat m);
 struct vec quaternion_yaw_pitch_roll(float yaw, float pitch, float roll);
 struct vec quaternion_linear_interpolation(struct vec a, struct vec b, float p);

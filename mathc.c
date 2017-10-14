@@ -1015,7 +1015,7 @@ MATHC_EXTERN_INLINE float quaternion_length(struct vec a)
 
 void pquaternion_normalize(struct vec *a, struct vec *result)
 {
-	float n = 1.0f / pquaternion_length(a);
+	float n = pquaternion_length(a);
 	result->x = a->x * n;
 	result->y = a->y * n;
 	result->z = a->z * n;
@@ -1054,21 +1054,42 @@ MATHC_EXTERN_INLINE struct vec quaternion_power(struct vec a, float exponent)
 	return result;
 }
 
-void pquaternion_axis_angle(struct vec *a, float angle, struct vec *result)
+void pquaternion_from_axis_angle(struct vec *a, float angle, struct vec *result)
 {
 	float half = angle * 0.5f;
 	float s = sinf(half);
-	float c = cosf(half);
 	result->x = a->x * s;
 	result->y = a->y * s;
 	result->z = a->z * s;
-	result->w = c;
+	result->w = cosf(half);
 }
 
-MATHC_EXTERN_INLINE struct vec quaternion_axis_angle(struct vec a, float angle)
+MATHC_EXTERN_INLINE struct vec quaternion_from_axis_angle(struct vec a, float angle)
 {
 	struct vec result;
-	pquaternion_axis_angle(&a, angle, &result);
+	pquaternion_from_axis_angle(&a, angle, &result);
+	return result;
+}
+
+void pquaternion_to_axis_angle(struct vec *a, struct vec *result)
+{
+	double sa;
+	struct vec tmp;
+	pquaternion_normalize(a, &tmp);
+	sa = sqrt(1.0f - tmp.w * tmp.w);
+	if (fabs(sa) <= FLT_EPSILON) {
+		sa = 1.0f;
+	}
+	result->x = tmp.x / sa;
+	result->y = tmp.y / sa;
+	result->z = tmp.z / sa;
+	result->w = acosf(tmp.w) * 2.0f;
+}
+
+MATHC_EXTERN_INLINE struct vec quaternion_to_axis_angle(struct vec a)
+{
+	struct vec result;
+	pquaternion_to_axis_angle(&a, &result);
 	return result;
 }
 
