@@ -35,7 +35,7 @@ struct vec {
 };
 ```
 
-## 2D Vectors
+## 2D Vector
 
 When using 2D vectors, it is good practice to initialize the variable with `0`, so the value of the `z` component is set to `0.0f`.
 
