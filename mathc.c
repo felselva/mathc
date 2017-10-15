@@ -63,6 +63,16 @@ int nearly_equal(float a, float b, float epsilon)
 	return result;
 }
 
+float to_radians(float degrees)
+{
+	return degrees * M_PIF / 180.0f;
+}
+
+float to_degrees(float radians)
+{
+	return radians * 180.0f / M_PIF;
+}
+
 /* Vector 2D */
 struct vec to_vector2(float x, float y)
 {

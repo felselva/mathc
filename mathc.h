@@ -53,6 +53,8 @@ struct mat {
 
 /* Utils */
 int nearly_equal(float a, float b, float epsilon);
+float to_radians(float degrees);
+float to_degrees(float radians);
 
 /* Vector 2D */
 struct vec to_vector2(float x, float y);
