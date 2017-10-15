@@ -231,6 +231,45 @@ struct vec vector2_linear_interpolation(struct vec a, struct vec b, float p);
 
 The result is a 2D vector for the linear interpolation between the 2D vector `a` and the 2D vector `b` with the value `p`.
 
+### Easing Functions
+
+```c
+float quadratic_ease_in(float p);
+float quadratic_ease_out(float p);
+float quadratic_ease_in_out(float p);
+float cubic_ease_in(float p);
+float cubic_ease_out(float p);
+float cubic_ease_in_out(float p);
+float quartic_ease_in(float p);
+float quartic_ease_out(float p);
+float quartic_ease_in_out(float p);
+float quintic_ease_in(float p);
+float quintic_ease_out(float p);
+float quintic_ease_in_out(float p);
+float sine_ease_in(float p);
+float sine_ease_out(float p);
+float sine_ease_in_out(float p);
+float circular_ease_in(float p);
+float circular_ease_out(float p);
+float circular_ease_in_out(float p);
+float exponential_ease_in(float p);
+float exponential_ease_out(float p);
+float exponential_ease_in_out(float p);
+float elastic_ease_in(float p);
+float elastic_ease_out(float p);
+float elastic_ease_in_out(float p);
+float back_ease_in(float p);
+float back_ease_out(float p);
+float back_ease_in_out(float p);
+float bounce_ease_in(float p);
+float bounce_ease_out(float p);
+float bounce_ease_in_out(float p);
+```
+
+Each easing function will return a rate of change for `p`. The value of `p` must be inside the range `0.0f-1.0f`.
+
+The graphic visualization of the easing functions can be found on [easing.net](http://easings.net/).
+
 # LICENSE
 
 The source code of this project is licensed under the terms of the ZLIB license:
