@@ -457,6 +457,7 @@ void pvector3_add(struct vec *a, struct vec *b, struct vec *result)
 	result->x = a->x + b->x;
 	result->y = a->y + b->y;
 	result->z = a->z + b->z;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_add(struct vec a, struct vec b)
@@ -471,6 +472,7 @@ void pvector3_subtract(struct vec *a, struct vec *b, struct vec *result)
 	result->x = a->x - b->x;
 	result->y = a->y - b->y;
 	result->z = a->z - b->z;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_subtract(struct vec a, struct vec b)
@@ -485,6 +487,7 @@ void pvector3_scale(struct vec *a, float scale, struct vec *result)
 	result->x = a->x * scale;
 	result->y = a->y * scale;
 	result->z = a->z * scale;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_scale(struct vec a, float scale)
@@ -499,6 +502,7 @@ void pvector3_multiply(struct vec *a, struct vec *b, struct vec *result)
 	result->x = a->x * b->x;
 	result->y = a->y * b->y;
 	result->z = a->z * b->z;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_multiply(struct vec a, struct vec b)
@@ -513,6 +517,7 @@ void pvector3_divide(struct vec *a, struct vec *b, struct vec *result)
 	result->x = a->x / b->x;
 	result->y = a->y / b->y;
 	result->z = a->z / b->z;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_divide(struct vec a, struct vec b)
@@ -527,6 +532,7 @@ void pvector3_negative(struct vec *a, struct vec *result)
 	result->x = -a->x;
 	result->y = -a->y;
 	result->z = -a->z;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_negative(struct vec a)
@@ -553,6 +559,7 @@ void pvector3_inverse(struct vec *a, struct vec *result)
 	} else {
 		result->z = 0.0f;
 	}
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_inverse(struct vec a)
@@ -567,6 +574,7 @@ void pvector3_abs(struct vec *a, struct vec *result)
 	result->x = fabsf(a->x);
 	result->y = fabsf(a->y);
 	result->z = fabsf(a->z);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_abs(struct vec a)
@@ -581,6 +589,7 @@ void pvector3_floor(struct vec *a, struct vec *result)
 	result->x = floorf(a->x);
 	result->y = floorf(a->y);
 	result->z = floorf(a->z);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_floor(struct vec a)
@@ -595,6 +604,7 @@ void pvector3_ceil(struct vec *a, struct vec *result)
 	result->x = ceilf(a->x);
 	result->y = ceilf(a->y);
 	result->z = ceilf(a->z);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_ceil(struct vec a)
@@ -609,6 +619,7 @@ void pvector3_round(struct vec *a, struct vec *result)
 	result->x = roundf(a->x);
 	result->y = roundf(a->y);
 	result->z = roundf(a->z);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_round(struct vec a)
@@ -623,6 +634,7 @@ void pvector3_max(struct vec *a, struct vec *b, struct vec *result)
 	result->x = fmaxf(a->x, b->x);
 	result->y = fmaxf(a->y, b->y);
 	result->z = fmaxf(a->z, b->z);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_max(struct vec a, struct vec b)
@@ -637,6 +649,7 @@ void pvector3_min(struct vec *a, struct vec *b, struct vec *result)
 	result->x = fminf(a->x, b->x);
 	result->y = fminf(a->y, b->y);
 	result->z = fminf(a->z, b->z);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_min(struct vec a, struct vec b)
@@ -661,6 +674,7 @@ void pvector3_cross(struct vec *a, struct vec *b, struct vec *result)
 	result->x = a->y * b->z - a->z * b->y;
 	result->y = a->z * b->x - a->x * b->z;
 	result->z = a->x * b->y - a->y * b->x;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_cross(struct vec a, struct vec b)
@@ -703,6 +717,7 @@ void pvector3_normalize(struct vec *a, struct vec *result)
 		result->y = 0.0f;
 		result->z = 0.0f;
 	}
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_normalize(struct vec a)
@@ -718,6 +733,7 @@ void pvector3_slide(struct vec *a, struct vec *normal, struct vec *result)
 	result->x = a->x - normal->x * d;
 	result->y = a->y - normal->y * d;
 	result->y = a->z - normal->z * d;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_slide(struct vec a, struct vec normal)
@@ -733,6 +749,7 @@ void pvector3_reflect(struct vec *a, struct vec *normal, struct vec *result)
 	result->x = a->x - normal->x * d;
 	result->y = a->y - normal->y * d;
 	result->z = a->z - normal->z * d;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_reflect(struct vec a, struct vec normal)
@@ -767,6 +784,7 @@ void pvector3_linear_interpolation(struct vec *a, struct vec *b, float p, struct
 	result->x = a->x + (b->x - a->x) * p;
 	result->y = a->y + (b->y - a->y) * p;
 	result->z = a->z + (b->z - a->z) * p;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector3_linear_interpolation(struct vec a, struct vec b, float p)
@@ -812,7 +830,7 @@ void pquaternion_subtract(struct vec *a, struct vec *b, struct vec *result)
 	result->x = a->x - b->x;
 	result->y = a->y - b->y;
 	result->y = a->z - b->z;
-	result->y = a->w - b->w;
+	result->w = a->w - b->w;
 }
 
 MATHC_EXTERN_INLINE struct vec quaternion_subtract(struct vec a, struct vec b)
@@ -839,10 +857,10 @@ MATHC_EXTERN_INLINE struct vec quaternion_scale(struct vec a, float scale)
 
 void pquaternion_multiply(struct vec *a, struct vec *b, struct vec *result)
 {
-	result->w = a->w * b->w - a->x * b->x - a->y * b->y - a->z * b->z;
 	result->x = a->w * b->x + a->x * b->w + a->y * b->z - a->z * b->y;
 	result->y = a->w * b->y + a->y * b->w + a->z * b->x - a->x * b->z;
 	result->z = a->w * b->z + a->z * b->w + a->x * b->y - a->y * b->x;
+	result->w = a->w * b->w - a->x * b->x - a->y * b->y - a->z * b->z;
 }
 
 MATHC_EXTERN_INLINE struct vec quaternion_multiply(struct vec a, struct vec b)
@@ -1516,6 +1534,7 @@ void pmatrix_get_translation(struct mat *m, struct vec *result)
 	result->x = m->m14;
 	result->y = m->m24;
 	result->z = m->m34;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec matrix_get_translation(struct mat m)
@@ -1734,7 +1753,7 @@ float quintic_ease_in_out(float p)
 		f = 16.0f * p * p * p * p * p;
 	} else {
 		f = ((2.0f * p) - 2.0f);
-		f =  0.5f * f * f * f * f * f + 1.0f;
+		f = 0.5f * f * f * f * f * f + 1.0f;
 	}
 	return f;
 }
