@@ -93,6 +93,7 @@ void pvector2_add(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x + b->x;
 	result->y = a->y + b->y;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_add(struct vec a, struct vec b)
@@ -106,6 +107,7 @@ void pvector2_subtract(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x - b->x;
 	result->y = a->y - b->y;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_subtract(struct vec a, struct vec b)
@@ -119,6 +121,7 @@ void pvector2_scale(struct vec *a, float scale, struct vec *result)
 {
 	result->x = a->x * scale;
 	result->y = a->y * scale;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_scale(struct vec a, float scale)
@@ -132,6 +135,7 @@ void pvector2_multiply(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x * b->x;
 	result->y = a->y * b->y;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_multiply(struct vec a, struct vec b)
@@ -145,6 +149,7 @@ void pvector2_divide(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x / b->x;
 	result->y = a->y / b->y;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_divide(struct vec a, struct vec b)
@@ -158,6 +163,7 @@ void pvector2_negative(struct vec *a, struct vec *result)
 {
 	result->x = -a->x;
 	result->y = -a->y;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_negative(struct vec a)
@@ -179,6 +185,7 @@ void pvector2_inverse(struct vec *a, struct vec *result)
 	} else {
 		result->y = 0.0f;
 	}
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_inverse(struct vec a)
@@ -192,6 +199,7 @@ void pvector2_abs(struct vec *a, struct vec *result)
 {
 	result->x = fabsf(a->x);
 	result->y = fabsf(a->y);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_abs(struct vec a)
@@ -205,6 +213,7 @@ void pvector2_floor(struct vec *a, struct vec *result)
 {
 	result->x = floorf(a->x);
 	result->y = floorf(a->y);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_floor(struct vec a)
@@ -218,6 +227,7 @@ void pvector2_ceil(struct vec *a, struct vec *result)
 {
 	result->x = ceilf(a->x);
 	result->y = ceilf(a->y);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_ceil(struct vec a)
@@ -231,6 +241,7 @@ void pvector2_round(struct vec *a, struct vec *result)
 {
 	result->x = roundf(a->x);
 	result->y = roundf(a->y);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_round(struct vec a)
@@ -244,6 +255,7 @@ void pvector2_max(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = fmaxf(a->x, b->x);
 	result->y = fmaxf(a->y, b->y);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_max(struct vec a, struct vec b)
@@ -257,6 +269,7 @@ void pvector2_min(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = fminf(a->x, b->x);
 	result->y = fminf(a->y, b->y);
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_min(struct vec a, struct vec b)
@@ -317,6 +330,7 @@ void pvector2_normalize(struct vec *a, struct vec *result)
 		result->x = 0.0f;
 		result->y = 0.0f;
 	}
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_normalize(struct vec a)
@@ -331,6 +345,7 @@ void pvector2_slide(struct vec *a, struct vec *normal, struct vec *result)
 	float d = pvector2_dot(a, normal);
 	result->x = a->x - normal->x * d;
 	result->y = a->y - normal->y * d;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_slide(struct vec a, struct vec normal)
@@ -345,6 +360,7 @@ void pvector2_reflect(struct vec *a, struct vec *normal, struct vec *result)
 	float d = 2.0f * pvector2_dot(a, normal);
 	result->x = a->x - normal->x * d;
 	result->y = a->y - normal->y * d;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_reflect(struct vec a, struct vec normal)
@@ -358,6 +374,7 @@ void pvector2_tangent(struct vec *a, struct vec *result)
 {
 	result->x = a->y;
 	result->y = -a->x;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_tangent(struct vec a)
@@ -409,6 +426,7 @@ void pvector2_linear_interpolation(struct vec *a, struct vec *b, float p, struct
 {
 	result->x = a->x + (b->x - a->x) * p;
 	result->y = a->y + (b->y - a->y) * p;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_linear_interpolation(struct vec a, struct vec b, float p)
