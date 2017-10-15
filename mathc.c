@@ -371,8 +371,11 @@ void pvector2_rotate(struct vec *a, float angle, struct vec *result)
 {
 	float cs = cosf(angle);
 	float sn = sinf(angle);
-	result->x = a->x * cs - a->y * sn;
-	result->y = a->x * sn + a->y * cs;
+	float x = a->x;
+	float y = a->y;
+	result->x = x * cs - y * sn;
+	result->y = x * sn + y * cs;
+	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec vector2_rotate(struct vec a, float angle)
