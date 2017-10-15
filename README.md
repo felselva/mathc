@@ -12,6 +12,10 @@ MathC is a simple math library for 2D and 3D programming. It contains implementa
 
 It support C99 standard or later.
 
+# Reference
+
+The reference is the file `REFERENCE.md`.
+
 # Float
 
 Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
