@@ -16,7 +16,41 @@ It support C99 standard or later.
 
 Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
 
-# Vector Structure
+**The type `float` loses precision with large numbers, why not use `double`?** Because every `double` value would be converted to `float` before sending to OpenGL, anyway. Which means your physics would run with high precision, but the rendering would still be affected by the `float` imprecision. Instead, *the good practice* to solve the problem with large numbers is to truncate the world position back to `[0.0f, 0.0f, 0.0f]` when the world distance to the center is too large. If the world is too big that even when truncating there is stil large numbers, the correct approach is to divide the world in chunks.
+
+# Passing Arguments as Value or Pointer
+
+For every function **that takes a structure**, there are two versions. One that you pass structures as value and other that you pass as pointer. The functions that pass the value by pointer have a prefix `p` before the type name (pvector2, pvector3, pquaternion and pmatrix) and the result is the `*result` argument or a returned `float`.
+
+You can decide which one you want to use.
+
+Examples:
+
+```c
+/* Pass by value and return a value */
+struct mat projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
+struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
+	to_vector3(0.0f, 0.0f, 0.0f),
+	to_vector3(0.0f, 1.0f, 0.0f));
+struct mat pv = matrix_multiply_matrix(projection, view);
+
+/* Pass by pointer */
+struct vec pos = {0};
+struct vec target = {0};
+struct vec up = {0};
+struct mat projection;
+struct mat view;
+struct mat multiplied_matrix;
+
+to_pvector3(0.0f, 0.0f, 1.0f, &pos);
+to_pvector3(0.0f, 0.0f, 0.0f, &target);
+to_pvector3(0.0f, 1.0f, 0.0f, &up);
+pmatrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f, &projection);
+pmatrix_look_at(&pos, &target, &up, &view);
+pmatrix_multiply_matrix(&projection, &view, &multiplied_matrix);
+```
+
+# Vectors
 
 All vectors (2D, 3D and quaternions ) use the same structure type `struct vec`.
 
@@ -39,38 +73,29 @@ struct vec quaternion = to_quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 struct vec interpolated = quaternion_spherical_linear_interpolation(a, b, 0.5f);
 ```
 
-# Passing Arguments as Value or Pointer
+# Matrices
 
-For every function **that takes a structure**, there are two versions. One that you pass structures as value and other that you pass as pointer. The functions that pass the value by pointer have a prefix `p` and the result is the `*result` argument or a returned `float`.
+All matrices are 4×4. There are functions for setting up projection matrices, view matrices and model matrices.
 
-You can decide which one you want to use.
-
-Examples:
+Usually, model matrices are used to modify vertices on client-side or GPU-side. If you want to modify on client-side, you can use the functions `matrix_multiply_f4()` or `pmatrix_multiply_f4()` to modify an array with 4 `float` elements. Example:
 
 ```c
-/* Pass by value and return a value */
+float v[4] = {0.0f, 10.0f, 0.0f, 1.0f}; /* Compoments X, Y, Z and W */
+struct mat rotation = matrix_rotation_z(to_radians(45.0f));
+matrix_multiply_f4(rotation, v);
+```
+
+If you want to modify on GPU-side, you can use the functions `matrix_to_array()` or `pmatrix_to_array()` to push the matrix to an array with 16 `float` elements. Example:
+
+```c
+float v[16];
 struct mat projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
 struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
 	to_vector3(0.0f, 0.0f, 0.0f),
 	to_vector3(0.0f, 1.0f, 0.0f));
 struct mat pv = matrix_multiply_matrix(projection, view);
-
-/* Pass by pointer */
-struct mat projection;
-struct mat view;
-struct vec pos;
-struct vec target;
-struct vec up;
-struct mat multiplied_matrix;
-
-pmatrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f, &projection);
-pmatrix_look_at(&pos, &target, &up, &view);
-pmatrix_multiply_matrix(&projection, &view, &multiplied_matrix);
+matrix_to_array(pv, v);
 ```
-
-# Matrices
-
-Matrices are 4×4.
 
 # Easing Functions
 
