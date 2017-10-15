@@ -57,7 +57,7 @@ float to_radians(float degrees);
 float to_degrees(float radians);
 
 /* Vector 2D */
-struct vec to_vector2(float x, float y);
+void to_pvector2(float x, float y, struct vec *result);
 void pvector2_add(struct vec *a, struct vec *b, struct vec *result);
 void pvector2_subtract(struct vec *a, struct vec *b, struct vec *result);
 void pvector2_scale(struct vec *a, float scale, struct vec *result);
@@ -84,6 +84,7 @@ float pvector2_distance_to(struct vec *a, struct vec *b);
 float pvector2_distance_squared_to(struct vec *a, struct vec *b);
 void pvector2_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
 
+struct vec to_vector2(float x, float y);
 struct vec vector2_add(struct vec a, struct vec b);
 struct vec vector2_subtract(struct vec a, struct vec b);
 struct vec vector2_scale(struct vec a, float scale);
@@ -111,7 +112,7 @@ float vector2_distance_squared_to(struct vec a, struct vec b);
 struct vec vector2_linear_interpolation(struct vec a, struct vec b, float p);
 
 /* Vector 3D */
-struct vec to_vector3(float x, float y, float z);
+void to_pvector3(float x, float y, float z, struct vec *result);
 void pvector3_add(struct vec *a, struct vec *b, struct vec *result);
 void pvector3_subtract(struct vec *a, struct vec *b, struct vec *result);
 void pvector3_scale(struct vec *a, float scale, struct vec *result);
@@ -136,6 +137,7 @@ float pvector3_distance_to(struct vec *a, struct vec *b);
 float pvector3_distance_squared_to(struct vec *a, struct vec *b);
 void pvector3_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
 
+struct vec to_vector3(float x, float y, float z);
 struct vec vector3_add(struct vec a, struct vec b);
 struct vec vector3_subtract(struct vec a, struct vec b);
 struct vec vector3_scale(struct vec a, float scale);
@@ -161,7 +163,7 @@ float vector3_distance_squared_to(struct vec a, struct vec b);
 struct vec vector3_linear_interpolation(struct vec a, struct vec b, float p);
 
 /* Quaternion */
-struct vec to_quaternion(float x, float y, float z, float w);
+void to_pquaternion(float x, float y, float z, float w, struct vec *result);
 void pquaternion_add(struct vec *a, struct vec *b, struct vec *result);
 void pquaternion_subtract(struct vec *a, struct vec *b, struct vec *result);
 void pquaternion_scale(struct vec *a, float scale, struct vec *result);
@@ -189,6 +191,7 @@ void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, struct vec *
 void pquaternion_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
 void pquaternion_spherical_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
 
+struct vec to_quaternion(float x, float y, float z, float w);
 struct vec quaternion_add(struct vec a, struct vec b);
 struct vec quaternion_subtract(struct vec a, struct vec b);
 struct vec quaternion_scale(struct vec a, float scale);

@@ -74,13 +74,18 @@ float to_degrees(float radians)
 }
 
 /* Vector 2D */
-struct vec to_vector2(float x, float y)
+void to_pvector2(float x, float y, struct vec *result)
+{
+	result->x = x;
+	result->y = y;
+	result->z = 0.0f;
+	result->w = 1.0f;
+}
+
+MATHC_EXTERN_INLINE struct vec to_vector2(float x, float y)
 {
 	struct vec result;
-	result.x = x;
-	result.y = y;
-	result.z = 0.0f;
-	result.w = 1.0f;
+	to_pvector2(x, y, &result);
 	return result;
 }
 
@@ -411,13 +416,18 @@ MATHC_EXTERN_INLINE struct vec vector2_linear_interpolation(struct vec a, struct
 }
 
 /* Vector 3D */
-struct vec to_vector3(float x, float y, float z)
+void to_pvector3(float x, float y, float z, struct vec *result)
+{
+	result->x = x;
+	result->y = y;
+	result->z = z;
+	result->w = 1.0f;
+}
+
+MATHC_EXTERN_INLINE struct vec to_vector3(float x, float y, float z)
 {
 	struct vec result;
-	result.x = x;
-	result.y = y;
-	result.z = z;
-	result.w = 1.0f;
+	to_pvector3(x, y, z, &result);
 	return result;
 }
 
@@ -746,13 +756,18 @@ MATHC_EXTERN_INLINE struct vec vector3_linear_interpolation(struct vec a, struct
 }
 
 /* Quaternion */
+void to_pquaternion(float x, float y, float z, float w, struct vec *result)
+{
+	result->x = x;
+	result->y = y;
+	result->z = z;
+	result->w = w;
+}
+
 struct vec to_quaternion(float x, float y, float z, float w)
 {
 	struct vec result;
-	result.x = x;
-	result.y = y;
-	result.z = z;
-	result.w = w;
+	to_pquaternion(x, y, z, w, &result);
 	return result;
 }
 
