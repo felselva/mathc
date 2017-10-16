@@ -54,7 +54,7 @@ void to_pvector2(float x, float y, struct vec *result);
 struct vec to_vector2(float x, float y);
 ```
 
-The result is a 2D vector for the position `x` and `y`. The value of `z` is set to `0.0f` and the value of `w` is set to `1.0f`.
+The result is a 2D vector for the position `x` and `y`. The value of `z` is set to `0.0f`.
 
 ```c
 void pvector2_add(struct vec *a, struct vec *b, struct vec *result);
@@ -230,6 +230,362 @@ struct vec vector2_linear_interpolation(struct vec a, struct vec b, float p);
 ```
 
 The result is a 2D vector for the linear interpolation between the 2D vector `a` and the 2D vector `b` with the value `p`.
+
+## 3D Vector
+
+Every function for 3D vectors will set the value of `w` to `1.0f`.
+
+```c
+void to_pvector3(float x, float y, float z, struct vec *result);
+struct vec to_vector2(float x, float y, float z);
+```
+
+The result is a 3D vector for the position `x`, `y` and `z`.
+
+```c
+void pvector3_add(struct vec *a, struct vec *b, struct vec *result);
+struct vec vector3_add(struct vec a, struct vec b);
+```
+
+The result is a 3D vector for the addition of the 3D vector `a` with the 3D vector `b`.
+
+```c
+void pvector3_subtract(struct vec *a, struct vec *b, struct vec *result);
+struct vec vector3_subtract(struct vec a, struct vec b);
+```
+
+The result is a 3D vector for the subraction of the 3D vector `a` with the 3D vector `b`.
+
+```c
+void pvector3_scale(struct vec *a, float scale, struct vec *result);
+struct vec vector3_scale(struct vec a, float scale);
+```
+
+The result is a 3D vector for the scaling of the 3D vector `a` with the value `scale`.
+
+```c
+void pvector3_multiply(struct vec *a, struct vec *b, struct vec *result);
+struct vec vector3_multiply(struct vec a, struct vec b);
+```
+
+The result is a 3D vector for the multiplication of the 3D vector `a` with the 3D vector `b`.
+
+```c
+void pvector3_divide(struct vec *a, struct vec *b, struct vec *result);
+struct vec vector3_divide(struct vec a, struct vec b);
+```
+
+The result is a 3D vector for the division of the 3D vector `a` with the 3D vector `b`.
+
+```c
+void pvector3_negative(struct vec *a, struct vec *result);
+struct vec vector3_negative(struct vec a);
+```
+
+The result is a 3D vector for the negation of the 3D vector `a`.
+
+```c
+void pvector3_inverse(struct vec *a, struct vec *result);
+struct vec vector3_inverse(struct vec a);
+```
+
+The result is a 3D vector for the inversion of the 3D vector `a`.
+
+```c
+void pvector3_abs(struct vec *a, struct vec *result);
+struct vec vector3_abs(struct vec a);
+```
+
+The result is a 3D vector for the 3D vector `a` with absolute values.
+
+```c
+void pvector3_floor(struct vec *a, struct vec *result);
+struct vec vector3_floor(struct vec a);
+```
+
+The result is a 3D vector for the 3D vector `a` with floored values.
+
+```c
+void pvector3_ceil(struct vec *a, struct vec *result);
+struct vec vector3_ceil(struct vec a);
+```
+
+The result is a 3D vector for the 3D vector `a` with ceiled values.
+
+```c
+void pvector3_round(struct vec *a, struct vec *result);
+struct vec vector3_round(struct vec a);
+```
+
+The result is a 3D vector for the 3D vector `a` with rounded values.
+
+```c
+void pvector3_max(struct vec *a, struct vec *b, struct vec *result);
+struct vec vector3_max(struct vec a, struct vec b);
+```
+
+The result is a 3D vector with the maximum values between the 3D vector `a` and the 3D vector `b`.
+
+```c
+void pvector3_min(struct vec *a, struct vec *b, struct vec *result);
+struct vec vector3_min(struct vec a, struct vec b);
+```
+
+The result is a 3D vector with the minimum values between the 3D vector `a` and the 3D vector `b`.
+
+```c
+float pvector3_dot(struct vec *a, struct vec *b);
+float vector3_dot(struct vec a, struct vec b);
+```
+
+The result is the dot product of the 3D vector `a` with the 3D vector `b`.
+
+```c
+float pvector3_cross(struct vec *a, struct vec *b);
+float vector3_cross(struct vec a, struct vec b);
+```
+
+The result is the cross product of the 3D vector `a` with the 3D vector `b`.
+
+```c
+float pvector3_length_squared(struct vec *a);
+float vector3_length_squared(struct vec a);
+```
+
+The result is the length squared of the 3D vector `a`.
+
+```c
+float pvector3_length(struct vec *a);
+float vector3_length(struct vec a);
+```
+
+The result is the length of the 3D vector `a`.
+
+```c
+void pvector3_normalize(struct vec *a, struct vec *result);
+struct vec vector3_normalize(struct vec a);
+```
+
+The result is a 3D vector for the normalized 3D vector `a`.
+
+```c
+void pvector3_slide(struct vec *a, struct vec *normal, struct vec *result);
+struct vec vector3_slide(struct vec a, struct vec normal);
+```
+
+The result is a 3D vector for the slided 3D vector `a` against the 3D vector `normal`.
+
+```c
+void pvector3_reflect(struct vec *a, struct vec *normal, struct vec *result);
+struct vec vector3_reflect(struct vec a, struct vec normal);
+```
+
+The result is a 3D vector for the reflected 3D vector `a` against the 3D vector `normal`.
+
+```c
+float pvector3_distance_to(struct vec *a, struct vec *b);
+float vector3_distance_to(struct vec a, struct vec b);
+```
+
+The result is the distance between the 3D vector `a` and the 3D vector `b`.
+
+```c
+float pvector3_distance_squared_to(struct vec *a, struct vec *b);
+float vector3_distance_squared_to(struct vec a, struct vec b);
+```
+
+The result is the distance squared between the 3D vector `a` and the 3D vector `b`.
+
+```c
+void pvector3_linear_interpolation(struct vec *a, struct vec *b, float, p, struct vec *result);
+struct vec vector3_linear_interpolation(struct vec a, struct vec b, float p);
+```
+
+The result is a 3D vector for the linear interpolation between the 3D vector `a` and the 3D vector `b` with the value `p`.
+
+## Quaternion
+
+```c
+void to_pquaternion(float x, float y, float z, struct vec *result);
+struct vec to_quaternion(float x, float y, float z);
+```
+
+The result is a quaternion for the position `x`, `y` and `z`.
+
+```c
+void pquaternion_add(struct vec *a, struct vec *b, struct vec *result);
+struct vec quaternion_add(struct vec a, struct vec b);
+```
+
+The result is a quaternion for the addition of the quaternion `a` with the quaternion `b`.
+
+```c
+void pquaternion_subtract(struct vec *a, struct vec *b, struct vec *result);
+struct vec quaternion_subtract(struct vec a, struct vec b);
+```
+
+The result is a quaternion for the subraction of the quaternion `a` with the quaternion `b`.
+
+```c
+void pquaternion_scale(struct vec *a, float scale, struct vec *result);
+struct vec quaternion_scale(struct vec a, float scale);
+```
+
+The result is a quaternion for the scaling of the quaternion `a` with the value `scale`.
+
+```c
+void pquaternion_multiply(struct vec *a, struct vec *b, struct vec *result);
+struct vec quaternion_multiply(struct vec a, struct vec b);
+```
+
+The result is a quaternion for the multiplication of the quaternion `a` with the quaternion `b`.
+
+```c
+void pquaternion_divide(struct vec *a, struct vec *b, struct vec *result);
+struct vec quaternion_divide(struct vec a, struct vec b);
+```
+
+The result is a quaternion for the division of the quaternion `a` with the quaternion `b`.
+
+```c
+void pquaternion_negative(struct vec *a, struct vec *result);
+struct vec quaternion_negative(struct vec a);
+```
+
+The result is a quaternion for the negation of the quaternion `a`.
+
+```c
+void pquaternion_conjugate(struct vec *a, struct vec *result);
+struct vec quaternion_conjugate(struct vec a);
+```
+
+The result is a quaternion for the conjugate of the quaternion `a`.
+
+```c
+void pquaternion_inverse(struct vec *a, struct vec *result);
+struct vec quaternion_inverse(struct vec a);
+```
+
+The result is a quaternion for the inversion of the quaternion `a`.
+
+```c
+void pquaternion_abs(struct vec *a, struct vec *result);
+struct vec quaternion_abs(struct vec a);
+```
+
+The result is a quaternion for the quaternion `a` with absolute values.
+
+```c
+void pquaternion_floor(struct vec *a, struct vec *result);
+struct vec quaternion_floor(struct vec a);
+```
+
+The result is a quaternion for the quaternion `a` with floored values.
+
+```c
+void pquaternion_ceil(struct vec *a, struct vec *result);
+struct vec quaternion_ceil(struct vec a);
+```
+
+The result is a quaternion for the quaternion `a` with ceiled values.
+
+```c
+void pquaternion_round(struct vec *a, struct vec *result);
+struct vec quaternion_round(struct vec a);
+```
+
+The result is a quaternion for the quaternion `a` with rounded values.
+
+```c
+void pquaternion_max(struct vec *a, struct vec *b, struct vec *result);
+struct vec quaternion_max(struct vec a, struct vec b);
+```
+
+The result is a quaternion with the maximum values between the quaternion `a` and the quaternion `b`.
+
+```c
+void pquaternion_min(struct vec *a, struct vec *b, struct vec *result);
+struct vec quaternion_min(struct vec a, struct vec b);
+```
+
+The result is a quaternion with the minimum values between the quaternion `a` and the quaternion `b`.
+
+```c
+float pquaternion_dot(struct vec *a, struct vec *b);
+float quaternion_dot(struct vec a, struct vec b);
+```
+
+The result is the dot product of the quaternion `a` with the quaternion `b`.
+
+```c
+float pquaternion_angle(struct vec *a, struct vec *b);
+float quaternion_angle(struct vec a, struct vec b);
+```
+
+The result is the angle between the quaternion `a` and the quaternion `b`.
+
+```c
+float pquaternion_length_squared(struct vec *a);
+float quaternion_length_squared(struct vec a);
+```
+
+The result is the length squared of the quaternion `a`.
+
+```c
+float pquaternion_length(struct vec *a);
+float quaternion_length(struct vec a);
+```
+
+The result is the length of the quaternion `a`.
+
+```c
+void pquaternion_normalize(struct vec *a, struct vec *result);
+struct vec quaternion_normalize(struct vec a);
+```
+
+The result is a quaternion for the normalized quaternion `a`.
+
+```c
+void pquaternion_power(struct vec *a, float exponent, struct vec *result);
+struct vec quaternion_power(struct vec a, float exponent);
+```
+
+The result is a quaternion for the quaternion `a` raised to the exponent `exponent`.
+
+```c
+void pquaternion_from_axis_angle(struct vec *a, float angle, struct vec *result);
+struct vec quaternion_from_axis_angle(struct vec a, float angle);
+```
+
+The result is a quaternion for the 3D vector `a` with the value in radians `angle`.
+
+```c
+void pquaternion_rotation_matrix(struct mat *m, struct vec *result);
+struct vec quaternion_rotation_matrix(struct mat m);
+```
+
+The result is a quaternion for the rotation matrix `m`.
+
+```c
+void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, struct vec *result);
+struct vec quaternion_yaw_pitch_roll(float yaw, float pitch, float roll);
+```
+
+The result is a quaternion for the vertical axis `yaw`, the lateral axis `pitch` and the longitudinal axis `roll`.
+
+```c
+void pquaternion_linear_interpolation(struct vec *a, struct vec *b, float, p, struct vec *result);
+struct vec quaternion_linear_interpolation(struct vec a, struct vec b, float p);
+```
+
+The result is a quaternion for the linear interpolation between the quaternion `a` and the quaternion `b` with the value `p`.
+
+```c
+void pquaternion_spherical_linear_interpolation(struct vec *a, struct vec *b, float, p, struct vec *result);
+struct vec quaternion_spherical_linear_interpolation(struct vec a, struct vec b, float p);
+```
+
+The result is a quaternion for the spherical linear interpolation between the quaternion `a` and the quaternion `b` with the value `p`.
 
 ### Easing Functions
 
