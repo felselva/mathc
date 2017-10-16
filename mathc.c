@@ -1211,10 +1211,10 @@ void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, struct vec *
 	float cos_pitch = cosf(half_pitch);
 	float sin_yaw = sinf(half_yaw);
 	float cos_yaw = cosf(half_yaw);
-	result->x = (cos_yaw * sin_pitch * cos_roll) + (sin_yaw * cos_pitch * sin_roll);
-	result->y = (sin_yaw * cos_pitch * cos_roll) - (cos_yaw * sin_pitch * sin_roll);
-	result->z = (cos_yaw * cos_pitch * sin_roll) - (sin_yaw * sin_pitch * cos_roll);
-	result->w = (cos_yaw * cos_pitch * cos_roll) + (sin_yaw * sin_pitch * sin_roll);
+	result->x = cos_yaw * sin_pitch * cos_roll + sin_yaw * cos_pitch * sin_roll;
+	result->y = sin_yaw * cos_pitch * cos_roll - cos_yaw * sin_pitch * sin_roll;
+	result->z = cos_yaw * cos_pitch * sin_roll - sin_yaw * sin_pitch * cos_roll;
+	result->w = cos_yaw * cos_pitch * cos_roll + sin_yaw * sin_pitch * sin_roll;
 }
 
 MATHC_EXTERN_INLINE struct vec quaternion_yaw_pitch_roll(float yaw, float pitch, float roll)
