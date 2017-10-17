@@ -587,7 +587,135 @@ struct vec quaternion_spherical_linear_interpolation(struct vec a, struct vec b,
 
 The result is a quaternion for the spherical linear interpolation between the quaternion `a` and the quaternion `b` with the value `p`.
 
-### Easing Functions
+## Matrix
+
+```c
+void pmatrix_identity(struct mat *result);
+struct mat matrix_identity(void);
+```
+
+The result is a identity matrix.
+
+```c
+void pmatrix_ortho(float l, float r, float b, float t, float n, float f, struct mat *result);
+struct mat matrix_ortho(float l, float r, float b, float t, float n, float f);
+```
+
+The result is a orthographic projection matrix with the left `l`, right `r`, bottom `b`, top `t`, near distance `n` and far distance `f`.
+
+```c
+void pmatrix_perspective(float y_fov, float aspect, float n, float f, struct mat *result);
+struct mat matrix_perspective(float y_fov, float aspect, float n, float f);
+```
+
+The result is a perspective projection matrix with the field of view, in radians, on the Y axis `y_fov`, aspect ratio `aspect`, near distance `n` and far distance `f`.
+
+```c
+void pmatrix_rotation_x(float angle, struct mat *result);
+struct mat matrix_rotation_x(float angle);
+```
+
+The result is a rotation matrix with radians `angle` on the X axis.
+
+```c
+void pmatrix_rotation_y(float angle, struct mat *result);
+struct mat matrix_rotation_y(float angle);
+```
+
+The result is a rotation matrix with radians `angle` on the Y axis.
+
+```c
+void pmatrix_rotation_z(float angle, struct mat *result);
+struct mat matrix_rotation_z(float angle);
+```
+
+The result is a rotation matrix with radians `angle` on the Z axis.
+
+```c
+void pmatrix_rotation_axis(struct vec *a, float angle, struct mat *result);
+struct mat matrix_rotation_axis(struct vec a, float angle);
+```
+
+The result is a rotation matrix with radians `angle` on the axis of the 3D vector `a`.
+
+```c
+void pmatrix_rotation_quaternion(struct vec *q, struct mat *result);
+struct mat matrix_rotation_quaternion(struct vec q);
+```
+
+The result is a rotation matrix from the quaternion `q`.
+
+```c
+void pmatrix_look_at(struct vec *pos, struct vec *target, struct vec *up, struct mat *result);
+struct mat matrix_look_at(struct vec pos, struct vec target, struct vec up);
+```
+
+The result is a view matrix with the position at the 3D vector `pos`, looking at the 3d vector `target` and up direction by the 3D vector `up`.
+
+```c
+void pmatrix_scale(struct vec *v, struct mat *result);
+struct mat matrix_scale(struct vec v);
+```
+
+The result is a scaling matrix for the 3D vector `v`.
+
+```c
+void pmatrix_get_scale(struct mat *m, struct vec *result);
+struct vec matrix_get_scale(struct mat m);
+```
+
+The result is a 3D vector from the scale of the scale matrix `m`.
+
+```c
+void pmatrix_translation(struct vec *v, struct mat *result);
+struct mat matrix_translation(struct vec v);
+```
+
+The result is a translation matrix for the 3D vector `v`.
+
+```c
+void pmatrix_get_translation(struct mat *m, struct vec *result);
+struct vec matrix_get_translation(struct mat m);
+```
+
+The result is a 3D vector from the translation of the translation matrix `m`.
+
+```c
+void pmatrix_negative(struct mat *m, struct mat *result);
+struct mat matrix_negative(struct mat m);
+```
+
+The result is a matrix for the negation of the matrix `m`.
+
+```c
+void pmatrix_multiply(struct mat *m, float s, struct mat *result);
+struct mat matrix_multiply(struct mat m, float s);
+```
+
+The result is a matrix for the multiplication of the matrix `a` with the scale `s`.
+
+```c
+void pmatrix_multiply_matrix(struct mat *a, struct mat *b, struct mat *result);
+struct mat matrix_multiply_matrix(struct mat a, struct mat b);
+```
+
+The result is a matrix for the multiplication of the matrix `a` with the matrix `b`.
+
+```c
+void pmatrix_multiply_f4(struct mat *m, float *result);
+void matrix_multiply_f4(struct mat m, float *result);
+```
+
+Multiply the values of the array `result` with 4 `float` elements by the matrix `m`.
+
+```c
+void pmatrix_to_array(struct mat *m, float *result);
+void matrix_to_array(struct mat m, float *result);
+```
+
+Copy the elements of the matrix `m` to the array `result` with 16 `float` elements.
+
+## Easing Functions
 
 ```c
 float quadratic_ease_in(float p);
