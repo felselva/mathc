@@ -56,7 +56,7 @@ pmatrix_multiply_matrix(&projection, &view, &multiplied_matrix);
 
 # Vectors
 
-All vectors (2D, 3D and quaternions ) use the same structure type `struct vec`.
+All vectors (2D, 3D and quaternions) use the same structure type `struct vec`. The `z` component is still useful for 2D vectors, as it is used by OpenGL for depth testing. This means the only extra component on 2D and 3D vectors is the `w` component, which is used by quaternions.
 
 Examples:
 
