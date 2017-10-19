@@ -1276,6 +1276,33 @@ MATHC_EXTERN_INLINE struct vec quaternion_spherical_linear_interpolation(struct 
 }
 
 /* Matrix */
+void pmatrix_zero(struct mat *result)
+{
+	result->m11 = 0.0f;
+	result->m12 = 0.0f;
+	result->m13 = 0.0f;
+	result->m14 = 0.0f;
+	result->m21 = 0.0f;
+	result->m22 = 0.0f;
+	result->m23 = 0.0f;
+	result->m24 = 0.0f;
+	result->m31 = 0.0f;
+	result->m32 = 0.0f;
+	result->m33 = 0.0f;
+	result->m34 = 0.0f;
+	result->m41 = 0.0f;
+	result->m42 = 0.0f;
+	result->m43 = 0.0f;
+	result->m44 = 0.0f;
+}
+
+MATHC_EXTERN_INLINE struct mat matrix_zero(void)
+{
+	struct mat result;
+	pmatrix_zero(&result);
+	return result;
+}
+
 void pmatrix_identity(struct mat *result)
 {
 	result->m11 = 1.0f;
@@ -1307,11 +1334,11 @@ void pmatrix_ortho(float l, float r, float b, float t, float n, float f, struct 
 {
 	pmatrix_identity(result);
 	result->m11 = 2.0f / (r - l);
-	result->m22 = 2.0f / (b - t);
+	result->m22 = 2.0f / (t - b);
 	result->m33 = 1.0f / (n - f);
 	result->m41 = (l + r) / (l - r);
-	result->m42 = (t + b) / (b - t);
-	result->m43 = n / (n - f);
+	result->m42 = (b + t) / (b - t);
+	result->m43 = n / (f - n);
 }
 
 MATHC_EXTERN_INLINE struct mat matrix_ortho(float l, float r, float b, float t, float n, float f)
@@ -1321,22 +1348,22 @@ MATHC_EXTERN_INLINE struct mat matrix_ortho(float l, float r, float b, float t, 
 	return result;
 }
 
-void pmatrix_perspective(float y_fov, float aspect, float n, float f, struct mat *result)
+void pmatrix_perspective(float fov, float aspect, float n, float f, struct mat *result)
 {
-	pmatrix_identity(result);
-	/* Right-handed */
-	float a = 1.0f / tanf(y_fov * 0.5f);
-	result->m11 = a / aspect;
-	result->m22 = a;
-	result->m33 = f / (n - f);
+	const float inverse_half_fov_tan = 1.0f / tanf(fov * 0.5f);
+	pmatrix_zero(result);
+	/* linmath.h */
+	result->m11 = inverse_half_fov_tan / aspect;
+	result->m22 = inverse_half_fov_tan;
+	result->m33 = -(f + n) / (f - n);
 	result->m34 = -1.0f;
-	result->m43 = (n * f) / (n - f);
+	result->m43 = -(2.0f * f * n) / (f - n);
 }
 
-MATHC_EXTERN_INLINE struct mat matrix_perspective(float y_fov, float aspect, float n, float f)
+MATHC_EXTERN_INLINE struct mat matrix_perspective(float fov, float aspect, float n, float f)
 {
 	struct mat result;
-	pmatrix_perspective(y_fov, aspect, n, f, &result);
+	pmatrix_perspective(fov, aspect, n, f, &result);
 	return result;
 }
 
@@ -1399,21 +1426,25 @@ void pmatrix_rotation_axis(struct vec *a, float angle, struct mat *result)
 	pmatrix_identity(result);
 	float c = cosf(angle);
 	float s = sinf(angle);
-	float n1 = a->x * a->x;
-	float n2 = a->y * a->y;
-	float n3 = a->z * a->z;
-	float n4 = a->x * a->y;
-	float n5 = a->x * a->z;
-	float n6 = a->y * a->z;
-	result->m11 = n1 + (c * (1.0f - n1));
-	result->m12 = (n4 - (c * n4)) + (s * a->z);
-	result->m13 = (n5 - (c * n5)) - (s * a->y);
-	result->m21 = (n4 - (c * n4)) - (s * a->z);
-	result->m22 = n2 + (c * (1.0f - n2));
-	result->m23 = (n6 - (c * n6)) + (s * a->x);
-	result->m31 = (n5 - (c * n5)) + (s * a->y);
-	result->m32 = (n6 - (c * n6)) - (s * a->x);
-	result->m33 = n3 + (c * (1.0f - n3));
+	float one_c = 1.0f - c;
+	float x = a->x;
+	float y = a->y;
+	float z = a->z;
+	float xx = x * x;
+	float xy = x * y;
+	float xz = x * z;
+	float yy = y * y;
+	float yz = y * z;
+	float zz = z * z;
+	result->m11 = c + xx * (one_c);
+	result->m12 = xy * (one_c) - z * s;
+	result->m13 = xz * (one_c) + y * s;
+	result->m21 = xy * (one_c) + z * s;
+	result->m22 = c + yy * (one_c);
+	result->m23 = yz * (one_c) - x * s;
+	result->m31 = xz * (one_c) - y * s;
+	result->m32 = yz * (one_c) + x * s;
+	result->m33 = c + zz * (one_c);
 }
 
 MATHC_EXTERN_INLINE struct mat matrix_rotation_axis(struct vec a, float angle)
@@ -1453,29 +1484,34 @@ MATHC_EXTERN_INLINE struct mat matrix_rotation_quaternion(struct vec q)
 	return result;
 }
 
-void pmatrix_look_at(struct vec *pos, struct vec *target, struct vec *up, struct mat *result)
+void pmatrix_look_at(struct vec *position, struct vec *target, struct vec *up, struct mat *result)
 {
-	struct vec v1;
-	struct vec v2;
-	struct vec v3;
-	pmatrix_identity(result);
-	pvector3_subtract(pos, target, &v1);
-	pvector3_normalize(&v1, &v1);
-	pvector3_cross(up, &v1, &v2);
-	pvector3_normalize(&v2, &v2);
-	pvector3_cross(&v1, &v2, &v3);
-	result->m11 = v2.x;
-	result->m12 = v3.x;
-	result->m13 = v1.x;
-	result->m21 = v2.y;
-	result->m22 = v3.y;
-	result->m23 = v1.y;
-	result->m31 = v2.z;
-	result->m32 = v3.z;
-	result->m33 = v1.z;
-	result->m41 = -pvector3_dot(&v2, pos);
-	result->m42 = -pvector3_dot(&v3, pos);
-	result->m43 = -pvector3_dot(&v1, pos);
+	struct vec direction;
+	struct vec right_direction;
+	struct vec up_direction;
+	pmatrix_zero(result);
+	/* Direction */
+	pvector3_subtract(target, position, &direction);
+	pvector3_normalize(&direction, &direction);
+	/* Right direction */
+	pvector3_cross(&direction, up, &right_direction);
+	pvector3_normalize(&right_direction, &right_direction);
+	/* Up direction */
+	pvector3_cross(&right_direction, &direction, &up_direction);
+	//pvector3_normalize(&up_direction, &up_direction);
+	result->m11 = right_direction.x;
+	result->m12 = right_direction.y;
+	result->m13 = right_direction.z;
+	result->m21 = up_direction.x;
+	result->m22 = up_direction.y;
+	result->m23 = up_direction.z;
+	result->m31 = direction.x;
+	result->m32 = direction.y;
+	result->m33 = direction.z;
+	result->m14 = -pvector3_dot(&right_direction, position);
+	result->m24 = -pvector3_dot(&up_direction, position);
+	result->m34 = pvector3_dot(&direction, position);
+	result->m44 = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct mat matrix_look_at(struct vec pos, struct vec target, struct vec up)
@@ -1645,20 +1681,20 @@ MATHC_EXTERN_INLINE void matrix_multiply_f4(struct mat m, float *result)
 void pmatrix_to_array(struct mat *m, float *result)
 {
 	result[0] = m->m11;
-	result[1] = m->m12;
-	result[2] = m->m13;
-	result[3] = m->m14;
-	result[4] = m->m21;
+	result[1] = m->m21;
+	result[2] = m->m31;
+	result[3] = m->m41;
+	result[4] = m->m12;
 	result[5] = m->m22;
-	result[6] = m->m23;
-	result[7] = m->m24;
-	result[8] = m->m31;
-	result[9] = m->m32;
+	result[6] = m->m32;
+	result[7] = m->m42;
+	result[8] = m->m13;
+	result[9] = m->m23;
 	result[10] = m->m33;
-	result[11] = m->m34;
-	result[12] = m->m41;
-	result[13] = m->m42;
-	result[14] = m->m43;
+	result[11] = m->m43;
+	result[12] = m->m14;
+	result[13] = m->m24;
+	result[14] = m->m34;
 	result[15] = m->m44;
 }
 

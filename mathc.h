@@ -220,9 +220,10 @@ struct vec quaternion_linear_interpolation(struct vec a, struct vec b, float p);
 struct vec quaternion_spherical_linear_interpolation(struct vec a, struct vec b, float p);
 
 /* Matrix */
+void pmatrix_zero(struct mat *result);
 void pmatrix_identity(struct mat *result);
 void pmatrix_ortho(float l, float r, float b, float t, float n, float f, struct mat *result);
-void pmatrix_perspective(float y_fov, float aspect, float n, float f, struct mat *result);
+void pmatrix_perspective(float fov, float aspect, float n, float f, struct mat *result);
 void pmatrix_rotation_x(float angle, struct mat *result);
 void pmatrix_rotation_y(float angle, struct mat *result);
 void pmatrix_rotation_z(float angle, struct mat *result);
@@ -239,9 +240,10 @@ void pmatrix_multiply_matrix(struct mat *a, struct mat *b, struct mat *result);
 void pmatrix_multiply_f4(struct mat *m, float *result);
 void pmatrix_to_array(struct mat *m, float *result);
 
+struct mat matrix_zero(void);
 struct mat matrix_identity(void);
 struct mat matrix_ortho(float l, float r, float b, float t, float n, float f);
-struct mat matrix_perspective(float y_fov, float aspect, float n, float f);
+struct mat matrix_perspective(float fov, float aspect, float n, float f);
 struct mat matrix_rotation_x(float angle);
 struct mat matrix_rotation_y(float angle);
 struct mat matrix_rotation_z(float angle);
