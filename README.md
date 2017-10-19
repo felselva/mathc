@@ -77,7 +77,7 @@ struct vec quaternion = to_quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 struct vec interpolated = quaternion_spherical_linear_interpolation(a, b, 0.5f);
 ```
 
-You don't need to create your OpenGL buffer (VBO) to take 4 elements. When using `glMapBufferRange()`/`glMapBuffer()` and `glUnmapBuffer()`, you can pass only the used elements to the VBO that has element count of your choice.
+You don't need to create your OpenGL buffer (VBO) to take 4 elements. When using `glMapBufferRange()`/`glMapBuffer()` and `glUnmapBuffer()`, you can pass only the used elements to the VBO, that has element count of your choice.
 
 # Matrices
 
