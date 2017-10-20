@@ -23,6 +23,7 @@ the following restrictions:
 
 #define M_PIF 3.1415926536f
 #define M_PIF_2 1.5707963268f
+#define MAT_SIZE 16
 
 struct vec {
 	float x;
