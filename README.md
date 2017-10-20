@@ -16,6 +16,10 @@ It support C99 standard or later.
 
 The reference is the file `REFERENCE.md`.
 
+There are examples on my other repository using this math library:
+
+[CGDFW examples](https://github.com/ferreiradaselva/cgdfw/tree/master/examples)
+
 # Float
 
 Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
