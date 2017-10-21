@@ -323,9 +323,9 @@ void pvector2_normalize(struct vec *a, struct vec *result)
 {
 	float length = a->x * a->x + a->y * a->y;
 	if (length != 0.0f) {
-		length = sqrtf(length);
-		result->x = a->x / length;
-		result->y = a->y / length;
+		length = 1.0f / sqrtf(length);
+		result->x = a->x * length;
+		result->y = a->y * length;
 	} else {
 		result->x = 0.0f;
 		result->y = 0.0f;
@@ -708,10 +708,10 @@ void pvector3_normalize(struct vec *a, struct vec *result)
 {
 	float length = a->x * a->x + a->y * a->y + a->z * a->z;
 	if (length != 0.0f) {
-		length = sqrtf(length);
-		result->x = a->x / length;
-		result->y = a->y / length;
-		result->z = a->z / length;
+		length = 1.0f / sqrtf(length);
+		result->x = a->x * length;
+		result->y = a->y * length;
+		result->z = a->z * length;
 	} else {
 		result->x = 0.0f;
 		result->y = 0.0f;
@@ -876,20 +876,15 @@ void pquaternion_divide(struct vec *a, struct vec *b, struct vec *result)
 	float y = a->y;
 	float z = a->z;
 	float w = a->w;
-	float n1 = b->x * b->x + b->y * b->y + b->z * b->z + b->w * b->w;
-	float n2 = 1.0f / n1;
-	float n3 = -b->x * n2;
-	float n4 = -b->y * n2;
-	float n5 = -b->z * n2;
-	float n6 = b->w * n2;
-	float n7 = y * n5 - z * n4;
-	float n8 = z * n3 - x * n5;
-	float n9 = x * n4 - y * n3;
-	float n10 = x * n3 + y * n4 + z * n5;
-	result->x = x * n6 + n3 * w + n7;
-	result->y = y * n6 + n4 * w + n8;
-	result->z = z * n6 + n5 * w + n9;
-	result->w = w * n6 - n10;
+	float length_squared = 1.0f / (b->x * b->x + b->y * b->y + b->z * b->z + b->w * b->w);
+	float normalized_x = -b->x * length_squared;
+	float normalized_y = -b->y * length_squared;
+	float normalized_z = -b->z * length_squared;
+	float normalized_w = b->w * length_squared;
+	result->x = x * normalized_w + normalized_x * w + (y * normalized_z - z * normalized_y);
+	result->y = y * normalized_w + normalized_y * w + (z * normalized_x - x * normalized_z);
+	result->z = z * normalized_w + normalized_z * w + (x * normalized_y - y * normalized_x);
+	result->w = w * normalized_w - (x * normalized_x + y * normalized_y + z * normalized_z);
 }
 
 MATHC_EXTERN_INLINE struct vec quaternion_divide(struct vec a, struct vec b)
@@ -931,12 +926,11 @@ MATHC_EXTERN_INLINE struct vec quaternion_conjugate(struct vec a)
 
 void pquaternion_inverse(struct vec *a, struct vec *result)
 {
-	float n1 = sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
-	float n2 = 1.0f / n1;
-	result->x = -a->x * n2;
-	result->y = -a->y * n2;
-	result->z = -a->z * n2;
-	result->w = a->w * n2;
+	float length = 1.0f / sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
+	result->x = -a->x * length;
+	result->y = -a->y * length;
+	result->z = -a->z * length;
+	result->w = a->w * length;
 }
 
 MATHC_EXTERN_INLINE struct vec quaternion_inverse(struct vec a)
