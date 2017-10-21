@@ -1335,10 +1335,10 @@ void pmatrix_ortho(float l, float r, float b, float t, float n, float f, struct 
 	pmatrix_identity(result);
 	result->m11 = 2.0f / (r - l);
 	result->m22 = 2.0f / (t - b);
-	result->m33 = 1.0f / (n - f);
-	result->m41 = (l + r) / (l - r);
-	result->m42 = (b + t) / (b - t);
-	result->m43 = n / (f - n);
+	result->m33 = -2.0f / (f - n);
+	result->m41 = -(r + l) / (r - l);
+	result->m42 = -(t + b) / (t - b);
+	result->m43 = -(f + n) / (f - n);
 }
 
 MATHC_EXTERN_INLINE struct mat matrix_ortho(float l, float r, float b, float t, float n, float f)
@@ -1350,14 +1350,13 @@ MATHC_EXTERN_INLINE struct mat matrix_ortho(float l, float r, float b, float t, 
 
 void pmatrix_perspective(float fov, float aspect, float n, float f, struct mat *result)
 {
-	const float inverse_half_fov_tan = 1.0f / tanf(fov * 0.5f);
+	const float cotan = 1.0f / tanf(fov * 0.5f);
 	pmatrix_zero(result);
-	/* linmath.h */
-	result->m11 = inverse_half_fov_tan / aspect;
-	result->m22 = inverse_half_fov_tan;
-	result->m33 = -(f + n) / (f - n);
-	result->m34 = -1.0f;
-	result->m43 = -(2.0f * f * n) / (f - n);
+	result->m11 = cotan / aspect;
+	result->m22 = cotan;
+	result->m33 = (f + n) / (n - f);
+	result->m43 = -1.0f;
+	result->m34 = 2.0f * f * n / (n - f);
 }
 
 MATHC_EXTERN_INLINE struct mat matrix_perspective(float fov, float aspect, float n, float f)
@@ -1457,24 +1456,24 @@ MATHC_EXTERN_INLINE struct mat matrix_rotation_axis(struct vec a, float angle)
 void pmatrix_rotation_quaternion(struct vec *q, struct mat *result)
 {
 	pmatrix_identity(result);
-	float n9 = q->x * q->x;
-	float n8 = q->y * q->y;
-	float n7 = q->z * q->z;
-	float n6 = q->x * q->y;
-	float n5 = q->z * q->w;
-	float n4 = q->z * q->x;
-	float n3 = q->y * q->w;
-	float n2 = q->y * q->z;
-	float n1 = q->x * q->w;
-	result->m11 = 1.0f - 2.0f * (n8 + n7);
-	result->m12 = 2.0f * (n6 + n5);
-	result->m13 = 2.0f * (n4 - n3);
-	result->m21 = 2.0f * (n6 - n5);
-	result->m22 = 1.0f - 2.0f * (n7 + n9);
-	result->m23 = 2.0f * (n2 + n1);
-	result->m31 = 2.0f * (n4 + n3);
-	result->m32 = 2.0f * (n2 - n1);
-	result->m33 = 1.0f - 2.0f * (n8 + n9);
+	float xx = q->x * q->x;
+	float yy = q->y * q->y;
+	float zz = q->z * q->z;
+	float xy = q->x * q->y;
+	float zw = q->z * q->w;
+	float xz = q->z * q->x;
+	float yw = q->y * q->w;
+	float yz = q->y * q->z;
+	float xw = q->x * q->w;
+	result->m11 = 1.0f - 2.0f * (yy - zz);
+	result->m12 = 2.0f * (xy - zw);
+	result->m13 = 2.0f * (xz + yw);
+	result->m21 = 2.0f * (xy + zw);
+	result->m22 = 1.0f - 2.0f * (xx - zz);
+	result->m23 = 2.0f * (yz - xw);
+	result->m31 = 2.0f * (xz - yw);
+	result->m32 = 2.0f * (yz + xw);
+	result->m33 = 1.0f - 2.0f * (xx - yy);
 }
 
 MATHC_EXTERN_INLINE struct mat matrix_rotation_quaternion(struct vec q)
@@ -1486,32 +1485,27 @@ MATHC_EXTERN_INLINE struct mat matrix_rotation_quaternion(struct vec q)
 
 void pmatrix_look_at(struct vec *position, struct vec *target, struct vec *up, struct mat *result)
 {
-	struct vec direction;
-	struct vec right_direction;
-	struct vec up_direction;
-	pmatrix_zero(result);
-	/* Direction */
-	pvector3_subtract(target, position, &direction);
-	pvector3_normalize(&direction, &direction);
-	/* Right direction */
-	pvector3_cross(&direction, up, &right_direction);
-	pvector3_normalize(&right_direction, &right_direction);
-	/* Up direction */
-	pvector3_cross(&right_direction, &direction, &up_direction);
-	//pvector3_normalize(&up_direction, &up_direction);
-	result->m11 = right_direction.x;
-	result->m12 = right_direction.y;
-	result->m13 = right_direction.z;
-	result->m21 = up_direction.x;
-	result->m22 = up_direction.y;
-	result->m23 = up_direction.z;
-	result->m31 = direction.x;
-	result->m32 = direction.y;
-	result->m33 = direction.z;
-	result->m14 = -pvector3_dot(&right_direction, position);
-	result->m24 = -pvector3_dot(&up_direction, position);
-	result->m34 = pvector3_dot(&direction, position);
-	result->m44 = 1.0f;
+	struct vec z_axis;
+	struct vec x_axis;
+	struct vec y_axis;
+	pvector3_subtract(target, position, &z_axis);
+	pvector3_normalize(&z_axis, &z_axis);
+	pvector3_cross(&z_axis, up, &x_axis);
+	pvector3_normalize(&x_axis, &x_axis);
+	pvector3_cross(&x_axis, &z_axis, &y_axis);
+	pmatrix_identity(result);
+	result->m11 = x_axis.x;
+	result->m12 = x_axis.y;
+	result->m13 = x_axis.z;
+	result->m21 = y_axis.x;
+	result->m22 = y_axis.y;
+	result->m23 = y_axis.z;
+	result->m31 = -z_axis.x;
+	result->m32 = -z_axis.y;
+	result->m33 = -z_axis.z;
+	result->m14 = -pvector3_dot(&x_axis, position);
+	result->m24 = -pvector3_dot(&y_axis, position);
+	result->m34 = pvector3_dot(&z_axis, position);
 }
 
 MATHC_EXTERN_INLINE struct mat matrix_look_at(struct vec pos, struct vec target, struct vec up)
