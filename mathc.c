@@ -1324,25 +1324,25 @@ MATHC_EXTERN_INLINE struct mat matrix_identity(void)
 	return result;
 }
 
-void pmatrix_ortho(float l, float r, float b, float t, float n, float f, struct mat *result)
+void pmatrix_ortho(float l, float r, float t, float b, float n, float f, struct mat *result)
 {
 	pmatrix_identity(result);
 	result->m11 = 2.0f / (r - l);
 	result->m22 = 2.0f / (t - b);
 	result->m33 = -2.0f / (f - n);
-	result->m41 = -(r + l) / (r - l);
-	result->m42 = -(t + b) / (t - b);
-	result->m43 = -(f + n) / (f - n);
+	result->m14 = -(r + l) / (r - l);
+	result->m24 = -(t + b) / (t - b);
+	result->m34 = -(f + n) / (f - n);
 }
 
-MATHC_EXTERN_INLINE struct mat matrix_ortho(float l, float r, float b, float t, float n, float f)
+MATHC_EXTERN_INLINE struct mat matrix_ortho(float l, float r, float t, float b, float n, float f)
 {
 	struct mat result;
 	pmatrix_ortho(l, r, b, t, n, f, &result);
 	return result;
 }
 
-void pmatrix_perspective(float fov, float aspect, float n, float f, struct mat *result)
+void pmatrix_perspective_fov(float fov, float aspect, float n, float f, struct mat *result)
 {
 	const float cotan = 1.0f / tanf(fov * 0.5f);
 	pmatrix_zero(result);
@@ -1353,10 +1353,29 @@ void pmatrix_perspective(float fov, float aspect, float n, float f, struct mat *
 	result->m34 = 2.0f * f * n / (n - f);
 }
 
-MATHC_EXTERN_INLINE struct mat matrix_perspective(float fov, float aspect, float n, float f)
+MATHC_EXTERN_INLINE struct mat matrix_perspective_fov(float fov, float aspect, float n, float f)
 {
 	struct mat result;
-	pmatrix_perspective(fov, aspect, n, f, &result);
+	pmatrix_perspective_fov(fov, aspect, n, f, &result);
+	return result;
+}
+
+void pmatrix_perspective(float l, float r, float t, float b, float n, float f, struct mat *result)
+{
+	pmatrix_zero(result);
+	result->m11 = 2.0f * n / (r - l);
+	result->m22 = 2.0f / (t - b);
+	result->m33 = -(f + n) / (f - n);
+	result->m13 = (r + l) / (r - l);
+	result->m23 = (t + b) / (t - b);
+	result->m34 = -2.0f * f * n / (f - n);
+	result->m43 = -1.0f;
+}
+
+MATHC_EXTERN_INLINE struct mat matrix_perspective(float l, float r, float t, float b, float n, float f)
+{
+	struct mat result;
+	pmatrix_perspective(l, r, t, b, n, f, &result);
 	return result;
 }
 
@@ -1477,16 +1496,25 @@ MATHC_EXTERN_INLINE struct mat matrix_rotation_quaternion(struct vec q)
 	return result;
 }
 
-void pmatrix_look_at(struct vec *position, struct vec *target, struct vec *up, struct mat *result)
+void pmatrix_look_at(struct vec *position, struct vec *target, struct mat *result)
 {
-	struct vec z_axis;
-	struct vec x_axis;
-	struct vec y_axis;
+	struct vec z_axis; /* Forward */
+	struct vec x_axis; /* Side */
+	struct vec y_axis; /* Up */
 	pvector3_subtract(target, position, &z_axis);
 	pvector3_normalize(&z_axis, &z_axis);
-	pvector3_cross(&z_axis, up, &x_axis);
+	if (fabsf(z_axis.x) < FLT_EPSILON && fabsf(z_axis.z) < FLT_EPSILON) {
+		if (z_axis.y > 0.0f) {
+			to_pvector3(0.0f, 0.0f, -1.0f, &y_axis);
+		} else {
+			to_pvector3(0.0f, 0.0f, 1.0f, &y_axis);
+		}
+	} else {
+		to_pvector3(0.0f, 1.0f, 0.0f, &y_axis);
+	}
+	pvector3_cross(&y_axis, &z_axis, &x_axis);
 	pvector3_normalize(&x_axis, &x_axis);
-	pvector3_cross(&x_axis, &z_axis, &y_axis);
+	pvector3_cross(&z_axis, &x_axis, &y_axis);
 	pmatrix_identity(result);
 	result->m11 = x_axis.x;
 	result->m12 = x_axis.y;
@@ -1494,18 +1522,18 @@ void pmatrix_look_at(struct vec *position, struct vec *target, struct vec *up, s
 	result->m21 = y_axis.x;
 	result->m22 = y_axis.y;
 	result->m23 = y_axis.z;
-	result->m31 = -z_axis.x;
-	result->m32 = -z_axis.y;
-	result->m33 = -z_axis.z;
-	result->m14 = -pvector3_dot(&x_axis, position);
-	result->m24 = -pvector3_dot(&y_axis, position);
+	result->m31 = z_axis.x;
+	result->m32 = z_axis.y;
+	result->m33 = z_axis.z;
+	result->m14 = pvector3_dot(&x_axis, position);
+	result->m24 = pvector3_dot(&y_axis, position);
 	result->m34 = pvector3_dot(&z_axis, position);
 }
 
-MATHC_EXTERN_INLINE struct mat matrix_look_at(struct vec pos, struct vec target, struct vec up)
+MATHC_EXTERN_INLINE struct mat matrix_look_at(struct vec pos, struct vec target)
 {
 	struct mat result;
-	pmatrix_look_at(&pos, &target, &up, &result);
+	pmatrix_look_at(&pos, &target, &result);
 	return result;
 }
 
