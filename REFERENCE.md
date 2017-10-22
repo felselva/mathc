@@ -604,11 +604,18 @@ struct mat matrix_ortho(float l, float r, float b, float t, float n, float f);
 The result is a orthographic projection matrix with the left `l`, right `r`, bottom `b`, top `t`, near distance `n` and far distance `f`.
 
 ```c
-void pmatrix_perspective(float y_fov, float aspect, float n, float f, struct mat *result);
-struct mat matrix_perspective(float y_fov, float aspect, float n, float f);
+void pmatrix_perspective_fov(float fov, float aspect, float n, float f, struct mat *result);
+struct mat matrix_perspective_fov(float fov, float aspect, float n, float f);
 ```
 
-The result is a perspective projection matrix with the field of view, in radians, on the Y axis `y_fov`, aspect ratio `aspect`, near distance `n` and far distance `f`.
+The result is a perspective projection matrix with the field of view `fov`, in radians, aspect ratio `aspect`, near distance `n` and far distance `f`.
+
+```c
+void pmatrix_perspective(float l, float r, float t, float b, float n, float f, struct mat *result);
+struct mat matrix_perspective(float l, float r, float t, float b, float n, float f);
+```
+
+The result is a perspective projection matrix with the bountadies set tot hte left `l`, right `r`, top `t`, bottom `b`, near distance `n` and far distance `f`.
 
 ```c
 void pmatrix_rotation_x(float angle, struct mat *result);
@@ -646,11 +653,11 @@ struct mat matrix_rotation_quaternion(struct vec q);
 The result is a rotation matrix from the quaternion `q`.
 
 ```c
-void pmatrix_look_at(struct vec *pos, struct vec *target, struct vec *up, struct mat *result);
-struct mat matrix_look_at(struct vec pos, struct vec target, struct vec up);
+void pmatrix_look_at(struct vec *pos, struct vec *target, struct mat *result);
+struct mat matrix_look_at(struct vec pos, struct vec target);
 ```
 
-The result is a view matrix with the position at the 3D vector `pos`, looking at the 3d vector `target` and up direction by the 3D vector `up`.
+The result is a view matrix with the position at the 3D vector `pos`, looking at the 3d vector `target`. The up direction is assumed `[0.0f, 1.0f, 0.0f]`.
 
 ```c
 void pmatrix_scale(struct vec *v, struct mat *result);
