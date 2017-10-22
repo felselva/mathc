@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ferreiradaselva/mathc.svg?branch=master)](https://travis-ci.org/ferreiradaselva/mathc)
 
-MathC is a simple math library for 2D and 3D programming. It contains implementations for:
+MathC is a simple math library for 2D and 3D game programming. It contains implementations for:
 
 - 2D vectors
 - 3D vectors
@@ -38,23 +38,21 @@ Examples:
 /* Pass by value and return a value */
 struct mat projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
 struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
-	to_vector3(0.0f, 0.0f, 0.0f),
-	to_vector3(0.0f, 1.0f, 0.0f));
+	to_vector3(0.0f, 0.0f, 0.0f));
 struct mat pv = matrix_multiply_matrix(projection, view);
 
 /* Pass by pointer */
 struct vec pos = {0};
 struct vec target = {0};
-struct vec up = {0};
-struct mat projection;
-struct mat view;
-struct mat multiplied_matrix;
+struct mat projection = {0};
+struct mat view = {0};
+struct mat multiplied_matrix = {0};
 
 to_pvector3(0.0f, 0.0f, 1.0f, &pos);
 to_pvector3(0.0f, 0.0f, 0.0f, &target);
 to_pvector3(0.0f, 1.0f, 0.0f, &up);
 pmatrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f, &projection);
-pmatrix_look_at(&pos, &target, &up, &view);
+pmatrix_look_at(&pos, &target, &view);
 pmatrix_multiply_matrix(&projection, &view, &multiplied_matrix);
 ```
 
@@ -101,8 +99,7 @@ If you want to modify on GPU-side, you can use the functions `matrix_to_array()`
 float v[16];
 struct mat projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
 struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
-	to_vector3(0.0f, 0.0f, 0.0f),
-	to_vector3(0.0f, 1.0f, 0.0f));
+	to_vector3(0.0f, 0.0f, 0.0f));
 struct mat pv = matrix_multiply_matrix(projection, view);
 matrix_to_array(pv, v);
 ```
