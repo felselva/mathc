@@ -1120,6 +1120,7 @@ void pquaternion_from_axis_angle(struct vec *a, float angle, struct vec *result)
 	result->y = a->y * s;
 	result->z = a->z * s;
 	result->w = cosf(half);
+	pquaternion_normalize(result, result);
 }
 
 MATHC_EXTERN_INLINE struct vec quaternion_from_axis_angle(struct vec a, float angle)
