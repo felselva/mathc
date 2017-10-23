@@ -1132,11 +1132,11 @@ MATHC_EXTERN_INLINE struct vec quaternion_from_axis_angle(struct vec a, float an
 
 void pquaternion_to_axis_angle(struct vec *a, struct vec *result)
 {
-	double sa;
+	float sa;
 	struct vec tmp;
 	pquaternion_normalize(a, &tmp);
-	sa = sqrt(1.0f - tmp.w * tmp.w);
-	if (fabs(sa) <= FLT_EPSILON) {
+	sa = sqrtf(1.0f - tmp.w * tmp.w);
+	if (fabsf(sa) <= FLT_EPSILON) {
 		sa = 1.0f;
 	}
 	result->x = tmp.x / sa;
