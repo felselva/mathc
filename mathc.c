@@ -929,6 +929,8 @@ void pquaternion_inverse(struct vec *a, struct vec *result)
 	float length = sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
 	if (fabs(length) > FLT_EPSILON) {
 		length = 1.0f / length;
+	} else {
+		length = 0.0f;
 	}
 	result->x = -a->x * length;
 	result->y = -a->y * length;
@@ -1046,7 +1048,12 @@ MATHC_EXTERN_INLINE float quaternion_dot(struct vec a, struct vec b)
 float pquaternion_angle(struct vec *a, struct vec *b)
 {
 	float s = sqrtf(pquaternion_length_squared(a) * pquaternion_length_squared(b));
-	return acosf(pquaternion_dot(a, b) / s);
+	if (fabs(s) > FLT_EPSILON) {
+		s = 1.0f / s;
+	} else {
+		s = 0.0f;
+	}
+	return acosf(pquaternion_dot(a, b) * s);
 }
 
 MATHC_EXTERN_INLINE float quaternion_angle(struct vec a, struct vec b)
