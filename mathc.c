@@ -926,7 +926,10 @@ MATHC_EXTERN_INLINE struct vec quaternion_conjugate(struct vec a)
 
 void pquaternion_inverse(struct vec *a, struct vec *result)
 {
-	float length = 1.0f / sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
+	float length = sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
+	if (fabs(length) > FLT_EPSILON) {
+		length = 1.0f / length;
+	}
 	result->x = -a->x * length;
 	result->y = -a->y * length;
 	result->z = -a->z * length;
