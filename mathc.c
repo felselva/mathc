@@ -436,6 +436,44 @@ MATHC_EXTERN_INLINE struct vec vector2_linear_interpolation(struct vec a, struct
 	return result;
 }
 
+void pvector2_bezier3(struct vec *a, struct vec *b, struct vec *c, float p, struct vec *result)
+{
+	struct vec tmp_a;
+	struct vec tmp_b;
+	pvector2_linear_interpolation(a, b, p, &tmp_a);
+	pvector2_linear_interpolation(b, c, p, &tmp_b);
+	pvector2_linear_interpolation(&tmp_a, &tmp_b, p, result);
+}
+
+MATHC_EXTERN_INLINE struct vec vector2_bezier3(struct vec a, struct vec b, struct vec c, float p)
+{
+	struct vec result;
+	pvector2_bezier3(&a, &b, &c, p, &result);
+	return result;
+}
+
+void pvector2_bezier4(struct vec *a, struct vec *b, struct vec *c, struct vec *d, float p, struct vec *result)
+{
+	struct vec tmp_a;
+	struct vec tmp_b;
+	struct vec tmp_c;
+	struct vec tmp_d;
+	struct vec tmp_e;
+	pvector2_linear_interpolation(a, b, p, &tmp_a);
+	pvector2_linear_interpolation(b, c, p, &tmp_b);
+	pvector2_linear_interpolation(c, d, p, &tmp_c);
+	pvector2_linear_interpolation(&tmp_a, &tmp_b, p, &tmp_d);
+	pvector2_linear_interpolation(&tmp_b, &tmp_c, p, &tmp_e);
+	pvector2_linear_interpolation(&tmp_d, &tmp_e, p, result);
+}
+
+MATHC_EXTERN_INLINE struct vec vector2_bezier4(struct vec a, struct vec b, struct vec c, struct vec d, float p)
+{
+	struct vec result;
+	pvector2_bezier4(&a, &b, &c, &d, p, &result);
+	return result;
+}
+
 /* Vector 3D */
 void to_pvector3(float x, float y, float z, struct vec *result)
 {
@@ -791,6 +829,44 @@ MATHC_EXTERN_INLINE struct vec vector3_linear_interpolation(struct vec a, struct
 {
 	struct vec result;
 	pvector3_linear_interpolation(&a, &b, p, &result);
+	return result;
+}
+
+void pvector3_bezier3(struct vec *a, struct vec *b, struct vec *c, float p, struct vec *result)
+{
+	struct vec tmp_a;
+	struct vec tmp_b;
+	pvector3_linear_interpolation(a, b, p, &tmp_a);
+	pvector3_linear_interpolation(b, c, p, &tmp_b);
+	pvector3_linear_interpolation(&tmp_a, &tmp_b, p, result);
+}
+
+MATHC_EXTERN_INLINE struct vec vector3_bezier3(struct vec a, struct vec b, struct vec c, float p)
+{
+	struct vec result;
+	pvector3_bezier3(&a, &b, &c, p, &result);
+	return result;
+}
+
+void pvector3_bezier4(struct vec *a, struct vec *b, struct vec *c, struct vec *d, float p, struct vec *result)
+{
+	struct vec tmp_a;
+	struct vec tmp_b;
+	struct vec tmp_c;
+	struct vec tmp_d;
+	struct vec tmp_e;
+	pvector3_linear_interpolation(a, b, p, &tmp_a);
+	pvector3_linear_interpolation(b, c, p, &tmp_b);
+	pvector3_linear_interpolation(c, d, p, &tmp_c);
+	pvector3_linear_interpolation(&tmp_a, &tmp_b, p, &tmp_d);
+	pvector3_linear_interpolation(&tmp_b, &tmp_c, p, &tmp_e);
+	pvector3_linear_interpolation(&tmp_d, &tmp_e, p, result);
+}
+
+MATHC_EXTERN_INLINE struct vec vector3_bezier4(struct vec a, struct vec b, struct vec c, struct vec d, float p)
+{
+	struct vec result;
+	pvector3_bezier4(&a, &b, &c, &d, p, &result);
 	return result;
 }
 

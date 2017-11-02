@@ -84,6 +84,8 @@ void pvector2_rotate(struct vec *a, float angle, struct vec *result);
 float pvector2_distance_to(struct vec *a, struct vec *b);
 float pvector2_distance_squared_to(struct vec *a, struct vec *b);
 void pvector2_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
+void pvector2_bezier3(struct vec *a, struct vec *b, struct vec *c, float p, struct vec *result);
+void pvector2_bezier4(struct vec *a, struct vec *b, struct vec *c, struct vec *d, float p, struct vec *result);
 
 struct vec to_vector2(float x, float y);
 struct vec vector2_add(struct vec a, struct vec b);
@@ -111,6 +113,8 @@ struct vec vector2_rotate(struct vec a, float angle);
 float vector2_distance_to(struct vec a, struct vec b);
 float vector2_distance_squared_to(struct vec a, struct vec b);
 struct vec vector2_linear_interpolation(struct vec a, struct vec b, float p);
+struct vec vector2_bezier3(struct vec a, struct vec b, struct vec c, float p);
+struct vec vector2_bezier4(struct vec a, struct vec b, struct vec c, struct vec d, float p);
 
 /* Vector 3D */
 void to_pvector3(float x, float y, float z, struct vec *result);
@@ -137,6 +141,8 @@ void pvector3_reflect(struct vec *a, struct vec *normal, struct vec *result);
 float pvector3_distance_to(struct vec *a, struct vec *b);
 float pvector3_distance_squared_to(struct vec *a, struct vec *b);
 void pvector3_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
+void pvector3_bezier3(struct vec *a, struct vec *b, struct vec *c, float p, struct vec *result);
+void pvector3_bezier4(struct vec *a, struct vec *b, struct vec *c, struct vec *d, float p, struct vec *result);
 
 struct vec to_vector3(float x, float y, float z);
 struct vec vector3_add(struct vec a, struct vec b);
@@ -162,6 +168,8 @@ struct vec vector3_reflect(struct vec a, struct vec normal);
 float vector3_distance_to(struct vec a, struct vec b);
 float vector3_distance_squared_to(struct vec a, struct vec b);
 struct vec vector3_linear_interpolation(struct vec a, struct vec b, float p);
+struct vec vector3_bezier3(struct vec a, struct vec b, struct vec c, float p);
+struct vec vector3_bezier4(struct vec a, struct vec b, struct vec c, struct vec d, float p);
 
 /* Quaternion */
 void to_pquaternion(float x, float y, float z, float w, struct vec *result);
