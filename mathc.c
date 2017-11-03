@@ -1159,9 +1159,8 @@ MATHC_EXTERN_INLINE float quaternion_length(struct vec a)
 
 void pquaternion_normalize(struct vec *a, struct vec *result)
 {
-	float length = sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
+	float length = 1.0f / sqrtf(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
 	if (length > FLT_EPSILON) {
-		length = 1.0f / length;
 		result->x = a->x * length;
 		result->y = a->y * length;
 		result->z = a->z * length;
@@ -1170,8 +1169,8 @@ void pquaternion_normalize(struct vec *a, struct vec *result)
 		result->x = 0.0f;
 		result->y = 0.0f;
 		result->z = 0.0f;
+		result->w = 1.0f;
 	}
-	result->w = 1.0f;
 }
 
 MATHC_EXTERN_INLINE struct vec quaternion_normalize(struct vec a)
