@@ -1425,7 +1425,7 @@ void pmatrix_ortho_zo(float l, float r, float t, float b, float n, float f, stru
 	result->m22 = 2.0f / (t - b);
 	result->m33 = -1.0f / (f - n);
 	result->m14 = -(r + l) / (r - l);
-	result->m24 = -(t + b) / (t - b);
+	result->m24 = -(b + t) / (b - t);
 	result->m34 = -n / (f - n);
 }
 
@@ -1443,7 +1443,7 @@ void pmatrix_ortho_no(float l, float r, float t, float b, float n, float f, stru
 	result->m22 = 2.0f / (t - b);
 	result->m33 = -2.0f / (f - n);
 	result->m14 = -(r + l) / (r - l);
-	result->m24 = -(t + b) / (t - b);
+	result->m24 = -(b + t) / (b - t);
 	result->m34 = -(f + n) / (f - n);
 }
 
@@ -1460,7 +1460,7 @@ void pmatrix_ortho(float l, float r, float t, float b, struct mat *result)
 	result->m11 = 2.0f / (r - l);
 	result->m22 = 2.0f / (t - b);
 	result->m14 = -(r + l) / (r - l);
-	result->m24 = -(t + b) / (t - b);
+	result->m24 = -(b + t) / (b - t);
 }
 
 MATHC_EXTERN_INLINE struct mat matrix_ortho(float l, float r, float t, float b)
