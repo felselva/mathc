@@ -373,11 +373,11 @@ void quaternion_tests(struct cerror *error)
 	printf("\n# Making tests with quaternions...\n");
 	a = to_quaternion(0.0f, 1.0f, 0.0f, 1.0f);
 	r = quaternion_normalize(a);
-	printf_4f_test(error, "Normalize quaternion", 0.707099974f, 0.0, 0.707099974f, 0.0f, r.w, r.x, r.y, r.z);
+	printf_4f_test(error, "Normalize quaternion", 0.7071067812f, 0.0, 0.7071067812f, 0.0f, r.w, r.x, r.y, r.z);
 	a = to_vector3(1.0f, 0.0f, 0.0f);
 	r = quaternion_from_axis_angle(a, M_PIF_2);
 	printf_4f_test(error, "Quaternion from axis-angle", 0.707099974f, 0.707099974f, 0.0f, 0.0f, r.w, r.x, r.y, r.z);
-	a = to_quaternion(0.7071f, 0.0f, 0.0f, 0.7071f);
+	a = to_quaternion(0.7071067812f, 0.0f, 0.0f, 0.7071067812f);
 	r = quaternion_to_axis_angle(a);
 	printf_4f_test(error, "Quaternion to axis-angle", 1.0f, 0.0f, 0.0f, 1.570796371f, r.x, r.y, r.z, r.w);
 }
