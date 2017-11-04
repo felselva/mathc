@@ -1635,15 +1635,18 @@ void pmatrix_rotation_axis(struct vec *a, float angle, struct mat *result)
 	float yy = y * y;
 	float yz = y * z;
 	float zz = z * z;
-	result->m11 = c + xx * (one_c);
-	result->m12 = xy * (one_c) - z * s;
-	result->m13 = xz * (one_c) + y * s;
-	result->m21 = xy * (one_c) + z * s;
-	result->m22 = c + yy * (one_c);
-	result->m23 = yz * (one_c) - x * s;
-	result->m31 = xz * (one_c) - y * s;
-	result->m32 = yz * (one_c) + x * s;
-	result->m33 = c + zz * (one_c);
+	float l = xx + yy + zz;
+	float sqrt_l = sqrtf(l);
+	pmatrix_identity(result);
+	result->m11 = (xx + (yy + zz) * c) / l;
+	result->m12 = (xy * one_c - a->z * sqrt_l * s) / l;
+	result->m13 = (xz * one_c + a->y * sqrt_l * s) / l;
+	result->m21 = (xy * one_c + a->z * sqrt_l * s) / l;
+	result->m22 = (yy + (xx + zz) * c) / l;
+	result->m23 = (yz * one_c - a->x * sqrt_l * s) / l;
+	result->m31 = (xz * one_c - a->y * sqrt_l * s) / l;
+	result->m32 = (yz * one_c + a->x * sqrt_l * s) / l;
+	result->m33 = (zz + (xx + yy) * c) / l;
 }
 
 MATHC_EXTERN_INLINE struct mat matrix_rotation_axis(struct vec a, float angle)
