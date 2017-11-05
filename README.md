@@ -24,7 +24,7 @@ There are examples on my other repository using this math library:
 
 Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
 
-**The type `float` loses precision with large numbers, why not use `double`?** Because every `double` value would be converted to `float` before sending to OpenGL, anyway. Which means your physics would run with high precision, but the rendering would still be affected by the `float` imprecision. Instead, *the good practice* to solve the problem with large numbers is to truncate the world position back to `[0.0f, 0.0f, 0.0f]` when the world distance to the center is too large. If the world is too big that even when truncating there is stil large numbers, the correct approach is to divide the world in chunks.
+**The type `float` loses precision with large numbers, why not use `double`?** Because every `double` value would be converted to `float` before sending to OpenGL, anyway. Which means your physics would run with high precision, but the rendering would still be affected by the `float` imprecision. Instead, *the good practice* to solve the problem with large numbers is to truncate the world position back to `[0.0f, 0.0f, 0.0f]` when the world distance to the center is too large. If the world is too big that even when truncating there are stil large numbers, the correct approach is to divide the world in chunks.
 
 # Passing Arguments as Value or Pointer
 
@@ -36,7 +36,7 @@ Examples:
 
 ```c
 /* Pass by value and return a value */
-struct mat projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
+struct mat projection = matrix_ortho(-100.0f, 100.0f, 100.0f, -100.0f);
 struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
 	to_vector3(0.0f, 0.0f, 0.0f));
 struct mat pv = matrix_multiply_matrix(projection, view);
@@ -51,7 +51,7 @@ struct mat multiplied_matrix = {0};
 to_pvector3(0.0f, 0.0f, 1.0f, &pos);
 to_pvector3(0.0f, 0.0f, 0.0f, &target);
 to_pvector3(0.0f, 1.0f, 0.0f, &up);
-pmatrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f, &projection);
+pmatrix_ortho(-100.0f, 100.0f, 100.0f, -100.0f, &projection);
 pmatrix_look_at(&pos, &target, &view);
 pmatrix_multiply_matrix(&projection, &view, &multiplied_matrix);
 ```
