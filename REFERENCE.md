@@ -69,6 +69,13 @@ struct vec to_vector2(float x, float y);
 The result is a 2D vector for the position `x` and `y`. The value of `z` is set to `0.0f`.
 
 ```c
+void pvector2_zero(struct vec *result);
+struct vec vector2_zero(void);
+```
+
+The result is a zeroed 2D vector.
+
+```c
 void pvector2_add(struct vec *a, struct vec *b, struct vec *result);
 struct vec vector2_add(struct vec a, struct vec b);
 ```
@@ -255,6 +262,13 @@ struct vec to_vector2(float x, float y, float z);
 The result is a 3D vector for the position `x`, `y` and `z`.
 
 ```c
+void pvector3_zero(struct vec *result);
+struct vec vector3_zero(void);
+```
+
+The result is a zeroed 3D vector.
+
+```c
 void pvector3_add(struct vec *a, struct vec *b, struct vec *result);
 struct vec vector3_add(struct vec a, struct vec b);
 ```
@@ -423,6 +437,13 @@ struct vec to_quaternion(float x, float y, float z);
 ```
 
 The result is a quaternion for the position `x`, `y` and `z`.
+
+```c
+void pquaternion_zero(struct vec *result);
+struct vec quaternion_zero();
+```
+
+The result is a zeroed quaternion.
 
 ```c
 void pquaternion_add(struct vec *a, struct vec *b, struct vec *result);

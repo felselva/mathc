@@ -59,6 +59,7 @@ float to_degrees(float radians);
 
 /* Vector 2D */
 void to_pvector2(float x, float y, struct vec *result);
+void pvector2_zero(struct vec *result);
 void pvector2_add(struct vec *a, struct vec *b, struct vec *result);
 void pvector2_subtract(struct vec *a, struct vec *b, struct vec *result);
 void pvector2_scale(struct vec *a, float scale, struct vec *result);
@@ -88,6 +89,7 @@ void pvector2_bezier3(struct vec *a, struct vec *b, struct vec *c, float p, stru
 void pvector2_bezier4(struct vec *a, struct vec *b, struct vec *c, struct vec *d, float p, struct vec *result);
 
 struct vec to_vector2(float x, float y);
+struct vec vector2_zero(void);
 struct vec vector2_add(struct vec a, struct vec b);
 struct vec vector2_subtract(struct vec a, struct vec b);
 struct vec vector2_scale(struct vec a, float scale);
@@ -118,6 +120,7 @@ struct vec vector2_bezier4(struct vec a, struct vec b, struct vec c, struct vec 
 
 /* Vector 3D */
 void to_pvector3(float x, float y, float z, struct vec *result);
+void pvector3_zero(struct vec *result);
 void pvector3_add(struct vec *a, struct vec *b, struct vec *result);
 void pvector3_subtract(struct vec *a, struct vec *b, struct vec *result);
 void pvector3_scale(struct vec *a, float scale, struct vec *result);
@@ -173,6 +176,7 @@ struct vec vector3_bezier4(struct vec a, struct vec b, struct vec c, struct vec 
 
 /* Quaternion */
 void to_pquaternion(float x, float y, float z, float w, struct vec *result);
+void pquaternion_zero(struct vec *result);
 void pquaternion_add(struct vec *a, struct vec *b, struct vec *result);
 void pquaternion_subtract(struct vec *a, struct vec *b, struct vec *result);
 void pquaternion_scale(struct vec *a, float scale, struct vec *result);
@@ -201,6 +205,7 @@ void pquaternion_linear_interpolation(struct vec *a, struct vec *b, float p, str
 void pquaternion_spherical_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
 
 struct vec to_quaternion(float x, float y, float z, float w);
+struct vec quaternion_zero(void);
 struct vec quaternion_add(struct vec a, struct vec b);
 struct vec quaternion_subtract(struct vec a, struct vec b);
 struct vec quaternion_scale(struct vec a, float scale);

@@ -89,6 +89,21 @@ MATHC_EXTERN_INLINE struct vec to_vector2(float x, float y)
 	return result;
 }
 
+void pvector2_zero(struct vec *result)
+{
+	result->x = 0.0f;
+	result->y = 0.0f;
+	result->z = 0.0f;
+	result->w = 0.0f;
+}
+
+MATHC_EXTERN_INLINE struct vec vector2_zero(void)
+{
+	struct vec result;
+	pvector2_zero(&result);
+	return result;
+}
+
 void pvector2_add(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x + b->x;
@@ -490,6 +505,21 @@ MATHC_EXTERN_INLINE struct vec to_vector3(float x, float y, float z)
 	return result;
 }
 
+void pvector3_zero(struct vec *result)
+{
+	result->x = 0.0f;
+	result->y = 0.0f;
+	result->z = 0.0f;
+	result->w = 0.0f;
+}
+
+MATHC_EXTERN_INLINE struct vec vector3_zero(void)
+{
+	struct vec result;
+	pvector3_zero(&result);
+	return result;
+}
+
 void pvector3_add(struct vec *a, struct vec *b, struct vec *result)
 {
 	result->x = a->x + b->x;
@@ -883,6 +913,22 @@ struct vec to_quaternion(float x, float y, float z, float w)
 {
 	struct vec result;
 	to_pquaternion(x, y, z, w, &result);
+	return result;
+}
+
+
+void pquaternion_zero(struct vec *result)
+{
+	result->x = 0.0f;
+	result->y = 0.0f;
+	result->z = 0.0f;
+	result->w = 0.0f;
+}
+
+MATHC_EXTERN_INLINE struct vec quaternion_zero(void)
+{
+	struct vec result;
+	pquaternion_zero(&result);
 	return result;
 }
 
