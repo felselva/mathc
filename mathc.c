@@ -1418,6 +1418,163 @@ MATHC_EXTERN_INLINE struct mat matrix_identity(void)
 	return result;
 }
 
+void pmatrix_transpose(struct mat *m, struct mat *result)
+{
+	result->m11 = m->m11;
+	result->m21 = m->m12;
+	result->m31 = m->m13;
+	result->m41 = m->m14;
+	result->m12 = m->m21;
+	result->m22 = m->m22;
+	result->m32 = m->m23;
+	result->m42 = m->m24;
+	result->m13 = m->m31;
+	result->m23 = m->m32;
+	result->m33 = m->m33;
+	result->m43 = m->m34;
+	result->m14 = m->m41;
+	result->m24 = m->m42;
+	result->m34 = m->m43;
+	result->m44 = m->m44;
+}
+
+struct mat matrix_transpose(struct mat m)
+{
+	struct mat result;
+	pmatrix_transpose(&m, &result);
+	return result;
+}
+
+void pmatrix_inverse(struct mat *m, struct mat *result)
+{
+	struct mat inv;
+	float det;
+	inv.m11 = m->m22 * m->m33 * m->m44 -
+		m->m22 * m->m43 * m->m34 -
+		m->m23 * m->m32 * m->m44 +
+		m->m23 * m->m42 * m->m34 +
+		m->m24 * m->m32 * m->m43 -
+		m->m24 * m->m42 * m->m33;
+	inv.m12 = -m->m12 * m->m33 * m->m44 +
+		m->m12 * m->m43 * m->m34 +
+		m->m13 * m->m32 * m->m44 -
+		m->m13 * m->m42 * m->m34 -
+		m->m14 * m->m32 * m->m43 +
+		m->m14 * m->m42 * m->m33;
+	inv.m13 = m->m12 * m->m23 * m->m44 -
+		m->m12 * m->m43 * m->m24 -
+		m->m13 * m->m22 * m->m44 +
+		m->m13 * m->m42 * m->m24 +
+		m->m14 * m->m22 * m->m43 -
+		m->m14 * m->m42 * m->m23;
+	inv.m14 = -m->m12 * m->m23 * m->m34 +
+		m->m12 * m->m33 * m->m24 +
+		m->m13 * m->m22 * m->m34 -
+		m->m13 * m->m32 * m->m24 -
+		m->m14 * m->m22 * m->m33 +
+		m->m14 * m->m32 * m->m23;
+	inv.m21 = -m->m21 * m->m33 * m->m44 +
+		m->m21 * m->m43 * m->m34 +
+		m->m23 * m->m31 * m->m44 -
+		m->m23 * m->m41 * m->m34 -
+		m->m24 * m->m31 * m->m43 +
+		m->m24 * m->m41 * m->m33;
+	inv.m22 = m->m11 * m->m33 * m->m44 -
+		m->m11 * m->m43 * m->m34 -
+		m->m13 * m->m31 * m->m44 +
+		m->m13 * m->m41 * m->m34 +
+		m->m14 * m->m31 * m->m43 -
+		m->m14 * m->m41 * m->m33;
+	inv.m23 = -m->m11 * m->m23 * m->m44 +
+		m->m11 * m->m43 * m->m24 +
+		m->m13 * m->m21 * m->m44 -
+		m->m13 * m->m41 * m->m24 -
+		m->m14 * m->m21 * m->m43 +
+		m->m14 * m->m41 * m->m23;
+	inv.m24 = m->m11 * m->m23 * m->m34 -
+		m->m11 * m->m33 * m->m24 -
+		m->m13 * m->m21 * m->m34 +
+		m->m13 * m->m31 * m->m24 +
+		m->m14 * m->m21 * m->m33 -
+		m->m14 * m->m31 * m->m23;
+	inv.m31 = m->m21 * m->m32 * m->m44 -
+		m->m21 * m->m42 * m->m34 -
+		m->m22 * m->m31 * m->m44 +
+		m->m22 * m->m41 * m->m34 +
+		m->m24 * m->m31 * m->m42 -
+		m->m24 * m->m41 * m->m32;
+	inv.m32 = -m->m11 * m->m32 * m->m44 +
+		m->m11 * m->m42 * m->m34 +
+		m->m12 * m->m31 * m->m44 -
+		m->m12 * m->m41 * m->m34 -
+		m->m14 * m->m31 * m->m42 +
+		m->m14 * m->m41 * m->m32;
+	inv.m33 = m->m11 * m->m22 * m->m44 -
+		m->m11 * m->m42 * m->m24 -
+		m->m12 * m->m21 * m->m44 +
+		m->m12 * m->m41 * m->m24 +
+		m->m14 * m->m21 * m->m42 -
+		m->m14 * m->m41 * m->m22;
+	inv.m34 = -m->m11 * m->m22 * m->m34 +
+		m->m11 * m->m32 * m->m24 +
+		m->m12 * m->m21 * m->m34 -
+		m->m12 * m->m31 * m->m24 -
+		m->m14 * m->m21 * m->m32 +
+		m->m14 * m->m31 * m->m22;
+	inv.m41 = -m->m21 * m->m32 * m->m43 +
+		m->m21 * m->m42 * m->m33 +
+		m->m22 * m->m31 * m->m43 -
+		m->m22 * m->m41 * m->m33 -
+		m->m23 * m->m31 * m->m42 +
+		m->m23 * m->m41 * m->m32;
+	inv.m42 = m->m11 * m->m32 * m->m43 -
+		m->m11 * m->m42 * m->m33 -
+		m->m12 * m->m31 * m->m43 +
+		m->m12 * m->m41 * m->m33 +
+		m->m13 * m->m31 * m->m42 -
+		m->m13 * m->m41 * m->m32;
+	inv.m43 = -m->m11 * m->m22 * m->m43 +
+		m->m11 * m->m42 * m->m23 +
+		m->m12 * m->m21 * m->m43 -
+		m->m12 * m->m41 * m->m23 -
+		m->m13 * m->m21 * m->m42 +
+		m->m13 * m->m41 * m->m22;
+	inv.m44 = m->m11 * m->m22 * m->m33 -
+		m->m11 * m->m32 * m->m23 -
+		m->m12 * m->m21 * m->m33 +
+		m->m12 * m->m31 * m->m23 +
+		m->m13 * m->m21 * m->m32 -
+		m->m13 * m->m31 * m->m22;
+	det = m->m11 * inv.m11 + m->m21 * inv.m12 + m->m31 * inv.m13 + m->m41 * inv.m14;
+	/* Matrix can not be inverted if det == 0 */
+	if (det != 0) {
+		det = 1.0 / det;
+	}
+	result->m11 = inv.m11 * det;
+	result->m21 = inv.m21 * det;
+	result->m31 = inv.m31 * det;
+	result->m41 = inv.m41 * det;
+	result->m12 = inv.m12 * det;
+	result->m22 = inv.m22 * det;
+	result->m32 = inv.m32 * det;
+	result->m42 = inv.m42 * det;
+	result->m13 = inv.m13 * det;
+	result->m23 = inv.m23 * det;
+	result->m33 = inv.m33 * det;
+	result->m43 = inv.m43 * det;
+	result->m14 = inv.m14 * det;
+	result->m24 = inv.m24 * det;
+	result->m34 = inv.m34 * det;
+	result->m44 = inv.m44 * det;
+}
+
+struct mat matrix_inverse(struct mat m)
+{
+	struct mat result;
+	pmatrix_inverse(&m, &result);
+	return result;
+}
+
 void pmatrix_ortho_zo(float l, float r, float t, float b, float n, float f, struct mat *result)
 {
 	pmatrix_identity(result);

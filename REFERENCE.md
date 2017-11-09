@@ -597,6 +597,20 @@ struct mat matrix_identity(void);
 The result is a identity matrix.
 
 ```c
+void pmatrix_transpose(struct mat *m, struct mat *result);
+struct mat matrix_transpose(struct mat m);
+```
+
+The result is the transpose of the matrix `m`.
+
+```c
+void pmatrix_inverse(struct mat *m, struct mat *result);
+struct mat matrix_inverse(struct mat m);
+```
+
+The result is the inverse of the matrix `m`.
+
+```c
 void pmatrix_ortho_zo(float l, float r, float b, float t, float n, float f, struct mat *result);
 struct mat matrix_ortho_zo(float l, float r, float b, float t, float n, float f);
 ```

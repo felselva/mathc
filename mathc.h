@@ -231,6 +231,8 @@ struct vec quaternion_spherical_linear_interpolation(struct vec a, struct vec b,
 /* Matrix */
 void pmatrix_zero(struct mat *result);
 void pmatrix_identity(struct mat *result);
+void pmatrix_transpose(struct mat *m, struct mat *result);
+void pmatrix_inverse(struct mat *m, struct mat *result);
 void pmatrix_ortho_zo(float l, float r, float b, float t, float n, float f, struct mat *result);
 void pmatrix_ortho_no(float l, float r, float b, float t, float n, float f, struct mat *result);
 void pmatrix_ortho(float l, float r, float b, float t, struct mat *result);
@@ -258,6 +260,8 @@ void pmatrix_to_array(struct mat *m, float *result);
 
 struct mat matrix_zero(void);
 struct mat matrix_identity(void);
+struct mat matrix_transpose(struct mat m);
+struct mat matrix_inverse(struct mat m);
 struct mat matrix_ortho_zo(float l, float r, float t, float b, float n, float f);
 struct mat matrix_ortho_no(float l, float r, float t, float b, float n, float f);
 struct mat matrix_ortho(float l, float r, float t, float b);
