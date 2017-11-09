@@ -80,7 +80,7 @@ void pvector2_subtract(struct vec *a, struct vec *b, struct vec *result);
 struct vec vector2_subtract(struct vec a, struct vec b);
 ```
 
-The result is a 2D vector for the subraction of the 2D vector `a` with the 2D vector `b`.
+The result is a 2D vector for the subtraction of the 2D vector `a` with the 2D vector `b`.
 
 ```c
 void pvector2_scale(struct vec *a, float scale, struct vec *result);
@@ -266,7 +266,7 @@ void pvector3_subtract(struct vec *a, struct vec *b, struct vec *result);
 struct vec vector3_subtract(struct vec a, struct vec b);
 ```
 
-The result is a 3D vector for the subraction of the 3D vector `a` with the 3D vector `b`.
+The result is a 3D vector for the subtraction of the 3D vector `a` with the 3D vector `b`.
 
 ```c
 void pvector3_scale(struct vec *a, float scale, struct vec *result);
@@ -436,7 +436,7 @@ void pquaternion_subtract(struct vec *a, struct vec *b, struct vec *result);
 struct vec quaternion_subtract(struct vec a, struct vec b);
 ```
 
-The result is a quaternion for the subraction of the quaternion `a` with the quaternion `b`.
+The result is a quaternion for the subtraction of the quaternion `a` with the quaternion `b`.
 
 ```c
 void pquaternion_scale(struct vec *a, float scale, struct vec *result);
