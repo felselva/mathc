@@ -3,6 +3,18 @@
 ## Utils
 
 ```c
+#define M_PIF 3.1415926536f
+#define M_PIF_2 1.5707963268f
+#define MAT_SIZE 16
+```
+
+These are "syntactic sugar" macros that might be useful for the user.
+
+The `M_PIF` is the `float` value of Pi, and `M_PIF_2` is the `float` value of Pi divided by `2`. The macros `M_PI` and `M_PI_2` are not part of the C standard, and for that reason they are added here.
+
+The `MAT_SIZE` is more often useful, that allows the user to declare an array with the correct number of elements (`16`) of a 4x4 matrix instead of writing a [magic number](https://en.wikipedia.org/wiki/Magic_number_\(programming\)#Unnamed_numerical_constants) in the code.
+
+```c
 int nearly_equal(float a, float b, float epsilon);
 ```
 
