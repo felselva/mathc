@@ -96,7 +96,7 @@ matrix_multiply_f4(rotation, v);
 If you want to modify on GPU-side, you can use the functions `matrix_to_array()` or `pmatrix_to_array()` to push the matrix to an array with 16 `float` elements. Example:
 
 ```c
-float v[16];
+float v[MAT_SIZE]; /* MAT_SIZE is a macro in mathc.h with value 16 */
 struct mat projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
 struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
 	to_vector3(0.0f, 0.0f, 0.0f));
