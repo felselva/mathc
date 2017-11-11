@@ -1621,59 +1621,27 @@ struct mat matrix_inverse(struct mat m)
 	return result;
 }
 
-void pmatrix_ortho_zo(float l, float r, float t, float b, float n, float f, struct mat *result)
-{
-	pmatrix_identity(result);
-	result->m11 = 2.0f / (r - l);
-	result->m22 = 2.0f / (t - b);
-	result->m33 = -1.0f / (f - n);
-	result->m14 = -(r + l) / (r - l);
-	result->m24 = -(b + t) / (b - t);
-	result->m34 = -n / (f - n);
-}
+#include <stdio.h>
 
-MATHC_EXTERN_INLINE struct mat matrix_ortho_zo(float l, float r, float t, float b, float n, float f)
-{
-	struct mat result;
-	pmatrix_ortho_zo(l, r, b, t, n, f, &result);
-	return result;
-}
-
-void pmatrix_ortho_no(float l, float r, float t, float b, float n, float f, struct mat *result)
+void pmatrix_ortho(float l, float r, float b, float t, float n, float f, struct mat *result)
 {
 	pmatrix_identity(result);
 	result->m11 = 2.0f / (r - l);
 	result->m22 = 2.0f / (t - b);
 	result->m33 = -2.0f / (f - n);
-	result->m14 = -(r + l) / (r - l);
-	result->m24 = -(b + t) / (b - t);
-	result->m34 = -(f + n) / (f - n);
+	result->m14 = -((r + l) / (r - l));
+	result->m24 = -((t + b) / (t - b));
+	result->m34 = -((f + n) / (f - n));
 }
 
-MATHC_EXTERN_INLINE struct mat matrix_ortho_no(float l, float r, float t, float b, float n, float f)
+MATHC_EXTERN_INLINE struct mat matrix_ortho(float l, float r, float b, float t, float n, float f)
 {
 	struct mat result;
-	pmatrix_ortho_no(l, r, b, t, n, f, &result);
+	pmatrix_ortho(l, r, b, t, n, f, &result);
 	return result;
 }
 
-void pmatrix_ortho(float l, float r, float t, float b, struct mat *result)
-{
-	pmatrix_identity(result);
-	result->m11 = 2.0f / (r - l);
-	result->m22 = 2.0f / (t - b);
-	result->m14 = -(r + l) / (r - l);
-	result->m24 = -(b + t) / (b - t);
-}
-
-MATHC_EXTERN_INLINE struct mat matrix_ortho(float l, float r, float t, float b)
-{
-	struct mat result;
-	pmatrix_ortho(l, r, b, t, &result);
-	return result;
-}
-
-void pmatrix_perspective_zo(float fov_y, float aspect, float n, float f, struct mat *result)
+void pmatrix_perspective(float fov_y, float aspect, float n, float f, struct mat *result)
 {
 	const float tan_half_fov_y = 1.0f / tanf(fov_y * 0.5f);
 	pmatrix_zero(result);
@@ -1684,32 +1652,14 @@ void pmatrix_perspective_zo(float fov_y, float aspect, float n, float f, struct 
 	result->m34 = -(f * n) / (f - n);
 }
 
-MATHC_EXTERN_INLINE struct mat matrix_perspective_zo(float fov_y, float aspect, float n, float f)
+MATHC_EXTERN_INLINE struct mat matrix_perspective(float fov_y, float aspect, float n, float f)
 {
 	struct mat result;
-	pmatrix_perspective_zo(fov_y, aspect, n, f, &result);
+	pmatrix_perspective(fov_y, aspect, n, f, &result);
 	return result;
 }
 
-void pmatrix_perspective_no(float fov_y, float aspect, float n, float f, struct mat *result)
-{
-	const float tan_half_fov_y = 1.0f / tanf(fov_y * 0.5f);
-	pmatrix_zero(result);
-	result->m11 = 1.0f / aspect * tan_half_fov_y;
-	result->m22 = 1.0f / tan_half_fov_y;
-	result->m33 = -(f + n) / (f - n);
-	result->m43 = -1.0f;
-	result->m34 = -(2.0f * f * n) / (f - n);
-}
-
-MATHC_EXTERN_INLINE struct mat matrix_perspective_no(float fov_y, float aspect, float n, float f)
-{
-	struct mat result;
-	pmatrix_perspective_no(fov_y, aspect, n, f, &result);
-	return result;
-}
-
-void pmatrix_perspective_fov_zo(float fov, float w, float h, float n, float f, struct mat *result)
+void pmatrix_perspective_fov(float fov, float w, float h, float n, float f, struct mat *result)
 {
 	const float h2 = cosf(fov * 0.5f) / sinf(fov * 0.5f);
 	const float w2 = h2 * h / w;
@@ -1721,29 +1671,10 @@ void pmatrix_perspective_fov_zo(float fov, float w, float h, float n, float f, s
 	result->m34 = -(f * n) / (f - n);
 }
 
-MATHC_EXTERN_INLINE struct mat matrix_perspective_fov_zo(float fov, float w, float h, float n, float f)
+MATHC_EXTERN_INLINE struct mat matrix_perspective_fov(float fov, float w, float h, float n, float f)
 {
 	struct mat result;
-	pmatrix_perspective_fov_zo(fov, w, h, n, f, &result);
-	return result;
-}
-
-void pmatrix_perspective_fov_no(float fov, float w, float h, float n, float f, struct mat *result)
-{
-	const float h2 = cosf(fov * 0.5f) / sinf(fov * 0.5f);
-	const float w2 = h2 * h / w;
-	pmatrix_zero(result);
-	result->m11 = w2;
-	result->m22 = h2;
-	result->m33 = -(f + n) / (f - n);
-	result->m43 = -1.0f;
-	result->m34 = -(2.0f * f * n) / (f - n);
-}
-
-MATHC_EXTERN_INLINE struct mat matrix_perspective_fov_no(float fov, float w, float h, float n, float f)
-{
-	struct mat result;
-	pmatrix_perspective_fov_no(fov, w, h, n, f, &result);
+	pmatrix_perspective_fov(fov, w, h, n, f, &result);
 	return result;
 }
 

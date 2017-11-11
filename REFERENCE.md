@@ -644,53 +644,25 @@ struct mat matrix_inverse(struct mat m);
 The result is the inverse of the matrix `m`.
 
 ```c
-void pmatrix_ortho_zo(float l, float r, float b, float t, float n, float f, struct mat *result);
-struct mat matrix_ortho_zo(float l, float r, float b, float t, float n, float f);
+void pmatrix_ortho(float l, float r, float b, float t, float n, float f, struct mat *result);
+struct mat matrix_ortho(float l, float r, float b, float t, float n, float f);
 ```
 
-The result is a orthographic projection matrix with depth from zero to one, left `l`, right `r`, bottom `b` top `t`, near clipping `n` and far clipping `f`.
+The result is a orthographic projection matrix with left `l`, right `r`, bottom `b` top `t`, near clipping `n` and far clipping `f`.
 
 ```c
-void pmatrix_ortho_no(float l, float r, float b, float t, float n, float f, struct mat *result);
-struct mat matrix_ortho_no(float l, float r, float b, float t, float n, float f);
+void pmatrix_perspective(float fov_y, float aspect, float n, float f, struct mat *result);
+struct mat matrix_perspective(float fov_y, float aspect, float n, float f);
 ```
 
-The result is a orthographic projection matrix with depth from negatie one to one, left `l`, right `r`, bottom `b` top `t`, near clipping `n` and far clipping `f`.
+The result is a perspective projection matrix with field of view of Y axis `fov_y`, in radians, aspect ratio `aspect`, near clipping `n` and far clipping `f`.
 
 ```c
-void pmatrix_ortho(float l, float r, float b, float t, struct mat *result);
-struct mat matrix_ortho(float l, float r, float b, float t);
+void pmatrix_perspective_fov(float fov, float w, float h, float n, float f, struct mat *result);
+struct mat matrix_perspective_fov(float fov, float w, float h, float n, float f);
 ```
 
-The result is a orthographic projection matrix with the left `l`, right `r`, bottom `b`, and top `t`.
-
-```c
-void pmatrix_perspective_zo(float fov_y, float aspect, float n, float f, struct mat *result);
-struct mat matrix_perspective_zo(float fov_y, float aspect, float n, float f);
-```
-
-The result is a perspective projection matrix with depth from zero to one, field of view of Y axis `fov_y`, in radians, aspect ratio `aspect`, near clipping `n` and far clipping `f`.
-
-```c
-void pmatrix_perspective_no(float fov_y, float aspect, float n, float f, struct mat *result);
-struct mat matrix_perspective_no(float fov_y, float aspect, float n, float f);
-```
-
-The result is a perspective projection matrix with depth from negative one to one, field of view of Y axis `fov_y`, in radians, aspect ratio `aspect`, near clipping `n` and far clipping `f`.
-
-```c
-void pmatrix_perspective_fov_zo(float fov, float w, float h, float n, float f, struct mat *result);
-struct mat matrix_perspective_fov_zo(float fov, float w, float h, float n, float f);
-```
-
-The result is a perspective projection matrix with depth from zero to one, field of view `fov`, width `w`, height `h`, near clipping `n` and far clipping `f`.
-
-```c
-void pmatrix_perspective_fov_no(float fov, float w, float h, float n, float f, struct mat *result);
-struct mat matrix_perspective_fov_no(float fov, float w, float h, float n, float f);
-```
-
-The result is a perspective projection matrix with depth from negatve one to one, field of view `fov`, width `w`, height `h`, near clipping `n` and far clipping `f`.
+The result is a perspective projection matrix with field of view `fov`, width `w`, height `h`, near clipping `n` and far clipping `f`.
 
 ```c
 void pmatrix_perspective_infinite(float fov_y, float aspect, float n, struct mat *result);
