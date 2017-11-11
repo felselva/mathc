@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file, following s
 
 ## Unreleased
 
+### Added
+
+- Functions `pmatrix_linear_interpolation`/`matrix_linear_interpolation` for matrix linear interpolation.
+
 ## 0.2.0 - 2017-11-11
 
 ### Notes
