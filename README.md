@@ -1,8 +1,8 @@
-# MathC
+# MATHC
 
 [![Build Status](https://travis-ci.org/ferreiradaselva/mathc.svg?branch=master)](https://travis-ci.org/ferreiradaselva/mathc)
 
-MathC is a simple math library for 2D and 3D game programming. It contains implementations for:
+MATHC is a simple math library for 2D and 3D game programming. It contains implementations for:
 
 - 2D vectors
 - 3D vectors
@@ -12,7 +12,11 @@ MathC is a simple math library for 2D and 3D game programming. It contains imple
 
 It support C99 standard or later.
 
-# Reference
+## Release
+
+The curreny unstable version is 0.2.0 and its CHANGELOG and RELEASE NOTES can be found in [CHANGELOG.md](CHANGELOG.md#0.2.0---2017-11-11).
+
+## Reference
 
 The reference is the file `REFERENCE.md`.
 
@@ -20,13 +24,13 @@ There are examples on my other repository using this math library:
 
 [CGDFW examples](https://github.com/ferreiradaselva/cgdfw/tree/master/examples)
 
-# Float
+## Float
 
 Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
 
 **The type `float` loses precision with large numbers, why not use `double`?** Because every `double` value would be converted to `float` before sending to OpenGL, anyway. Which means your physics would run with high precision, but the rendering would still be affected by the `float` imprecision. Instead, *the good practice* to solve the problem with large numbers is to truncate the world position back to `[0.0f, 0.0f, 0.0f]` when the world distance to the center is too large. If the world is too big that even when truncating there are stil large numbers, the correct approach is to divide the world in chunks.
 
-# Passing Arguments as Value or Pointer
+## Passing Arguments as Value or Pointer
 
 For every function **that takes a structure**, there are two versions. One that you pass structures as value and other that you pass as pointer. The functions that pass the value by pointer have a prefix `p` before the type name (pvector2, pvector3, pquaternion and pmatrix) and the result is the `*result` argument or a returned `float`.
 
@@ -56,7 +60,7 @@ pmatrix_look_at(&pos, &target, &view);
 pmatrix_multiply_matrix(&projection, &view, &multiplied_matrix);
 ```
 
-# Vectors
+## Vectors
 
 All vectors (2D, 3D and quaternions) use the same structure type `struct vec`. The `z` component is still useful for 2D vectors, as it is used by OpenGL for depth testing. This means the only extra component on 2D and 3D vectors is the `w` component, which is used by quaternions.
 
@@ -81,7 +85,7 @@ struct vec interpolated = quaternion_spherical_linear_interpolation(a, b, 0.5f);
 
 You don't need to create your OpenGL buffer (VBO) to take 4 elements. When using `glMapBufferRange()`/`glMapBuffer()` and `glUnmapBuffer()`, you can pass only the used elements to the VBO, that has element count of your choice.
 
-# Matrices
+## Matrices
 
 All matrices are 4×4. There are functions for setting up projection matrices, view matrices and model matrices.
 
@@ -104,20 +108,20 @@ struct mat pv = matrix_multiply_matrix(projection, view);
 matrix_to_array(pv, v);
 ```
 
-# Easing Functions
+## Easing Functions
 
 The easing functions are an implementation of the functions presented in [easing.net](http://easings.net/). They are mainly useful for animations.
 
 Easing functions take a value that range from `0.0f` to `1.0f` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range.
 
-# Contributing
+## Contributing
 
 - Before sending any pull request, open an issue asking if the feature or fix is already being worked on.
 - If you find any error, you can open an issue.
 - You can request more useful functions in the issues regarding 2D vectors, 3D vectors, quaternions and matrices. If you have already an implementation or know where to find, better.
 - Everything here will stay licensed under ZLIB, which is a ***very*** permissive license.
 
-# LICENSE
+## LICENSE
 
 The source code of this project is licensed under the terms of the ZLIB license:
 
