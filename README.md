@@ -24,6 +24,10 @@ There are examples on my other repository using this math library:
 
 [CGDFW examples](https://github.com/ferreiradaselva/cgdfw/tree/master/examples)
 
+## Contributing
+
+Check the file `CONTRIBUTING.md` for contribution rules and contributions of interest.
+
 ## Float
 
 Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
@@ -113,13 +117,6 @@ matrix_to_array(pv, v);
 The easing functions are an implementation of the functions presented in [easing.net](http://easings.net/). They are mainly useful for animations.
 
 Easing functions take a value that range from `0.0f` to `1.0f` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range.
-
-## Contributing
-
-- Before sending any pull request, open an issue asking if the feature or fix is already being worked on.
-- If you find any error, you can open an issue.
-- You can request more useful functions in the issues regarding 2D vectors, 3D vectors, quaternions and matrices. If you have already an implementation or know where to find, better.
-- Everything here will stay licensed under ZLIB, which is a ***very*** permissive license.
 
 ## LICENSE
 
