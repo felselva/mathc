@@ -2032,6 +2032,33 @@ MATHC_EXTERN_INLINE struct mat matrix_multiply_matrix(struct mat a, struct mat b
 	return result;
 }
 
+void pmatrix_linear_interpolation(struct mat *a, struct mat *b, float p, struct mat *result)
+{
+	result->m11 = a->m11 + (b->m11 - a->m11) * p;
+	result->m12 = a->m12 + (b->m12 - a->m12) * p;
+	result->m13 = a->m13 + (b->m13 - a->m13) * p;
+	result->m14 = a->m14 + (b->m14 - a->m14) * p;
+	result->m21 = a->m21 + (b->m21 - a->m21) * p;
+	result->m22 = a->m22 + (b->m22 - a->m22) * p;
+	result->m23 = a->m23 + (b->m23 - a->m23) * p;
+	result->m24 = a->m24 + (b->m24 - a->m24) * p;
+	result->m31 = a->m31 + (b->m31 - a->m31) * p;
+	result->m32 = a->m32 + (b->m32 - a->m32) * p;
+	result->m33 = a->m33 + (b->m33 - a->m33) * p;
+	result->m34 = a->m34 + (b->m34 - a->m34) * p;
+	result->m41 = a->m41 + (b->m41 - a->m41) * p;
+	result->m42 = a->m42 + (b->m42 - a->m42) * p;
+	result->m43 = a->m43 + (b->m43 - a->m43) * p;
+	result->m44 = a->m44 + (b->m44 - a->m44) * p;
+}
+
+MATHC_EXTERN_INLINE struct mat matrix_linear_interpolation(struct mat a, struct mat b, float p)
+{
+	struct mat result;
+	pmatrix_linear_interpolation(&a, &b, p, &result);
+	return result;
+}
+
 void pmatrix_multiply_f4(struct mat *m, float *result)
 {
 	float v0 = result[0];

@@ -256,6 +256,7 @@ void pmatrix_get_translation(struct mat *m, struct vec *result);
 void pmatrix_negative(struct mat *m, struct mat *result);
 void pmatrix_multiply(struct mat *m, float s, struct mat *result);
 void pmatrix_multiply_matrix(struct mat *a, struct mat *b, struct mat *result);
+void pmatrix_linear_interpolation(struct mat *a, struct mat *b, float p, struct mat *result);
 void pmatrix_multiply_f4(struct mat *m, float *result);
 void pmatrix_to_array(struct mat *m, float *result);
 
@@ -281,6 +282,7 @@ struct vec matrix_get_translation(struct mat m);
 struct mat matrix_negative(struct mat m);
 struct mat matrix_multiply(struct mat m, float s);
 struct mat matrix_multiply_matrix(struct mat a, struct mat b);
+struct mat matrix_linear_interpolation(struct mat a, struct mat b, float p);
 void matrix_multiply_f4(struct mat m, float *result);
 void matrix_to_array(struct mat m, float *result);
 

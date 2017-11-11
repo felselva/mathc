@@ -763,6 +763,13 @@ struct mat matrix_multiply_matrix(struct mat a, struct mat b);
 The result is a matrix for the multiplication of the matrix `a` with the matrix `b`.
 
 ```c
+void pmatrix_linear_interpolation(struct mat *a, struct mat *b, float p, struct mat *result);
+struct mat matrix_linear_interpolation(struct mat a, struct mat b, float p);
+```
+
+The result is a matrix for the linear interpolation between the matrix `a` and the matrix `b` with the value `p`.
+
+```c
 void pmatrix_multiply_f4(struct mat *m, float *result);
 void matrix_multiply_f4(struct mat m, float *result);
 ```
