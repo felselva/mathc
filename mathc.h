@@ -21,6 +21,9 @@ the following restrictions:
 #ifndef MATHC_H
 #define MATHC_H
 
+#define MATHC_MAJOR_VERSION 1
+#define MATHC_MINOR_VERSION 0
+#define MATHC_PATCH_VERSION 0
 #define M_PIF 3.1415926536f
 #define M_PIF_2 1.5707963268f
 #define MAT_SIZE 16
