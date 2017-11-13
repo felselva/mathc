@@ -1,5 +1,6 @@
 # Contributors
 
+- [@cxong](https://github.com/cxong) suggested functions to test vectors equality
 - [@cxong](https://github.com/cxong) suggested function to return zeroed vectors
 - [@cxong](https://github.com/cxong) fixed typos in `REFERENCE.md`
 - [@Ankush-p](https://github.com/Ankush-p) added `pmatrix_transpose`/`matrix_transpose` and `pmatrix_inverse`/`matrix_inverse`
