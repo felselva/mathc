@@ -4,9 +4,21 @@ All notable changes to this project will be documented in this file, following s
 
 ## Unreleased
 
+## 0.3.0 - 2017-11-13
+
 ### Added
 
 - Functions `pmatrix_linear_interpolation`/`matrix_linear_interpolation` for matrix linear interpolation.
+- Functions to test vector and quaternion equality:
+  - `pvector2_is_zero`/`vector2_is_zero`
+  - `pvector2_is_near_zero`/`vector2_is_near_zero`
+  - `pvector2_is_equal`/`vector2_is_equal`
+  - `pvector3_is_zero`/`vector3_is_zero`
+  - `pvector3_is_near_zero`/`vector3_is_near_zero`
+  - `pvector3_is_equal`/`vector3_is_equal`
+  - `pquatertion_is_zero`/`quatertion_is_zero`
+  - `pquatertion_is_near_zero`/`quatertion_is_near_zero`
+  - `pquatertion_is_equal`/`quatertion_is_equal`
 
 ## 0.2.0 - 2017-11-11
 

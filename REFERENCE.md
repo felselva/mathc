@@ -76,6 +76,27 @@ struct vec vector2_zero(void);
 The result is a zeroed 2D vector.
 
 ```c
+int pvector2_is_zero(struct vec *a);
+int vector2_is_zero(struct vec a);
+```
+
+Test if the 2D vector is zero with `FLT_EPSILON` as error margin. Returns `TRUE` if the values are accepted as equal to zero and `FALSE` otherwise.
+
+```c
+int pvector2_is_near_zero(struct vec *a, float epsilon);
+int vector2_is_near_zero(struct vec a, float epsilon);
+```
+
+Test if the 2D vector is near zero with `epsilon` as error margin. Returns `TRUE` if the values are accepted as nearly equal to zero and `FALSE` otherwise.
+
+```c
+int pvector2_is_equal(struct vec *a, struct vec *b, float epsilon);
+int vector2_is_equal(struct vec a, struct vec b, float epsilon);
+```
+
+Test if the 2D vector `a` and the 2D vector `b` are equal with `epsilon` as error margin. Returns `TRUE` if the values are accepted as equal and `FALSE` otherwise.
+
+```c
 void pvector2_add(struct vec *a, struct vec *b, struct vec *result);
 struct vec vector2_add(struct vec a, struct vec b);
 ```
@@ -269,6 +290,27 @@ struct vec vector3_zero(void);
 The result is a zeroed 3D vector.
 
 ```c
+int pvector3_is_zero(struct vec *a);
+int vector3_is_zero(struct vec a);
+```
+
+Test if the 3D vector is zero with `FLT_EPSILON` as error margin. Returns `TRUE` if the values are accepted as equal to zero and `FALSE` otherwise.
+
+```c
+int pvector3_is_near_zero(struct vec *a, float epsilon);
+int vector3_is_near_zero(struct vec a, float epsilon);
+```
+
+Test if the 3D vector is near zero with `epsilon` as error margin. Returns `TRUE` if the values are accepted as nearly equal to zero and `FALSE` otherwise.
+
+```c
+int pvector3_is_equal(struct vec *a, struct vec *b, float epsilon);
+int vector3_is_equal(struct vec a, struct vec b, float epsilon);
+```
+
+Test if the 3D vector `a` and the 3D vector `b` are equal with `epsilon` as error margin. Returns `TRUE` if the values are accepted as equal and `FALSE` otherwise.
+
+```c
 void pvector3_add(struct vec *a, struct vec *b, struct vec *result);
 struct vec vector3_add(struct vec a, struct vec b);
 ```
@@ -444,6 +486,27 @@ struct vec quaternion_zero();
 ```
 
 The result is a zeroed quaternion.
+
+```c
+int pquaternion_is_zero(struct vec *a);
+int quaternion_is_zero(struct vec a);
+```
+
+Test if the quaternion is zero with `FLT_EPSILON` as error margin. Returns `TRUE` if the values are accepted as equal to zero and `FALSE` otherwise.
+
+```c
+int pquaternion_is_near_zero(struct vec *a, float epsilon);
+int quaternion_is_near_zero(struct vec a, float epsilon);
+```
+
+Test if the quaternion is near zero with `epsilon` as error margin. Returns `TRUE` if the values are accepted as nearly equal to zero and `FALSE` otherwise.
+
+```c
+int pquaternion_is_equal(struct vec *a, struct vec *b, float epsilon);
+int quaternion_is_equal(struct vec a, struct vec b, float epsilon);
+```
+
+Test if the quaternion `a` and the quaternion `b` are equal with `epsilon` as error margin. Returns `TRUE` if the values are accepted as equal and `FALSE` otherwise.
 
 ```c
 void pquaternion_add(struct vec *a, struct vec *b, struct vec *result);
