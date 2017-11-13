@@ -14,7 +14,7 @@ It support C99 standard or later.
 
 ## Release
 
-The curreny unstable version is 0.2.0 and its CHANGELOG and RELEASE NOTES can be found in [CHANGELOG.md](CHANGELOG.md#020---2017-11-11).
+The CHANGELOG and RELEASE NOTES can be found in [CHANGELOG.md](CHANGELOG.md#020---2017-11-11).
 
 ## Reference
 
