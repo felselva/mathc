@@ -1039,7 +1039,7 @@ MATHC_EXTERN_INLINE bool quaternion_is_near_zero(struct vec a, float epsilon)
 
 bool pquaternion_is_equal(struct vec *a, struct vec *b, float epsilon)
 {
-	bool is_equal = fa;
+	bool is_equal = false;
 	if (fabs(a->x - b->x) < epsilon && fabs(a->y - b->y) < FLT_EPSILON && fabs(a->z - b->z) < FLT_EPSILON) {
 		is_equal = true;
 	}
