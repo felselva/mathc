@@ -39,22 +39,15 @@ the following restrictions:
 #define MATHC_EXTERN_INLINE
 #endif
 
-#ifndef TRUE
-#define TRUE 1
-#endif
-#ifndef FALSE
-#define FALSE 0
-#endif
-
 /* Utils */
-int nearly_equal(float a, float b, float epsilon)
+bool nearly_equal(float a, float b, float epsilon)
 {
-	int result = FALSE;
+	bool result = false;
 	float abs_a = fabsf(a);
 	float abs_b = fabsf(b);
 	float diff = fabsf(a - b);
 	if (a == b) {
-		result = TRUE;
+		result = true;
 	} else if (a == 0.0f || b == 0.0f || diff < FLT_EPSILON) {
 		result = diff < epsilon;
 	} else {
@@ -104,44 +97,44 @@ MATHC_EXTERN_INLINE struct vec vector2_zero(void)
 	return result;
 }
 
-int pvector2_is_zero(struct vec *a)
+bool pvector2_is_zero(struct vec *a)
 {
-	int is_zero = FALSE;
+	bool is_zero = false;
 	if (fabs(a->x) < FLT_EPSILON && fabs(a->y) < FLT_EPSILON) {
-		is_zero = TRUE;
+		is_zero = true;
 	}
 	return is_zero;
 }
 
-MATHC_EXTERN_INLINE int vector2_is_zero(struct vec a)
+MATHC_EXTERN_INLINE bool vector2_is_zero(struct vec a)
 {
 	return pvector2_is_zero(&a);
 }
 
-int pvector2_is_near_zero(struct vec *a, float epsilon)
+bool pvector2_is_near_zero(struct vec *a, float epsilon)
 {
-	int is_near_zero = FALSE;
+	bool is_near_zero = false;
 	if (fabs(a->x) < epsilon && fabs(a->y) < epsilon) {
-		is_near_zero = TRUE;
+		is_near_zero = true;
 	}
 	return is_near_zero;
 }
 
-MATHC_EXTERN_INLINE int vector2_is_near_zero(struct vec a, float epsilon)
+MATHC_EXTERN_INLINE bool vector2_is_near_zero(struct vec a, float epsilon)
 {
 	return pvector2_is_near_zero(&a, epsilon);
 }
 
-int pvector2_is_equal(struct vec *a, struct vec *b, float epsilon)
+bool pvector2_is_equal(struct vec *a, struct vec *b, float epsilon)
 {
-	int is_equal = FALSE;
+	bool is_equal = false;
 	if (fabs(a->x - b->x) < epsilon && fabs(a->y - b->y) < FLT_EPSILON) {
-		is_equal = TRUE;
+		is_equal = true;
 	}
 	return is_equal;
 }
 
-MATHC_EXTERN_INLINE int vector2_is_equal(struct vec a, struct vec b, float epsilon)
+MATHC_EXTERN_INLINE bool vector2_is_equal(struct vec a, struct vec b, float epsilon)
 {
 	return pvector2_is_equal(&a, &b, epsilon);
 }
@@ -562,44 +555,44 @@ MATHC_EXTERN_INLINE struct vec vector3_zero(void)
 	return result;
 }
 
-int pvector3_is_zero(struct vec *a)
+bool pvector3_is_zero(struct vec *a)
 {
-	int is_zero = FALSE;
+	bool is_zero = false;
 	if (fabs(a->x) < FLT_EPSILON && fabs(a->y) < FLT_EPSILON && fabs(a->z) < FLT_EPSILON) {
-		is_zero = TRUE;
+		is_zero = true;
 	}
 	return is_zero;
 }
 
-MATHC_EXTERN_INLINE int vector3_is_zero(struct vec a)
+MATHC_EXTERN_INLINE bool vector3_is_zero(struct vec a)
 {
 	return pvector3_is_zero(&a);
 }
 
-int pvector3_is_near_zero(struct vec *a, float epsilon)
+bool pvector3_is_near_zero(struct vec *a, float epsilon)
 {
-	int is_near_zero = FALSE;
+	bool is_near_zero = false;
 	if (fabs(a->x) < epsilon && fabs(a->y) < epsilon && fabs(a->z) < epsilon) {
-		is_near_zero = TRUE;
+		is_near_zero = true;
 	}
 	return is_near_zero;
 }
 
-MATHC_EXTERN_INLINE int vector3_is_near_zero(struct vec a, float epsilon)
+MATHC_EXTERN_INLINE bool vector3_is_near_zero(struct vec a, float epsilon)
 {
 	return pvector3_is_near_zero(&a, epsilon);
 }
 
-int pvector3_is_equal(struct vec *a, struct vec *b, float epsilon)
+bool pvector3_is_equal(struct vec *a, struct vec *b, float epsilon)
 {
-	int is_equal = FALSE;
+	bool is_equal = false;
 	if (fabs(a->x - b->x) < epsilon && fabs(a->y - b->y) < FLT_EPSILON && fabs(a->z - b->z) < FLT_EPSILON) {
-		is_equal = TRUE;
+		is_equal = true;
 	}
 	return is_equal;
 }
 
-MATHC_EXTERN_INLINE int vector3_is_equal(struct vec a, struct vec b, float epsilon)
+MATHC_EXTERN_INLINE bool vector3_is_equal(struct vec a, struct vec b, float epsilon)
 {
 	return pvector3_is_equal(&a, &b, epsilon);
 }
@@ -1016,44 +1009,44 @@ MATHC_EXTERN_INLINE struct vec quaternion_zero(void)
 	return result;
 }
 
-int pquaternion_is_zero(struct vec *a)
+bool pquaternion_is_zero(struct vec *a)
 {
-	int is_zero = FALSE;
+	bool is_zero = false;
 	if (fabs(a->x) < FLT_EPSILON && fabs(a->y) < FLT_EPSILON && fabs(a->z) < FLT_EPSILON && fabs(a->w) < FLT_EPSILON) {
-		is_zero = TRUE;
+		is_zero = true;
 	}
 	return is_zero;
 }
 
-MATHC_EXTERN_INLINE int quaternion_is_zero(struct vec a)
+MATHC_EXTERN_INLINE bool quaternion_is_zero(struct vec a)
 {
 	return pvector3_is_zero(&a);
 }
 
-int pquaternion_is_near_zero(struct vec *a, float epsilon)
+bool pquaternion_is_near_zero(struct vec *a, float epsilon)
 {
-	int is_near_zero = FALSE;
+	bool is_near_zero = false;
 	if (fabs(a->x) < epsilon && fabs(a->y) < epsilon && fabs(a->z) < epsilon && fabs(a->w) < epsilon) {
-		is_near_zero = TRUE;
+		is_near_zero = true;
 	}
 	return is_near_zero;
 }
 
-MATHC_EXTERN_INLINE int quaternion_is_near_zero(struct vec a, float epsilon)
+MATHC_EXTERN_INLINE bool quaternion_is_near_zero(struct vec a, float epsilon)
 {
 	return pquaternion_is_near_zero(&a, epsilon);
 }
 
-int pquaternion_is_equal(struct vec *a, struct vec *b, float epsilon)
+bool pquaternion_is_equal(struct vec *a, struct vec *b, float epsilon)
 {
-	int is_equal = FALSE;
+	bool is_equal = fa;
 	if (fabs(a->x - b->x) < epsilon && fabs(a->y - b->y) < FLT_EPSILON && fabs(a->z - b->z) < FLT_EPSILON) {
-		is_equal = TRUE;
+		is_equal = true;
 	}
 	return is_equal;
 }
 
-MATHC_EXTERN_INLINE int quaternion_is_equal(struct vec a, struct vec b, float epsilon)
+MATHC_EXTERN_INLINE bool quaternion_is_equal(struct vec a, struct vec b, float epsilon)
 {
 	return pquaternion_is_equal(&a, &b, epsilon);
 }
