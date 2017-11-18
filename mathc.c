@@ -1424,6 +1424,23 @@ MATHC_EXTERN_INLINE struct vec quaternion_to_axis_angle(struct vec a)
 	return result;
 }
 
+void pquaternion_from_2_vectors(struct vec *a, struct vec *b, struct vec *result){
+	struct vec cross;
+	float dot = pvector3_dot(a, b);
+	float a_length_sq = pvector3_length_squared(a);
+	float b_length_sq = pvector3_length_squared(a);
+	pvector3_cross(a, b, &cross);
+	to_pquaternion(cross.x, cross.y, cross.z, dot + sqrtf(a_length_sq * b_length_sq), result);
+	pquaternion_normalize(result, result);
+}
+
+MATHC_EXTERN_INLINE struct vec quaternion_from_2_vectors(struct vec a, struct vec b)
+{
+	struct vec result;
+	pquaternion_from_2_vectors(&a, &b, &result);
+	return result;
+}
+
 void pquaternion_rotation_matrix(struct mat *m, struct vec *result)
 {
 	float sr;
