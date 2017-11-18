@@ -1020,7 +1020,7 @@ bool pquaternion_is_zero(struct vec *a)
 
 MATHC_EXTERN_INLINE bool quaternion_is_zero(struct vec a)
 {
-	return pvector3_is_zero(&a);
+	return pquaternion_is_zero(&a);
 }
 
 bool pquaternion_is_near_zero(struct vec *a, float epsilon)
