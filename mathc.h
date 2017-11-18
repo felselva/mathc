@@ -195,6 +195,7 @@ struct vec vector3_bezier4(struct vec a, struct vec b, struct vec c, struct vec 
 /* Quaternion */
 void to_pquaternion(float x, float y, float z, float w, struct vec *result);
 void pquaternion_zero(struct vec *result);
+void pquaternion_null(struct vec *result);
 bool pquaternion_is_zero(struct vec *a);
 bool pquaternion_is_near_zero(struct vec *a, float epsilon);
 bool pquaternion_is_equal(struct vec *a, struct vec *b, float epsilon);
@@ -227,6 +228,7 @@ void pquaternion_spherical_linear_interpolation(struct vec *a, struct vec *b, fl
 
 struct vec to_quaternion(float x, float y, float z, float w);
 struct vec quaternion_zero(void);
+struct vec quaternion_null(void);
 bool quaternion_is_zero(struct vec a);
 bool quaternion_is_near_zero(struct vec a, float epsilon);
 bool quaternion_is_equal(struct vec a, struct vec b, float epsilon);

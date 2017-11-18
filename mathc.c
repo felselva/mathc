@@ -1008,6 +1008,21 @@ MATHC_EXTERN_INLINE struct vec quaternion_zero(void)
 	return result;
 }
 
+void pquaternion_null(struct vec *result)
+{
+	result->x = 0.0f;
+	result->y = 0.0f;
+	result->z = 0.0f;
+	result->w = 1.0f;
+}
+
+MATHC_EXTERN_INLINE struct vec quaternion_null(void)
+{
+	struct vec result;
+	pquaternion_null(&result);
+	return result;
+}
+
 bool pquaternion_is_zero(struct vec *a)
 {
 	bool is_zero = false;
