@@ -993,7 +993,6 @@ struct vec to_quaternion(float x, float y, float z, float w)
 	return result;
 }
 
-
 void pquaternion_zero(struct vec *result)
 {
 	result->x = 0.0f;
