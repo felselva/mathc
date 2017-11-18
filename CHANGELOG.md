@@ -4,6 +4,47 @@ All notable changes to this project will be documented in this file, following s
 
 ## Unreleased
 
+## 1.1.0 - 2017-11-18
+
+### Added
+
+- Function to get quaternion from two vectors.
+- Function to get null quaternion.
+
+### Changed
+
+- Fix missing declaration of function to get zero 3D vector.
+
+## 1.0.4 - 2017-11-18
+
+### Changed
+
+- Fix quaternion inverse function.
+
+## 1.0.3 - 2017-11-18
+
+### Changed
+
+- Fix checking if quaternion is zero.
+
+## 1.0.2 - 2017-11-13
+
+### Changed
+
+- Fix typo.
+
+## 1.0.1 - 2017-11-13
+
+### Changed
+
+- Use standard boolean.
+
+## 1.0.0 - 2017-11-13
+
+### Added
+
+- Version macros.
+
 ## 0.3.0 - 2017-11-13
 
 ### Added
