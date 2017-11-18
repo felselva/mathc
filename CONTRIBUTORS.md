@@ -1,5 +1,6 @@
 # Contributors
 
+- [@ratchetfreak](https://github.com/ratchetfreak) added `pquaternion_null`/`quaternion_null` and `pquaternion_from_2_vectors`/`quaternion_from_2_vectors`
 - [@ratchetfreak](https://github.com/ratchetfreak) found bug with function for quaternion inverse
 - [@ratchetfreak](https://github.com/ratchetfreak) found bug with function for testing if quaternion is zero
 - [@cxong](https://github.com/cxong) suggested functions to test vectors equality
