@@ -162,6 +162,7 @@ void pvector3_bezier3(struct vec *a, struct vec *b, struct vec *c, float p, stru
 void pvector3_bezier4(struct vec *a, struct vec *b, struct vec *c, struct vec *d, float p, struct vec *result);
 
 struct vec to_vector3(float x, float y, float z);
+struct vec vector3_zero(void);
 struct vec vector3_add(struct vec a, struct vec b);
 bool vector3_is_zero(struct vec a);
 bool vector3_is_near_zero(struct vec a, float epsilon);
