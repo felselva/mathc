@@ -4,12 +4,23 @@ All notable changes to this project will be documented in this file, following s
 
 ## Unreleased
 
+## 1.2.0 - 2017-11-21
+
+### Added
+
+- Functions `pvector2_in_circle`/`vector2_in_circle` to check if 2D vector is inside 2D circle.
+- Functions `pvector2_in_triangle`/`vector2_in_triangle` to check if 2D vector is inside 2D triangle.
+
+### Changed
+
+- Quaternion spherical interpolation use `0.95f` as cutoff to switch to linear interpolation.
+
 ## 1.1.0 - 2017-11-18
 
 ### Added
 
-- Function to get quaternion from two vectors.
-- Function to get null quaternion.
+- Functions `pquaternion_from_2_vectors`/`quaternion_from_2_vectors` to get quaternion from two vectors.
+- Functions `pquaternion_null`/`quaternion_null` to get null quaternion.
 
 ### Changed
 

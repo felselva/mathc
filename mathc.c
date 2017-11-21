@@ -1528,28 +1528,28 @@ void pquaternion_spherical_linear_interpolation(struct vec *a, struct vec *b, fl
 	struct vec tmp_a = *a;
 	struct vec tmp_b = *b;
 	float cos_theta = pquaternion_dot(a, b);
-	float k0;
-	float k1;
+	float p0;
+	float p1;
 	/* Take shortest arc */
 	if (cos_theta < 0.0f) {
 		pquaternion_negative(&tmp_b, &tmp_b);
 		cos_theta = -cos_theta;
 	}
 	/* Check if quaternions are close */
-	if (cos_theta > 0.9999f) {
+	if (cos_theta > 0.95f) {
 		/* Use linear interpolation */
-		k0 = 1.0f - p;
-		k1 = p;
+		p0 = 1.0f - p;
+		p1 = p;
 	} else {
 		float theta = acosf(cos_theta);
 		float sin_theta = sinf(theta);
-		k0 = sinf((1.f - p) * theta) / sin_theta;
-		k1 = sinf(p * theta) / sin_theta;
+		p0 = sinf((1.f - p) * theta) / sin_theta;
+		p1 = sinf(p * theta) / sin_theta;
 	}
-	result->x = tmp_a.x * k0 + tmp_b.x * k1;
-	result->y = tmp_a.y * k0 + tmp_b.y * k1;
-	result->z = tmp_a.z * k0 + tmp_b.z * k1;
-	result->w = tmp_a.w * k0 + tmp_b.w * k1;
+	result->x = tmp_a.x * p0 + tmp_b.x * p1;
+	result->y = tmp_a.y * p0 + tmp_b.y * p1;
+	result->z = tmp_a.z * p0 + tmp_b.z * p1;
+	result->w = tmp_a.w * p0 + tmp_b.w * p1;
 }
 
 MATHC_EXTERN_INLINE struct vec quaternion_spherical_linear_interpolation(struct vec a, struct vec b, float p)
@@ -2249,6 +2249,55 @@ void pmatrix_to_array(struct mat *m, float *result)
 MATHC_EXTERN_INLINE void matrix_to_array(struct mat m, float *result)
 {
 	pmatrix_to_array(&m, result);
+}
+
+/* Intersection */
+bool pvector2_in_circle(struct vec *v, struct vec *circle_position, float radius)
+{
+	bool result = false;
+	float distance = pvector2_distance_to(v, circle_position);
+	if (distance <= radius) {
+		result = true;
+	}
+	return result;
+}
+
+MATHC_EXTERN_INLINE bool vector2_in_circle(struct vec v, struct vec circle_position, float radius)
+{
+	return pvector2_in_circle(&v, &circle_position, radius);
+}
+
+static bool psame_side(struct vec *p1, struct vec *p2, struct vec *a, struct vec *b)
+{
+	bool result = false;
+	struct vec b_minus_a = {0};
+	struct vec p1_minus_a = {0};
+	struct vec p2_minus_a = {0};
+	struct vec cross_p1;
+	struct vec cross_p2;
+	pvector2_subtract(b, a, &b_minus_a);
+	pvector2_subtract(p1, a, &p1_minus_a);
+	pvector2_subtract(p2, a, &p2_minus_a);
+	pvector3_cross(&b_minus_a, &p1_minus_a, &cross_p1);
+	pvector3_cross(&b_minus_a, &p2_minus_a, &cross_p2);
+	if (pvector3_dot(&cross_p1, &cross_p2) >= 0.0f) {
+		result = true;
+	}
+	return result;
+}
+
+bool pvector2_in_triangle(struct vec *v, struct vec *a, struct vec *b, struct vec *c)
+{
+	bool result = false;
+	if (psame_side(v, a, b, c) && psame_side(v, b, a, c) && psame_side(v, c, a, b)) {
+		result = true;
+	}
+	return result;
+}
+
+MATHC_EXTERN_INLINE bool vector2_in_triangle(struct vec v, struct vec a, struct vec b, struct vec c)
+{
+	return pvector2_in_triangle(&v, &a, &b, &c);
 }
 
 /* Easing functions */

@@ -34,6 +34,28 @@ struct cerror {
 	int32_t passed_with_e1000;
 };
 
+void printf_bool_test(struct cerror *error, char *msg, bool e, bool r)
+{
+	if (e) {
+		printf("%s:\n\tExpected true\n\t", msg);
+	} else {
+		printf("%s:\n\tExpected false\n\t", msg);
+	}
+	if (r) {
+		printf("  Actual true\t");
+	} else {
+		printf("  Actual false\t");
+	}
+
+	if (e == r) {
+		error->passed = error->passed + 1;
+		printf("~passed~\n\n");
+	} else {
+		error->failed = error->failed + 1;
+		printf("~failed~\n\n");
+	}
+}
+
 void printf_1f_test(struct cerror *error, char *msg, float e1, float r1)
 {
 	bool done = false;
@@ -394,6 +416,35 @@ void matrix_tests(struct cerror *error)
 	r = matrix_multiply_matrix(a, b);
 }
 
+void intersection_tests(struct cerror *error)
+{
+	struct vec a;
+	struct vec b;
+	struct vec c;
+	struct vec d;
+	printf("\n# Making tests with intersection...\n");
+	a = to_vector2(0.0f, 0.0f);
+	b = to_vector2(0.0f, 1.0f);
+	c = to_vector2(1.0f, 0.0f);
+	d = to_vector2(0.5f, 0.5f);
+	printf_bool_test(error, "2D vector in triangle", true, vector2_in_triangle(d, a, b, c));
+	a = to_vector2(0.0f, 0.0f);
+	b = to_vector2(1.0f, 1.0f);
+	c = to_vector2(1.0f, 0.0f);
+	d = to_vector2(0.5f, 0.5f);
+	printf_bool_test(error, "2D vector in triangle", true, vector2_in_triangle(d, a, b, c));
+	a = to_vector2(0.0f, 0.0f);
+	b = to_vector2(1.0f, 1.0f);
+	c = to_vector2(1.0f, 0.0f);
+	d = to_vector2(0.5f, 0.6f);
+	printf_bool_test(error, "2D vector in triangle", false, vector2_in_triangle(d, a, b, c));
+	a = to_vector2(0.0f, 1.0f);
+	b = to_vector2(1.0f, 1.0f);
+	c = to_vector2(1.0f, 0.0f);
+	d = to_vector2(0.5f, 0.4f);
+	printf_bool_test(error, "2D vector in triangle", false, vector2_in_triangle(d, a, b, c));
+}
+
 int main(int argc, char **args)
 {
 	struct cerror error = {0};
@@ -401,6 +452,7 @@ int main(int argc, char **args)
 	vector3_tests(&error);
 	quaternion_tests(&error);
 	matrix_tests(&error);
+	intersection_tests(&error);
 	printf("\nTotal of failed tests: %d\n", error.failed);
 	printf("Total of tests that passed: %d\n", error.passed);
 	printf("Total of tests that passed with epsilon * 10.0: %d\n", error.passed_with_e10);

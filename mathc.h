@@ -24,7 +24,7 @@ the following restrictions:
 #include <stdbool.h>
 
 #define MATHC_MAJOR_VERSION 1
-#define MATHC_MINOR_VERSION 0
+#define MATHC_MINOR_VERSION 2
 #define MATHC_PATCH_VERSION 0
 #define M_PIF 3.1415926536f
 #define M_PIF_2 1.5707963268f
@@ -313,6 +313,13 @@ struct mat matrix_multiply_matrix(struct mat a, struct mat b);
 struct mat matrix_linear_interpolation(struct mat a, struct mat b, float p);
 void matrix_multiply_f4(struct mat m, float *result);
 void matrix_to_array(struct mat m, float *result);
+
+/* Intersection */
+bool pvector2_in_circle(struct vec *v, struct vec *circle_position, float radius);
+bool pvector2_in_triangle(struct vec *v, struct vec *a, struct vec *b, struct vec *c);
+
+bool vector2_in_circle(struct vec v, struct vec circle_position, float radius);
+bool vector2_in_triangle(struct vec v, struct vec a, struct vec b, struct vec c);
 
 /* Easing functions */
 float quadratic_ease_in(float p);
