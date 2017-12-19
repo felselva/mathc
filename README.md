@@ -10,7 +10,7 @@ MATHC is a simple math library for 2D and 3D game programming. It contains imple
 - Matrices
 - Easing functions
 
-It support C99 standard or later.
+It support C99 standard or later. MATCH was made with focus on simplicity.
 
 ## Release
 
@@ -32,7 +32,7 @@ Check the file `CONTRIBUTING.md` for contribution rules and contributions of int
 
 Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
 
-**The type `float` loses precision with large numbers, why not use `double`?** Because every `double` value would be converted to `float` before sending to OpenGL, anyway. Which means your physics would run with high precision, but the rendering would still be affected by the `float` imprecision. Instead, *the good practice* to solve the problem with large numbers is to truncate the world position back to `[0.0f, 0.0f, 0.0f]` when the world distance to the center is too large. If the world is too big that even when truncating there are stil large numbers, the correct approach is to divide the world in chunks.
+**The type `float` is less precise with large numbers, why not use `double`?** Because every `double` value would be converted to `float` before sending to OpenGL, anyway. Which means your physics would run with high precision, but the rendering would still be affected by the `float` imprecision. Instead, *the good practice* to solve the problem with large numbers is to truncate the world position back to `[0.0f, 0.0f, 0.0f]` when the world distance to the center is too large. If the world is too big that even when truncating there are stil large numbers, the correct approach is to divide the world in chunks.
 
 ## Passing Arguments as Value or Pointer
 
@@ -93,7 +93,7 @@ You don't need to create your OpenGL buffer (VBO) to take 4 elements. When using
 
 All matrices are 4×4. There are functions for setting up projection matrices, view matrices and model matrices.
 
-Usually, model matrices are used to modify vertices on client-side or GPU-side. If you want to modify on client-side, you can use the functions `matrix_multiply_f4()` or `pmatrix_multiply_f4()` to modify an array with 4 `float` elements. Example:
+Model matrices are used to modify vertices on client-side or GPU-side. If you want to modify on client-side, you can use the functions `matrix_multiply_f4()` or `pmatrix_multiply_f4()` to modify an array with 4 `float` elements. Example:
 
 ```c
 float v[4] = {0.0f, 10.0f, 0.0f, 1.0f}; /* Compoments X, Y, Z and W */
@@ -110,6 +110,10 @@ struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
 	to_vector3(0.0f, 0.0f, 0.0f));
 struct mat pv = matrix_multiply_matrix(projection, view);
 matrix_to_array(pv, v);
+/*
+After rotation, the new values of `v` are:
+[-7.071068f, 7.071068f, 0.000000f, 1.000000f]
+*/
 ```
 
 ## Easing Functions
