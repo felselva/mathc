@@ -2226,6 +2226,23 @@ MATHC_EXTERN_INLINE void matrix_multiply_f4(struct mat m, float *result)
 	pmatrix_multiply_f4(&m, result);
 }
 
+void pmatrix_multiply_f3(struct mat *m, float *result)
+{
+	float v0 = result[0];
+	float v1 = result[1];
+	float v2 = result[2];
+	float v3 = 1.0f;
+	result[0] = (m->m11 * v0) + (m->m12 * v1) + (m->m13 * v2) + (m->m14 * v3);
+	result[1] = (m->m21 * v0) + (m->m22 * v1) + (m->m23 * v2) + (m->m24 * v3);
+	result[2] = (m->m31 * v0) + (m->m32 * v1) + (m->m33 * v2) + (m->m34 * v3);
+	result[3] = (m->m41 * v0) + (m->m42 * v1) + (m->m43 * v2) + (m->m44 * v3);
+}
+
+MATHC_EXTERN_INLINE void matrix_multiply_f3(struct mat m, float *result)
+{
+	pmatrix_multiply_f3(&m, result);
+}
+
 void pmatrix_to_array(struct mat *m, float *result)
 {
 	result[0] = m->m11;

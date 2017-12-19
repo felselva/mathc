@@ -286,6 +286,7 @@ void pmatrix_multiply(struct mat *m, float s, struct mat *result);
 void pmatrix_multiply_matrix(struct mat *a, struct mat *b, struct mat *result);
 void pmatrix_linear_interpolation(struct mat *a, struct mat *b, float p, struct mat *result);
 void pmatrix_multiply_f4(struct mat *m, float *result);
+void pmatrix_multiply_f3(struct mat *m, float *result);
 void pmatrix_to_array(struct mat *m, float *result);
 
 struct mat matrix_zero(void);
@@ -312,6 +313,7 @@ struct mat matrix_multiply(struct mat m, float s);
 struct mat matrix_multiply_matrix(struct mat a, struct mat b);
 struct mat matrix_linear_interpolation(struct mat a, struct mat b, float p);
 void matrix_multiply_f4(struct mat m, float *result);
+void matrix_multiply_f3(struct mat m, float *result);
 void matrix_to_array(struct mat m, float *result);
 
 /* Intersection */
