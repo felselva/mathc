@@ -2,9 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ferreiradaselva/mathc.svg?branch=master)](https://travis-ci.org/ferreiradaselva/mathc)
 
-Important: MATHC version 2 is currently under development with improvements. You can check out on branch `mathc2`.
-
-MATHC is a simple math library for 2D and 3D game programming. It contains implementations for:
+MATHC (version 2) is a simple math library for 2D and 3D programming. It contains implementations for:
 
 - 2D vectors
 - 3D vectors
@@ -12,117 +10,56 @@ MATHC is a simple math library for 2D and 3D game programming. It contains imple
 - Matrices
 - Easing functions
 
-It support C99 standard or later. MATCH was made with focus on simplicity.
+It support C99 standard or later.
 
-## Release
+## Declaring Variables
 
-The CHANGELOG and RELEASE NOTES can be found in [CHANGELOG.md](CHANGELOG.md#020---2017-11-11).
-
-## Reference
-
-The reference is the file `REFERENCE.md`.
-
-There are examples on my other repository using this math library:
-
-[CGDFW examples](https://github.com/ferreiradaselva/cgdfw/tree/master/examples)
-
-## Contributing
-
-Check the file `CONTRIBUTING.md` for contribution rules and contributions of interest.
-
-## Float
-
-Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
-
-**The type `float` is less precise with large numbers, why not use `double`?** Because every `double` value would be converted to `float` before sending to OpenGL, anyway. Which means your physics would run with high precision, but the rendering would still be affected by the `float` imprecision. Instead, *the good practice* to solve the problem with large numbers is to truncate the world position back to `[0.0f, 0.0f, 0.0f]` when the world distance to the center is too large. If the world is too big that even when truncating there are stil large numbers, the correct approach is to divide the world in chunks.
-
-## Passing Arguments as Value or Pointer
-
-For every function **that takes a structure**, there are two versions. One that you pass structures as value and other that you pass as pointer. The functions that pass the value by pointer have a prefix `p` before the type name (pvector2, pvector3, pquaternion and pmatrix) and the result is the `*result` argument or a returned `float`.
-
-You can decide which one you want to use.
-
-Examples:
+MATHC doesn't define any structure type. Everything is declared as an array:
 
 ```c
-/* Pass by value and return a value */
-struct mat projection = matrix_ortho(-100.0f, 100.0f, 100.0f, -100.0f);
-struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
-	to_vector3(0.0f, 0.0f, 0.0f));
-struct mat pv = matrix_multiply_matrix(projection, view);
-
-/* Pass by pointer */
-struct vec pos = {0};
-struct vec target = {0};
-struct mat projection = {0};
-struct mat view = {0};
-struct mat multiplied_matrix = {0};
-
-to_pvector3(0.0f, 0.0f, 1.0f, &pos);
-to_pvector3(0.0f, 0.0f, 0.0f, &target);
-to_pvector3(0.0f, 1.0f, 0.0f, &up);
-pmatrix_ortho(-100.0f, 100.0f, 100.0f, -100.0f, &projection);
-pmatrix_look_at(&pos, &target, &view);
-pmatrix_multiply_matrix(&projection, &view, &multiplied_matrix);
-```
-
-## Vectors
-
-All vectors (2D, 3D and quaternions) use the same structure type `struct vec`. The `z` component is still useful for 2D vectors, as it is used by OpenGL for depth testing. This means the only extra component on 2D and 3D vectors is the `w` component, which is used by quaternions.
-
-Examples:
-
-```c
-/* Rotate a 2D vector 90º */
-struct vec direction = to_vector2(0.0f, -1.0f);
-direction = vector2_rotate(90.0f * M_PIF / 180.0f);
-
-/* Get the angle (radians) of a 2D vector */
-float angle = vector2_angle(direction);
-
-/* Create a 3D vector */
-struct vec position = to_vector3(0.0f, 0.0f, 0.0f);
-
-/* Create a quaternion */
-struct vec quaternion = to_quaternion(0.0f, 0.0f, 0.0f, 1.0f);
-/* Spherical interpolation between two quaternions */
-struct vec interpolated = quaternion_spherical_linear_interpolation(a, b, 0.5f);
-```
-
-You don't need to create your OpenGL buffer (VBO) to take 4 elements. When using `glMapBufferRange()`/`glMapBuffer()` and `glUnmapBuffer()`, you can pass only the used elements to the VBO, that has element count of your choice.
-
-## Matrices
-
-All matrices are 4×4. There are functions for setting up projection matrices, view matrices and model matrices.
-
-Model matrices are used to modify vertices on client-side or GPU-side. If you want to modify on client-side, you can use the functions `matrix_multiply_f4()` or `pmatrix_multiply_f4()` to modify an array with 4 `float` elements. Example:
-
-```c
-float v[4] = {0.0f, 10.0f, 0.0f, 1.0f}; /* Compoments X, Y, Z and W */
-struct mat rotation = matrix_rotation_z(to_radians(45.0f));
-matrix_multiply_f4(rotation, v);
-```
-
-If you want to modify on GPU-side, you can use the functions `matrix_to_array()` or `pmatrix_to_array()` to push the matrix to an array with 16 `float` elements. Example:
-
-```c
-float v[MAT_SIZE]; /* MAT_SIZE is a macro in mathc.h with value 16 */
-struct mat projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
-struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
-	to_vector3(0.0f, 0.0f, 0.0f));
-struct mat pv = matrix_multiply_matrix(projection, view);
-matrix_to_array(pv, v);
-/*
-After rotation, the new values of `v` are:
-[-7.071068f, 7.071068f, 0.000000f, 1.000000f]
-*/
+mfloat_t v[VEC2_SIZE];
+mfloat_t v[VEC3_SIZE];
+mfloat_t v[VEC4_SIZE];
+mfloat_t q[QUAT_SIZE];
+mfloat_t m[MAT3_SIZE];
+mfloat_t m[MAT4_SIZE];
 ```
 
 ## Easing Functions
 
 The easing functions are an implementation of the functions presented in [easings.net](http://easings.net/). They are mainly useful for animations.
 
-Easing functions take a value that range from `0.0f` to `1.0f` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range.
+Easing functions take a value inside the range `0.0-1.0` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range (Check the [easings.net](http://easings.net/) to see those functions).
+
+## Configuration Macros
+
+The float type used by MATHC is defined by the macro `mfloat_t`, which is by default `float`.
+
+If the macro `MATHC_NO_STDBOOL` is defined, the library will not include `stdbool.h` and will define a macro `bool` of type `int` to represent boolean values. This is useful for platforms where `stdbool.h` is not available.
+
+If the macro `MATHC_DOUBLE_PRECISION` is defined, the Pi macros will be defined with double precision and the library will use internally the math functions for double types. Otherwise, the Pi macros will be defined with float precision and the library will use internally the math functions for float types
+
+You can define these macros during compilation time with flags:
+
+```
+-DMATHC_NO_STDBOOL=ON -Dmfloat_t=double -DMATHC_DOUBLE_PRECISION=ON
+```
+
+Or include `mathc.c` and `mathc.h` in a source and header. This second approach is useful, because you can define `mfloat_t` as a different type other than the built-in types `float` or `double`, such as `GLfloat`:
+
+```c
+/* In a *.c file */
+#define mfloat_t GLfloat
+#include <mathc.c>
+
+/* In a *.h file */
+#define mfloat_t GLfloat
+#include <mathc.h>
+```
+
+## Contributing
+
+Check the file `CONTRIBUTING.md` for contribution rules and contributions of interest.
 
 ## LICENSE
 

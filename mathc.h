@@ -21,338 +21,242 @@ the following restrictions:
 #ifndef MATHC_H
 #define MATHC_H
 
-#include <stdbool.h>
+#include <math.h>
+#include <float.h>
 
-#define MATHC_MAJOR_VERSION 1
-#define MATHC_MINOR_VERSION 2
+#ifndef MATHC_NO_STDBOOL
+	#include <stdbool.h>
+#else
+	#define bool int
+	#define true 1
+	#define false 0
+#endif
+
+#define MATHC_MAJOR_VERSION 2
+#define MATHC_MINOR_VERSION 0
 #define MATHC_PATCH_VERSION 0
-#define M_PIF 3.1415926536f
-#define M_PIF_2 1.5707963268f
-#define MAT_SIZE 16
-
-struct vec {
-	float x;
-	float y;
-	float z;
-	float w;
-};
-
-struct mat {
-	/* Row x Column */
-	float m11;
-	float m21;
-	float m31;
-	float m41;
-	float m12;
-	float m22;
-	float m32;
-	float m42;
-	float m13;
-	float m23;
-	float m33;
-	float m43;
-	float m14;
-	float m24;
-	float m34;
-	float m44;
-};
+#ifndef mfloat_t
+	#define mfloat_t float
+#endif
+#define VEC2_SIZE 2
+#define VEC3_SIZE 3
+#define QUAT_SIZE 4
+#define MAT3_SIZE 9
+#define MAT4_SIZE 16
+#ifdef MATHC_DOUBLE_PRECISION
+	#define MPI 3.14159265358979323846
+	#define MPI_2 1.57079632679489661923
+	#define MPI_4 0.78539816339744830962
+	#define MFLT_EPSILON DBL_EPSILON
+	#define MABS fabs
+	#define MMIN fmin
+	#define MMAX fmax
+	#define MSQRT sqrt
+	#define MSIN sin
+	#define MCOS cos
+	#define MACOS acos
+	#define MTAN tan
+	#define MATAN2 atan2
+	#define MPOW pow
+	#define MFLOOR floor
+	#define MCEIL ceil
+	#define MROUND round
+	#define MFLOAT_C(c) c
+#else
+	#define MPI 3.1415926536f
+	#define MPI_2 1.5707963268f
+	#define MPI_4 0.7853981634f
+	#define MFLT_EPSILON FLT_EPSILON
+	#define MABS fabsf
+	#define MMIN fminf
+	#define MMAX fmaxf
+	#define MSQRT sqrtf
+	#define MSIN sinf
+	#define MCOS cosf
+	#define MACOS acosf
+	#define MTAN tanf
+	#define MATAN2 atan2f
+	#define MPOW powf
+	#define MFLOOR floorf
+	#define MCEIL ceilf
+	#define MROUND roundf
+	#define MFLOAT_C(c) c ## f
+#endif
 
 /* Utils */
-bool nearly_equal(float a, float b, float epsilon);
-float to_radians(float degrees);
-float to_degrees(float radians);
+bool nearly_equal(mfloat_t a, mfloat_t b, mfloat_t epsilon);
+mfloat_t to_radians(mfloat_t degrees);
+mfloat_t to_degrees(mfloat_t radians);
 
 /* Vector 2D */
-void to_pvector2(float x, float y, struct vec *result);
-void pvector2_zero(struct vec *result);
-bool pvector2_is_zero(struct vec *a);
-bool pvector2_is_near_zero(struct vec *a, float epsilon);
-bool pvector2_is_equal(struct vec *a, struct vec *b, float epsilon);
-void pvector2_add(struct vec *a, struct vec *b, struct vec *result);
-void pvector2_subtract(struct vec *a, struct vec *b, struct vec *result);
-void pvector2_scale(struct vec *a, float scale, struct vec *result);
-void pvector2_multiply(struct vec *a, struct vec *b, struct vec *result);
-void pvector2_divide(struct vec *a, struct vec *b, struct vec *result);
-void pvector2_negative(struct vec *a, struct vec *result);
-void pvector2_inverse(struct vec *a, struct vec *result);
-void pvector2_abs(struct vec *a, struct vec *result);
-void pvector2_floor(struct vec *a, struct vec *result);
-void pvector2_ceil(struct vec *a, struct vec *result);
-void pvector2_round(struct vec *a, struct vec *result);
-void pvector2_max(struct vec *a, struct vec *b, struct vec *result);
-void pvector2_min(struct vec *a, struct vec *b, struct vec *result);
-float pvector2_dot(struct vec *a, struct vec *b);
-float pvector2_angle(struct vec *a);
-float pvector2_length_squared(struct vec *a);
-float pvector2_length(struct vec *a);
-void pvector2_normalize(struct vec *a, struct vec *result);
-void pvector2_slide(struct vec *a, struct vec *b, struct vec *result);
-void pvector2_reflect(struct vec *a, struct vec *b, struct vec *result);
-void pvector2_tangent(struct vec *a, struct vec *result);
-void pvector2_rotate(struct vec *a, float angle, struct vec *result);
-float pvector2_distance_to(struct vec *a, struct vec *b);
-float pvector2_distance_squared_to(struct vec *a, struct vec *b);
-void pvector2_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
-void pvector2_bezier3(struct vec *a, struct vec *b, struct vec *c, float p, struct vec *result);
-void pvector2_bezier4(struct vec *a, struct vec *b, struct vec *c, struct vec *d, float p, struct vec *result);
-
-struct vec to_vector2(float x, float y);
-struct vec vector2_zero(void);
-bool vector2_is_zero(struct vec a);
-bool vector2_is_near_zero(struct vec a, float epsilon);
-bool vector2_is_equal(struct vec a, struct vec b, float epsilon);
-struct vec vector2_add(struct vec a, struct vec b);
-struct vec vector2_subtract(struct vec a, struct vec b);
-struct vec vector2_scale(struct vec a, float scale);
-struct vec vector2_multiply(struct vec a, struct vec b);
-struct vec vector2_divide(struct vec a, struct vec b);
-struct vec vector2_negative(struct vec a);
-struct vec vector2_inverse(struct vec a);
-struct vec vector2_abs(struct vec a);
-struct vec vector2_floor(struct vec a);
-struct vec vector2_ceil(struct vec a);
-struct vec vector2_round(struct vec a);
-struct vec vector2_max(struct vec a, struct vec b);
-struct vec vector2_min(struct vec a, struct vec b);
-float vector2_dot(struct vec a, struct vec b);
-float vector2_angle(struct vec a);
-float vector2_length_squared(struct vec a);
-float vector2_length(struct vec a);
-struct vec vector2_normalize(struct vec a);
-struct vec vector2_slide(struct vec a, struct vec normal);
-struct vec vector2_reflect(struct vec a, struct vec normal);
-struct vec vector2_tangent(struct vec a);
-struct vec vector2_rotate(struct vec a, float angle);
-float vector2_distance_to(struct vec a, struct vec b);
-float vector2_distance_squared_to(struct vec a, struct vec b);
-struct vec vector2_linear_interpolation(struct vec a, struct vec b, float p);
-struct vec vector2_bezier3(struct vec a, struct vec b, struct vec c, float p);
-struct vec vector2_bezier4(struct vec a, struct vec b, struct vec c, struct vec d, float p);
+bool vec2_is_zero(mfloat_t *a);
+bool vec2_is_near_zero(mfloat_t *a, mfloat_t epsilon);
+bool vec2_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
+mfloat_t *vec2(mfloat_t *result, mfloat_t x, mfloat_t y);
+mfloat_t *vec2_zero(mfloat_t *result);
+mfloat_t *vec2_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec2_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec2_scale(mfloat_t *result, mfloat_t *a, mfloat_t scale);
+mfloat_t *vec2_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec2_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec2_negative(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec2_inverse(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec2_abs(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec2_floor(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec2_ceil(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec2_round(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec2_max(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec2_min(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec2_normalize(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec2_slide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec2_reflect(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec2_tangent(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec2_rotate(mfloat_t *result, mfloat_t *a, mfloat_t angle);
+mfloat_t *vec2_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
+mfloat_t *vec2_bezier3(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t *c, mfloat_t p);
+mfloat_t *vec2_bezier4(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t *c, mfloat_t *d, mfloat_t p);
+mfloat_t vec2_dot(mfloat_t *a, mfloat_t *b);
+mfloat_t vec2_angle(mfloat_t *a);
+mfloat_t vec2_length_squared(mfloat_t *a);
+mfloat_t vec2_length(mfloat_t *a);
+mfloat_t vec2_distance_to(mfloat_t *a, mfloat_t *b);
+mfloat_t vec2_distance_squared_to(mfloat_t *a, mfloat_t *b);
 
 /* Vector 3D */
-void to_pvector3(float x, float y, float z, struct vec *result);
-void pvector3_zero(struct vec *result);
-bool pvector3_is_zero(struct vec *a);
-bool pvector3_is_near_zero(struct vec *a, float epsilon);
-bool pvector3_is_equal(struct vec *a, struct vec *b, float epsilon);
-void pvector3_add(struct vec *a, struct vec *b, struct vec *result);
-void pvector3_subtract(struct vec *a, struct vec *b, struct vec *result);
-void pvector3_scale(struct vec *a, float scale, struct vec *result);
-void pvector3_multiply(struct vec *a, struct vec *b, struct vec *result);
-void pvector3_divide(struct vec *a, struct vec *b, struct vec *result);
-void pvector3_negative(struct vec *a, struct vec *result);
-void pvector3_inverse(struct vec *a, struct vec *result);
-void pvector3_abs(struct vec *a, struct vec *result);
-void pvector3_floor(struct vec *a, struct vec *result);
-void pvector3_ceil(struct vec *a, struct vec *result);
-void pvector3_round(struct vec *a, struct vec *result);
-void pvector3_max(struct vec *a, struct vec *b, struct vec *result);
-void pvector3_min(struct vec *a, struct vec *b, struct vec *result);
-float pvector3_dot(struct vec *a, struct vec *b);
-void pvector3_cross(struct vec *a, struct vec *b, struct vec *result);
-float pvector3_length_squared(struct vec *a);
-float pvector3_length(struct vec *a);
-void pvector3_normalize(struct vec *a, struct vec *result);
-void pvector3_slide(struct vec *a, struct vec *b, struct vec *result);
-void pvector3_reflect(struct vec *a, struct vec *normal, struct vec *result);
-float pvector3_distance_to(struct vec *a, struct vec *b);
-float pvector3_distance_squared_to(struct vec *a, struct vec *b);
-void pvector3_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
-void pvector3_bezier3(struct vec *a, struct vec *b, struct vec *c, float p, struct vec *result);
-void pvector3_bezier4(struct vec *a, struct vec *b, struct vec *c, struct vec *d, float p, struct vec *result);
+bool vec3_is_zero(mfloat_t *a);
+bool vec3_is_near_zero(mfloat_t *a, mfloat_t epsilon);
+bool vec3_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
+mfloat_t *vec3(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z);
+mfloat_t *vec3_zero(mfloat_t *result);
+mfloat_t *vec3_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_scale(mfloat_t *result, mfloat_t *a, mfloat_t scale);
+mfloat_t *vec3_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_multiply_mat3(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_negative(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec3_inverse(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec3_abs(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec3_floor(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec3_ceil(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec3_round(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec3_max(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_min(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_cross(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_normalize(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec3_slide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_reflect(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
+mfloat_t *vec3_bezier3(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t *c, mfloat_t p);
+mfloat_t *vec3_bezier4(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t *c, mfloat_t *d, mfloat_t p);
+mfloat_t vec3_dot(mfloat_t *a, mfloat_t *b);
+mfloat_t vec3_length_squared(mfloat_t *a);
+mfloat_t vec3_length(mfloat_t *a);
+mfloat_t vec3_distance_to(mfloat_t *a, mfloat_t *b);
+mfloat_t vec3_distance_squared_to(mfloat_t *a, mfloat_t *b);
 
-struct vec to_vector3(float x, float y, float z);
-struct vec vector3_zero(void);
-struct vec vector3_add(struct vec a, struct vec b);
-bool vector3_is_zero(struct vec a);
-bool vector3_is_near_zero(struct vec a, float epsilon);
-bool vector3_is_equal(struct vec a, struct vec b, float epsilon);
-struct vec vector3_subtract(struct vec a, struct vec b);
-struct vec vector3_scale(struct vec a, float scale);
-struct vec vector3_multiply(struct vec a, struct vec b);
-struct vec vector3_divide(struct vec a, struct vec b);
-struct vec vector3_negative(struct vec a);
-struct vec vector3_inverse(struct vec a);
-struct vec vector3_abs(struct vec a);
-struct vec vector3_floor(struct vec a);
-struct vec vector3_ceil(struct vec a);
-struct vec vector3_round(struct vec a);
-struct vec vector3_max(struct vec a, struct vec b);
-struct vec vector3_min(struct vec a, struct vec b);
-float vector3_dot(struct vec a, struct vec b);
-struct vec vector3_cross(struct vec a, struct vec b);
-float vector3_length_squared(struct vec a);
-float vector3_length(struct vec a);
-struct vec vector3_normalize(struct vec a);
-struct vec vector3_slide(struct vec a, struct vec b);
-struct vec vector3_reflect(struct vec a, struct vec normal);
-float vector3_distance_to(struct vec a, struct vec b);
-float vector3_distance_squared_to(struct vec a, struct vec b);
-struct vec vector3_linear_interpolation(struct vec a, struct vec b, float p);
-struct vec vector3_bezier3(struct vec a, struct vec b, struct vec c, float p);
-struct vec vector3_bezier4(struct vec a, struct vec b, struct vec c, struct vec d, float p);
+/* Vector 4D */
+bool vec4_is_zero(mfloat_t *a);
+bool vec4_is_near_zero(mfloat_t *a, mfloat_t epsilon);
+bool vec4_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
+mfloat_t *vec4(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w);
+mfloat_t *vec4_zero(mfloat_t *result);
+mfloat_t *vec4_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec4_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec4_scale(mfloat_t *result, mfloat_t *a, mfloat_t scale);
+mfloat_t *vec4_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec4_multiply_mat4(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec4_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec4_negative(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec4_inverse(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec4_abs(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec4_floor(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec4_ceil(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec4_round(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec4_max(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec4_min(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec4_normalize(mfloat_t *result, mfloat_t *a);
 
 /* Quaternion */
-void to_pquaternion(float x, float y, float z, float w, struct vec *result);
-void pquaternion_zero(struct vec *result);
-void pquaternion_null(struct vec *result);
-bool pquaternion_is_zero(struct vec *a);
-bool pquaternion_is_near_zero(struct vec *a, float epsilon);
-bool pquaternion_is_equal(struct vec *a, struct vec *b, float epsilon);
-void pquaternion_add(struct vec *a, struct vec *b, struct vec *result);
-void pquaternion_subtract(struct vec *a, struct vec *b, struct vec *result);
-void pquaternion_scale(struct vec *a, float scale, struct vec *result);
-void pquaternion_multiply(struct vec *a, struct vec *b, struct vec *result);
-void pquaternion_divide(struct vec *a, struct vec *b, struct vec *result);
-void pquaternion_negative(struct vec *a, struct vec *result);
-void pquaternion_conjugate(struct vec *a, struct vec *result);
-void pquaternion_inverse(struct vec *a, struct vec *result);
-void pquaternion_abs(struct vec *a, struct vec *result);
-void pquaternion_floor(struct vec *a, struct vec *result);
-void pquaternion_ceil(struct vec *a, struct vec *result);
-void pquaternion_round(struct vec *a, struct vec *result);
-void pquaternion_max(struct vec *a, struct vec *b, struct vec *result);
-void pquaternion_min(struct vec *a, struct vec *b, struct vec *result);
-float pquaternion_dot(struct vec *a, struct vec *b);
-float pquaternion_angle(struct vec *a, struct vec *b);
-float pquaternion_length_squared(struct vec *a);
-float pquaternion_length(struct vec *a);
-void pquaternion_normalize(struct vec *a, struct vec *result);
-void pquaternion_power(struct vec *a, float exponent, struct vec *result);
-void pquaternion_from_axis_angle(struct vec *a, float angle, struct vec *result);
-void pquaternion_to_axis_angle(struct vec *a, struct vec *result);
-void pquaternion_from_2_vectors(struct vec *a, struct vec *b, struct vec *result);
-void pquaternion_rotation_matrix(struct mat *m, struct vec *result);
-void pquaternion_yaw_pitch_roll(float yaw, float pitch, float roll, struct vec *result);
-void pquaternion_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
-void pquaternion_spherical_linear_interpolation(struct vec *a, struct vec *b, float p, struct vec *result);
-
-struct vec to_quaternion(float x, float y, float z, float w);
-struct vec quaternion_zero(void);
-struct vec quaternion_null(void);
-bool quaternion_is_zero(struct vec a);
-bool quaternion_is_near_zero(struct vec a, float epsilon);
-bool quaternion_is_equal(struct vec a, struct vec b, float epsilon);
-struct vec quaternion_add(struct vec a, struct vec b);
-struct vec quaternion_subtract(struct vec a, struct vec b);
-struct vec quaternion_scale(struct vec a, float scale);
-struct vec quaternion_multiply(struct vec a, struct vec b);
-struct vec quaternion_divide(struct vec a, struct vec b);
-struct vec quaternion_negative(struct vec a);
-struct vec quaternion_conjugate(struct vec a);
-struct vec quaternion_inverse(struct vec a);
-struct vec quaternion_abs(struct vec a);
-struct vec quaternion_floor(struct vec a);
-struct vec quaternion_ceil(struct vec a);
-struct vec quaternion_round(struct vec a);
-struct vec quaternion_max(struct vec a, struct vec b);
-struct vec quaternion_min(struct vec a, struct vec b);
-float quaternion_dot(struct vec a, struct vec b);
-float quaternion_angle(struct vec a, struct vec b);
-float quaternion_length_squared(struct vec a);
-float quaternion_length(struct vec a);
-struct vec quaternion_normalize(struct vec a);
-struct vec quaternion_power(struct vec a, float exponent);
-struct vec quaternion_from_axis_angle(struct vec a, float angle);
-struct vec quaternion_to_axis_angle(struct vec a);
-struct vec quaternion_from_2_vectors(struct vec a, struct vec b);
-struct vec quaternion_rotation_matrix(struct mat m);
-struct vec quaternion_yaw_pitch_roll(float yaw, float pitch, float roll);
-struct vec quaternion_linear_interpolation(struct vec a, struct vec b, float p);
-struct vec quaternion_spherical_linear_interpolation(struct vec a, struct vec b, float p);
+bool quat_is_zero(mfloat_t *a);
+bool quat_is_near_zero(mfloat_t *a, mfloat_t epsilon);
+bool quat_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
+mfloat_t *quat(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w);
+mfloat_t *quat_zero(mfloat_t *result);
+mfloat_t *quat_null(mfloat_t *result);
+mfloat_t *quat_scale(mfloat_t *result, mfloat_t *a, mfloat_t scale);
+mfloat_t *quat_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *quat_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *quat_negative(mfloat_t *result, mfloat_t *a);
+mfloat_t *quat_conjugate(mfloat_t *result, mfloat_t *a);
+mfloat_t *quat_inverse(mfloat_t *result, mfloat_t *a);
+mfloat_t *quat_normalize(mfloat_t *result, mfloat_t *a);
+mfloat_t *quat_power(mfloat_t *result, mfloat_t *a, mfloat_t exponent);
+mfloat_t *quat_from_axis_angle(mfloat_t *result, mfloat_t *a, mfloat_t angle);
+mfloat_t *quat_to_axis_angle(mfloat_t *result, mfloat_t *a);
+mfloat_t *quat_from_vec3(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *quat_from_mat4(mfloat_t *result, mfloat_t *m);
+mfloat_t *quat_from_yaw_pitch_roll(mfloat_t *result, mfloat_t yaw, mfloat_t pitch, mfloat_t roll);
+mfloat_t *quat_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
+mfloat_t *quat_slerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
+mfloat_t quat_dot(mfloat_t *a, mfloat_t *b);
+mfloat_t quat_angle(mfloat_t *a, mfloat_t *b);
+mfloat_t quat_length_squared(mfloat_t *a);
+mfloat_t quat_length(mfloat_t *a);
 
 /* Matrix */
-void pmatrix_zero(struct mat *result);
-void pmatrix_identity(struct mat *result);
-void pmatrix_transpose(struct mat *m, struct mat *result);
-void pmatrix_inverse(struct mat *m, struct mat *result);
-void pmatrix_ortho(float l, float r, float b, float t, float n, float f, struct mat *result);
-void pmatrix_perspective(float fov_y, float aspect, float n, float f, struct mat *result);
-void pmatrix_perspective_fov(float fov, float w, float h, float n, float f, struct mat *result);
-void pmatrix_perspective_infinite(float fov_y, float aspect, float n, struct mat *result);
-void pmatrix_rotation_x(float angle, struct mat *result);
-void pmatrix_rotation_y(float angle, struct mat *result);
-void pmatrix_rotation_z(float angle, struct mat *result);
-void pmatrix_rotation_axis(struct vec *a, float angle, struct mat *result);
-void pmatrix_rotation_quaternion(struct vec *q, struct mat *result);
-void pmatrix_look_at_up(struct vec *pos, struct vec *target, struct vec *up_axis, struct mat *result);
-void pmatrix_look_at(struct vec *pos, struct vec *target, struct mat *result);
-void pmatrix_scale(struct vec *v, struct mat *result);
-void pmatrix_get_scale(struct mat *m, struct vec *result);
-void pmatrix_translation(struct vec *v, struct mat *result);
-void pmatrix_get_translation(struct mat *m, struct vec *result);
-void pmatrix_negative(struct mat *m, struct mat *result);
-void pmatrix_multiply(struct mat *m, float s, struct mat *result);
-void pmatrix_multiply_matrix(struct mat *a, struct mat *b, struct mat *result);
-void pmatrix_linear_interpolation(struct mat *a, struct mat *b, float p, struct mat *result);
-void pmatrix_multiply_f4(struct mat *m, float *result);
-void pmatrix_multiply_f3(struct mat *m, float *result);
-void pmatrix_to_array(struct mat *m, float *result);
-
-struct mat matrix_zero(void);
-struct mat matrix_identity(void);
-struct mat matrix_transpose(struct mat m);
-struct mat matrix_inverse(struct mat m);
-struct mat matrix_ortho(float l, float r, float b, float t, float n, float f);
-struct mat matrix_perspective(float fov_y, float aspect, float n, float f);
-struct mat matrix_perspective_fov(float fov, float w, float h, float n, float f);
-struct mat matrix_perspective_infinite(float fov_y, float aspect, float n);
-struct mat matrix_rotation_x(float angle);
-struct mat matrix_rotation_y(float angle);
-struct mat matrix_rotation_z(float angle);
-struct mat matrix_rotation_axis(struct vec a, float angle);
-struct mat matrix_rotation_quaternion(struct vec q);
-struct mat matrix_look_at_up(struct vec pos, struct vec target, struct vec up_axis);
-struct mat matrix_look_at(struct vec pos, struct vec target);
-struct mat matrix_scale(struct vec v);
-struct vec matrix_get_scale(struct mat m);
-struct mat matrix_translation(struct vec v);
-struct vec matrix_get_translation(struct mat m);
-struct mat matrix_negative(struct mat m);
-struct mat matrix_multiply(struct mat m, float s);
-struct mat matrix_multiply_matrix(struct mat a, struct mat b);
-struct mat matrix_linear_interpolation(struct mat a, struct mat b, float p);
-void matrix_multiply_f4(struct mat m, float *result);
-void matrix_multiply_f3(struct mat m, float *result);
-void matrix_to_array(struct mat m, float *result);
-
-/* Intersection */
-bool pvector2_in_circle(struct vec *v, struct vec *circle_position, float radius);
-bool pvector2_in_triangle(struct vec *v, struct vec *a, struct vec *b, struct vec *c);
-
-bool vector2_in_circle(struct vec v, struct vec circle_position, float radius);
-bool vector2_in_triangle(struct vec v, struct vec a, struct vec b, struct vec c);
+mfloat_t *mat4_zero(mfloat_t *result);
+mfloat_t *mat4_identity(mfloat_t *result);
+mfloat_t *mat4_transpose(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat4_inverse(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat4_ortho(mfloat_t *result, mfloat_t l, mfloat_t r, mfloat_t b, mfloat_t t, mfloat_t n, mfloat_t f);
+mfloat_t *mat4_perspective(mfloat_t *result, mfloat_t fov_y, mfloat_t aspect, mfloat_t n, mfloat_t f);
+mfloat_t *mat4_perspective_fov(mfloat_t *result, mfloat_t fov, mfloat_t w, mfloat_t h, mfloat_t n, mfloat_t f);
+mfloat_t *mat4_perspective_infinite(mfloat_t *result, mfloat_t fov_y, mfloat_t aspect, mfloat_t n);
+mfloat_t *mat4_rotation_x(mfloat_t *result, mfloat_t angle);
+mfloat_t *mat4_rotation_y(mfloat_t *result, mfloat_t angle);
+mfloat_t *mat4_rotation_z(mfloat_t *result, mfloat_t angle);
+mfloat_t *mat4_rotation_axis(mfloat_t *result, mfloat_t *a, mfloat_t angle);
+mfloat_t *mat4_rotation_quaternion(mfloat_t *result, mfloat_t *q);
+mfloat_t *mat4_look_at_with_up(mfloat_t *result, mfloat_t *position, mfloat_t *target, mfloat_t *up_axis);
+mfloat_t *mat4_look_at(mfloat_t *result, mfloat_t *position, mfloat_t *target);
+mfloat_t *mat4_scaling(mfloat_t *result, mfloat_t *v);
+mfloat_t *mat4_translation(mfloat_t *result, mfloat_t *v);
+mfloat_t *mat4_negative(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat4_scale(mfloat_t *result, mfloat_t *m, mfloat_t s);
+mfloat_t *mat4_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *mat4_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
 
 /* Easing functions */
-float quadratic_ease_in(float p);
-float quadratic_ease_out(float p);
-float quadratic_ease_in_out(float p);
-float cubic_ease_in(float p);
-float cubic_ease_out(float p);
-float cubic_ease_in_out(float p);
-float quartic_ease_in(float p);
-float quartic_ease_out(float p);
-float quartic_ease_in_out(float p);
-float quintic_ease_in(float p);
-float quintic_ease_out(float p);
-float quintic_ease_in_out(float p);
-float sine_ease_in(float p);
-float sine_ease_out(float p);
-float sine_ease_in_out(float p);
-float circular_ease_in(float p);
-float circular_ease_out(float p);
-float circular_ease_in_out(float p);
-float exponential_ease_in(float p);
-float exponential_ease_out(float p);
-float exponential_ease_in_out(float p);
-float elastic_ease_in(float p);
-float elastic_ease_out(float p);
-float elastic_ease_in_out(float p);
-float back_ease_in(float p);
-float back_ease_out(float p);
-float back_ease_in_out(float p);
-float bounce_ease_in(float p);
-float bounce_ease_out(float p);
-float bounce_ease_in_out(float p);
+mfloat_t quadratic_ease_in(mfloat_t p);
+mfloat_t quadratic_ease_out(mfloat_t p);
+mfloat_t quadratic_ease_in_out(mfloat_t p);
+mfloat_t cubic_ease_in(mfloat_t p);
+mfloat_t cubic_ease_out(mfloat_t p);
+mfloat_t cubic_ease_in_out(mfloat_t p);
+mfloat_t quartic_ease_in(mfloat_t p);
+mfloat_t quartic_ease_out(mfloat_t p);
+mfloat_t quartic_ease_in_out(mfloat_t p);
+mfloat_t quintic_ease_in(mfloat_t p);
+mfloat_t quintic_ease_out(mfloat_t p);
+mfloat_t quintic_ease_in_out(mfloat_t p);
+mfloat_t sine_ease_in(mfloat_t p);
+mfloat_t sine_ease_out(mfloat_t p);
+mfloat_t sine_ease_in_out(mfloat_t p);
+mfloat_t circular_ease_in(mfloat_t p);
+mfloat_t circular_ease_out(mfloat_t p);
+mfloat_t circular_ease_in_out(mfloat_t p);
+mfloat_t exponential_ease_in(mfloat_t p);
+mfloat_t exponential_ease_out(mfloat_t p);
+mfloat_t exponential_ease_in_out(mfloat_t p);
+mfloat_t elastic_ease_in(mfloat_t p);
+mfloat_t elastic_ease_out(mfloat_t p);
+mfloat_t elastic_ease_in_out(mfloat_t p);
+mfloat_t back_ease_in(mfloat_t p);
+mfloat_t back_ease_out(mfloat_t p);
+mfloat_t back_ease_in_out(mfloat_t p);
+mfloat_t bounce_ease_in(mfloat_t p);
+mfloat_t bounce_ease_out(mfloat_t p);
+mfloat_t bounce_ease_in_out(mfloat_t p);
 
 #endif
