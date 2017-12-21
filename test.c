@@ -447,7 +447,7 @@ void intersection_tests(struct cerror *error)
 
 int main(int argc, char **args)
 {
-	struct cerror error = {0};
+	struct cerror error = {0, 0, 0, 0, 0};
 	vector2_tests(&error);
 	vector3_tests(&error);
 	quaternion_tests(&error);
