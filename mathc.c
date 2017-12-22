@@ -380,9 +380,9 @@ mfloat_t *vec3_multiply_mat3(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	mfloat_t x = a[0];
 	mfloat_t y = a[1];
 	mfloat_t z = a[2];
-	result[0] = (b[0] * x) + (b[1] * y) + (b[2] * z);
-	result[1] = (b[3] * x) + (b[4] * y) + (b[5] * z);
-	result[2] = (b[6] * x) + (b[7] * y) + (b[8] * z);
+	result[0] = (b[0] * x) + (b[4] * y) + (b[8] * z);
+	result[1] = (b[12] * x) + (b[1] * y) + (b[5] * z);
+	result[2] = (b[9] * x) + (b[13] * y) + (b[2] * z);
 	return result;
 }
 
@@ -659,10 +659,10 @@ mfloat_t *vec4_multiply_mat4(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	mfloat_t y = a[1];
 	mfloat_t z = a[2];
 	mfloat_t w = a[3];
-	result[0] = (b[0] * x) + (b[1] * y) + (b[2] * z) + (b[3] * w);
-	result[1] = (b[4] * x) + (b[5] * y) + (b[6] * z) + (b[7] * w);
-	result[2] = (b[8] * x) + (b[9] * y) + (b[10] * z) + (b[11] * w);
-	result[3] = (b[12] * x) + (b[13] * y) + (b[14] * z) + (b[15] * w);
+	result[0] = (b[0] * x) + (b[4] * y) + (b[8] * z) + (b[12] * w);
+	result[1] = (b[1] * x) + (b[5] * y) + (b[9] * z) + (b[13] * w);
+	result[2] = (b[2] * x) + (b[6] * y) + (b[10] * z) + (b[14] * w);
+	result[3] = (b[3] * x) + (b[7] * y) + (b[11] * z) + (b[15] * w);
 	return result;
 }
 
@@ -860,10 +860,10 @@ mfloat_t *quat_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	mfloat_t y = a[1];
 	mfloat_t z = a[2];
 	mfloat_t w = a[3];
-	mfloat_t length_squared = MFLOAT_C(1.0) / (b[0] * b[0] + b[1] * b[1] + b[2] * b[2] + b[3] * b[3]);
+	mfloat_t length_squared = MFLOAT_C(1.0) / (b[0] * b[0] + b[1] * b[1] + b[8] * b[8] + b[3] * b[3]);
 	mfloat_t normalized_x = -b[0] * length_squared;
 	mfloat_t normalized_y = -b[1] * length_squared;
-	mfloat_t normalized_z = -b[2] * length_squared;
+	mfloat_t normalized_z = -b[8] * length_squared;
 	mfloat_t normalized_w = b[3] * length_squared;
 	result[0] = x * normalized_w + normalized_x * w + (y * normalized_z - z * normalized_y);
 	result[1] = y * normalized_w + normalized_y * w + (z * normalized_x - x * normalized_z);
@@ -935,7 +935,7 @@ mfloat_t *quat_power(mfloat_t *result, mfloat_t *a, mfloat_t exponent)
 	} else {
 		result[0] = a[0];
 		result[1] = a[1];
-		result[2] = a[2];
+		result[2] = a[1];
 		result[3] = a[3];
 	}
 	return result;
@@ -976,7 +976,7 @@ mfloat_t *quat_from_vec3(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	mfloat_t a_length_sq = vec3_length_squared(a);
 	mfloat_t b_length_sq = vec3_length_squared(a);
 	vec3_cross(cross, a, b);
-	quat(result, cross[0], cross[1], cross[2], dot + MSQRT(a_length_sq * b_length_sq));
+	quat(result, cross[0], cross[1], cross[1], dot + MSQRT(a_length_sq * b_length_sq));
 	quat_normalize(result, result);
 	return result;
 }
@@ -990,30 +990,30 @@ mfloat_t *quat_from_mat4(mfloat_t *result, mfloat_t *m)
 		sr = MSQRT(scale + MFLOAT_C(1.0));
 		result[3] = sr * MFLOAT_C(0.5);
 		sr = MFLOAT_C(0.5) / sr;
-		result[0] = (m[6] - m[9]) * sr;
-		result[1] = (m[8] - m[2]) * sr;
-		result[2] = (m[1] - m[4]) * sr;
+		result[0] = (m[9] - m[6]) * sr;
+		result[1] = (m[2] - m[8]) * sr;
+		result[2] = (m[4] - m[1]) * sr;
 	} else if ((m[0] >= m[5]) && (m[0] >= m[10])) {
 		sr = MSQRT(MFLOAT_C(1.0) + m[0] - m[5] - m[10]);
 		half = MFLOAT_C(0.5) / sr;
 		result[0] = MFLOAT_C(0.5) * sr;
-		result[1] = (m[1] + m[4]) * half;
-		result[2] = (m[2] + m[8]) * half;
-		result[3] = (m[6] - m[9]) * half;
+		result[1] = (m[4] + m[1]) * half;
+		result[2] = (m[8] + m[2]) * half;
+		result[3] = (m[9] - m[6]) * half;
 	} else if (m[5] > m[10]) {
 		sr = MSQRT(MFLOAT_C(1.0) + m[5] - m[0] - m[10]);
 		half = MFLOAT_C(0.5) / sr;
-		result[0] = (m[4] + m[1]) * half;
+		result[0] = (m[1] + m[4]) * half;
 		result[1] = MFLOAT_C(0.5) * sr;
-		result[2] = (m[9] + m[6]) * half;
-		result[3] = (m[8] - m[2]) * half;
+		result[2] = (m[6] + m[9]) * half;
+		result[3] = (m[2] - m[8]) * half;
 	} else {
 		sr = MSQRT(MFLOAT_C(1.0) + m[10] - m[0] - m[5]);
 		half = MFLOAT_C(0.5) / sr;
-		result[0] = (m[8] + m[2]) * half;
-		result[1] = (m[9] + m[6]) * half;
+		result[0] = (m[2] + m[8]) * half;
+		result[1] = (m[6] + m[9]) * half;
 		result[2] = MFLOAT_C(0.5) * sr;
-		result[3] = (m[1] - m[4]) * half;
+		result[3] = (m[4] - m[1]) * half;
 	}
 	return result;
 }
@@ -1107,20 +1107,20 @@ mfloat_t quat_length(mfloat_t *a)
 mfloat_t *mat4_zero(mfloat_t *result)
 {
 	result[0] = MFLOAT_C(0.0);
-	result[1] = MFLOAT_C(0.0);
-	result[2] = MFLOAT_C(0.0);
-	result[3] = MFLOAT_C(0.0);
 	result[4] = MFLOAT_C(0.0);
-	result[5] = MFLOAT_C(0.0);
-	result[6] = MFLOAT_C(0.0);
-	result[7] = MFLOAT_C(0.0);
 	result[8] = MFLOAT_C(0.0);
-	result[9] = MFLOAT_C(0.0);
-	result[10] = MFLOAT_C(0.0);
-	result[11] = MFLOAT_C(0.0);
 	result[12] = MFLOAT_C(0.0);
+	result[1] = MFLOAT_C(0.0);
+	result[5] = MFLOAT_C(0.0);
+	result[9] = MFLOAT_C(0.0);
 	result[13] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[10] = MFLOAT_C(0.0);
 	result[14] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(0.0);
 	return result;
 }
@@ -1128,42 +1128,59 @@ mfloat_t *mat4_zero(mfloat_t *result)
 mfloat_t *mat4_identity(mfloat_t *result)
 {
 	result[0] = MFLOAT_C(1.0);
-	result[1] = MFLOAT_C(0.0);
-	result[2] = MFLOAT_C(0.0);
-	result[3] = MFLOAT_C(0.0);
 	result[4] = MFLOAT_C(0.0);
-	result[5] = MFLOAT_C(1.0);
-	result[6] = MFLOAT_C(0.0);
-	result[7] = MFLOAT_C(0.0);
 	result[8] = MFLOAT_C(0.0);
-	result[9] = MFLOAT_C(0.0);
-	result[10] = MFLOAT_C(1.0);
-	result[11] = MFLOAT_C(0.0);
 	result[12] = MFLOAT_C(0.0);
+	result[1] = MFLOAT_C(0.0);
+	result[5] = MFLOAT_C(1.0);
+	result[9] = MFLOAT_C(0.0);
 	result[13] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[10] = MFLOAT_C(1.0);
 	result[14] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(1.0);
 	return result;
 }
 
 mfloat_t *mat4_transpose(mfloat_t *result, mfloat_t *m)
 {
-	result[0] = m[0];
-	result[4] = m[1];
-	result[8] = m[2];
-	result[12] = m[3];
-	result[1] = m[4];
-	result[5] = m[5];
-	result[9] = m[6];
-	result[13] = m[7];
-	result[2] = m[8];
-	result[6] = m[9];
-	result[10] = m[10];
-	result[14] = m[11];
-	result[3] = m[12];
-	result[7] = m[13];
-	result[11] = m[14];
-	result[15] = m[15];
+	mfloat_t transposed[MAT4_SIZE];
+	transposed[0] = m[0];
+	transposed[1] = m[4];
+	transposed[2] = m[8];
+	transposed[3] = m[12];
+	transposed[4] = m[1];
+	transposed[5] = m[5];
+	transposed[6] = m[9];
+	transposed[7] = m[13];
+	transposed[8] = m[2];
+	transposed[9] = m[6];
+	transposed[10] = m[10];
+	transposed[11] = m[14];
+	transposed[12] = m[3];
+	transposed[13] = m[7];
+	transposed[14] = m[11];
+	transposed[15] = m[15];
+	result[0] = transposed[0];
+	result[4] = transposed[4];
+	result[8] = transposed[8];
+	result[12] = transposed[12];
+	result[1] = transposed[1];
+	result[5] = transposed[5];
+	result[9] = transposed[9];
+	result[13] = transposed[13];
+	result[2] = transposed[2];
+	result[6] = transposed[6];
+	result[10] = transposed[10];
+	result[14] = transposed[14];
+	result[3] = transposed[3];
+	result[7] = transposed[7];
+	result[11] = transposed[11];
+	result[15] = transposed[15];
 	return result;
 }
 
@@ -1172,120 +1189,120 @@ mfloat_t *mat4_inverse(mfloat_t *result, mfloat_t *m)
 	mfloat_t inverse[MAT4_SIZE];
 	mfloat_t det;
 	inverse[0] = m[5] * m[10] * m[15] -
-		m[5] * m[14] * m[11] -
-		m[6] * m[9] * m[15] +
-		m[6] * m[13] * m[11] +
-		m[7] * m[9] * m[14] -
-		m[7] * m[13] * m[10];
-	inverse[1] = -m[1] * m[10] * m[15] +
-		m[1] * m[14] * m[11] +
-		m[2] * m[9] * m[15] -
-		m[2] * m[13] * m[11] -
-		m[3] * m[9] * m[14] +
-		m[3] * m[13] * m[10];
-	inverse[2] = m[1] * m[6] * m[15] -
-		m[1] * m[14] * m[7] -
-		m[2] * m[5] * m[15] +
-		m[2] * m[13] * m[7] +
-		m[3] * m[5] * m[14] -
-		m[3] * m[13] * m[6];
-	inverse[3] = -m[1] * m[6] * m[11] +
-		m[1] * m[10] * m[7] +
-		m[2] * m[5] * m[11] -
-		m[2] * m[9] * m[7] -
-		m[3] * m[5] * m[10] +
-		m[3] * m[9] * m[6];
+		m[5] * m[11] * m[14] -
+		m[9] * m[6] * m[15] +
+		m[9] * m[7] * m[14] +
+		m[13] * m[6] * m[11] -
+		m[13] * m[7] * m[10];
 	inverse[4] = -m[4] * m[10] * m[15] +
-		m[4] * m[14] * m[11] +
-		m[6] * m[8] * m[15] -
-		m[6] * m[12] * m[11] -
-		m[7] * m[8] * m[14] +
-		m[7] * m[12] * m[10];
-	inverse[5] = m[0] * m[10] * m[15] -
-		m[0] * m[14] * m[11] -
-		m[2] * m[8] * m[15] +
-		m[2] * m[12] * m[11] +
-		m[3] * m[8] * m[14] -
-		m[3] * m[12] * m[10];
-	inverse[6] = -m[0] * m[6] * m[15] +
-		m[0] * m[14] * m[7] +
-		m[2] * m[4] * m[15] -
-		m[2] * m[12] * m[7] -
-		m[3] * m[4] * m[14] +
-		m[3] * m[12] * m[6];
-	inverse[7] = m[0] * m[6] * m[11] -
-		m[0] * m[10] * m[7] -
-		m[2] * m[4] * m[11] +
-		m[2] * m[8] * m[7] +
-		m[3] * m[4] * m[10] -
-		m[3] * m[8] * m[6];
+		m[4] * m[11] * m[14] +
+		m[8] * m[6] * m[15] -
+		m[8] * m[7] * m[14] -
+		m[12] * m[6] * m[11] +
+		m[12] * m[7] * m[10];
 	inverse[8] = m[4] * m[9] * m[15] -
-		m[4] * m[13] * m[11] -
-		m[5] * m[8] * m[15] +
-		m[5] * m[12] * m[11] +
-		m[7] * m[8] * m[13] -
-		m[7] * m[12] * m[9];
-	inverse[9] = -m[0] * m[9] * m[15] +
-		m[0] * m[13] * m[11] +
-		m[1] * m[8] * m[15] -
-		m[1] * m[12] * m[11] -
-		m[3] * m[8] * m[13] +
-		m[3] * m[12] * m[9];
-	inverse[10] = m[0] * m[5] * m[15] -
-		m[0] * m[13] * m[7] -
-		m[1] * m[4] * m[15] +
-		m[1] * m[12] * m[7] +
-		m[3] * m[4] * m[13] -
-		m[3] * m[12] * m[5];
-	inverse[11] = -m[0] * m[5] * m[11] +
-		m[0] * m[9] * m[7] +
-		m[1] * m[4] * m[11] -
-		m[1] * m[8] * m[7] -
-		m[3] * m[4] * m[9] +
-		m[3] * m[8] * m[5];
+		m[4] * m[11] * m[13] -
+		m[8] * m[5] * m[15] +
+		m[8] * m[7] * m[13] +
+		m[12] * m[5] * m[11] -
+		m[12] * m[7] * m[9];
 	inverse[12] = -m[4] * m[9] * m[14] +
-		m[4] * m[13] * m[10] +
-		m[5] * m[8] * m[14] -
-		m[5] * m[12] * m[10] -
-		m[6] * m[8] * m[13] +
-		m[6] * m[12] * m[9];
+		m[4] * m[10] * m[13] +
+		m[8] * m[5] * m[14] -
+		m[8] * m[6] * m[13] -
+		m[12] * m[5] * m[10] +
+		m[12] * m[6] * m[9];
+	inverse[1] = -m[1] * m[10] * m[15] +
+		m[1] * m[11] * m[14] +
+		m[9] * m[2] * m[15] -
+		m[9] * m[3] * m[14] -
+		m[13] * m[2] * m[11] +
+		m[13] * m[3] * m[10];
+	inverse[5] = m[0] * m[10] * m[15] -
+		m[0] * m[11] * m[14] -
+		m[8] * m[2] * m[15] +
+		m[8] * m[3] * m[14] +
+		m[12] * m[2] * m[11] -
+		m[12] * m[3] * m[10];
+	inverse[9] = -m[0] * m[9] * m[15] +
+		m[0] * m[11] * m[13] +
+		m[8] * m[1] * m[15] -
+		m[8] * m[3] * m[13] -
+		m[12] * m[1] * m[11] +
+		m[12] * m[3] * m[9];
 	inverse[13] = m[0] * m[9] * m[14] -
-		m[0] * m[13] * m[10] -
-		m[1] * m[8] * m[14] +
-		m[1] * m[12] * m[10] +
-		m[2] * m[8] * m[13] -
-		m[2] * m[12] * m[9];
+		m[0] * m[10] * m[13] -
+		m[8] * m[1] * m[14] +
+		m[8] * m[2] * m[13] +
+		m[12] * m[1] * m[10] -
+		m[12] * m[2] * m[9];
+	inverse[2] = m[1] * m[6] * m[15] -
+		m[1] * m[7] * m[14] -
+		m[5] * m[2] * m[15] +
+		m[5] * m[3] * m[14] +
+		m[13] * m[2] * m[7] -
+		m[13] * m[3] * m[6];
+	inverse[6] = -m[0] * m[6] * m[15] +
+		m[0] * m[7] * m[14] +
+		m[4] * m[2] * m[15] -
+		m[4] * m[3] * m[14] -
+		m[12] * m[2] * m[7] +
+		m[12] * m[3] * m[6];
+	inverse[10] = m[0] * m[5] * m[15] -
+		m[0] * m[7] * m[13] -
+		m[4] * m[1] * m[15] +
+		m[4] * m[3] * m[13] +
+		m[12] * m[1] * m[7] -
+		m[12] * m[3] * m[5];
 	inverse[14] = -m[0] * m[5] * m[14] +
-		m[0] * m[13] * m[6] +
-		m[1] * m[4] * m[14] -
-		m[1] * m[12] * m[6] -
-		m[2] * m[4] * m[13] +
-		m[2] * m[12] * m[5];
+		m[0] * m[6] * m[13] +
+		m[4] * m[1] * m[14] -
+		m[4] * m[2] * m[13] -
+		m[12] * m[1] * m[6] +
+		m[12] * m[2] * m[5];
+	inverse[3] = -m[1] * m[6] * m[11] +
+		m[1] * m[7] * m[10] +
+		m[5] * m[2] * m[11] -
+		m[5] * m[3] * m[10] -
+		m[9] * m[2] * m[7] +
+		m[9] * m[3] * m[6];
+	inverse[7] = m[0] * m[6] * m[11] -
+		m[0] * m[7] * m[10] -
+		m[4] * m[2] * m[11] +
+		m[4] * m[3] * m[10] +
+		m[8] * m[2] * m[7] -
+		m[8] * m[3] * m[6];
+	inverse[11] = -m[0] * m[5] * m[11] +
+		m[0] * m[7] * m[9] +
+		m[4] * m[1] * m[11] -
+		m[4] * m[3] * m[9] -
+		m[8] * m[1] * m[7] +
+		m[8] * m[3] * m[5];
 	inverse[15] = m[0] * m[5] * m[10] -
-		m[0] * m[9] * m[6] -
-		m[1] * m[4] * m[10] +
-		m[1] * m[8] * m[6] +
-		m[2] * m[4] * m[9] -
-		m[2] * m[8] * m[5];
-	det = m[0] * inverse[0] + m[4] * inverse[1] + m[8] * inverse[2] + m[12] * inverse[3];
+		m[0] * m[6] * m[9] -
+		m[4] * m[1] * m[10] +
+		m[4] * m[2] * m[9] +
+		m[8] * m[1] * m[6] -
+		m[8] * m[2] * m[5];
+	det = m[0] * inverse[0] + m[1] * inverse[4] + m[2] * inverse[8] + m[3] * inverse[12];
 	if (!nearly_equal(det, MFLOAT_C(0.0), MFLT_EPSILON)) {
 		det = MFLOAT_C(1.0) / det;
 	}
 	result[0] = inverse[0] * det;
-	result[4] = inverse[4] * det;
-	result[8] = inverse[8] * det;
-	result[12] = inverse[12] * det;
 	result[1] = inverse[1] * det;
-	result[5] = inverse[5] * det;
-	result[9] = inverse[9] * det;
-	result[13] = inverse[13] * det;
 	result[2] = inverse[2] * det;
-	result[6] = inverse[6] * det;
-	result[10] = inverse[10] * det;
-	result[14] = inverse[14] * det;
 	result[3] = inverse[3] * det;
+	result[4] = inverse[4] * det;
+	result[5] = inverse[5] * det;
+	result[6] = inverse[6] * det;
 	result[7] = inverse[7] * det;
+	result[8] = inverse[8] * det;
+	result[9] = inverse[9] * det;
+	result[10] = inverse[10] * det;
 	result[11] = inverse[11] * det;
+	result[12] = inverse[12] * det;
+	result[13] = inverse[13] * det;
+	result[14] = inverse[14] * det;
 	result[15] = inverse[15] * det;
 	return result;
 }
@@ -1293,20 +1310,20 @@ mfloat_t *mat4_inverse(mfloat_t *result, mfloat_t *m)
 mfloat_t *mat4_ortho(mfloat_t *result, mfloat_t l, mfloat_t r, mfloat_t b, mfloat_t t, mfloat_t n, mfloat_t f)
 {
 	result[0] = MFLOAT_C(2.0) / (r - l);
-	result[1] = MFLOAT_C(0.0);
-	result[2] = MFLOAT_C(0.0);
-	result[3] = -((r + l) / (r - l));
 	result[4] = MFLOAT_C(0.0);
-	result[5] = MFLOAT_C(2.0) / (t - b);
-	result[6] = MFLOAT_C(0.0);
-	result[7] = -((t + b) / (t - b));
 	result[8] = MFLOAT_C(0.0);
+	result[12] = -((r + l) / (r - l));
+	result[1] = MFLOAT_C(0.0);
+	result[5] = MFLOAT_C(2.0) / (t - b);
 	result[9] = MFLOAT_C(0.0);
+	result[13] = -((t + b) / (t - b));
+	result[2] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
 	result[10] = -MFLOAT_C(2.0) / (f - n);
-	result[11] = -((f + n) / (f - n));
-	result[12] = MFLOAT_C(0.0);
-	result[13] = MFLOAT_C(0.0);
-	result[14] = MFLOAT_C(0.0);
+	result[14] = -((f + n) / (f - n));
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(1.0);
 	return result;
 }
@@ -1315,20 +1332,20 @@ mfloat_t *mat4_perspective(mfloat_t *result, mfloat_t fov_y, mfloat_t aspect, mf
 {
 	mfloat_t tan_half_fov_y = MFLOAT_C(1.0) / MTAN(fov_y * MFLOAT_C(0.5));
 	result[0] = MFLOAT_C(1.0) / aspect * tan_half_fov_y;
-	result[1] = MFLOAT_C(0.0);
-	result[2] = MFLOAT_C(0.0);
-	result[3] = MFLOAT_C(0.0);
 	result[4] = MFLOAT_C(0.0);
-	result[5] = MFLOAT_C(1.0) / tan_half_fov_y;
-	result[6] = MFLOAT_C(0.0);
-	result[7] = MFLOAT_C(0.0);
 	result[8] = MFLOAT_C(0.0);
-	result[9] = MFLOAT_C(0.0);
-	result[10] = f / (n - f);
-	result[11] = -(f * n) / (f - n);
 	result[12] = MFLOAT_C(0.0);
+	result[1] = MFLOAT_C(0.0);
+	result[5] = MFLOAT_C(1.0) / tan_half_fov_y;
+	result[9] = MFLOAT_C(0.0);
 	result[13] = MFLOAT_C(0.0);
-	result[14] = -MFLOAT_C(1.0);
+	result[2] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[10] = f / (n - f);
+	result[14] = -(f * n) / (f - n);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = -MFLOAT_C(1.0);
 	result[15] = MFLOAT_C(0.0);
 	return result;
 }
@@ -1338,20 +1355,20 @@ mfloat_t *mat4_perspective_fov(mfloat_t *result, mfloat_t fov, mfloat_t w, mfloa
 	mfloat_t h2 = MCOS(fov * MFLOAT_C(0.5)) / MSIN(fov * MFLOAT_C(0.5));
 	mfloat_t w2 = h2 * h / w;
 	result[0] = w2;
-	result[1] = MFLOAT_C(0.0);
-	result[2] = MFLOAT_C(0.0);
-	result[3] = MFLOAT_C(0.0);
 	result[4] = MFLOAT_C(0.0);
-	result[5] = h2;
-	result[6] = MFLOAT_C(0.0);
-	result[7] = MFLOAT_C(0.0);
 	result[8] = MFLOAT_C(0.0);
-	result[9] = MFLOAT_C(0.0);
-	result[10] = f / (n - f);
-	result[11] = -(f * n) / (f - n);
 	result[12] = MFLOAT_C(0.0);
+	result[1] = MFLOAT_C(0.0);
+	result[5] = h2;
+	result[9] = MFLOAT_C(0.0);
 	result[13] = MFLOAT_C(0.0);
-	result[14] = -MFLOAT_C(1.0);
+	result[2] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[10] = f / (n - f);
+	result[14] = -(f * n) / (f - n);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = -MFLOAT_C(1.0);
 	result[15] = MFLOAT_C(0.0);
 	return result;
 }
@@ -1364,20 +1381,20 @@ mfloat_t *mat4_perspective_infinite(mfloat_t *result, mfloat_t fov_y, mfloat_t a
 	mfloat_t top = range;
 	mfloat_t bottom = -range;
 	result[0] = MFLOAT_C(2.0) * n / (right - left);
-	result[1] = MFLOAT_C(0.0);
-	result[2] = MFLOAT_C(0.0);
-	result[3] = MFLOAT_C(0.0);
 	result[4] = MFLOAT_C(0.0);
-	result[5] = MFLOAT_C(2.0) * n / (top - bottom);
-	result[6] = MFLOAT_C(0.0);
-	result[7] = MFLOAT_C(0.0);
 	result[8] = MFLOAT_C(0.0);
-	result[9] = MFLOAT_C(0.0);
-	result[10] = -MFLOAT_C(1.0);
-	result[11] = -MFLOAT_C(2.0) * n;
 	result[12] = MFLOAT_C(0.0);
+	result[1] = MFLOAT_C(0.0);
+	result[5] = MFLOAT_C(2.0) * n / (top - bottom);
+	result[9] = MFLOAT_C(0.0);
 	result[13] = MFLOAT_C(0.0);
-	result[14] = -MFLOAT_C(1.0);
+	result[2] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[10] = -MFLOAT_C(1.0);
+	result[14] = -MFLOAT_C(2.0) * n;
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = -MFLOAT_C(1.0);
 	result[15] = MFLOAT_C(0.0);
 	return result;
 }
@@ -1387,20 +1404,20 @@ mfloat_t *mat4_rotation_x(mfloat_t *result, mfloat_t angle)
 	mfloat_t c = MCOS(angle);
 	mfloat_t s = MSIN(angle);
 	result[0] = MFLOAT_C(1.0);
-	result[1] = MFLOAT_C(0.0);
-	result[2] = MFLOAT_C(0.0);
-	result[3] = MFLOAT_C(0.0);
 	result[4] = MFLOAT_C(0.0);
-	result[5] = c;
-	result[6] = -s;
-	result[7] = MFLOAT_C(0.0);
 	result[8] = MFLOAT_C(0.0);
-	result[9] = s;
-	result[10] = c;
-	result[11] = MFLOAT_C(0.0);
 	result[12] = MFLOAT_C(0.0);
+	result[1] = MFLOAT_C(0.0);
+	result[5] = c;
+	result[9] = -s;
 	result[13] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[6] = s;
+	result[10] = c;
 	result[14] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(1.0);
 	return result;
 }
@@ -1410,20 +1427,20 @@ mfloat_t *mat4_rotation_y(mfloat_t *result, mfloat_t angle)
 	mfloat_t c = MCOS(angle);
 	mfloat_t s = MSIN(angle);
 	result[0] = c;
-	result[1] = MFLOAT_C(0.0);
-	result[2] = s;
-	result[3] = MFLOAT_C(0.0);
 	result[4] = MFLOAT_C(0.0);
-	result[5] = MFLOAT_C(0.0);
-	result[6] = MFLOAT_C(0.0);
-	result[7] = MFLOAT_C(0.0);
-	result[8] = -s;
-	result[9] = MFLOAT_C(0.0);
-	result[10] = c;
-	result[11] = MFLOAT_C(0.0);
+	result[8] = s;
 	result[12] = MFLOAT_C(0.0);
+	result[1] = MFLOAT_C(0.0);
+	result[5] = MFLOAT_C(0.0);
+	result[9] = MFLOAT_C(0.0);
 	result[13] = MFLOAT_C(0.0);
+	result[2] = -s;
+	result[6] = MFLOAT_C(0.0);
+	result[10] = c;
 	result[14] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(1.0);
 	return result;
 }
@@ -1433,19 +1450,19 @@ mfloat_t *mat4_rotation_z(mfloat_t *result, mfloat_t angle)
 	mfloat_t c = MCOS(angle);
 	mfloat_t s = MSIN(angle);
 	result[0] = c;
-	result[1] = -s;
-	result[3] = MFLOAT_C(0.0);
-	result[4] = s;
-	result[5] = c;
-	result[6] = MFLOAT_C(0.0);
-	result[7] = MFLOAT_C(0.0);
-	result[8] = MFLOAT_C(0.0);
-	result[9] = MFLOAT_C(0.0);
-	result[10] = MFLOAT_C(1.0);
-	result[11] = MFLOAT_C(0.0);
+	result[4] = -s;
 	result[12] = MFLOAT_C(0.0);
+	result[1] = s;
+	result[5] = c;
+	result[9] = MFLOAT_C(0.0);
 	result[13] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[10] = MFLOAT_C(1.0);
 	result[14] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(1.0);
 	return result;
 }
@@ -1456,8 +1473,8 @@ mfloat_t *mat4_rotation_axis(mfloat_t *result, mfloat_t *a, mfloat_t angle)
 	mfloat_t s = MSIN(angle);
 	mfloat_t one_c = MFLOAT_C(1.0) - c;
 	mfloat_t x = a[0];
-	mfloat_t y = a[1];
-	mfloat_t z = a[2];
+	mfloat_t y = a[4];
+	mfloat_t z = a[8];
 	mfloat_t xx = x * x;
 	mfloat_t xy = x * y;
 	mfloat_t xz = x * z;
@@ -1467,20 +1484,20 @@ mfloat_t *mat4_rotation_axis(mfloat_t *result, mfloat_t *a, mfloat_t angle)
 	mfloat_t l = xx + yy + zz;
 	mfloat_t sqrt_l = MSQRT(l);
 	result[0] = (xx + (yy + zz) * c) / l;
-	result[1] = (xy * one_c - a[2] * sqrt_l * s) / l;
-	result[2] = (xz * one_c + a[1] * sqrt_l * s) / l;
-	result[3] = MFLOAT_C(0.0);
-	result[4] = (xy * one_c + a[2] * sqrt_l * s) / l;
-	result[5] = (yy + (xx + zz) * c) / l;
-	result[6] = (yz * one_c - a[0] * sqrt_l * s) / l;
-	result[7] = MFLOAT_C(0.0);
-	result[8] = (xz * one_c - a[1] * sqrt_l * s) / l;
-	result[9] = (yz * one_c + a[0] * sqrt_l * s) / l;
-	result[10] = (zz + (xx + yy) * c) / l;
-	result[11] = MFLOAT_C(0.0);
+	result[4] = (xy * one_c - a[2] * sqrt_l * s) / l;
+	result[8] = (xz * one_c + a[1] * sqrt_l * s) / l;
 	result[12] = MFLOAT_C(0.0);
+	result[1] = (xy * one_c + a[2] * sqrt_l * s) / l;
+	result[5] = (yy + (xx + zz) * c) / l;
+	result[9] = (yz * one_c - a[0] * sqrt_l * s) / l;
 	result[13] = MFLOAT_C(0.0);
+	result[2] = (xz * one_c - a[1] * sqrt_l * s) / l;
+	result[6] = (yz * one_c + a[0] * sqrt_l * s) / l;
+	result[10] = (zz + (xx + yy) * c) / l;
 	result[14] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(1.0);
 	return result;
 }
@@ -1492,24 +1509,24 @@ mfloat_t *mat4_rotation_quaternion(mfloat_t *result, mfloat_t *q)
 	mfloat_t zz = q[2] * q[2];
 	mfloat_t xy = q[0] * q[1];
 	mfloat_t zw = q[2] * q[3];
-	mfloat_t xz = q[2] * q[0];
+	mfloat_t xz = q[8] * q[0];
 	mfloat_t yw = q[1] * q[3];
 	mfloat_t yz = q[1] * q[2];
 	mfloat_t xw = q[0] * q[3];
 	result[0] = MFLOAT_C(1.0) - MFLOAT_C(2.0) * (yy - zz);
-	result[1] = MFLOAT_C(2.0) * (xy - zw);
-	result[2] = MFLOAT_C(2.0) * (xz + yw);
-	result[4] = MFLOAT_C(2.0) * (xy + zw);
+	result[4] = MFLOAT_C(2.0) * (xy - zw);
+	result[8] = MFLOAT_C(2.0) * (xz + yw);
+	result[1] = MFLOAT_C(2.0) * (xy + zw);
 	result[5] = MFLOAT_C(1.0) - MFLOAT_C(2.0) * (xx - zz);
-	result[6] = MFLOAT_C(2.0) * (yz - xw);
-	result[7] = MFLOAT_C(0.0);
-	result[8] = MFLOAT_C(2.0) * (xz - yw);
-	result[9] = MFLOAT_C(2.0) * (yz + xw);
-	result[10] = MFLOAT_C(1.0) - MFLOAT_C(2.0) * (xx - yy);
-	result[11] = MFLOAT_C(0.0);
-	result[12] = MFLOAT_C(0.0);
+	result[9] = MFLOAT_C(2.0) * (yz - xw);
 	result[13] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(2.0) * (xz - yw);
+	result[6] = MFLOAT_C(2.0) * (yz + xw);
+	result[10] = MFLOAT_C(1.0) - MFLOAT_C(2.0) * (xx - yy);
 	result[14] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(1.0);
 	return result;
 }
@@ -1524,20 +1541,20 @@ mfloat_t *mat4_look_at_with_up(mfloat_t *result, mfloat_t *position, mfloat_t *t
 	vec3_normalize(side_axis, side_axis);
 	vec3_cross(up_axis, side_axis, forward_axis);
 	result[0] = side_axis[0];
-	result[1] = side_axis[1];
-	result[2] = side_axis[2];
-	result[3] = -vec3_dot(side_axis, position);
-	result[4] = up_axis[0];
+	result[4] = side_axis[1];
+	result[8] = side_axis[2];
+	result[12] = -vec3_dot(side_axis, position);
+	result[1] = up_axis[0];
 	result[5] = up_axis[1];
-	result[6] = up_axis[2];
-	result[7] = -vec3_dot(up_axis, position);
-	result[8] = -forward_axis[0];
-	result[9] = -forward_axis[1];
+	result[9] = up_axis[2];
+	result[13] = -vec3_dot(up_axis, position);
+	result[2] = -forward_axis[0];
+	result[6] = -forward_axis[1];
 	result[10] = -forward_axis[2];
-	result[11] = vec3_dot(forward_axis, position);
-	result[12] = MFLOAT_C(0.0);
-	result[13] = MFLOAT_C(0.0);
-	result[14] = MFLOAT_C(0.0);
+	result[14] = vec3_dot(forward_axis, position);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(1.0);
 	return result;
 }
@@ -1549,8 +1566,8 @@ mfloat_t *mat4_look_at(mfloat_t *result, mfloat_t *position, mfloat_t *target)
 	mfloat_t up_axis[VEC3_SIZE];
 	vec3_subtract(forward_axis, target, position);
 	vec3_normalize(forward_axis, forward_axis);
-	if (nearly_equal(forward_axis[0], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(forward_axis[2], MFLOAT_C(0.0), MFLT_EPSILON)) {
-		if (forward_axis[1] > MFLOAT_C(0.0)) {
+	if (nearly_equal(forward_axis[0], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(forward_axis[8], MFLOAT_C(0.0), MFLT_EPSILON)) {
+		if (forward_axis[4] > MFLOAT_C(0.0)) {
 			vec3(up_axis, MFLOAT_C(0.0), MFLOAT_C(0.0), -MFLOAT_C(1.0));
 		} else {
 			vec3(up_axis, MFLOAT_C(0.0), MFLOAT_C(0.0), MFLOAT_C(1.0));
@@ -1562,20 +1579,20 @@ mfloat_t *mat4_look_at(mfloat_t *result, mfloat_t *position, mfloat_t *target)
 	vec3_normalize(side_axis, side_axis);
 	vec3_cross(up_axis, side_axis, forward_axis);
 	result[0] = side_axis[0];
-	result[1] = side_axis[1];
-	result[2] = side_axis[2];
-	result[3] = -vec3_dot(side_axis, position);
-	result[4] = up_axis[0];
+	result[4] = side_axis[1];
+	result[8] = side_axis[2];
+	result[12] = -vec3_dot(side_axis, position);
+	result[1] = up_axis[0];
 	result[5] = up_axis[1];
-	result[6] = up_axis[2];
-	result[7] = -vec3_dot(up_axis, position);
-	result[8] = -forward_axis[0];
-	result[9] = -forward_axis[1];
+	result[9] = up_axis[2];
+	result[13] = -vec3_dot(up_axis, position);
+	result[2] = -forward_axis[0];
+	result[6] = -forward_axis[1];
 	result[10] = -forward_axis[2];
-	result[11] = vec3_dot(forward_axis, position);
-	result[12] = MFLOAT_C(0.0);
-	result[13] = MFLOAT_C(0.0);
-	result[14] = MFLOAT_C(0.0);
+	result[14] = vec3_dot(forward_axis, position);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(1.0);
 	return result;
 }
@@ -1583,20 +1600,20 @@ mfloat_t *mat4_look_at(mfloat_t *result, mfloat_t *position, mfloat_t *target)
 mfloat_t *mat4_scaling(mfloat_t *result, mfloat_t *v)
 {
 	result[0] = v[0];
-	result[1] = MFLOAT_C(0.0);
-	result[2] = MFLOAT_C(0.0);
-	result[3] = MFLOAT_C(0.0);
 	result[4] = MFLOAT_C(0.0);
-	result[5] = v[1];
-	result[6] = MFLOAT_C(0.0);
-	result[7] = MFLOAT_C(0.0);
 	result[8] = MFLOAT_C(0.0);
-	result[9] = MFLOAT_C(0.0);
-	result[10] = v[2];
-	result[11] = MFLOAT_C(0.0);
 	result[12] = MFLOAT_C(0.0);
+	result[1] = MFLOAT_C(0.0);
+	result[5] = v[1];
+	result[9] = MFLOAT_C(0.0);
 	result[13] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[10] = v[2];
 	result[14] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(0.0);
 	return result;
 }
@@ -1604,19 +1621,19 @@ mfloat_t *mat4_scaling(mfloat_t *result, mfloat_t *v)
 mfloat_t *mat4_translation(mfloat_t *result, mfloat_t *v)
 {
 	result[0] = MFLOAT_C(0.0);
-	result[1] = MFLOAT_C(0.0);
-	result[3] = v[0];
 	result[4] = MFLOAT_C(0.0);
+	result[12] = v[0];
+	result[1] = MFLOAT_C(0.0);
 	result[5] = MFLOAT_C(0.0);
-	result[6] = MFLOAT_C(0.0);
-	result[7] = v[1];
-	result[8] = MFLOAT_C(0.0);
 	result[9] = MFLOAT_C(0.0);
+	result[13] = v[1];
+	result[2] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
 	result[10] = MFLOAT_C(0.0);
-	result[11] = v[2];
-	result[12] = MFLOAT_C(0.0);
-	result[13] = MFLOAT_C(0.0);
-	result[14] = MFLOAT_C(0.0);
+	result[14] = v[2];
+	result[3] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[11] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(0.0);
 	return result;
 }
@@ -1624,20 +1641,20 @@ mfloat_t *mat4_translation(mfloat_t *result, mfloat_t *v)
 mfloat_t *mat4_negative(mfloat_t *result, mfloat_t *m)
 {
 	result[0] = -m[0];
-	result[1] = -m[1];
-	result[2] = -m[2];
-	result[3] = -m[3];
 	result[4] = -m[4];
-	result[5] = -m[5];
-	result[6] = -m[6];
-	result[7] = -m[7];
 	result[8] = -m[8];
-	result[9] = -m[9];
-	result[10] = -m[10];
-	result[11] = -m[11];
 	result[12] = -m[12];
+	result[1] = -m[1];
+	result[5] = -m[5];
+	result[9] = -m[9];
 	result[13] = -m[13];
+	result[2] = -m[2];
+	result[6] = -m[6];
+	result[10] = -m[10];
 	result[14] = -m[14];
+	result[3] = -m[3];
+	result[7] = -m[7];
+	result[11] = -m[11];
 	result[15] = -m[15];
 	return result;
 }
@@ -1645,62 +1662,62 @@ mfloat_t *mat4_negative(mfloat_t *result, mfloat_t *m)
 mfloat_t *mat4_scale(mfloat_t *result, mfloat_t *m, mfloat_t s)
 {
 	result[0] = m[0] * s;
-	result[1] = m[1] * s;
-	result[2] = m[2] * s;
-	result[3] = m[3] * s;
 	result[4] = m[4] * s;
-	result[5] = m[5] * s;
-	result[6] = m[6] * s;
-	result[7] = m[7] * s;
 	result[8] = m[8] * s;
-	result[9] = m[9] * s;
-	result[10] = m[10] * s;
-	result[11] = m[11] * s;
 	result[12] = m[12] * s;
+	result[1] = m[1] * s;
+	result[5] = m[5] * s;
+	result[9] = m[9] * s;
 	result[13] = m[13] * s;
+	result[2] = m[2] * s;
+	result[6] = m[6] * s;
+	result[10] = m[10] * s;
 	result[14] = m[14] * s;
+	result[3] = m[3] * s;
+	result[7] = m[7] * s;
+	result[11] = m[11] * s;
 	result[15] = m[15] * s;
 	return result;
 }
 
 mfloat_t *mat4_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
-	result[0] = a[0] * b[0] + a[1] * b[4] + a[2] * b[8] + a[3] * b[12];
-	result[1] = a[0] * b[1] + a[1] * b[5] + a[2] * b[9] + a[3] * b[13];
-	result[2] = a[0] * b[2] + a[1] * b[6] + a[2] * b[10] + a[3] * b[14];
-	result[3] = a[0] * b[3] + a[1] * b[7] + a[2] * b[11] + a[3] * b[15];
-	result[4] = a[4] * b[0] + a[5] * b[4] + a[6] * b[8] + a[7] * b[12];
-	result[5] = a[4] * b[1] + a[5] * b[5] + a[6] * b[9] + a[7] * b[13];
-	result[6] = a[4] * b[2] + a[5] * b[6] + a[6] * b[10] + a[7] * b[14];
-	result[7] = a[4] * b[3] + a[5] * b[7] + a[6] * b[11] + a[7] * b[15];
-	result[8] = a[8] * b[0] + a[9] * b[4] + a[10] * b[8] + a[11] * b[12];
-	result[9] = a[8] * b[1] + a[9] * b[5] + a[10] * b[9] + a[11] * b[13];
-	result[10] = a[8] * b[2] + a[9] * b[6] + a[10] * b[10] + a[11] * b[14];
-	result[11] = a[8] * b[3] + a[9] * b[7] + a[10] * b[11] + a[11] * b[15];
-	result[12] = a[12] * b[0] + a[13] * b[4] + a[14] * b[8] + a[15] * b[12];
-	result[13] = a[12] * b[1] + a[13] * b[5] + a[14] * b[9] + a[15] * b[13];
-	result[14] = a[12] * b[2] + a[13] * b[6] + a[14] * b[10] + a[15] * b[14];
-	result[15] = a[12] * b[3] + a[13] * b[7] + a[14] * b[11] + a[15] * b[15];
+	result[0] = a[0] * b[0] + a[4] * b[1] + a[8] * b[2] + a[12] * b[3];
+	result[4] = a[0] * b[4] + a[4] * b[5] + a[8] * b[6] + a[12] * b[7];
+	result[8] = a[0] * b[8] + a[4] * b[9] + a[8] * b[10] + a[12] * b[11];
+	result[12] = a[0] * b[12] + a[4] * b[13] + a[8] * b[14] + a[12] * b[15];
+	result[1] = a[1] * b[0] + a[5] * b[1] + a[9] * b[2] + a[13] * b[3];
+	result[5] = a[1] * b[4] + a[5] * b[5] + a[9] * b[6] + a[13] * b[7];
+	result[9] = a[1] * b[8] + a[5] * b[9] + a[9] * b[10] + a[13] * b[11];
+	result[13] = a[1] * b[12] + a[5] * b[13] + a[9] * b[14] + a[13] * b[15];
+	result[2] = a[2] * b[0] + a[6] * b[1] + a[10] * b[2] + a[14] * b[3];
+	result[6] = a[2] * b[4] + a[6] * b[5] + a[10] * b[6] + a[14] * b[7];
+	result[10] = a[2] * b[8] + a[6] * b[9] + a[10] * b[10] + a[14] * b[11];
+	result[14] = a[2] * b[12] + a[6] * b[13] + a[10] * b[14] + a[14] * b[15];
+	result[3] = a[3] * b[0] + a[7] * b[1] + a[11] * b[2] + a[15] * b[3];
+	result[7] = a[3] * b[4] + a[7] * b[5] + a[11] * b[6] + a[15] * b[7];
+	result[11] = a[3] * b[8] + a[7] * b[9] + a[11] * b[10] + a[15] * b[11];
+	result[15] = a[3] * b[12] + a[7] * b[13] + a[11] * b[14] + a[15] * b[15];
 	return result;
 }
 
 mfloat_t *mat4_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p)
 {
 	result[0] = a[0] + (b[0] - a[0]) * p;
-	result[1] = a[1] + (b[1] - a[1]) * p;
-	result[2] = a[2] + (b[2] - a[2]) * p;
-	result[3] = a[3] + (b[3] - a[3]) * p;
 	result[4] = a[4] + (b[4] - a[4]) * p;
-	result[5] = a[5] + (b[5] - a[5]) * p;
-	result[6] = a[6] + (b[6] - a[6]) * p;
-	result[7] = a[7] + (b[7] - a[7]) * p;
 	result[8] = a[8] + (b[8] - a[8]) * p;
-	result[9] = a[9] + (b[9] - a[9]) * p;
-	result[10] = a[10] + (b[10] - a[10]) * p;
-	result[11] = a[11] + (b[11] - a[11]) * p;
 	result[12] = a[12] + (b[12] - a[12]) * p;
+	result[1] = a[1] + (b[1] - a[1]) * p;
+	result[5] = a[5] + (b[5] - a[5]) * p;
+	result[9] = a[9] + (b[9] - a[9]) * p;
 	result[13] = a[13] + (b[13] - a[13]) * p;
+	result[2] = a[2] + (b[2] - a[2]) * p;
+	result[6] = a[6] + (b[6] - a[6]) * p;
+	result[10] = a[10] + (b[10] - a[10]) * p;
 	result[14] = a[14] + (b[14] - a[14]) * p;
+	result[3] = a[3] + (b[3] - a[3]) * p;
+	result[7] = a[7] + (b[7] - a[7]) * p;
+	result[11] = a[11] + (b[11] - a[11]) * p;
 	result[15] = a[15] + (b[15] - a[15]) * p;
 	return result;
 }
