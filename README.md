@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/ferreiradaselva/mathc.svg?branch=master)](https://travis-ci.org/ferreiradaselva/mathc)
 
+Important: MATHC version 2 is currently under development with improvements. You can check out on branch `mathc2`.
+
 MATHC is a simple math library for 2D and 3D game programming. It contains implementations for:
 
 - 2D vectors
