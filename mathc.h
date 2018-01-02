@@ -23,13 +23,12 @@ the following restrictions:
 
 #include <math.h>
 #include <float.h>
-
-#ifndef MATHC_NO_STDBOOL
-	#include <stdbool.h>
-#else
+#ifdef MATHC_NO_STDBOOL
 	#define bool int
 	#define true 1
 	#define false 0
+#else
+	#include <stdbool.h>
 #endif
 
 #define MATHC_MAJOR_VERSION 2
@@ -94,6 +93,7 @@ bool vec2_is_zero(mfloat_t *a);
 bool vec2_is_near_zero(mfloat_t *a, mfloat_t epsilon);
 bool vec2_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
 mfloat_t *vec2(mfloat_t *result, mfloat_t x, mfloat_t y);
+mfloat_t *vec2_assign(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec2_zero(mfloat_t *result);
 mfloat_t *vec2_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
@@ -128,6 +128,7 @@ bool vec3_is_zero(mfloat_t *a);
 bool vec3_is_near_zero(mfloat_t *a, mfloat_t epsilon);
 bool vec3_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
 mfloat_t *vec3(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z);
+mfloat_t *vec3_assign(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec3_zero(mfloat_t *result);
 mfloat_t *vec3_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
@@ -161,6 +162,7 @@ bool vec4_is_zero(mfloat_t *a);
 bool vec4_is_near_zero(mfloat_t *a, mfloat_t epsilon);
 bool vec4_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
 mfloat_t *vec4(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w);
+mfloat_t *vec4_assign(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec4_zero(mfloat_t *result);
 mfloat_t *vec4_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
@@ -177,12 +179,14 @@ mfloat_t *vec4_round(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec4_max(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_min(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_normalize(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec4_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
 
 /* Quaternion */
 bool quat_is_zero(mfloat_t *a);
 bool quat_is_near_zero(mfloat_t *a, mfloat_t epsilon);
 bool quat_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
 mfloat_t *quat(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w);
+mfloat_t *quat_assign(mfloat_t *result, mfloat_t *a);
 mfloat_t *quat_zero(mfloat_t *result);
 mfloat_t *quat_null(mfloat_t *result);
 mfloat_t *quat_scale(mfloat_t *result, mfloat_t *a, mfloat_t scale);
@@ -207,6 +211,7 @@ mfloat_t quat_length(mfloat_t *a);
 
 /* Matrix */
 mfloat_t *mat4_zero(mfloat_t *result);
+mfloat_t *mat4_assign(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat4_identity(mfloat_t *result);
 mfloat_t *mat4_transpose(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat4_inverse(mfloat_t *result, mfloat_t *m);
@@ -219,10 +224,9 @@ mfloat_t *mat4_rotation_y(mfloat_t *result, mfloat_t angle);
 mfloat_t *mat4_rotation_z(mfloat_t *result, mfloat_t angle);
 mfloat_t *mat4_rotation_axis(mfloat_t *result, mfloat_t *a, mfloat_t angle);
 mfloat_t *mat4_rotation_quaternion(mfloat_t *result, mfloat_t *q);
-mfloat_t *mat4_look_at_with_up(mfloat_t *result, mfloat_t *position, mfloat_t *target, mfloat_t *up_axis);
-mfloat_t *mat4_look_at(mfloat_t *result, mfloat_t *position, mfloat_t *target);
-mfloat_t *mat4_scaling(mfloat_t *result, mfloat_t *v);
+mfloat_t *mat4_look_at(mfloat_t *result, mfloat_t *position, mfloat_t *target, mfloat_t *up_axis);
 mfloat_t *mat4_translation(mfloat_t *result, mfloat_t *v);
+mfloat_t *mat4_scaling(mfloat_t *result, mfloat_t *v);
 mfloat_t *mat4_negative(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat4_scale(mfloat_t *result, mfloat_t *m, mfloat_t s);
 mfloat_t *mat4_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
