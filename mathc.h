@@ -83,6 +83,124 @@ the following restrictions:
 	#define MFLOAT_C(c) c ## f
 #endif
 
+#ifdef MATHC_STRUCTURES
+struct vec2 {
+	union {
+		struct {
+			mfloat_t x;
+			mfloat_t y;
+		};
+		mfloat_t v[2];
+	};
+};
+
+struct vec3 {
+	union {
+		struct {
+			mfloat_t x;
+			mfloat_t y;
+			mfloat_t z;
+		};
+		mfloat_t v[3];
+	};
+};
+
+struct vec4 {
+	union {
+		struct {
+			mfloat_t x;
+			mfloat_t y;
+			mfloat_t z;
+			mfloat_t w;
+		};
+		mfloat_t v[4];
+	};
+};
+
+struct quat {
+	union {
+		struct {
+			mfloat_t x;
+			mfloat_t y;
+			mfloat_t z;
+			mfloat_t w;
+		};
+		mfloat_t v[4];
+	};
+};
+
+/*
+Matrix 2x2 representation:
+m11 m12
+m21 m22
+*/
+struct mat2 {
+	union {
+		struct {
+			mfloat_t m11;
+			mfloat_t m21;
+			mfloat_t m12;
+			mfloat_t m22;
+		};
+		mfloat_t v[4];
+	};
+};
+
+/*
+Matrix 3x3 representation:
+m11 m12 m13
+m21 m22 m23
+m31 m32 m33
+*/
+struct mat3 {
+	union {
+		struct {
+			mfloat_t m11;
+			mfloat_t m21;
+			mfloat_t m31;
+			mfloat_t m12;
+			mfloat_t m22;
+			mfloat_t m32;
+			mfloat_t m13;
+			mfloat_t m23;
+			mfloat_t m33;
+		};
+		mfloat_t v[9];
+	};
+};
+
+/*
+Matrix 4x4 representation:
+m11 m12 m13 m14
+m21 m22 m23 m24
+m31 m32 m33 m34
+m41 m42 m43 m44
+*/
+struct mat4 {
+	union {
+		struct {
+			mfloat_t m11;
+			mfloat_t m21;
+			mfloat_t m31;
+			mfloat_t m41;
+			mfloat_t m12;
+			mfloat_t m22;
+			mfloat_t m32;
+			mfloat_t m42;
+			mfloat_t m13;
+			mfloat_t m23;
+			mfloat_t m33;
+			mfloat_t m43;
+			mfloat_t m14;
+			mfloat_t m24;
+			mfloat_t m34;
+			mfloat_t m44;
+		};
+		mfloat_t v[16];
+	};
+};
+#endif
+
 /* Utils */
 bool nearly_equal(mfloat_t a, mfloat_t b, mfloat_t epsilon);
 mfloat_t to_radians(mfloat_t degrees);
