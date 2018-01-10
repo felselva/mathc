@@ -51,7 +51,7 @@ By default, MATHC types are declared as `mfloat_t` arrays:
 
 ```c
 mfloat_t texture_coordinates[VEC2_SIZE];
-mfloat_t position[VEC2_SIZE];
+mfloat_t position[VEC3_SIZE];
 mfloat_t rgba[VEC4_SIZE];
 mfloat_t rotation[QUAT_SIZE];
 mfloat_t rotation_mat[MAT3_SIZE];
