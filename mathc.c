@@ -110,10 +110,10 @@ mfloat_t *vec2_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
-mfloat_t *vec2_scale(mfloat_t *result, mfloat_t *a, mfloat_t s)
+mfloat_t *vec2_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar)
 {
-	result[0] = a[0] * s;
-	result[1] = a[1] * s;
+	result[0] = a[0] * scalar;
+	result[1] = a[1] * scalar;
 	return result;
 }
 
@@ -192,6 +192,25 @@ mfloat_t *vec2_min(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = MMIN(a[0], b[0]);
 	result[1] = MMIN(a[1], b[1]);
+	return result;
+}
+
+mfloat_t *vec2_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher)
+{
+	result[0] = a[0];
+	result[1] = a[1];
+	if (result[0] < lower[0]) {
+		result[0] = lower[0];
+	}
+	if (result[0] > higher[0]) {
+		result[0] = higher[0];
+	}
+	if (result[1] < lower[1]) {
+		result[1] = lower[1];
+	}
+	if (result[1] > higher[1]) {
+		result[1] = higher[1];
+	}
 	return result;
 }
 
@@ -286,14 +305,14 @@ mfloat_t vec2_angle(mfloat_t *a)
 	return MATAN2(a[1], a[0]);
 }
 
-mfloat_t vec2_length_squared(mfloat_t *a)
-{
-	return a[0] * a[0] + a[1] * a[1];
-}
-
 mfloat_t vec2_length(mfloat_t *a)
 {
 	return MSQRT(a[0] * a[0] + a[1] * a[1]);
+}
+
+mfloat_t vec2_length_squared(mfloat_t *a)
+{
+	return a[0] * a[0] + a[1] * a[1];
 }
 
 mfloat_t vec2_distance_to(mfloat_t *a, mfloat_t *b)
@@ -374,11 +393,11 @@ mfloat_t *vec3_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
-mfloat_t *vec3_scale(mfloat_t *result, mfloat_t *a, mfloat_t s)
+mfloat_t *vec3_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar)
 {
-	result[0] = a[0] * s;
-	result[1] = a[1] * s;
-	result[2] = a[2] * s;
+	result[0] = a[0] * scalar;
+	result[1] = a[1] * scalar;
+	result[2] = a[2] * scalar;
 	return result;
 }
 
@@ -570,14 +589,14 @@ mfloat_t vec3_dot(mfloat_t *a, mfloat_t *b)
 	return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
-mfloat_t vec3_length_squared(mfloat_t *a)
-{
-	return a[0] * a[0] + a[1] * a[1] + a[2] * a[2];
-}
-
 mfloat_t vec3_length(mfloat_t *a)
 {
 	return MSQRT(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
+}
+
+mfloat_t vec3_length_squared(mfloat_t *a)
+{
+	return a[0] * a[0] + a[1] * a[1] + a[2] * a[2];
 }
 
 mfloat_t vec3_distance_to(mfloat_t *a, mfloat_t *b)
@@ -663,12 +682,12 @@ mfloat_t *vec4_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
-mfloat_t *vec4_scale(mfloat_t *result, mfloat_t *a, mfloat_t s)
+mfloat_t *vec4_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar)
 {
-	result[0] = a[0] * s;
-	result[1] = a[1] * s;
-	result[2] = a[2] * s;
-	result[3] = a[3] * s;
+	result[0] = a[0] * scalar;
+	result[1] = a[1] * scalar;
+	result[2] = a[2] * scalar;
+	result[3] = a[3] * scalar;
 	return result;
 }
 
@@ -882,12 +901,12 @@ mfloat_t *quat_null(mfloat_t *result)
 	return result;
 }
 
-mfloat_t *quat_scale(mfloat_t *result, mfloat_t *a, mfloat_t s)
+mfloat_t *quat_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar)
 {
-	result[0] = a[0] * s;
-	result[1] = a[1] * s;
-	result[2] = a[2] * s;
-	result[3] = a[3] * s;
+	result[0] = a[0] * scalar;
+	result[1] = a[1] * scalar;
+	result[2] = a[2] * scalar;
+	result[3] = a[3] * scalar;
 	return result;
 }
 
@@ -996,22 +1015,6 @@ mfloat_t *quat_from_axis_angle(mfloat_t *result, mfloat_t *a, mfloat_t angle)
 	result[2] = a[2] * s;
 	result[3] = MCOS(half);
 	quat_normalize(result, result);
-	return result;
-}
-
-mfloat_t *quat_to_axis_angle(mfloat_t *result, mfloat_t *a)
-{
-	mfloat_t sa;
-	mfloat_t tmp[QUAT_SIZE];
-	quat_normalize(tmp, a);
-	sa = MSQRT(MFLOAT_C(1.0) - tmp[3] * tmp[3]);
-	if (MABS(sa) <= MFLT_EPSILON) {
-		sa = MFLOAT_C(1.0);
-	}
-	result[0] = tmp[0] / sa;
-	result[1] = tmp[1] / sa;
-	result[2] = tmp[2] / sa;
-	result[3] = MACOS(tmp[3]) * MFLOAT_C(2.0);
 	return result;
 }
 
@@ -1139,14 +1142,14 @@ mfloat_t quat_angle(mfloat_t *a, mfloat_t *b)
 	return MACOS(quat_dot(a, b) * s);
 }
 
-mfloat_t quat_length_squared(mfloat_t *a)
-{
-	return a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3];
-}
-
 mfloat_t quat_length(mfloat_t *a)
 {
 	return MSQRT(a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3]);
+}
+
+mfloat_t quat_length_squared(mfloat_t *a)
+{
+	return a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3];
 }
 
 /* Matrix */
@@ -1691,24 +1694,24 @@ mfloat_t *mat4_negative(mfloat_t *result, mfloat_t *m)
 	return result;
 }
 
-mfloat_t *mat4_scale(mfloat_t *result, mfloat_t *m, mfloat_t s)
+mfloat_t *mat4_scale(mfloat_t *result, mfloat_t *m, mfloat_t scalar)
 {
-	result[0] = m[0] * s;
-	result[1] = m[1] * s;
-	result[2] = m[2] * s;
-	result[3] = m[3] * s;
-	result[4] = m[4] * s;
-	result[5] = m[5] * s;
-	result[6] = m[6] * s;
-	result[7] = m[7] * s;
-	result[8] = m[8] * s;
-	result[9] = m[9] * s;
-	result[10] = m[10] * s;
-	result[11] = m[11] * s;
-	result[12] = m[12] * s;
-	result[13] = m[13] * s;
-	result[14] = m[14] * s;
-	result[15] = m[15] * s;
+	result[0] = m[0] * scalar;
+	result[1] = m[1] * scalar;
+	result[2] = m[2] * scalar;
+	result[3] = m[3] * scalar;
+	result[4] = m[4] * scalar;
+	result[5] = m[5] * scalar;
+	result[6] = m[6] * scalar;
+	result[7] = m[7] * scalar;
+	result[8] = m[8] * scalar;
+	result[9] = m[9] * scalar;
+	result[10] = m[10] * scalar;
+	result[11] = m[11] * scalar;
+	result[12] = m[12] * scalar;
+	result[13] = m[13] * scalar;
+	result[14] = m[14] * scalar;
+	result[15] = m[15] * scalar;
 	return result;
 }
 
@@ -1771,6 +1774,7 @@ mfloat_t *mat4_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p)
 	return result;
 }
 
+#ifdef MATHC_EASING_FUNCTIONS
 /* Easing functions */
 mfloat_t quadratic_ease_in(mfloat_t p)
 {
@@ -2002,3 +2006,4 @@ mfloat_t bounce_ease_in_out(mfloat_t p)
 	}
 	return f;
 }
+#endif

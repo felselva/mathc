@@ -4,58 +4,121 @@
 
 MATHC (version 2) is a simple math library for 2D and 3D programming. It contains implementations for:
 
-- 2D vectors
-- 3D vectors
+- Vectors (2D, 3D and 4D)
 - Quaternions
-- Matrices
+- Matrices (2×2, 3×3, and 4×4)
 - Easing functions
 
-It support C99 standard or later.
+## Configuring
 
-## Declaring Variables
+MATHC can be configured with the following preprocessors (described in the following sections of this document):
 
-MATHC doesn't define any structure type. Everything is declared as an array:
-
-```c
-mfloat_t v[VEC2_SIZE];
-mfloat_t v[VEC3_SIZE];
-mfloat_t v[VEC4_SIZE];
-mfloat_t q[QUAT_SIZE];
-mfloat_t m[MAT3_SIZE];
-mfloat_t m[MAT4_SIZE];
-```
-
-## Easing Functions
-
-The easing functions are an implementation of the functions presented in [easings.net](http://easings.net/). They are mainly useful for animations.
-
-Easing functions take a value inside the range `0.0-1.0` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range (Check the [easings.net](http://easings.net/) to see those functions).
-
-## Configuration Macros
-
-The float type used by MATHC is defined by the macro `mfloat_t`, which is by default `float`.
-
-If the macro `MATHC_NO_STDBOOL` is defined, the library will not include `stdbool.h` and will define a macro `bool` of type `int` to represent boolean values. This is useful for platforms where `stdbool.h` is not available.
-
-If the macro `MATHC_DOUBLE_PRECISION` is defined, the Pi macros will be defined with double precision and the library will use internally the math functions for double types. Otherwise, the Pi macros will be defined with float precision and the library will use internally the math functions for float types
+- `MATHC_NO_STDBOOL`
+- `mfloat_t`
+- `MATHC_DOUBLE_PRECISION`
+- `MATHC_STRUCTURES`
+- `MATHC_POINTER_STRUCT_FUNCTIONS`
+- `MATHC_STRUCT_FUNCTIONS`
+- `MATHC_EASING_FUNCTIONS`
 
 You can define these macros during compilation time with flags:
 
 ```
--DMATHC_NO_STDBOOL=ON -Dmfloat_t=double -DMATHC_DOUBLE_PRECISION=ON
+gcc -DMATHC_NO_STDBOOL=ON -Dmfloat_t=double -DMATHC_DOUBLE_PRECISION=ON
 ```
 
-Or include `mathc.c` and `mathc.h` in a source and header. This second approach is useful, because you can define `mfloat_t` as a different type other than the built-in types `float` or `double`, such as `GLfloat`:
+Or include `mathc.c` in a source file. This second approach is more useful and flexible, because you can define `mfloat_t` as a different type other than the built-in types `float` or `double`, such as `GLfloat`:
 
 ```c
 /* In a *.c file */
+#include <GL.h>
 #define mfloat_t GLfloat
+#define MATHC_DOUBLE_PRECISION
 #include <mathc.c>
-
-/* In a *.h file */
-#define mfloat_t GLfloat
-#include <mathc.h>
 ```
+
+## Float-Point Type
+
+By default, `mfloat_t` is a `float`. This can be changed by predefining `mfloat_t` as a desired type.
+
+## Math Precision
+
+By default, MATHC will use single-precision internally. This can be changed by predefining `MATHC_DOUBLE_PRECISION`.
+
+## Types
+
+By default, MATHC types are declared as `mfloat_t` arrays:
+
+```c
+mfloat_t texture_coordinates[VEC2_SIZE];
+mfloat_t position[VEC2_SIZE];
+mfloat_t rgba[VEC4_SIZE];
+mfloat_t rotation[QUAT_SIZE];
+mfloat_t rotation_mat[MAT3_SIZE];
+mfloat_t model_mat[MAT4_SIZE];
+```
+
+By defining `MATHC_STRUCTURES`, the structures for each type will be available:
+
+```c
+struct vec2 texture_coordinates;
+struct vec3 position;
+struct vec4 rgba;
+struct quat rotation;
+struct mat3 rotation_mat;
+struct mat4 model_mat;
+```
+
+Note that the structures are composed of a union. This means that the members can be still accessed as a `mfloat_t` array:
+
+```c
+struct vec3 position;
+
+printf("Position (Address: %p) = {%f, %f, %f}\n",
+	position.v,
+	position.v[0], position.v[1], position.v[2])
+```
+
+## Functions
+
+By default, MATHC only declare functions that take `mfloat_t` array as arguments:
+
+```c
+mfloat_t position[VEC3_SIZE];
+mfloat_t offset[VEC3_SIZE];
+
+vec2_add(position,
+	vec2(position, 0.0f, 0.0f),
+	vec2(offset, 1.0f, 1.0f));
+```
+
+By defining `MATHC_STRUCT_FUNCTIONS`, functions that work with structures as value will be available:
+
+```c
+struct vec2 position = svec2(0.0f, 0.0f);
+struct vec2 offset = svec2(1.0f, 1.0f);
+
+position = svec2_add(position, offset);
+```
+
+By defining `MATHC_POINTER_STRUCT_FUNCTIONS`, functions that work with pointer to structures will be available:
+
+```c
+struct vec2 position;
+struct vec2 offset;
+
+psvec2_add(&position,
+	psvec2(&position, 0.0f, 0.0f),
+	psvec2(&offset, 1.0f, 1.0f));
+```
+
+## Easing Functions
+
+By defining `MATHC_EASING_FUNCTIONS`, the easing functions will be avaliable.
+
+The easing functions are an implementation of the functions presented in [easings.net](http://easings.net/), useful particularly for animations.
+
+Easing functions take a value inside the range `0.0-1.0` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range (Check the [easings.net](http://easings.net/) to see those functions).
 
 ## Contributing
 
