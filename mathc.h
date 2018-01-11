@@ -153,8 +153,8 @@ struct quat {
 
 /*
 Matrix 2x2 representation:
-m11 m12
-m21 m22
+0/m11 2/m12
+1/m21 3/m22
 */
 struct mat2 {
 	union {
@@ -170,9 +170,9 @@ struct mat2 {
 
 /*
 Matrix 3x3 representation:
-m11 m12 m13
-m21 m22 m23
-m31 m32 m33
+0/m11 3/m12 6/m13
+1/m21 4/m22 7/m23
+2/m31 5/m32 8/m33
 */
 struct mat3 {
 	union {
@@ -193,10 +193,10 @@ struct mat3 {
 
 /*
 Matrix 4x4 representation:
-m11 m12 m13 m14
-m21 m22 m23 m24
-m31 m32 m33 m34
-m41 m42 m43 m44
+0/m11 4/m12  8/m13 12/m14
+1/m21 5/m22  9/m23 13/m24
+2/m31 6/m32 10/m33 14/m34
+3/m41 7/m42 11/m43 15/m44
 */
 struct mat4 {
 	union {
@@ -359,11 +359,53 @@ mfloat_t quat_angle(mfloat_t *a, mfloat_t *b);
 mfloat_t quat_length(mfloat_t *a);
 mfloat_t quat_length_squared(mfloat_t *a);
 
-/* Matrix */
+/* Matrix 2x2 */
+mfloat_t *mat2_zero(mfloat_t *result);
+mfloat_t *mat2_identity(mfloat_t *result);
+mfloat_t mat2_determinant(mfloat_t *m);
+mfloat_t *mat2_assign(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat2_assign_mat3(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat2_assign_mat4(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat2_transpose(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat2_adjugate(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat2_inverse(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat2_rotation(mfloat_t *result, mfloat_t angle);
+mfloat_t *mat2_scaling(mfloat_t *result, mfloat_t *v);
+mfloat_t *mat2_negative(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat2_scale(mfloat_t *result, mfloat_t *m, mfloat_t scalar);
+mfloat_t *mat2_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *mat2_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
+
+/* Matrix 3x3 */
+mfloat_t *mat3_zero(mfloat_t *result);
+mfloat_t *mat3_identity(mfloat_t *result);
+mfloat_t mat3_determinant(mfloat_t *m);
+mfloat_t *mat3_assign(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat3_assign_mat2(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat3_assign_mat4(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat3_transpose(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat3_adjugate(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat3_inverse(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat3_rotation_x(mfloat_t *result, mfloat_t angle);
+mfloat_t *mat3_rotation_y(mfloat_t *result, mfloat_t angle);
+mfloat_t *mat3_rotation_z(mfloat_t *result, mfloat_t angle);
+mfloat_t *mat3_rotation_axis(mfloat_t *result, mfloat_t *a, mfloat_t angle);
+mfloat_t *mat3_rotation_quaternion(mfloat_t *result, mfloat_t *q);
+mfloat_t *mat3_scaling(mfloat_t *result, mfloat_t *v);
+mfloat_t *mat3_negative(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat3_scale(mfloat_t *result, mfloat_t *m, mfloat_t scalar);
+mfloat_t *mat3_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *mat3_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
+
+/* Matrix 4x4 */
 mfloat_t *mat4_zero(mfloat_t *result);
-mfloat_t *mat4_assign(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat4_identity(mfloat_t *result);
+mfloat_t mat4_determinant(mfloat_t *m);
+mfloat_t *mat4_assign(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat4_assign_mat2(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat4_assign_mat3(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat4_transpose(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat4_adjugate(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat4_inverse(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat4_ortho(mfloat_t *result, mfloat_t l, mfloat_t r, mfloat_t b, mfloat_t t, mfloat_t n, mfloat_t f);
 mfloat_t *mat4_perspective(mfloat_t *result, mfloat_t fov_y, mfloat_t aspect, mfloat_t n, mfloat_t f);
@@ -1050,16 +1092,214 @@ MATHC_INLINE mfloat_t psquat_length_squared(struct quat *a)
 	return quat_length_squared(a->v);
 }
 
-/* Matrix */
-MATHC_INLINE struct mat4 *psmat4_zero(struct mat4 *result)
+/* Matrix 2x2 */
+MATHC_INLINE struct mat2 *psmat2_zero(struct mat2 *result)
 {
-	mat4_zero(result->v);
+	mat2_zero(result->v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 *psmat4_assign(struct mat4 *result, struct mat4 *m)
+MATHC_INLINE struct mat2 *psmat2_identity(struct mat2 *result)
 {
-	mat4_assign(result->v, m->v);
+	mat2_identity(result->v);
+	return result;
+}
+
+MATHC_INLINE mfloat_t psmat2_determinant(struct mat2 *m)
+{
+	return mat2_determinant(m->v);
+}
+
+MATHC_INLINE struct mat2 *psmat2_assign(struct mat2 *result, struct mat2 *m)
+{
+	mat2_assign(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 *psmat2_assign_mat3(struct mat2 *result, struct mat3 *m)
+{
+	mat2_assign_mat3(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 *psmat2_assign_mat4(struct mat2 *result, struct mat4 *m)
+{
+	mat2_assign_mat4(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 *psmat2_transpose(struct mat2 *result, struct mat2 *m)
+{
+	mat2_transpose(result->v, m->v);
+	return result;
+};
+
+MATHC_INLINE struct mat2 *psmat2_adjugate(struct mat2 *result, struct mat2 *m)
+{
+	mat2_adjugate(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 *psmat2_inverse(struct mat2 *result, struct mat2 *m)
+{
+	mat2_inverse(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 *psmat2_rotation(struct mat2 *result, mfloat_t angle)
+{
+	mat2_rotation(result->v, angle);
+	return result;
+}
+
+MATHC_INLINE struct mat2 *psmat2_scaling(struct mat2 *result, struct mat2 *v)
+{
+	mat2_scaling(result->v, v->v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 *psmat2_negative(struct mat2 *result, struct mat2 *m)
+{
+	mat2_negative(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 *psmat2_scale(struct mat2 *result, struct mat2 *m, mfloat_t s)
+{
+	mat2_scale(result->v, m->v, s);
+	return result;
+}
+
+MATHC_INLINE struct mat2 *psmat2_multiply(struct mat2 *result, struct mat2 *a, struct mat2 *b)
+{
+	mat2_multiply(result->v, a->v, b->v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 *psmat2_lerp(struct mat2 *result, struct mat2 *a, struct mat2 *b, mfloat_t p)
+{
+	mat2_lerp(result->v, a->v, b->v, p);
+	return result;
+}
+
+/* Matrix 3x3 */
+MATHC_INLINE struct mat3 *psmat3_zero(struct mat3 *result)
+{
+	mat3_zero(result->v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_identity(struct mat3 *result)
+{
+	mat3_identity(result->v);
+	return result;
+}
+
+MATHC_INLINE mfloat_t psmat3_determinant(struct mat3 *m)
+{
+	return mat3_determinant(m->v);
+}
+
+MATHC_INLINE struct mat3 *psmat3_assign(struct mat3 *result, struct mat3 *m)
+{
+	mat3_assign(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_assign_mat2(struct mat3 *result, struct mat2 *m)
+{
+	mat3_assign_mat2(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_assign_mat4(struct mat3 *result, struct mat4 *m)
+{
+	mat3_assign_mat4(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_transpose(struct mat3 *result, struct mat3 *m)
+{
+	mat3_transpose(result->v, m->v);
+	return result;
+};
+
+MATHC_INLINE struct mat3 *psmat3_adjugate(struct mat3 *result, struct mat3 *m)
+{
+	mat3_adjugate(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_inverse(struct mat3 *result, struct mat3 *m)
+{
+	mat3_inverse(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_rotation_x(struct mat3 *result, mfloat_t angle)
+{
+	mat3_rotation_x(result->v, angle);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_rotation_y(struct mat3 *result, mfloat_t angle)
+{
+	mat3_rotation_y(result->v, angle);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_rotation_z(struct mat3 *result, mfloat_t angle)
+{
+	mat3_rotation_z(result->v, angle);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_rotation_axis(struct mat3 *result, struct vec3 *a, mfloat_t angle)
+{
+	mat3_rotation_axis(result->v, a->v, angle);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_rotation_quaternion(struct mat3 *result, struct quat *q)
+{
+	mat3_rotation_quaternion(result->v, q->v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_scaling(struct mat3 *result, struct mat3 *v)
+{
+	mat3_scaling(result->v, v->v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_negative(struct mat3 *result, struct mat3 *m)
+{
+	mat3_negative(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_scale(struct mat3 *result, struct mat3 *m, mfloat_t s)
+{
+	mat3_scale(result->v, m->v, s);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_multiply(struct mat3 *result, struct mat3 *a, struct mat3 *b)
+{
+	mat3_multiply(result->v, a->v, b->v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 *psmat3_lerp(struct mat3 *result, struct mat3 *a, struct mat3 *b, mfloat_t p)
+{
+	mat3_lerp(result->v, a->v, b->v, p);
+	return result;
+}
+
+/* Matrix 4x4 */
+MATHC_INLINE struct mat4 *psmat4_zero(struct mat4 *result)
+{
+	mat4_zero(result->v);
 	return result;
 }
 
@@ -1069,11 +1309,40 @@ MATHC_INLINE struct mat4 *psmat4_identity(struct mat4 *result)
 	return result;
 }
 
+MATHC_INLINE mfloat_t psmat4_determinant(struct mat4 *m)
+{
+	return mat4_determinant(m->v);
+}
+
+MATHC_INLINE struct mat4 *psmat4_assign(struct mat4 *result, struct mat4 *m)
+{
+	mat4_assign(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat4 *psmat4_assign_mat2(struct mat4 *result, struct mat2 *m)
+{
+	mat4_assign_mat2(result->v, m->v);
+	return result;
+}
+
+MATHC_INLINE struct mat4 *psmat4_assign_mat3(struct mat4 *result, struct mat3 *m)
+{
+	mat4_assign_mat3(result->v, m->v);
+	return result;
+}
+
 MATHC_INLINE struct mat4 *psmat4_transpose(struct mat4 *result, struct mat4 *m)
 {
 	mat4_transpose(result->v, m->v);
 	return result;
 };
+
+MATHC_INLINE struct mat4 *psmat4_adjugate(struct mat4 *result, struct mat4 *m)
+{
+	mat4_adjugate(result->v, m->v);
+	return result;
+}
 
 MATHC_INLINE struct mat4 *psmat4_inverse(struct mat4 *result, struct mat4 *m)
 {
@@ -1930,18 +2199,247 @@ MATHC_INLINE mfloat_t squat_length_squared(struct quat a)
 	return quat_length_squared(a.v);
 }
 
-/* Matrix */
+/* Matrix 2x2 */
+MATHC_INLINE struct mat2 smat2_zero(void)
+{
+	struct mat2 result;
+	mat2_zero(result.v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_identity(void)
+{
+	struct mat2 result;
+	mat2_identity(result.v);
+	return result;
+}
+
+MATHC_INLINE mfloat_t smat2_determinant(struct mat2 m)
+{
+	return mat2_determinant(m.v);
+}
+
+MATHC_INLINE struct mat2 smat2_assign(struct mat2 m)
+{
+	struct mat2 result;
+	mat2_assign(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_assign_mat3(struct mat3 m)
+{
+	struct mat2 result;
+	mat2_assign_mat3(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_assign_mat4(struct mat4 m)
+{
+	struct mat2 result;
+	mat2_assign_mat4(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_transpose(struct mat2 m)
+{
+	struct mat2 result;
+	mat2_transpose(result.v, m.v);
+	return result;
+};
+
+MATHC_INLINE struct mat2 smat2_adjugate(struct mat2 m)
+{
+	struct mat2 result;
+	mat2_adjugate(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_inverse(struct mat2 m)
+{
+	struct mat2 result;
+	mat2_inverse(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_rotation(mfloat_t angle)
+{
+	struct mat2 result;
+	mat2_rotation(result.v, angle);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_scaling(struct mat2 v)
+{
+	struct mat2 result;
+	mat2_scaling(result.v, v.v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_negative(struct mat2 m)
+{
+	struct mat2 result;
+	mat2_negative(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_scale(struct mat2 m, mfloat_t s)
+{
+	struct mat2 result;
+	mat2_scale(result.v, m.v, s);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_multiply(struct mat2 a, struct mat2 b)
+{
+	struct mat2 result;
+	mat2_multiply(result.v, a.v, b.v);
+	return result;
+}
+
+MATHC_INLINE struct mat2 smat2_lerp(struct mat2 a, struct mat2 b, mfloat_t p)
+{
+	struct mat2 result;
+	mat2_lerp(result.v, a.v, b.v, p);
+	return result;
+}
+
+/* Matrix 3x3 */
+MATHC_INLINE struct mat3 smat3_zero(void)
+{
+	struct mat3 result;
+	mat3_zero(result.v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_identity(void)
+{
+	struct mat3 result;
+	mat3_identity(result.v);
+	return result;
+}
+
+MATHC_INLINE mfloat_t smat3_determinant(struct mat3 m)
+{
+	return mat3_determinant(m.v);
+}
+
+MATHC_INLINE struct mat3 smat3_assign(struct mat3 m)
+{
+	struct mat3 result;
+	mat3_assign(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_assign_mat2(struct mat2 m)
+{
+	struct mat3 result;
+	mat3_assign_mat2(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_assign_mat4(struct mat4 m)
+{
+	struct mat3 result;
+	mat3_assign_mat4(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_transpose(struct mat3 m)
+{
+	struct mat3 result;
+	mat3_transpose(result.v, m.v);
+	return result;
+};
+
+MATHC_INLINE struct mat3 smat3_adjugate(struct mat3 m)
+{
+	struct mat3 result;
+	mat3_adjugate(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_inverse(struct mat3 m)
+{
+	struct mat3 result;
+	mat3_inverse(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_rotation_x(mfloat_t angle)
+{
+	struct mat3 result;
+	mat3_rotation_x(result.v, angle);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_rotation_y(mfloat_t angle)
+{
+	struct mat3 result;
+	mat3_rotation_y(result.v, angle);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_rotation_z(mfloat_t angle)
+{
+	struct mat3 result;
+	mat3_rotation_z(result.v, angle);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_rotation_axis(struct vec3 a, mfloat_t angle)
+{
+	struct mat3 result;
+	mat3_rotation_axis(result.v, a.v, angle);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_rotation_quaternion(struct quat q)
+{
+	struct mat3 result;
+	mat3_rotation_quaternion(result.v, q.v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_scaling(struct mat3 v)
+{
+	struct mat3 result;
+	mat3_scaling(result.v, v.v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_negative(struct mat3 m)
+{
+	struct mat3 result;
+	mat3_negative(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_scale(struct mat4 m, mfloat_t s)
+{
+	struct mat3 result;
+	mat3_scale(result.v, m.v, s);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_multiply(struct mat3 a, struct mat3 b)
+{
+	struct mat3 result;
+	mat3_multiply(result.v, a.v, b.v);
+	return result;
+}
+
+MATHC_INLINE struct mat3 smat3_lerp(struct mat3 a, struct mat3 b, mfloat_t p)
+{
+	struct mat3 result;
+	mat3_lerp(result.v, a.v, b.v, p);
+	return result;
+}
+
+/* Matrix 4x4 */
 MATHC_INLINE struct mat4 smat4_zero(void)
 {
 	struct mat4 result;
 	mat4_zero(result.v);
-	return result;
-}
-
-MATHC_INLINE struct mat4 smat4_assign(struct mat4 m)
-{
-	struct mat4 result;
-	mat4_assign(result.v, m.v);
 	return result;
 }
 
@@ -1952,12 +2450,45 @@ MATHC_INLINE struct mat4 smat4_identity(void)
 	return result;
 }
 
+MATHC_INLINE mfloat_t smat4_determinant(struct mat4 m)
+{
+	return mat4_determinant(m.v);
+}
+
+MATHC_INLINE struct mat4 smat4_assign(struct mat4 m)
+{
+	struct mat4 result;
+	mat4_assign(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat4 smat4_assign_mat2(struct mat2 m)
+{
+	struct mat4 result;
+	mat4_assign_mat2(result.v, m.v);
+	return result;
+}
+
+MATHC_INLINE struct mat4 smat4_assign_mat3(struct mat3 m)
+{
+	struct mat4 result;
+	mat4_assign_mat3(result.v, m.v);
+	return result;
+}
+
 MATHC_INLINE struct mat4 smat4_transpose(struct mat4 m)
 {
 	struct mat4 result;
 	mat4_transpose(result.v, m.v);
 	return result;
 };
+
+MATHC_INLINE struct mat4 smat4_adjugate(struct mat4 m)
+{
+	struct mat4 result;
+	mat4_adjugate(result.v, m.v);
+	return result;
+}
 
 MATHC_INLINE struct mat4 smat4_inverse(struct mat4 m)
 {

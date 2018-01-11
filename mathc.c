@@ -1152,7 +1152,456 @@ mfloat_t quat_length_squared(mfloat_t *a)
 	return a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3];
 }
 
-/* Matrix */
+/* Matrix 2x2 */
+mfloat_t *mat2_zero(mfloat_t *result)
+{
+	result[0] = MFLOAT_C(0.0);
+	result[1] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	return result;
+}
+
+mfloat_t mat2_determinant(mfloat_t *m)
+{
+	return m[0] * m[3] - m[2] * m[1];
+}
+
+mfloat_t *mat2_assign(mfloat_t *result, mfloat_t *m)
+{
+	result[0] = m[0];
+	result[1] = m[1];
+	result[2] = m[2];
+	result[3] = m[3];
+	return result;
+}
+
+mfloat_t *mat2_assign_mat3(mfloat_t *result, mfloat_t *m)
+{
+	result[0] = m[0];
+	result[1] = m[1];
+	result[2] = m[3];
+	result[3] = m[4];
+	return result;
+}
+
+mfloat_t *mat2_assign_mat4(mfloat_t *result, mfloat_t *m)
+{
+	result[0] = m[0];
+	result[1] = m[1];
+	result[2] = m[4];
+	result[3] = m[5];
+	return result;
+}
+
+mfloat_t *mat2_transpose(mfloat_t *result, mfloat_t *m)
+{
+	mfloat_t transposed[MAT2_SIZE];
+	transposed[0] = m[0];
+	transposed[1] = m[2];
+	transposed[2] = m[1];
+	transposed[3] = m[3];
+	result[0] = transposed[0];
+	result[1] = transposed[1];
+	result[2] = transposed[2];
+	result[3] = transposed[3];
+	return result;
+}
+
+mfloat_t *mat2_adjugate(mfloat_t *result, mfloat_t *m)
+{
+	mfloat_t adjugate[MAT2_SIZE];
+	adjugate[0] = m[3];
+	adjugate[1] = -m[1];
+	adjugate[2] = -m[2];
+	adjugate[3] = m[0];
+	result[0] = adjugate[0];
+	result[1] = adjugate[1];
+	result[2] = adjugate[2];
+	result[3] = adjugate[3];
+	return result;
+}
+
+mfloat_t *mat2_inverse(mfloat_t *result, mfloat_t *m)
+{
+	mfloat_t inverse[MAT2_SIZE];
+	mfloat_t det = mat2_determinant(m);
+	if (!nearly_equal(det, MFLOAT_C(0.0), MFLT_EPSILON)) {
+		mat2_adjugate(inverse, m);
+		mat2_scale(inverse, inverse, MFLOAT_C(1.0) / det);
+		result[0] = inverse[0];
+		result[1] = inverse[1];
+		result[2] = inverse[2];
+		result[3] = inverse[3];
+	}
+	return result;
+}
+
+mfloat_t *mat2_rotation(mfloat_t *result, mfloat_t angle)
+{
+	mfloat_t c = MCOS(angle);
+	mfloat_t s = MSIN(angle);
+	result[0] = c;
+	result[1] = s;
+	result[2] = -s;
+	result[3] = c;
+	return result;
+}
+
+mfloat_t *mat2_scaling(mfloat_t *result, mfloat_t *v)
+{
+	result[0] = v[0];
+	result[1] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[3] = v[1];
+	return result;
+}
+
+mfloat_t *mat2_negative(mfloat_t *result, mfloat_t *m)
+{
+	result[0] = -m[0];
+	result[1] = -m[1];
+	result[2] = -m[2];
+	result[3] = -m[3];
+	return result;
+}
+
+mfloat_t *mat2_scale(mfloat_t *result, mfloat_t *m, mfloat_t scalar)
+{
+	result[0] = m[0] * scalar;
+	result[1] = m[1] * scalar;
+	result[2] = m[2] * scalar;
+	result[3] = m[3] * scalar;
+	return result;
+}
+
+mfloat_t *mat2_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b)
+{
+	mfloat_t multiplied[MAT3_SIZE];
+	multiplied[0] = a[0] * b[0] + a[2] * b[1];
+	multiplied[1] = a[1] * b[0] + a[3] * b[1];
+	multiplied[2] = a[0] * b[2] + a[2] * b[3];
+	multiplied[3] = a[1] * b[2] + a[3] * b[3];
+	result[0] = multiplied[0];
+	result[1] = multiplied[1];
+	result[2] = multiplied[2];
+	result[3] = multiplied[3];
+	return result;
+}
+
+mfloat_t *mat2_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p)
+{
+	result[0] = a[0] + (b[0] - a[0]) * p;
+	result[1] = a[1] + (b[1] - a[1]) * p;
+	result[2] = a[2] + (b[2] - a[2]) * p;
+	result[3] = a[3] + (b[3] - a[3]) * p;
+	return result;
+}
+
+/* Matrix 3x3 */
+mfloat_t *mat3_zero(mfloat_t *result)
+{
+	result[0] = MFLOAT_C(0.0);
+	result[1] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[4] = MFLOAT_C(0.0);
+	result[5] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[8] = MFLOAT_C(0.0);
+	return result;
+}
+
+mfloat_t *mat3_identity(mfloat_t *result)
+{
+	result[0] = MFLOAT_C(1.0);
+	result[1] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[4] = MFLOAT_C(1.0);
+	result[5] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[8] = MFLOAT_C(8.0);
+	return result;
+}
+
+mfloat_t mat3_determinant(mfloat_t *m)
+{
+	mfloat_t det1;
+	mfloat_t det2;
+	mfloat_t det3;
+	mfloat_t m2[MAT2_SIZE];
+	m2[0] = m[4];
+	m2[1] = m[5];
+	m2[2] = m[7];
+	m2[3] = m[8];
+	det1 = mat2_determinant(m2);
+	m2[0] = m[1];
+	m2[1] = m[2];
+	m2[2] = m[7];
+	m2[3] = m[8];
+	det2 = mat2_determinant(m2);
+	m2[0] = m[1];
+	m2[1] = m[2];
+	m2[2] = m[4];
+	m2[3] = m[5];
+	det3 = mat2_determinant(m2);
+	return m[0] * det1 - m[3] * det2 - m[6] * det3;
+}
+
+mfloat_t *mat3_assign(mfloat_t *result, mfloat_t *m)
+{
+	result[0] = m[0];
+	result[1] = m[1];
+	result[2] = m[2];
+	result[3] = m[3];
+	result[4] = m[4];
+	result[5] = m[5];
+	result[6] = m[6];
+	result[7] = m[7];
+	result[8] = m[8];
+	return result;
+}
+
+mfloat_t *mat3_assign_mat2(mfloat_t *result, mfloat_t *m)
+{
+	result[0] = m[0];
+	result[1] = m[1];
+	result[3] = m[2];
+	result[4] = m[3];
+	return result;
+}
+
+mfloat_t *mat3_assign_mat4(mfloat_t *result, mfloat_t *m)
+{
+	result[0] = m[0];
+	result[1] = m[1];
+	result[2] = m[2];
+	result[3] = m[4];
+	result[4] = m[5];
+	result[5] = m[6];
+	result[6] = m[8];
+	result[7] = m[9];
+	result[8] = m[10];
+	return result;
+}
+
+mfloat_t *mat3_transpose(mfloat_t *result, mfloat_t *m)
+{
+	mfloat_t transposed[MAT4_SIZE];
+	transposed[0] = m[0];
+	transposed[1] = m[3];
+	transposed[2] = m[6];
+	transposed[3] = m[1];
+	transposed[4] = m[4];
+	transposed[5] = m[7];
+	transposed[6] = m[2];
+	transposed[7] = m[5];
+	transposed[8] = m[8];
+	result[0] = transposed[0];
+	result[1] = transposed[1];
+	result[2] = transposed[2];
+	result[3] = transposed[3];
+	result[4] = transposed[4];
+	result[5] = transposed[5];
+	result[6] = transposed[6];
+	result[7] = transposed[7];
+	result[8] = transposed[8];
+	return result;
+}
+
+mfloat_t *mat3_adjugate(mfloat_t *result, mfloat_t *m)
+{
+	return result;
+}
+
+mfloat_t *mat3_inverse(mfloat_t *result, mfloat_t *m)
+{
+	return result;
+}
+
+mfloat_t *mat3_rotation_x(mfloat_t *result, mfloat_t angle)
+{
+	mfloat_t c = MCOS(angle);
+	mfloat_t s = MSIN(angle);
+	result[0] = MFLOAT_C(1.0);
+	result[1] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[4] = c;
+	result[5] = s;
+	result[6] = MFLOAT_C(0.0);
+	result[7] = -s;
+	result[8] = -c;
+	return result;
+}
+
+mfloat_t *mat3_rotation_y(mfloat_t *result, mfloat_t angle)
+{
+	mfloat_t c = MCOS(angle);
+	mfloat_t s = MSIN(angle);
+	result[0] = c;
+	result[1] = MFLOAT_C(0.0);
+	result[2] = -s;
+	result[3] = MFLOAT_C(0.0);
+	result[4] = MFLOAT_C(0.0);
+	result[5] = MFLOAT_C(0.0);
+	result[6] = s;
+	result[7] = MFLOAT_C(0.0);
+	result[8] = c;
+	return result;
+}
+
+mfloat_t *mat3_rotation_z(mfloat_t *result, mfloat_t angle)
+{
+	mfloat_t c = MCOS(angle);
+	mfloat_t s = MSIN(angle);
+	result[0] = c;
+	result[1] = s;
+	result[2] = MFLOAT_C(0.0);
+	result[3] = -s;
+	result[4] = c;
+	result[5] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[8] = MFLOAT_C(1.0);
+	return result;
+}
+
+mfloat_t *mat3_rotation_axis(mfloat_t *result, mfloat_t *a, mfloat_t angle)
+{
+	mfloat_t c = MCOS(angle);
+	mfloat_t s = MSIN(angle);
+	mfloat_t one_c = MFLOAT_C(1.0) - c;
+	mfloat_t x = a[0];
+	mfloat_t y = a[4];
+	mfloat_t z = a[8];
+	mfloat_t xx = x * x;
+	mfloat_t xy = x * y;
+	mfloat_t xz = x * z;
+	mfloat_t yy = y * y;
+	mfloat_t yz = y * z;
+	mfloat_t zz = z * z;
+	mfloat_t l = xx + yy + zz;
+	mfloat_t sqrt_l = MSQRT(l);
+	result[0] = (xx + (yy + zz) * c) / l;
+	result[1] = (xy * one_c + a[2] * sqrt_l * s) / l;
+	result[2] = (xz * one_c - a[1] * sqrt_l * s) / l;
+	result[3] = (xy * one_c - a[2] * sqrt_l * s) / l;
+	result[4] = (yy + (xx + zz) * c) / l;
+	result[5] = (yz * one_c + a[0] * sqrt_l * s) / l;
+	result[6] = (xz * one_c + a[1] * sqrt_l * s) / l;
+	result[7] = (yz * one_c - a[0] * sqrt_l * s) / l;
+	result[8] = (zz + (xx + yy) * c) / l;
+	return result;
+}
+
+mfloat_t *mat3_rotation_quaternion(mfloat_t *result, mfloat_t *q)
+{
+	mfloat_t xx = q[0] * q[0];
+	mfloat_t yy = q[1] * q[1];
+	mfloat_t zz = q[2] * q[2];
+	mfloat_t xy = q[0] * q[1];
+	mfloat_t zw = q[2] * q[3];
+	mfloat_t xz = q[8] * q[0];
+	mfloat_t yw = q[1] * q[3];
+	mfloat_t yz = q[1] * q[2];
+	mfloat_t xw = q[0] * q[3];
+	result[0] = MFLOAT_C(1.0) - MFLOAT_C(2.0) * (yy - zz);
+	result[1] = MFLOAT_C(2.0) * (xy + zw);
+	result[2] = MFLOAT_C(2.0) * (xz - yw);
+	result[3] = MFLOAT_C(2.0) * (xy - zw);
+	result[4] = MFLOAT_C(1.0) - MFLOAT_C(2.0) * (xx - zz);
+	result[5] = MFLOAT_C(2.0) * (yz + xw);
+	result[6] = MFLOAT_C(2.0) * (xz + yw);
+	result[7] = MFLOAT_C(2.0) * (yz - xw);
+	result[8] = MFLOAT_C(1.0) - MFLOAT_C(2.0) * (xx - yy);
+	return result;
+}
+
+mfloat_t *mat3_scaling(mfloat_t *result, mfloat_t *v)
+{
+	result[0] = v[0];
+	result[1] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[4] = v[1];
+	result[5] = MFLOAT_C(0.0);
+	result[6] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[8] = v[2];
+	return result;
+}
+
+mfloat_t *mat3_negative(mfloat_t *result, mfloat_t *m)
+{
+	result[0] = -m[0];
+	result[1] = -m[1];
+	result[2] = -m[2];
+	result[3] = -m[3];
+	result[4] = -m[4];
+	result[5] = -m[5];
+	result[6] = -m[6];
+	result[7] = -m[7];
+	result[8] = -m[8];
+	return result;
+}
+
+mfloat_t *mat3_scale(mfloat_t *result, mfloat_t *m, mfloat_t scalar)
+{
+	result[0] = m[0] * scalar;
+	result[1] = m[1] * scalar;
+	result[2] = m[2] * scalar;
+	result[3] = m[3] * scalar;
+	result[4] = m[4] * scalar;
+	result[5] = m[5] * scalar;
+	result[6] = m[6] * scalar;
+	result[7] = m[7] * scalar;
+	result[8] = m[8] * scalar;
+	return result;
+}
+
+mfloat_t *mat3_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b)
+{
+	mfloat_t multiplied[MAT3_SIZE];
+	multiplied[0] = a[0] * b[0] + a[3] * b[1] + a[6] * b[2];
+	multiplied[1] = a[1] * b[0] + a[4] * b[1] + a[7] * b[2];
+	multiplied[2] = a[2] * b[0] + a[5] * b[1] + a[8] * b[2];
+	multiplied[3] = a[0] * b[3] + a[3] * b[4] + a[6] * b[5];
+	multiplied[4] = a[1] * b[3] + a[4] * b[4] + a[7] * b[5];
+	multiplied[5] = a[2] * b[3] + a[5] * b[4] + a[8] * b[5];
+	multiplied[6] = a[0] * b[6] + a[3] * b[7] + a[6] * b[8];
+	multiplied[7] = a[1] * b[6] + a[4] * b[7] + a[7] * b[8];
+	multiplied[8] = a[2] * b[6] + a[5] * b[7] + a[8] * b[8];
+	result[0] = multiplied[0];
+	result[1] = multiplied[1];
+	result[2] = multiplied[2];
+	result[3] = multiplied[3];
+	result[4] = multiplied[4];
+	result[5] = multiplied[5];
+	result[6] = multiplied[6];
+	result[7] = multiplied[7];
+	result[8] = multiplied[8];
+	return result;
+}
+
+mfloat_t *mat3_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p)
+{
+	result[0] = a[0] + (b[0] - a[0]) * p;
+	result[1] = a[1] + (b[1] - a[1]) * p;
+	result[2] = a[2] + (b[2] - a[2]) * p;
+	result[3] = a[3] + (b[3] - a[3]) * p;
+	result[4] = a[4] + (b[4] - a[4]) * p;
+	result[5] = a[5] + (b[5] - a[5]) * p;
+	result[6] = a[6] + (b[6] - a[6]) * p;
+	result[7] = a[7] + (b[7] - a[7]) * p;
+	result[8] = a[8] + (b[8] - a[8]) * p;
+	return result;
+}
+
+/* Matrix 4x4 */
 mfloat_t *mat4_zero(mfloat_t *result)
 {
 	result[0] = MFLOAT_C(0.0);
@@ -1172,6 +1621,77 @@ mfloat_t *mat4_zero(mfloat_t *result)
 	result[14] = MFLOAT_C(0.0);
 	result[15] = MFLOAT_C(0.0);
 	return result;
+}
+
+mfloat_t *mat4_identity(mfloat_t *result)
+{
+	result[0] = MFLOAT_C(1.0);
+	result[1] = MFLOAT_C(0.0);
+	result[2] = MFLOAT_C(0.0);
+	result[3] = MFLOAT_C(0.0);
+	result[4] = MFLOAT_C(0.0);
+	result[5] = MFLOAT_C(1.0);
+	result[6] = MFLOAT_C(0.0);
+	result[7] = MFLOAT_C(0.0);
+	result[8] = MFLOAT_C(0.0);
+	result[9] = MFLOAT_C(0.0);
+	result[10] = MFLOAT_C(1.0);
+	result[11] = MFLOAT_C(0.0);
+	result[12] = MFLOAT_C(0.0);
+	result[13] = MFLOAT_C(0.0);
+	result[14] = MFLOAT_C(0.0);
+	result[15] = MFLOAT_C(1.0);
+	return result;
+}
+
+mfloat_t mat4_determinant(mfloat_t *m)
+{
+	mfloat_t det1;
+	mfloat_t det2;
+	mfloat_t det3;
+	mfloat_t det4;
+	mfloat_t m2[MAT3_SIZE];
+	m2[0] = m[5];
+	m2[1] = m[6];
+	m2[2] = m[7];
+	m2[3] = m[9];
+	m2[4] = m[10];
+	m2[5] = m[11];
+	m2[6] = m[13];
+	m2[7] = m[14];
+	m2[8] = m[15];
+	det1 = mat3_determinant(m2);
+	m2[0] = m[1];
+	m2[1] = m[2];
+	m2[2] = m[3];
+	m2[3] = m[9];
+	m2[4] = m[10];
+	m2[5] = m[11];
+	m2[6] = m[13];
+	m2[7] = m[14];
+	m2[8] = m[15];
+	det2 = mat2_determinant(m2);
+	m2[0] = m[1];
+	m2[1] = m[2];
+	m2[2] = m[3];
+	m2[3] = m[5];
+	m2[4] = m[6];
+	m2[5] = m[7];
+	m2[6] = m[13];
+	m2[7] = m[14];
+	m2[8] = m[15];
+	det3 = mat2_determinant(m2);
+	m2[0] = m[1];
+	m2[1] = m[2];
+	m2[2] = m[3];
+	m2[3] = m[5];
+	m2[4] = m[6];
+	m2[5] = m[7];
+	m2[6] = m[9];
+	m2[7] = m[10];
+	m2[8] = m[11];
+	det4 = mat2_determinant(m2);
+	return m[0] * det1 - m[4] * det2 + m[8] * det3 - m[12] * det4;
 }
 
 mfloat_t *mat4_assign(mfloat_t *result, mfloat_t *m)
@@ -1195,24 +1715,26 @@ mfloat_t *mat4_assign(mfloat_t *result, mfloat_t *m)
 	return result;
 }
 
-mfloat_t *mat4_identity(mfloat_t *result)
+mfloat_t *mat4_assign_mat2(mfloat_t *result, mfloat_t *m)
 {
-	result[0] = MFLOAT_C(1.0);
-	result[1] = MFLOAT_C(0.0);
-	result[2] = MFLOAT_C(0.0);
-	result[3] = MFLOAT_C(0.0);
-	result[4] = MFLOAT_C(0.0);
-	result[5] = MFLOAT_C(1.0);
-	result[6] = MFLOAT_C(0.0);
-	result[7] = MFLOAT_C(0.0);
-	result[8] = MFLOAT_C(0.0);
-	result[9] = MFLOAT_C(0.0);
-	result[10] = MFLOAT_C(1.0);
-	result[11] = MFLOAT_C(0.0);
-	result[12] = MFLOAT_C(0.0);
-	result[13] = MFLOAT_C(0.0);
-	result[14] = MFLOAT_C(0.0);
-	result[15] = MFLOAT_C(1.0);
+	result[0] = m[0];
+	result[1] = m[1];
+	result[4] = m[2];
+	result[5] = m[3];
+	return result;
+}
+
+mfloat_t *mat4_assign_mat3(mfloat_t *result, mfloat_t *m)
+{
+	result[0] = m[0];
+	result[1] = m[1];
+	result[2] = m[2];
+	result[4] = m[3];
+	result[5] = m[4];
+	result[6] = m[5];
+	result[8] = m[6];
+	result[9] = m[7];
+	result[10] = m[8];
 	return result;
 }
 
@@ -1251,6 +1773,11 @@ mfloat_t *mat4_transpose(mfloat_t *result, mfloat_t *m)
 	result[13] = transposed[13];
 	result[14] = transposed[14];
 	result[15] = transposed[15];
+	return result;
+}
+
+mfloat_t *mat4_adjugate(mfloat_t *result, mfloat_t *m)
+{
 	return result;
 }
 
