@@ -1784,122 +1784,140 @@ MATHC_INLINE bool squat_is_equal(struct quat a, struct quat b, mfloat_t epsilon)
 	return quat_is_equal(a.v, b.v, epsilon);
 };
 
-MATHC_INLINE struct quat squat(struct quat result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
+MATHC_INLINE struct quat squat(mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
 {
+	struct quat result;
 	quat(result.v, x, y, z, w);
 	return result;
 };
 
-MATHC_INLINE struct quat squat_assign(struct quat result, struct quat a)
+MATHC_INLINE struct quat squat_assign(struct quat a)
 {
+	struct quat result;
 	quat_assign(result.v, a.v);
 	return result;
 };
 
-MATHC_INLINE struct quat squat_zero(struct quat result)
+MATHC_INLINE struct quat squat_zero(void)
 {
+	struct quat result;
 	quat_zero(result.v);
 	return result;
 };
 
-MATHC_INLINE struct quat squat_null(struct quat result)
+MATHC_INLINE struct quat squat_null(void)
 {
+	struct quat result;
 	quat_null(result.v);
 	return result;
 };
 
-MATHC_INLINE struct quat squat_scale(struct quat result, struct quat a, mfloat_t scalar)
+MATHC_INLINE struct quat squat_scale(struct quat a, mfloat_t scalar)
 {
+	struct quat result;
 	quat_scale(result.v, a.v, scalar);
 	return result;
 };
 
-MATHC_INLINE struct quat squat_multiply(struct quat result, struct quat a, struct quat b)
+MATHC_INLINE struct quat squat_multiply(struct quat a, struct quat b)
 {
+	struct quat result;
 	quat_multiply(result.v, a.v, b.v);
 	return result;
 };
 
-MATHC_INLINE struct quat squat_divide(struct quat result, struct quat a, struct quat b)
+MATHC_INLINE struct quat squat_divide(struct quat a, struct quat b)
 {
+	struct quat result;
 	quat_divide(result.v, a.v, b.v);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_negative(struct quat result, struct quat a)
+MATHC_INLINE struct quat squat_negative(struct quat a)
 {
+	struct quat result;
 	quat_negative(result.v, a.v);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_conjugate(struct quat result, struct quat a)
+MATHC_INLINE struct quat squat_conjugate(struct quat a)
 {
+	struct quat result;
 	quat_conjugate(result.v, a.v);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_inverse(struct quat result, struct quat a)
+MATHC_INLINE struct quat squat_inverse(struct quat a)
 {
+	struct quat result;
 	quat_inverse(result.v, a.v);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_normalize(struct quat result, struct quat a)
+MATHC_INLINE struct quat squat_normalize(struct quat a)
 {
+	struct quat result;
 	quat_normalize(result.v, a.v);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_power(struct quat result, struct quat a, mfloat_t exponent)
+MATHC_INLINE struct quat squat_power(struct quat a, mfloat_t exponent)
 {
+	struct quat result;
 	quat_power(result.v, a.v, exponent);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_from_axis_angle(struct quat result, struct vec3 a, mfloat_t angle)
+MATHC_INLINE struct quat squat_from_axis_angle(struct vec3 a, mfloat_t angle)
 {
+	struct quat result;
 	quat_from_axis_angle(result.v, a.v, angle);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_from_vec3(struct quat result, struct vec3 a, struct vec3 b)
+MATHC_INLINE struct quat squat_from_vec3(struct vec3 a, struct vec3 b)
 {
+	struct quat result;
 	quat_from_vec3(result.v, a.v, b.v);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_from_mat4(struct quat result, struct mat4 a)
+MATHC_INLINE struct quat squat_from_mat4(struct mat4 a)
 {
+	struct quat result;
 	quat_from_mat4(result.v, a.v);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_from_yaw_pitch_roll(struct quat result, mfloat_t yaw, mfloat_t pitch, mfloat_t roll)
+MATHC_INLINE struct quat squat_from_yaw_pitch_roll(mfloat_t yaw, mfloat_t pitch, mfloat_t roll)
 {
+	struct quat result;
 	quat_from_yaw_pitch_roll(result.v, yaw, pitch, roll);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_lerp(struct quat result, struct quat a, struct quat b, mfloat_t p)
+MATHC_INLINE struct quat squat_lerp(struct quat a, struct quat b, mfloat_t p)
 {
+	struct quat result;
 	quat_lerp(result.v, a.v, b.v, p);
 	return result;
 }
 
-MATHC_INLINE struct quat squat_slerp(struct quat result, struct quat a, struct quat b, mfloat_t p)
+MATHC_INLINE struct quat squat_slerp(struct quat a, struct quat b, mfloat_t p)
 {
+	struct quat result;
 	quat_slerp(result.v, a.v, b.v, p);
 	return result;
 }
 
-MATHC_INLINE mfloat_t squat_dot(struct quat result, struct quat a, struct quat b)
+MATHC_INLINE mfloat_t squat_dot(struct quat a, struct quat b)
 {
 	return quat_dot(a.v, b.v);
 }
 
-MATHC_INLINE mfloat_t squat_angle(struct quat result, struct quat a, struct quat b)
+MATHC_INLINE mfloat_t squat_angle(struct quat a, struct quat b)
 {
-	return quat_angle( a.v, b.v);
+	return quat_angle(a.v, b.v);
 }
 
 MATHC_INLINE mfloat_t squat_length(struct quat a)
@@ -1907,134 +1925,155 @@ MATHC_INLINE mfloat_t squat_length(struct quat a)
 	return quat_length(a.v);
 }
 
-MATHC_INLINE mfloat_t squat_length_squared(struct quat result, struct quat a)
+MATHC_INLINE mfloat_t squat_length_squared(struct quat a)
 {
 	return quat_length_squared(a.v);
 }
 
 /* Matrix */
-MATHC_INLINE struct mat4 smat4_zero(struct mat4 result)
+MATHC_INLINE struct mat4 smat4_zero(void)
 {
+	struct mat4 result;
 	mat4_zero(result.v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_assign(struct mat4 result, struct mat4 m)
+MATHC_INLINE struct mat4 smat4_assign(struct mat4 m)
 {
+	struct mat4 result;
 	mat4_assign(result.v, m.v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_identity(struct mat4 result)
+MATHC_INLINE struct mat4 smat4_identity(void)
 {
+	struct mat4 result;
 	mat4_identity(result.v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_transpose(struct mat4 result, struct mat4 m)
+MATHC_INLINE struct mat4 smat4_transpose(struct mat4 m)
 {
+	struct mat4 result;
 	mat4_transpose(result.v, m.v);
 	return result;
 };
 
-MATHC_INLINE struct mat4 smat4_inverse(struct mat4 result, struct mat4 m)
+MATHC_INLINE struct mat4 smat4_inverse(struct mat4 m)
 {
+	struct mat4 result;
 	mat4_inverse(result.v, m.v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_ortho(struct mat4 result, mfloat_t l, mfloat_t r, mfloat_t b, mfloat_t t, mfloat_t n, mfloat_t f)
+MATHC_INLINE struct mat4 smat4_ortho(mfloat_t l, mfloat_t r, mfloat_t b, mfloat_t t, mfloat_t n, mfloat_t f)
 {
+	struct mat4 result;
 	mat4_ortho(result.v, l, r, b, t, n, f);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_perspective(struct mat4 result, mfloat_t fov_y, mfloat_t aspect, mfloat_t n, mfloat_t f)
+MATHC_INLINE struct mat4 smat4_perspective(mfloat_t fov_y, mfloat_t aspect, mfloat_t n, mfloat_t f)
 {
+	struct mat4 result;
 	mat4_perspective(result.v, fov_y, aspect, n, f);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_perspective_fov(struct mat4 result, mfloat_t fov, mfloat_t w, mfloat_t h, mfloat_t n, mfloat_t f)
+MATHC_INLINE struct mat4 smat4_perspective_fov(mfloat_t fov, mfloat_t w, mfloat_t h, mfloat_t n, mfloat_t f)
 {
+	struct mat4 result;
 	mat4_perspective_fov(result.v, fov, w, h, n, f);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_perspective_infinite(struct mat4 result, mfloat_t fov_y, mfloat_t aspect, mfloat_t n)
+MATHC_INLINE struct mat4 smat4_perspective_infinite(mfloat_t fov_y, mfloat_t aspect, mfloat_t n)
 {
+	struct mat4 result;
 	mat4_perspective_infinite(result.v, fov_y, aspect, n);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_rotation_x(struct mat4 result, mfloat_t angle)
+MATHC_INLINE struct mat4 smat4_rotation_x(mfloat_t angle)
 {
+	struct mat4 result;
 	mat4_rotation_x(result.v, angle);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_rotation_y(struct mat4 result, mfloat_t angle)
+MATHC_INLINE struct mat4 smat4_rotation_y(mfloat_t angle)
 {
+	struct mat4 result;
 	mat4_rotation_y(result.v, angle);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_rotation_z(struct mat4 result, mfloat_t angle)
+MATHC_INLINE struct mat4 smat4_rotation_z(mfloat_t angle)
 {
+	struct mat4 result;
 	mat4_rotation_z(result.v, angle);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_rotation_axis(struct mat4 result, struct mat4 a, mfloat_t angle)
+MATHC_INLINE struct mat4 smat4_rotation_axis(struct mat4 a, mfloat_t angle)
 {
+	struct mat4 result;
 	mat4_rotation_axis(result.v, a.v, angle);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_rotation_quaternion(struct mat4 result, struct mat4 q)
+MATHC_INLINE struct mat4 smat4_rotation_quaternion(struct mat4 q)
 {
+	struct mat4 result;
 	mat4_rotation_quaternion(result.v, q.v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_look_at(struct mat4 result, struct vec3 position, struct vec3 target, struct vec3 up_axis)
+MATHC_INLINE struct mat4 smat4_look_at(struct vec3 position, struct vec3 target, struct vec3 up_axis)
 {
+	struct mat4 result;
 	mat4_look_at(result.v, position.v, target.v, up_axis.v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_translation(struct mat4 result, struct mat4 v)
+MATHC_INLINE struct mat4 smat4_translation(struct mat4 v)
 {
+	struct mat4 result;
 	mat4_translation(result.v, v.v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_scaling(struct mat4 result, struct mat4 v)
+MATHC_INLINE struct mat4 smat4_scaling(struct mat4 v)
 {
+	struct mat4 result;
 	mat4_scaling(result.v, v.v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_negative(struct mat4 result, struct mat4 m)
+MATHC_INLINE struct mat4 smat4_negative(struct mat4 m)
 {
+	struct mat4 result;
 	mat4_negative(result.v, m.v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_scale(struct mat4 result, struct mat4 m, mfloat_t s)
+MATHC_INLINE struct mat4 smat4_scale(struct mat4 m, mfloat_t s)
 {
+	struct mat4 result;
 	mat4_scale(result.v, m.v, s);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_multiply(struct mat4 result, struct mat4 a, struct mat4 b)
+MATHC_INLINE struct mat4 smat4_multiply(struct mat4 a, struct mat4 b)
 {
+	struct mat4 result;
 	mat4_multiply(result.v, a.v, b.v);
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_lerp(struct mat4 result, struct mat4 a, struct mat4 b, mfloat_t p)
+MATHC_INLINE struct mat4 smat4_lerp(struct mat4 a, struct mat4 b, mfloat_t p)
 {
+	struct mat4 result;
 	mat4_lerp(result.v, a.v, b.v, p);
 	return result;
 }
