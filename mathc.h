@@ -34,9 +34,13 @@ the following restrictions:
 #define MATHC_MAJOR_VERSION 2
 #define MATHC_MINOR_VERSION 0
 #define MATHC_PATCH_VERSION 0
+
+/* Component type */
 #ifndef mfloat_t
 	#define mfloat_t float
 #endif
+
+/* Array sizes for declarations */
 #define VEC2_SIZE 2
 #define VEC3_SIZE 3
 #define VEC4_SIZE 4
@@ -44,6 +48,8 @@ the following restrictions:
 #define MAT2_SIZE 4
 #define MAT3_SIZE 9
 #define MAT4_SIZE 16
+
+/* Float-point precision used internally */
 #ifdef MATHC_DOUBLE_PRECISION
 	#define MPI 3.14159265358979323846
 	#define MPI_2 1.57079632679489661923
@@ -84,7 +90,11 @@ the following restrictions:
 	#define MFLOAT_C(c) c ## f
 #endif
 
-#ifdef MATHC_STRUCTURES
+/* Enable or disable structures */
+#ifdef MATHC_NO_STRUCTURES
+	#define MATHC_NO_POINTER_STRUCT_FUNCTIONS
+	#define MATHC_NO_STRUCT_FUNCTIONS
+#else
 struct vec2 {
 	union {
 		struct {
@@ -211,18 +221,13 @@ struct mat4 {
 		mfloat_t v[16];
 	};
 };
-#else
-	#undef MATHC_POINTER_STRUCT_FUNCTIONS
-	#undef MATHC_STRUCT_FUNCTIONS
 #endif
 
-#if defined(MATHC_POINTER_STRUCT_FUNCTIONS) || defined(MATHC_STRUCT_FUNCTIONS)
-	#ifndef MATHC_INLINE
-		#ifdef _MSC_VER
-			#define MATHC_INLINE __forceinline
-		#else
-			#define MATHC_INLINE inline __attribute__((always_inline))
-		#endif
+#if !defined(MATHC_NO_POINTER_STRUCT_FUNCTIONS) || !defined(MATHC_NO_STRUCT_FUNCTIONS)
+	#ifdef _MSC_VER
+		#define MATHC_INLINE __forceinline
+	#else
+		#define MATHC_INLINE inline __attribute__((always_inline))
 	#endif
 #endif
 
@@ -377,7 +382,7 @@ mfloat_t *mat4_scale(mfloat_t *result, mfloat_t *m, mfloat_t s);
 mfloat_t *mat4_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *mat4_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
 
-#ifdef MATHC_POINTER_STRUCT_FUNCTIONS
+#ifndef MATHC_NO_POINTER_STRUCT_FUNCTIONS
 /* Vector 2D */
 MATHC_INLINE bool psvec2_is_zero(struct vec2 *a)
 {
@@ -1173,7 +1178,7 @@ MATHC_INLINE struct mat4 *psmat4_lerp(struct mat4 *result, struct mat4 *a, struc
 }
 #endif
 
-#ifdef MATHC_STRUCT_FUNCTIONS
+#ifndef MATHC_NO_STRUCT_FUNCTIONS
 MATHC_INLINE bool svec2_is_zero(struct vec2 a)
 {
 	return vec2_is_zero(a.v);
@@ -2035,7 +2040,7 @@ MATHC_INLINE struct mat4 smat4_lerp(struct mat4 result, struct mat4 a, struct ma
 }
 #endif
 
-#ifdef MATHC_EASING_FUNCTIONS
+#ifndef MATHC_NO_EASING_FUNCTIONS
 /* Easing functions */
 mfloat_t quadratic_ease_in(mfloat_t p);
 mfloat_t quadratic_ease_out(mfloat_t p);

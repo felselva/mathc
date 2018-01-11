@@ -1774,7 +1774,7 @@ mfloat_t *mat4_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p)
 	return result;
 }
 
-#ifdef MATHC_EASING_FUNCTIONS
+#ifndef MATHC_NO_EASING_FUNCTIONS
 /* Easing functions */
 mfloat_t quadratic_ease_in(mfloat_t p)
 {
