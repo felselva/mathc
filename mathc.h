@@ -30,6 +30,9 @@ the following restrictions:
 #else
 	#include <stdbool.h>
 #endif
+#ifndef MATHC_NO_STDINT
+	#include <stdint.h>
+#endif
 
 #define MATHC_MAJOR_VERSION 2
 #define MATHC_MINOR_VERSION 0
@@ -38,6 +41,13 @@ the following restrictions:
 /* Component type */
 #ifndef mfloat_t
 	#define mfloat_t float
+#endif
+#ifndef mint_t
+	#ifndef MATHC_NO_STDINT
+		#define mint_t int32_t
+	#else
+		#define mint_t int
+	#endif
 #endif
 
 /* Array sizes for declarations */
@@ -90,6 +100,10 @@ the following restrictions:
 	#define MFLOAT_C(c) c ## f
 #endif
 
+#ifndef MVECI_ROUND
+	#define MVECI_ROUND MROUND
+#endif
+
 /* Enable or disable structures */
 #ifdef MATHC_NO_STRUCTURES
 	#define MATHC_NO_POINTER_STRUCT_FUNCTIONS
@@ -107,10 +121,28 @@ struct vec3 {
 };
 
 struct vec4 {
-	mfloat_t x;
-	mfloat_t y;
-	mfloat_t z;
-	mfloat_t w;
+	mint_t x;
+	mint_t y;
+	mint_t z;
+	mint_t w;
+};
+
+struct vec2i {
+	mint_t x;
+	mint_t y;
+};
+
+struct vec3i {
+	mint_t x;
+	mint_t y;
+	mint_t z;
+};
+
+struct vec4i {
+	mint_t x;
+	mint_t y;
+	mint_t z;
+	mint_t w;
 };
 
 struct quat {
@@ -193,9 +225,11 @@ mfloat_t to_degrees(mfloat_t radians);
 /* Vector 2D */
 bool vec2_is_zero(mfloat_t *a);
 bool vec2_is_near_zero(mfloat_t *a, mfloat_t epsilon);
-bool vec2_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
+bool vec2_is_equal(mfloat_t *a, mfloat_t *b);
+bool vec2_is_nearly_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
 mfloat_t *vec2(mfloat_t *result, mfloat_t x, mfloat_t y);
 mfloat_t *vec2_assign(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec2_assign_vec2i(mfloat_t *result, mint_t *a);
 mfloat_t *vec2_zero(mfloat_t *result);
 mfloat_t *vec2_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
@@ -226,18 +260,56 @@ mfloat_t vec2_length_squared(mfloat_t *a);
 mfloat_t vec2_distance_to(mfloat_t *a, mfloat_t *b);
 mfloat_t vec2_distance_squared_to(mfloat_t *a, mfloat_t *b);
 
+/* Vector 2D Integer */
+bool vec2i_is_zero(mint_t *a);
+bool vec2i_is_equal(mint_t *a, mint_t *b);
+mint_t *vec2i(mint_t *result, mint_t x, mint_t y);
+mint_t *vec2i_assign(mint_t *result, mint_t *a);
+mint_t *vec2i_assign_vec2(mint_t *result, mfloat_t *a);
+mint_t *vec2i_zero(mint_t *result);
+mint_t *vec2i_add(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec2i_subtract(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec2i_scale(mint_t *result, mint_t *a, mfloat_t scalar);
+mint_t *vec2i_multiply(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec2i_divide(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec2i_negative(mint_t *result, mint_t *a);
+mint_t *vec2i_inverse(mint_t *result, mint_t *a);
+mint_t *vec2i_abs(mint_t *result, mint_t *a);
+mint_t *vec2i_floor(mint_t *result, mfloat_t *a);
+mint_t *vec2i_ceil(mint_t *result, mfloat_t *a);
+mint_t *vec2i_round(mint_t *result, mfloat_t *a);
+mint_t *vec2i_max(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec2i_min(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec2i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher);
+mint_t *vec2i_normalize(mint_t *result, mint_t *a);
+mint_t *vec2i_slide(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec2i_reflect(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec2i_tangent(mint_t *result, mint_t *a);
+mint_t *vec2i_rotate(mint_t *result, mint_t *a, mfloat_t angle);
+mint_t *vec2i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p);
+mint_t *vec2i_bezier3(mint_t *result, mint_t *a, mint_t *b, mint_t *c, mfloat_t p);
+mint_t *vec2i_bezier4(mint_t *result, mint_t *a, mint_t *b, mint_t *c, mint_t *d, mfloat_t p);
+mfloat_t vec2i_dot(mint_t *a, mint_t *b);
+mfloat_t vec2i_angle(mint_t *a);
+mfloat_t vec2i_length(mint_t *a);
+mfloat_t vec2i_length_squared(mint_t *a);
+mfloat_t vec2i_distance_to(mint_t *a, mint_t *b);
+mfloat_t vec2i_distance_squared_to(mint_t *a, mint_t *b);
+
 /* Vector 3D */
 bool vec3_is_zero(mfloat_t *a);
 bool vec3_is_near_zero(mfloat_t *a, mfloat_t epsilon);
-bool vec3_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
+bool vec3_is_equal(mfloat_t *a, mfloat_t *b);
+bool vec3_is_nearly_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
 mfloat_t *vec3(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z);
 mfloat_t *vec3_assign(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec3_assign_vec3i(mfloat_t *result, mint_t *a);
 mfloat_t *vec3_zero(mfloat_t *result);
 mfloat_t *vec3_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar);
 mfloat_t *vec3_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
-mfloat_t *vec3_multiply_mat3(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_multiply_mat3(mfloat_t *result, mfloat_t *a, mfloat_t *m);
 mfloat_t *vec3_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_negative(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec3_inverse(mfloat_t *result, mfloat_t *a);
@@ -261,18 +333,55 @@ mfloat_t vec3_length_squared(mfloat_t *a);
 mfloat_t vec3_distance_to(mfloat_t *a, mfloat_t *b);
 mfloat_t vec3_distance_squared_to(mfloat_t *a, mfloat_t *b);
 
+/* Vector 3D Integer */
+bool vec3i_is_zero(mint_t *a);
+bool vec3i_is_equal(mint_t *a, mint_t *b);
+mint_t *vec3i(mint_t *result, mint_t x, mint_t y, mint_t z);
+mint_t *vec3i_assign(mint_t *result, mint_t *a);
+mint_t *vec3i_assign_vec3(mint_t *result, mfloat_t *a);
+mint_t *vec3i_zero(mint_t *result);
+mint_t *vec3i_add(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec3i_subtract(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec3i_scale(mint_t *result, mint_t *a, mfloat_t scalar);
+mint_t *vec3i_multiply(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec3i_multiply_mat3(mint_t *result, mint_t *a, mfloat_t *m);
+mint_t *vec3i_divide(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec3i_negative(mint_t *result, mint_t *a);
+mint_t *vec3i_inverse(mint_t *result, mint_t *a);
+mint_t *vec3i_abs(mint_t *result, mint_t *a);
+mint_t *vec3i_floor(mint_t *result, mfloat_t *a);
+mint_t *vec3i_ceil(mint_t *result, mfloat_t *a);
+mint_t *vec3i_round(mint_t *result, mfloat_t *a);
+mint_t *vec3i_max(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec3i_min(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec3i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher);
+mint_t *vec3i_cross(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec3i_normalize(mint_t *result, mint_t *a);
+mint_t *vec3i_slide(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec3i_reflect(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec3i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p);
+mint_t *vec3i_bezier3(mint_t *result, mint_t *a, mint_t *b, mint_t *c, mfloat_t p);
+mint_t *vec3i_bezier4(mint_t *result, mint_t *a, mint_t *b, mint_t *c, mint_t *d, mfloat_t p);
+mfloat_t vec3i_dot(mint_t *a, mint_t *b);
+mfloat_t vec3i_length(mint_t *a);
+mfloat_t vec3i_length_squared(mint_t *a);
+mfloat_t vec3i_distance_to(mint_t *a, mint_t *b);
+mfloat_t vec3i_distance_squared_to(mint_t *a, mint_t *b);
+
 /* Vector 4D */
 bool vec4_is_zero(mfloat_t *a);
 bool vec4_is_near_zero(mfloat_t *a, mfloat_t epsilon);
-bool vec4_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
+bool vec4_is_equal(mfloat_t *a, mfloat_t *b);
+bool vec4_is_nearly_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
 mfloat_t *vec4(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w);
 mfloat_t *vec4_assign(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec4_assign_vec4i(mfloat_t *result, mint_t *a);
 mfloat_t *vec4_zero(mfloat_t *result);
 mfloat_t *vec4_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar);
 mfloat_t *vec4_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
-mfloat_t *vec4_multiply_mat4(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec4_multiply_mat4(mfloat_t *result, mfloat_t *a, mfloat_t *m);
 mfloat_t *vec4_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_negative(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec4_inverse(mfloat_t *result, mfloat_t *a);
@@ -286,10 +395,36 @@ mfloat_t *vec4_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *h
 mfloat_t *vec4_normalize(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec4_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
 
+/* Vector 4D Integer */
+bool vec4i_is_zero(mint_t *a);
+bool vec4i_is_equal(mint_t *a, mint_t *b);
+mint_t *vec4i(mint_t *result, mint_t x, mint_t y, mint_t z, mint_t w);
+mint_t *vec4i_assign(mint_t *result, mint_t *a);
+mint_t *vec4i_assign_vec4(mint_t *result, mfloat_t *a);
+mint_t *vec4i_zero(mint_t *result);
+mint_t *vec4i_add(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec4i_subtract(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec4i_scale(mint_t *result, mint_t *a, mfloat_t scalar);
+mint_t *vec4i_multiply(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec4i_multiply_mat4(mint_t *result, mint_t *a, mfloat_t *m);
+mint_t *vec4i_divide(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec4i_negative(mint_t *result, mint_t *a);
+mint_t *vec4i_inverse(mint_t *result, mint_t *a);
+mint_t *vec4i_abs(mint_t *result, mint_t *a);
+mint_t *vec4i_floor(mint_t *result, mfloat_t *a);
+mint_t *vec4i_ceil(mint_t *result, mfloat_t *a);
+mint_t *vec4i_round(mint_t *result, mfloat_t *a);
+mint_t *vec4i_max(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec4i_min(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec4i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher);
+mint_t *vec4i_normalize(mint_t *result, mint_t *a);
+mint_t *vec4i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p);
+
 /* Quaternion */
 bool quat_is_zero(mfloat_t *a);
 bool quat_is_near_zero(mfloat_t *a, mfloat_t epsilon);
-bool quat_is_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
+bool quat_is_equal(mfloat_t *a, mfloat_t *b);
+bool quat_is_nearly_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon);
 mfloat_t *quat(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w);
 mfloat_t *quat_assign(mfloat_t *result, mfloat_t *a);
 mfloat_t *quat_zero(mfloat_t *result);
@@ -390,9 +525,14 @@ MATHC_INLINE bool psvec2_is_near_zero(struct vec2 *a, mfloat_t epsilon)
 	return vec2_is_near_zero((mfloat_t *)a, epsilon);
 };
 
-MATHC_INLINE bool psvec2_is_equal(struct vec2 *a, struct vec2 *b, mfloat_t epsilon)
+MATHC_INLINE bool psvec2_is_equal(struct vec2 *a, struct vec2 *b)
 {
-	return vec2_is_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
+	return vec2_is_equal((mfloat_t *)a, (mfloat_t *)b);
+};
+
+MATHC_INLINE bool psvec2_is_nearly_equal(struct vec2 *a, struct vec2 *b, mfloat_t epsilon)
+{
+	return vec2_is_nearly_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
 };
 
 MATHC_INLINE struct vec2 *psvec2(struct vec2 *result, mfloat_t x, mfloat_t y)
@@ -404,6 +544,12 @@ MATHC_INLINE struct vec2 *psvec2(struct vec2 *result, mfloat_t x, mfloat_t y)
 MATHC_INLINE struct vec2 *psvec2_assign(struct vec2 *result, struct vec2 *a)
 {
 	vec2_assign((mfloat_t *)result, (mfloat_t *)a);
+	return result;
+};
+
+MATHC_INLINE struct vec2 *psvec2_assign_vec2i(struct vec2 *result, struct vec2i *a)
+{
+	vec2_assign_vec2i((mfloat_t *)result, (mint_t *)a);
 	return result;
 };
 
@@ -575,6 +721,203 @@ MATHC_INLINE mfloat_t psvec2_distance_squared_to(struct vec2 *a, struct vec2 *b)
 	return vec2_distance_squared_to((mfloat_t *)a, (mfloat_t *)b);
 }
 
+/* Vector 2D Integer */
+MATHC_INLINE bool psvec2i_is_zero(struct vec2i *a)
+{
+	return vec2i_is_zero((mint_t *)a);
+};
+
+MATHC_INLINE bool psvec2i_is_equal(struct vec2i *a, struct vec2i *b)
+{
+	return vec2i_is_equal((mint_t *)a, (mint_t *)b);
+};
+
+MATHC_INLINE struct vec2i *psvec2i(struct vec2i *result, mfloat_t x, mfloat_t y)
+{
+	vec2i((mint_t *)result, x, y);
+	return result;
+};
+
+MATHC_INLINE struct vec2i *psvec2i_assign(struct vec2i *result, struct vec2i *a)
+{
+	vec2i_assign((mint_t *)result, (mint_t *)a);
+	return result;
+};
+
+MATHC_INLINE struct vec2i *psvec2i_assign_vec2(struct vec2i *result, struct vec2 *a)
+{
+	vec2i_assign_vec2((mint_t *)result, (mfloat_t *)a);
+	return result;
+};
+
+MATHC_INLINE struct vec2i *psvec2i_zero(struct vec2i *result)
+{
+	vec2i_zero((mint_t *)result);
+	return result;
+};
+
+MATHC_INLINE struct vec2i *psvec2i_add(struct vec2i *result, struct vec2i *a, struct vec2i *b)
+{
+	vec2i_add((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+};
+
+MATHC_INLINE struct vec2i *psvec2i_subtract(struct vec2i *result, struct vec2i *a, struct vec2i *b)
+{
+	vec2i_subtract((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+};
+
+MATHC_INLINE struct vec2i *psvec2i_scale(struct vec2i *result, struct vec2i *a, mfloat_t scalar)
+{
+	vec2i_scale((mint_t *)result, (mint_t *)a, scalar);
+	return result;
+};
+
+MATHC_INLINE struct vec2i *psvec2i_multiply(struct vec2i *result, struct vec2i *a, struct vec2i *b)
+{
+	vec2i_multiply((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+};
+
+MATHC_INLINE struct vec2i *psvec2i_divide(struct vec2i *result, struct vec2i *a, struct vec2i *b)
+{
+	vec2i_divide((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_negative(struct vec2i *result, struct vec2i *a)
+{
+	vec2i_negative((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_inverse(struct vec2i *result, struct vec2i *a)
+{
+	vec2i_inverse((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_abs(struct vec2i *result, struct vec2i *a)
+{
+	vec2i_abs((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_floor(struct vec2i *result, struct vec2 *a)
+{
+	vec2i_floor((mint_t *)result, (mfloat_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_ceil(struct vec2i *result, struct vec2 *a)
+{
+	vec2i_ceil((mint_t *)result, (mfloat_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_round(struct vec2i *result, struct vec2 *a)
+{
+	vec2i_round((mint_t *)result, (mfloat_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_max(struct vec2i *result, struct vec2i *a, struct vec2i *b)
+{
+	vec2i_max((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_min(struct vec2i *result, struct vec2i *a, struct vec2i *b)
+{
+	vec2i_min((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_clamp(struct vec2i *result, struct vec2i *a, struct vec2i *lower, struct vec2i *higher)
+{
+	vec2i_clamp((mint_t *)result, (mint_t *)a, (mint_t *)lower, (mint_t *)higher);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_normalize(struct vec2i *result, struct vec2i *a)
+{
+	vec2i_normalize((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_slide(struct vec2i *result, struct vec2i *a, struct vec2i *b)
+{
+	vec2i_slide((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_reflect(struct vec2i *result, struct vec2i *a, struct vec2i *b)
+{
+	vec2i_reflect((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_tangent(struct vec2i *result, struct vec2i *a)
+{
+	vec2i_tangent((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_rotate(struct vec2i *result, struct vec2i *a, mfloat_t angle)
+{
+	vec2i_rotate((mint_t *)result, (mint_t *)a, angle);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_lerp(struct vec2i *result, struct vec2i *a, struct vec2i *b, mfloat_t p)
+{
+	vec2i_lerp((mint_t *)result, (mint_t *)a, (mint_t *)b, p);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_bezier3(struct vec2i *result, struct vec2i *a, struct vec2i *b, struct vec2i *c, mfloat_t p)
+{
+	vec2i_bezier3((mint_t *)result, (mint_t *)a, (mint_t *)b, (mint_t *)c, p);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_bezier4(struct vec2i *result, struct vec2i *a, struct vec2i *b, struct vec2i *c, struct vec2i *d, mfloat_t p)
+{
+	vec2i_bezier4((mint_t *)result, (mint_t *)a, (mint_t *)b, (mint_t *)c, (mint_t *)d, p);
+	return result;
+}
+
+MATHC_INLINE mfloat_t psvec2i_dot(struct vec2i *a, struct vec2i *b)
+{
+	return vec2i_dot((mint_t *)a, (mint_t *)b);
+}
+
+MATHC_INLINE mfloat_t psvec2i_angle(struct vec2i *a)
+{
+	return vec2i_angle((mint_t *)a);
+}
+
+MATHC_INLINE mfloat_t psvec2i_length_squared(struct vec2i *a)
+{
+	return vec2i_length_squared((mint_t *)a);
+}
+
+MATHC_INLINE mfloat_t psvec2i_length(struct vec2i *a)
+{
+	return vec2i_length((mint_t *)a);
+}
+
+MATHC_INLINE mfloat_t psvec2i_distance_to(struct vec2i *a, struct vec2i *b)
+{
+	return vec2i_distance_to((mint_t *)a, (mint_t *)b);
+}
+
+MATHC_INLINE mfloat_t psvec2i_distance_squared_to(struct vec2i *a, struct vec2i *b)
+{
+	return vec2i_distance_squared_to((mint_t *)a, (mint_t *)b);
+}
+
 /* Vector 3D */
 MATHC_INLINE bool psvec3_is_zero(struct vec3 *a)
 {
@@ -586,9 +929,14 @@ MATHC_INLINE bool psvec3_is_near_zero(struct vec3 *a, mfloat_t epsilon)
 	return vec3_is_near_zero((mfloat_t *)a, epsilon);
 };
 
-MATHC_INLINE bool psvec3_is_equal(struct vec3 *a, struct vec3 *b, mfloat_t epsilon)
+MATHC_INLINE bool psvec3_is_equal(struct vec3 *a, struct vec3 *b)
 {
-	return vec3_is_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
+	return vec3_is_equal((mfloat_t *)a, (mfloat_t *)b);
+};
+
+MATHC_INLINE bool psvec3_is_nearly_equal(struct vec3 *a, struct vec3 *b, mfloat_t epsilon)
+{
+	return vec3_is_nearly_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
 };
 
 MATHC_INLINE struct vec3 *psvec3(struct vec3 *result, mfloat_t x, mfloat_t y, mfloat_t z)
@@ -600,6 +948,12 @@ MATHC_INLINE struct vec3 *psvec3(struct vec3 *result, mfloat_t x, mfloat_t y, mf
 MATHC_INLINE struct vec3 *psvec3_assign(struct vec3 *result, struct vec3 *a)
 {
 	vec3_assign((mfloat_t *)result, (mfloat_t *)a);
+	return result;
+};
+
+MATHC_INLINE struct vec3 *psvec3_assign_vec3i(struct vec3 *result, struct vec3i *a)
+{
+	vec3_assign_vec3i((mfloat_t *)result, (mint_t *)a);
 	return result;
 };
 
@@ -633,9 +987,9 @@ MATHC_INLINE struct vec3 *psvec3_multiply(struct vec3 *result, struct vec3 *a, s
 	return result;
 };
 
-MATHC_INLINE struct vec3 *psvec3_multiply_mat3(struct vec3 *result, struct vec3 *a, struct mat3 *b)
+MATHC_INLINE struct vec3 *psvec3_multiply_mat3(struct vec3 *result, struct vec3 *a, struct mat3 *m)
 {
-	vec3_multiply_mat3((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
+	vec3_multiply_mat3((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)m);
 	return result;
 };
 
@@ -766,6 +1120,198 @@ MATHC_INLINE mfloat_t psvec3_distance_squared_to(struct vec3 *a, struct vec3 *b)
 	return vec3_distance_squared_to((mfloat_t *)a, (mfloat_t *)b);
 }
 
+/* Vector 3D Integer */
+MATHC_INLINE bool psvec3i_is_zero(struct vec3i *a)
+{
+	return vec3i_is_zero((mint_t *)a);
+};
+
+MATHC_INLINE bool psvec3i_is_equal(struct vec3i *a, struct vec3i *b)
+{
+	return vec3i_is_equal((mint_t *)a, (mint_t *)b);
+};
+
+MATHC_INLINE struct vec3i *psvec3i(struct vec3i *result, mfloat_t x, mfloat_t y, mfloat_t z)
+{
+	vec3i((mint_t *)result, x, y, z);
+	return result;
+};
+
+MATHC_INLINE struct vec3i *psvec3i_assign(struct vec3i *result, struct vec3i *a)
+{
+	vec3i_assign((mint_t *)result, (mint_t *)a);
+	return result;
+};
+
+MATHC_INLINE struct vec3i *psvec3i_assign_vec3(struct vec3i *result, struct vec3 *a)
+{
+	vec3i_assign_vec3((mint_t *)result, (mfloat_t *)a);
+	return result;
+};
+
+MATHC_INLINE struct vec3i *psvec3i_zero(struct vec3i *result)
+{
+	vec3i_zero((mint_t *)result);
+	return result;
+};
+
+MATHC_INLINE struct vec3i *psvec3i_add(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_add((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+};
+
+MATHC_INLINE struct vec3i *psvec3i_subtract(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_subtract((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+};
+
+MATHC_INLINE struct vec3i *psvec3i_scale(struct vec3i *result, struct vec3i *a, mfloat_t scalar)
+{
+	vec3i_scale((mint_t *)result, (mint_t *)a, scalar);
+	return result;
+};
+
+MATHC_INLINE struct vec3i *psvec3i_multiply(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_multiply((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+};
+
+MATHC_INLINE struct vec3i *psvec3i_multiply_mat3(struct vec3i *result, struct vec3i *a, struct mat3 *m)
+{
+	vec3i_multiply_mat3((mint_t *)result, (mint_t *)a, (mfloat_t *)m);
+	return result;
+};
+
+MATHC_INLINE struct vec3i *psvec3i_divide(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_divide((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_negative(struct vec3i *result, struct vec3i *a)
+{
+	vec3i_negative((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_inverse(struct vec3i *result, struct vec3i *a)
+{
+	vec3i_inverse((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_abs(struct vec3i *result, struct vec3i *a)
+{
+	vec3i_abs((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_floor(struct vec3i *result, struct vec3 *a)
+{
+	vec3i_floor((mint_t *)result, (mfloat_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_ceil(struct vec3i *result, struct vec3 *a)
+{
+	vec3i_ceil((mint_t *)result, (mfloat_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_round(struct vec3i *result, struct vec3 *a)
+{
+	vec3i_round((mint_t *)result, (mfloat_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_max(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_max((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_min(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_min((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_clamp(struct vec3i *result, struct vec3i *a, struct vec3i *lower, struct vec3i *higher)
+{
+	vec3i_clamp((mint_t *)result, (mint_t *)a, (mint_t *)lower, (mint_t *)higher);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_cross(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_cross((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_normalize(struct vec3i *result, struct vec3i *a)
+{
+	vec3i_normalize((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_slide(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_slide((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_reflect(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_reflect((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_lerp(struct vec3i *result, struct vec3i *a, struct vec3i *b, mfloat_t p)
+{
+	vec3i_lerp((mint_t *)result, (mint_t *)a, (mint_t *)b, p);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_bezier3(struct vec3i *result, struct vec3i *a, struct vec3i *b, struct vec3i *c, mfloat_t p)
+{
+	vec3i_bezier3((mint_t *)result, (mint_t *)a, (mint_t *)b, (mint_t *)c, p);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_bezier4(struct vec3i *result, struct vec3i *a, struct vec3i *b, struct vec3i *c, struct vec3i *d, mfloat_t p)
+{
+	vec3i_bezier4((mint_t *)result, (mint_t *)a, (mint_t *)b, (mint_t *)c, (mint_t *)d, p);
+	return result;
+}
+
+MATHC_INLINE mfloat_t psvec3i_dot(struct vec3i *a, struct vec3i *b)
+{
+	return vec3i_dot((mint_t *)a, (mint_t *)b);
+}
+
+MATHC_INLINE mfloat_t psvec3i_length(struct vec3i *a)
+{
+	return vec3i_length((mint_t *)a);
+}
+
+MATHC_INLINE mfloat_t psvec3i_length_squared(struct vec3i *a)
+{
+	return vec3i_length_squared((mint_t *)a);
+}
+
+MATHC_INLINE mfloat_t psvec3i_distance_to(struct vec3i *a, struct vec3i *b)
+{
+	return vec3i_distance_to((mint_t *)a, (mint_t *)b);
+}
+
+MATHC_INLINE mfloat_t psvec3i_distance_squared_to(struct vec3i *a, struct vec3i *b)
+{
+	return vec3i_distance_squared_to((mint_t *)a, (mint_t *)b);
+}
+
 /* Vector 4D */
 MATHC_INLINE bool psvec4_is_zero(struct vec4 *a)
 {
@@ -777,9 +1323,14 @@ MATHC_INLINE bool psvec4_is_near_zero(struct vec4 *a, mfloat_t epsilon)
 	return vec4_is_near_zero((mfloat_t *)a, epsilon);
 };
 
-MATHC_INLINE bool psvec4_is_equal(struct vec4 *a, struct vec4 *b, mfloat_t epsilon)
+MATHC_INLINE bool psvec4_is_equal(struct vec4 *a, struct vec4 *b)
 {
-	return vec4_is_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
+	return vec4_is_equal((mfloat_t *)a, (mfloat_t *)b);
+};
+
+MATHC_INLINE bool psvec4_is_nearly_equal(struct vec4 *a, struct vec4 *b, mfloat_t epsilon)
+{
+	return vec4_is_nearly_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
 };
 
 MATHC_INLINE struct vec4 *psvec4(struct vec4 *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
@@ -791,6 +1342,12 @@ MATHC_INLINE struct vec4 *psvec4(struct vec4 *result, mfloat_t x, mfloat_t y, mf
 MATHC_INLINE struct vec4 *psvec4_assign(struct vec4 *result, struct vec4 *a)
 {
 	vec4_assign((mfloat_t *)result, (mfloat_t *)a);
+	return result;
+};
+
+MATHC_INLINE struct vec4 *psvec4_assign_vec4i(struct vec4 *result, struct vec4i *a)
+{
+	vec4_assign_vec4i((mfloat_t *)result, (mint_t *)a);
 	return result;
 };
 
@@ -824,9 +1381,9 @@ MATHC_INLINE struct vec4 *psvec4_multiply(struct vec4 *result, struct vec4 *a, s
 	return result;
 };
 
-MATHC_INLINE struct vec4 *psvec4_multiply_mat4(struct vec4 *result, struct vec4 *a, struct mat4 *b)
+MATHC_INLINE struct vec4 *psvec4_multiply_mat4(struct vec4 *result, struct vec4 *a, struct mat4 *m)
 {
-	vec4_multiply_mat4((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
+	vec4_multiply_mat4((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)m);
 	return result;
 };
 
@@ -902,6 +1459,143 @@ MATHC_INLINE struct vec4 *psvec4_lerp(struct vec4 *result, struct vec4 *a, struc
 	return result;
 }
 
+/* Vector 4D */
+MATHC_INLINE bool psvec4i_is_zero(struct vec4i *a)
+{
+	return vec4i_is_zero((mint_t *)a);
+};
+
+MATHC_INLINE bool psvec4i_is_equal(struct vec4i *a, struct vec4i *b)
+{
+	return vec4i_is_equal((mint_t *)a, (mint_t *)b);
+};
+
+MATHC_INLINE struct vec4i *psvec4i(struct vec4i *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
+{
+	vec4i((mint_t *)result, x, y, z, w);
+	return result;
+};
+
+MATHC_INLINE struct vec4i *psvec4i_assign(struct vec4i *result, struct vec4i *a)
+{
+	vec4i_assign((mint_t *)result, (mint_t *)a);
+	return result;
+};
+
+MATHC_INLINE struct vec4i *psvec4i_assign_vec4(struct vec4i *result, struct vec4 *a)
+{
+	vec4i_assign_vec4((mint_t *)result, (mfloat_t *)a);
+	return result;
+};
+
+MATHC_INLINE struct vec4i *psvec4i_zero(struct vec4i *result)
+{
+	vec4i_zero((mint_t *)result);
+	return result;
+};
+
+MATHC_INLINE struct vec4i *psvec4i_add(struct vec4i *result, struct vec4i *a, struct vec4i *b)
+{
+	vec4i_add((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+};
+
+MATHC_INLINE struct vec4i *psvec4i_subtract(struct vec4i *result, struct vec4i *a, struct vec4i *b)
+{
+	vec4i_subtract((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+};
+
+MATHC_INLINE struct vec4i *psvec4i_scale(struct vec4i *result, struct vec4i *a, mfloat_t scalar)
+{
+	vec4i_scale((mint_t *)result, (mint_t *)a, scalar);
+	return result;
+};
+
+MATHC_INLINE struct vec4i *psvec4i_multiply(struct vec4i *result, struct vec4i *a, struct vec4i *b)
+{
+	vec4i_multiply((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+};
+
+MATHC_INLINE struct vec4i *psvec4i_multiply_mat4(struct vec4i *result, struct vec4i *a, struct mat4 *m)
+{
+	vec4i_multiply_mat4((mint_t *)result, (mint_t *)a, (mfloat_t *)m);
+	return result;
+};
+
+MATHC_INLINE struct vec4i *psvec4i_divide(struct vec4i *result, struct vec4i *a, struct vec4i *b)
+{
+	vec4i_divide((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_negative(struct vec4i *result, struct vec4i *a)
+{
+	vec4i_negative((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_inverse(struct vec4i *result, struct vec4i *a)
+{
+	vec4i_inverse((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_abs(struct vec4i *result, struct vec4i *a)
+{
+	vec4i_abs((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_floor(struct vec4i *result, struct vec4 *a)
+{
+	vec4i_floor((mint_t *)result, (mfloat_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_ceil(struct vec4i *result, struct vec4 *a)
+{
+	vec4i_ceil((mint_t *)result, (mfloat_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_round(struct vec4i *result, struct vec4 *a)
+{
+	vec4i_round((mint_t *)result, (mfloat_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_max(struct vec4i *result, struct vec4i *a, struct vec4i *b)
+{
+	vec4i_max((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_min(struct vec4i *result, struct vec4i *a, struct vec4i *b)
+{
+	vec4i_min((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_clamp(struct vec4i *result, struct vec4i *a, struct vec4i *lower, struct vec4i *higher)
+{
+	vec4i_clamp((mint_t *)result, (mint_t *)a, (mint_t *)lower, (mint_t *)higher);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_normalize(struct vec4i *result, struct vec4i *a)
+{
+	vec4i_normalize((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_lerp(struct vec4i *result, struct vec4i *a, struct vec4i *b, mfloat_t p)
+{
+	vec4i_lerp((mint_t *)result, (mint_t *)a, (mint_t *)b, p);
+	return result;
+}
+
 /* Quaternion */
 MATHC_INLINE bool psquat_is_zero(struct quat *a)
 {
@@ -913,9 +1607,14 @@ MATHC_INLINE bool psquat_is_near_zero(struct quat *a, mfloat_t epsilon)
 	return quat_is_near_zero((mfloat_t *)a, epsilon);
 };
 
-MATHC_INLINE bool psquat_is_equal(struct quat *a, struct quat *b, mfloat_t epsilon)
+MATHC_INLINE bool psquat_is_equal(struct quat *a, struct quat *b)
 {
-	return quat_is_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
+	return quat_is_equal((mfloat_t *)a, (mfloat_t *)b);
+};
+
+MATHC_INLINE bool psquat_is_nearly_equal(struct quat *a, struct quat *b, mfloat_t epsilon)
+{
+	return quat_is_nearly_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
 };
 
 MATHC_INLINE struct quat *psquat(struct quat *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
@@ -1402,6 +2101,7 @@ MATHC_INLINE struct mat4 *psmat4_lerp(struct mat4 *result, struct mat4 *a, struc
 #endif
 
 #ifndef MATHC_NO_STRUCT_FUNCTIONS
+/* Vector 2D */
 MATHC_INLINE bool svec2_is_zero(struct vec2 a)
 {
 	return vec2_is_zero((mfloat_t *)&a);
@@ -1412,9 +2112,14 @@ MATHC_INLINE bool svec2_is_near_zero(struct vec2 a, mfloat_t epsilon)
 	return vec2_is_near_zero((mfloat_t *)&a, epsilon);
 };
 
-MATHC_INLINE bool svec2_is_equal(struct vec2 a, struct vec2 b, mfloat_t epsilon)
+MATHC_INLINE bool svec2_is_equal(struct vec2 a, struct vec2 b)
 {
-	return vec2_is_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
+	return vec2_is_equal((mfloat_t *)&a, (mfloat_t *)&b);
+};
+
+MATHC_INLINE bool svec2_is_nearly_equal(struct vec2 a, struct vec2 b, mfloat_t epsilon)
+{
+	return vec2_is_nearly_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
 };
 
 MATHC_INLINE struct vec2 svec2(mfloat_t x, mfloat_t y)
@@ -1622,6 +2327,230 @@ MATHC_INLINE mfloat_t svec2_distance_squared_to(struct vec2 a, struct vec2 b)
 	return vec2_distance_squared_to((mfloat_t *)&a, (mfloat_t *)&b);
 }
 
+/* Vector 2D Integer */
+MATHC_INLINE bool svec2i_is_zero(struct vec2i a)
+{
+	return vec2i_is_zero((mint_t *)&a);
+};
+
+MATHC_INLINE bool svec2i_is_equal(struct vec2i a, struct vec2i b)
+{
+	return vec2i_is_equal((mint_t *)&a, (mint_t *)&b);
+};
+
+MATHC_INLINE struct vec2i svec2i(mfloat_t x, mfloat_t y)
+{
+	struct vec2i result;
+	vec2i((mint_t *)&result, x, y);
+	return result;
+};
+
+MATHC_INLINE struct vec2i svec2i_assign(struct vec2i a)
+{
+	struct vec2i result;
+	vec2i_assign((mint_t *)&result, (mint_t *)&a);
+	return result;
+};
+
+MATHC_INLINE struct vec2i svec2i_assign_vec2(struct vec2 *a)
+{
+	struct vec2i result;
+	vec2i_assign_vec2((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+};
+
+MATHC_INLINE struct vec2i svec2i_zero(void)
+{
+	struct vec2i result;
+	vec2i_zero((mint_t *)&result);
+	return result;
+};
+
+MATHC_INLINE struct vec2i svec2i_add(struct vec2i a, struct vec2i b)
+{
+	struct vec2i result;
+	vec2i_add((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+};
+
+MATHC_INLINE struct vec2i svec2i_subtract(struct vec2i a, struct vec2i b)
+{
+	struct vec2i result;
+	vec2i_subtract((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+};
+
+MATHC_INLINE struct vec2i svec2i_scale(struct vec2i a, mfloat_t scalar)
+{
+	struct vec2i result;
+	vec2i_scale((mint_t *)&result, (mint_t *)&a, scalar);
+	return result;
+};
+
+MATHC_INLINE struct vec2i svec2i_multiply(struct vec2i a, struct vec2i b)
+{
+	struct vec2i result;
+	vec2i_multiply((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+};
+
+MATHC_INLINE struct vec2i svec2i_divide(struct vec2i a, struct vec2i b)
+{
+	struct vec2i result;
+	vec2i_divide((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_negative(struct vec2i a)
+{
+	struct vec2i result;
+	vec2i_negative((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_inverse(struct vec2i a)
+{
+	struct vec2i result;
+	vec2i_inverse((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_abs(struct vec2i a)
+{
+	struct vec2i result;
+	vec2i_abs((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_floor(struct vec2 *a)
+{
+	struct vec2i result;
+	vec2i_floor((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_ceil(struct vec2 *a)
+{
+	struct vec2i result;
+	vec2i_ceil((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_round(struct vec2 *a)
+{
+	struct vec2i result;
+	vec2i_round((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_max(struct vec2i a, struct vec2i b)
+{
+	struct vec2i result;
+	vec2i_max((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_min(struct vec2i a, struct vec2i b)
+{
+	struct vec2i result;
+	vec2i_min((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_clamp(struct vec2i a, struct vec2i lower, struct vec2i higher)
+{
+	struct vec2i result;
+	vec2i_clamp((mint_t *)&result, (mint_t *)&a, (mint_t *)&lower, (mint_t *)&higher);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_normalize(struct vec2i a)
+{
+	struct vec2i result;
+	vec2i_normalize((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_slide(struct vec2i a, struct vec2i b)
+{
+	struct vec2i result;
+	vec2i_slide((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_reflect(struct vec2i a, struct vec2i b)
+{
+	struct vec2i result;
+	vec2i_reflect((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_tangent(struct vec2i a)
+{
+	struct vec2i result;
+	vec2i_tangent((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_rotate(struct vec2i a, mfloat_t angle)
+{
+	struct vec2i result;
+	vec2i_rotate((mint_t *)&result, (mint_t *)&a, angle);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_lerp(struct vec2i a, struct vec2i b, mfloat_t p)
+{
+	struct vec2i result;
+	vec2i_lerp((mint_t *)&result, (mint_t *)&a, (mint_t *)&b, p);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_bezier3(struct vec2i a, struct vec2i b, struct vec2i c, mfloat_t p)
+{
+	struct vec2i result;
+	vec2i_bezier3((mint_t *)&result, (mint_t *)&a, (mint_t *)&b, (mint_t *)&c, p);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_bezier4(struct vec2i a, struct vec2i b, struct vec2i c, struct vec2i d, mfloat_t p)
+{
+	struct vec2i result;
+	vec2i_bezier4((mint_t *)&result, (mint_t *)&a, (mint_t *)&b, (mint_t *)&c, (mint_t *)&d, p);
+	return result;
+}
+
+MATHC_INLINE mfloat_t svec2i_dot(struct vec2i a, struct vec2i b)
+{
+	return vec2i_dot((mint_t *)&a, (mint_t *)&b);
+}
+
+MATHC_INLINE mfloat_t svec2i_angle(struct vec2i a)
+{
+	return vec2i_angle((mint_t *)&a);
+}
+
+MATHC_INLINE mfloat_t svec2i_length_squared(struct vec2i a)
+{
+	return vec2i_length_squared((mint_t *)&a);
+}
+
+MATHC_INLINE mfloat_t svec2i_length(struct vec2i a)
+{
+	return vec2i_length((mint_t *)&a);
+}
+
+MATHC_INLINE mfloat_t svec2i_distance_to(struct vec2i a, struct vec2i b)
+{
+	return vec2i_distance_to((mint_t *)&a, (mint_t *)&b);
+}
+
+MATHC_INLINE mfloat_t svec2i_distance_squared_to(struct vec2i a, struct vec2i b)
+{
+	return vec2i_distance_squared_to((mint_t *)&a, (mint_t *)&b);
+}
+
+/* Vector 3 */
 MATHC_INLINE bool svec3_is_zero(struct vec3 a)
 {
 	return vec3_is_zero((mfloat_t *)&a);
@@ -1632,9 +2561,14 @@ MATHC_INLINE bool svec3_is_near_zero(struct vec3 a, mfloat_t epsilon)
 	return vec3_is_near_zero((mfloat_t *)&a, epsilon);
 };
 
-MATHC_INLINE bool svec3_is_equal(struct vec3 a, struct vec3 b, mfloat_t epsilon)
+MATHC_INLINE bool svec3_is_equal(struct vec3 a, struct vec3 b)
 {
-	return vec3_is_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
+	return vec3_is_equal((mfloat_t *)&a, (mfloat_t *)&b);
+};
+
+MATHC_INLINE bool svec3_is_nearly_equal(struct vec3 a, struct vec3 b, mfloat_t epsilon)
+{
+	return vec3_is_nearly_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
 };
 
 MATHC_INLINE struct vec3 svec3(mfloat_t x, mfloat_t y, mfloat_t z)
@@ -1648,6 +2582,13 @@ MATHC_INLINE struct vec3 svec3_assign(struct vec3 a)
 {
 	struct vec3 result;
 	vec3_assign((mfloat_t *)&result, (mfloat_t *)&a);
+	return result;
+};
+
+MATHC_INLINE struct vec3 svec3_assign_vec3i(struct vec3i a)
+{
+	struct vec3 result;
+	vec3_assign_vec3i((mfloat_t *)&result, (mint_t *)&a);
 	return result;
 };
 
@@ -1686,10 +2627,10 @@ MATHC_INLINE struct vec3 svec3_multiply(struct vec3 a, struct vec3 b)
 	return result;
 };
 
-MATHC_INLINE struct vec3 svec3_multiply_mat3(struct vec3 a, struct mat3 b)
+MATHC_INLINE struct vec3 svec3_multiply_mat3(struct vec3 a, struct mat3 m)
 {
 	struct vec3 result;
-	vec3_multiply_mat3((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
+	vec3_multiply_mat3((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&m);
 	return result;
 };
 
@@ -1837,6 +2778,225 @@ MATHC_INLINE mfloat_t svec3_distance_squared_to(struct vec3 a, struct vec3 b)
 	return vec3_distance_squared_to((mfloat_t *)&a, (mfloat_t *)&b);
 }
 
+/* Vector 3 Integer */
+MATHC_INLINE bool svec3i_is_zero(struct vec3i a)
+{
+	return vec3i_is_zero((mint_t *)&a);
+};
+
+MATHC_INLINE bool svec3i_is_equal(struct vec3i a, struct vec3i b)
+{
+	return vec3i_is_equal((mint_t *)&a, (mint_t *)&b);
+};
+
+MATHC_INLINE struct vec3i svec3i(mint_t x, mint_t y, mint_t z)
+{
+	struct vec3i result;
+	vec3i((mint_t *)&result, x, y, z);
+	return result;
+};
+
+MATHC_INLINE struct vec3i svec3i_assign(struct vec3i a)
+{
+	struct vec3i result;
+	vec3i_assign((mint_t *)&result, (mint_t *)&a);
+	return result;
+};
+
+MATHC_INLINE struct vec3i svec3i_assign_vec3(struct vec3 a)
+{
+	struct vec3i result;
+	vec3i_assign_vec3((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+};
+
+MATHC_INLINE struct vec3i svec3i_zero(void)
+{
+	struct vec3i result;
+	vec3i_zero((mint_t *)&result);
+	return result;
+};
+
+MATHC_INLINE struct vec3i svec3i_add(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_add((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+};
+
+MATHC_INLINE struct vec3i svec3i_subtract(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_subtract((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+};
+
+MATHC_INLINE struct vec3i svec3i_scale(struct vec3i a, mint_t scalar)
+{
+	struct vec3i result;
+	vec3i_scale((mint_t *)&result, (mint_t *)&a, scalar);
+	return result;
+};
+
+MATHC_INLINE struct vec3i svec3i_multiply(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_multiply((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+};
+
+MATHC_INLINE struct vec3i svec3i_multiply_mat3(struct vec3i a, struct mat3 m)
+{
+	struct vec3i result;
+	vec3i_multiply_mat3((mint_t *)&result, (mint_t *)&a, (mfloat_t *)&m);
+	return result;
+};
+
+MATHC_INLINE struct vec3i svec3i_divide(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_divide((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_negative(struct vec3i a)
+{
+	struct vec3i result;
+	vec3i_negative((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_inverse(struct vec3i a)
+{
+	struct vec3i result;
+	vec3i_inverse((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_abs(struct vec3i a)
+{
+	struct vec3i result;
+	vec3i_abs((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_floor(struct vec3 a)
+{
+	struct vec3i result;
+	vec3i_floor((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_ceil(struct vec3 a)
+{
+	struct vec3i result;
+	vec3i_ceil((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_round(struct vec3 a)
+{
+	struct vec3i result;
+	vec3i_round((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_max(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_max((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_min(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_min((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_clamp(struct vec3i a, struct vec3i lower, struct vec3i higher)
+{
+	struct vec3i result;
+	vec3i_clamp((mint_t *)&result, (mint_t *)&a, (mint_t *)&lower, (mint_t *)&higher);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_cross(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_cross((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_normalize(struct vec3i a)
+{
+	struct vec3i result;
+	vec3i_normalize((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_slide(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_slide((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_reflect(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_reflect((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_lerp(struct vec3i a, struct vec3i b, mint_t p)
+{
+	struct vec3i result;
+	vec3i_lerp((mint_t *)&result, (mint_t *)&a, (mint_t *)&b, p);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_bezier3(struct vec3i a, struct vec3i b, struct vec3i c, mint_t p)
+{
+	struct vec3i result;
+	vec3i_bezier3((mint_t *)&result, (mint_t *)&a, (mint_t *)&b, (mint_t *)&c, p);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_bezier4(struct vec3i a, struct vec3i b, struct vec3i c, struct vec3i d, mint_t p)
+{
+	struct vec3i result;
+	vec3i_bezier4((mint_t *)&result, (mint_t *)&a, (mint_t *)&b, (mint_t *)&c, (mint_t *)&d, p);
+	return result;
+}
+
+MATHC_INLINE mint_t svec3i_dot(struct vec3i a, struct vec3i b)
+{
+	return vec3i_dot((mint_t *)&a, (mint_t *)&b);
+}
+
+MATHC_INLINE mint_t svec3i_length(struct vec3i a)
+{
+	return vec3i_length((mint_t *)&a);
+}
+
+MATHC_INLINE mint_t svec3i_length_squared(struct vec3i a)
+{
+	return vec3i_length_squared((mint_t *)&a);
+}
+
+MATHC_INLINE mint_t svec3i_distance_to(struct vec3i a, struct vec3i b)
+{
+	return vec3i_distance_to((mint_t *)&a, (mint_t *)&b);
+}
+
+MATHC_INLINE mint_t svec3i_distance_squared_to(struct vec3i a, struct vec3i b)
+{
+	return vec3i_distance_squared_to((mint_t *)&a, (mint_t *)&b);
+}
+
+/* Vector 4D */
 MATHC_INLINE bool svec4_is_zero(struct vec4 a)
 {
 	return vec4_is_zero((mfloat_t *)&a);
@@ -1847,9 +3007,14 @@ MATHC_INLINE bool svec4_is_near_zero(struct vec4 a, mfloat_t epsilon)
 	return vec4_is_near_zero((mfloat_t *)&a, epsilon);
 };
 
-MATHC_INLINE bool svec4_is_equal(struct vec4 a, struct vec4 b, mfloat_t epsilon)
+MATHC_INLINE bool svec4_is_equal(struct vec4 a, struct vec4 b)
 {
-	return vec4_is_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
+	return vec4_is_equal((mfloat_t *)&a, (mfloat_t *)&b);
+};
+
+MATHC_INLINE bool svec4_is_nearly_equal(struct vec4 a, struct vec4 b, mfloat_t epsilon)
+{
+	return vec4_is_nearly_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
 };
 
 MATHC_INLINE struct vec4 svec4(mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
@@ -1863,6 +3028,13 @@ MATHC_INLINE struct vec4 svec4_assign(struct vec4 a)
 {
 	struct vec4 result;
 	vec4_assign((mfloat_t *)&result, (mfloat_t *)&a);
+	return result;
+};
+
+MATHC_INLINE struct vec4 svec4_assign_vec4i(struct vec4i a)
+{
+	struct vec4 result;
+	vec4_assign_vec4i((mfloat_t *)&result, (mint_t *)&a);
 	return result;
 };
 
@@ -1901,10 +3073,10 @@ MATHC_INLINE struct vec4 svec4_multiply(struct vec4 a, struct vec4 b)
 	return result;
 };
 
-MATHC_INLINE struct vec4 svec4_multiply_mat4(struct vec4 a, struct mat4 b)
+MATHC_INLINE struct vec4 svec4_multiply_mat4(struct vec4 a, struct mat4 m)
 {
 	struct vec4 result;
-	vec4_multiply_mat4((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
+	vec4_multiply_mat4((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&m);
 	return result;
 };
 
@@ -1992,6 +3164,165 @@ MATHC_INLINE struct vec4 svec4_lerp(struct vec4 a, struct vec4 b, mfloat_t p)
 	return result;
 }
 
+/* Vector 4D Integer */
+MATHC_INLINE bool svec4i_is_zero(struct vec4i a)
+{
+	return vec4i_is_zero((mint_t *)&a);
+};
+
+MATHC_INLINE bool svec4i_is_equal(struct vec4i a, struct vec4i b)
+{
+	return vec4i_is_equal((mint_t *)&a, (mint_t *)&b);
+};
+
+MATHC_INLINE struct vec4i svec4i(mint_t x, mint_t y, mint_t z, mint_t w)
+{
+	struct vec4i result;
+	vec4i((mint_t *)&result, x, y, z, w);
+	return result;
+};
+
+MATHC_INLINE struct vec4i svec4i_assign(struct vec4i a)
+{
+	struct vec4i result;
+	vec4i_assign((mint_t *)&result, (mint_t *)&a);
+	return result;
+};
+
+MATHC_INLINE struct vec4i svec4i_assign_vec4(struct vec4 a)
+{
+	struct vec4i result;
+	vec4i_assign_vec4((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+};
+
+MATHC_INLINE struct vec4i svec4i_zero(void)
+{
+	struct vec4i result;
+	vec4i_zero((mint_t *)&result);
+	return result;
+};
+
+MATHC_INLINE struct vec4i svec4i_add(struct vec4i a, struct vec4i b)
+{
+	struct vec4i result;
+	vec4i_add((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+};
+
+MATHC_INLINE struct vec4i svec4i_subtract(struct vec4i a, struct vec4i b)
+{
+	struct vec4i result;
+	vec4i_subtract((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+};
+
+MATHC_INLINE struct vec4i svec4i_scale(struct vec4i a, mint_t scalar)
+{
+	struct vec4i result;
+	vec4i_scale((mint_t *)&result, (mint_t *)&a, scalar);
+	return result;
+};
+
+MATHC_INLINE struct vec4i svec4i_multiply(struct vec4i a, struct vec4i b)
+{
+	struct vec4i result;
+	vec4i_multiply((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+};
+
+MATHC_INLINE struct vec4i svec4i_multiply_mat4(struct vec4i a, struct mat4 m)
+{
+	struct vec4i result;
+	vec4i_multiply_mat4((mint_t *)&result, (mint_t *)&a, (mfloat_t *)&m);
+	return result;
+};
+
+MATHC_INLINE struct vec4i svec4i_divide(struct vec4i a, struct vec4i b)
+{
+	struct vec4i result;
+	vec4i_divide((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_negative(struct vec4i a)
+{
+	struct vec4i result;
+	vec4i_negative((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_inverse(struct vec4i a)
+{
+	struct vec4i result;
+	vec4i_inverse((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_abs(struct vec4i a)
+{
+	struct vec4i result;
+	vec4i_abs((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_floor(struct vec4 a)
+{
+	struct vec4i result;
+	vec4i_floor((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_ceil(struct vec4 a)
+{
+	struct vec4i result;
+	vec4i_ceil((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_round(struct vec4 a)
+{
+	struct vec4i result;
+	vec4i_round((mint_t *)&result, (mfloat_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_max(struct vec4i a, struct vec4i b)
+{
+	struct vec4i result;
+	vec4i_max((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_min(struct vec4i a, struct vec4i b)
+{
+	struct vec4i result;
+	vec4i_min((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_clamp(struct vec4i a, struct vec4i lower, struct vec4i higher)
+{
+	struct vec4i result;
+	vec4i_clamp((mint_t *)&result, (mint_t *)&a, (mint_t *)&lower, (mint_t *)&higher);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_normalize(struct vec4i a)
+{
+	struct vec4i result;
+	vec4i_normalize((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_lerp(struct vec4i a, struct vec4i b, mint_t p)
+{
+	struct vec4i result;
+	vec4i_lerp((mint_t *)&result, (mint_t *)&a, (mint_t *)&b, p);
+	return result;
+}
+
+/* Quaternion */
 MATHC_INLINE bool squat_is_zero(struct quat a)
 {
 	return quat_is_zero((mfloat_t *)&a);
@@ -2002,9 +3333,14 @@ MATHC_INLINE bool squat_is_near_zero(struct quat a, mfloat_t epsilon)
 	return quat_is_near_zero((mfloat_t *)&a, epsilon);
 };
 
-MATHC_INLINE bool squat_is_equal(struct quat a, struct quat b, mfloat_t epsilon)
+MATHC_INLINE bool squat_is_equal(struct quat a, struct quat b)
 {
-	return quat_is_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
+	return quat_is_equal((mfloat_t *)&a, (mfloat_t *)&b);
+};
+
+MATHC_INLINE bool squat_is_nearly_equal(struct quat a, struct quat b, mfloat_t epsilon)
+{
+	return quat_is_nearly_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
 };
 
 MATHC_INLINE struct quat squat(mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
