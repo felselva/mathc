@@ -2277,6 +2277,67 @@ mfloat_t *mat3_transpose(mfloat_t *result, mfloat_t *m)
 	return result;
 }
 
+mfloat_t *mat3_cofactor(mfloat_t *result, mfloat_t *m)
+{
+	mfloat_t cofactor[MAT3_SIZE];
+	mfloat_t m2[MAT2_SIZE];
+	m2[0] = m[4];
+	m2[1] = m[5];
+	m2[2] = m[7];
+	m2[3] = m[8];
+	cofactor[0] = mat2_determinant(m2);
+	m2[0] = m[3];
+	m2[1] = m[5];
+	m2[2] = m[6];
+	m2[3] = m[8];
+	cofactor[1] = -mat2_determinant(m2);
+	m2[0] = m[3];
+	m2[1] = m[4];
+	m2[2] = m[6];
+	m2[3] = m[7];
+	cofactor[2] = mat2_determinant(m2);
+	m2[0] = m[1];
+	m2[1] = m[2];
+	m2[2] = m[7];
+	m2[3] = m[8];
+	cofactor[3] = -mat2_determinant(m2);
+	m2[0] = m[0];
+	m2[1] = m[2];
+	m2[2] = m[6];
+	m2[3] = m[8];
+	cofactor[4] = mat2_determinant(m2);
+	m2[0] = m[0];
+	m2[1] = m[1];
+	m2[2] = m[6];
+	m2[3] = m[7];
+	cofactor[5] = -mat2_determinant(m2);
+	m2[0] = m[1];
+	m2[1] = m[2];
+	m2[2] = m[4];
+	m2[3] = m[5];
+	cofactor[6] = mat2_determinant(m2);
+	m2[0] = m[0];
+	m2[1] = m[2];
+	m2[2] = m[3];
+	m2[3] = m[5];
+	cofactor[7] = -mat2_determinant(m2);
+	m2[0] = m[0];
+	m2[1] = m[1];
+	m2[2] = m[4];
+	m2[3] = m[5];
+	cofactor[8] = mat2_determinant(m2);
+	result[0] = cofactor[0];
+	result[1] = cofactor[1];
+	result[2] = cofactor[2];
+	result[3] = cofactor[3];
+	result[4] = cofactor[4];
+	result[5] = cofactor[5];
+	result[6] = cofactor[6];
+	result[7] = cofactor[7];
+	result[8] = cofactor[8];
+	return result;
+}
+
 mfloat_t *mat3_adjugate(mfloat_t *result, mfloat_t *m)
 {
 	return result;

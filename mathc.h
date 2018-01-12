@@ -473,6 +473,7 @@ mfloat_t *mat3_assign(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat3_assign_mat2(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat3_assign_mat4(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat3_transpose(mfloat_t *result, mfloat_t *m);
+mfloat_t *mat3_cofactor(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat3_adjugate(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat3_inverse(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat3_rotation_x(mfloat_t *result, mfloat_t angle);
@@ -1876,6 +1877,12 @@ MATHC_INLINE struct mat3 *psmat3_transpose(struct mat3 *result, struct mat3 *m)
 	mat3_transpose((mfloat_t *)result, (mfloat_t *)m);
 	return result;
 };
+
+MATHC_INLINE struct mat3 *psmat3_cofactor(struct mat3 *result, struct mat3 *m)
+{
+	mat3_cofactor((mfloat_t *)result, (mfloat_t *)m);
+	return result;
+}
 
 MATHC_INLINE struct mat3 *psmat3_adjugate(struct mat3 *result, struct mat3 *m)
 {
@@ -3640,6 +3647,13 @@ MATHC_INLINE struct mat3 smat3_transpose(struct mat3 m)
 	mat3_transpose((mfloat_t *)&result, (mfloat_t *)&m);
 	return result;
 };
+
+MATHC_INLINE struct mat3 smat3_cofactor(struct mat3 m)
+{
+	struct mat3 result;
+	mat3_cofactor((mfloat_t *)&result, (mfloat_t *)&m);
+	return result;
+}
 
 MATHC_INLINE struct mat3 smat3_adjugate(struct mat3 m)
 {
