@@ -519,70 +519,70 @@ mfloat_t *mat4_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
 MATHC_INLINE bool psvec2_is_zero(struct vec2 *a)
 {
 	return vec2_is_zero((mfloat_t *)a);
-};
+}
 
 MATHC_INLINE bool psvec2_is_near_zero(struct vec2 *a, mfloat_t epsilon)
 {
 	return vec2_is_near_zero((mfloat_t *)a, epsilon);
-};
+}
 
 MATHC_INLINE bool psvec2_is_equal(struct vec2 *a, struct vec2 *b)
 {
 	return vec2_is_equal((mfloat_t *)a, (mfloat_t *)b);
-};
+}
 
 MATHC_INLINE bool psvec2_is_nearly_equal(struct vec2 *a, struct vec2 *b, mfloat_t epsilon)
 {
 	return vec2_is_nearly_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
-};
+}
 
 MATHC_INLINE struct vec2 *psvec2(struct vec2 *result, mfloat_t x, mfloat_t y)
 {
 	vec2((mfloat_t *)result, x, y);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 *psvec2_assign(struct vec2 *result, struct vec2 *a)
 {
 	vec2_assign((mfloat_t *)result, (mfloat_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 *psvec2_assign_vec2i(struct vec2 *result, struct vec2i *a)
 {
 	vec2_assign_vec2i((mfloat_t *)result, (mint_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 *psvec2_zero(struct vec2 *result)
 {
 	vec2_zero((mfloat_t *)result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 *psvec2_add(struct vec2 *result, struct vec2 *a, struct vec2 *b)
 {
 	vec2_add((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 *psvec2_subtract(struct vec2 *result, struct vec2 *a, struct vec2 *b)
 {
 	vec2_subtract((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 *psvec2_scale(struct vec2 *result, struct vec2 *a, mfloat_t scalar)
 {
 	vec2_scale((mfloat_t *)result, (mfloat_t *)a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 *psvec2_multiply(struct vec2 *result, struct vec2 *a, struct vec2 *b)
 {
 	vec2_multiply((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 *psvec2_divide(struct vec2 *result, struct vec2 *a, struct vec2 *b)
 {
@@ -726,60 +726,60 @@ MATHC_INLINE mfloat_t psvec2_distance_squared_to(struct vec2 *a, struct vec2 *b)
 MATHC_INLINE bool psvec2i_is_zero(struct vec2i *a)
 {
 	return vec2i_is_zero((mint_t *)a);
-};
+}
 
 MATHC_INLINE bool psvec2i_is_equal(struct vec2i *a, struct vec2i *b)
 {
 	return vec2i_is_equal((mint_t *)a, (mint_t *)b);
-};
+}
 
 MATHC_INLINE struct vec2i *psvec2i(struct vec2i *result, mfloat_t x, mfloat_t y)
 {
 	vec2i((mint_t *)result, x, y);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i *psvec2i_assign(struct vec2i *result, struct vec2i *a)
 {
 	vec2i_assign((mint_t *)result, (mint_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i *psvec2i_assign_vec2(struct vec2i *result, struct vec2 *a)
 {
 	vec2i_assign_vec2((mint_t *)result, (mfloat_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i *psvec2i_zero(struct vec2i *result)
 {
 	vec2i_zero((mint_t *)result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i *psvec2i_add(struct vec2i *result, struct vec2i *a, struct vec2i *b)
 {
 	vec2i_add((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i *psvec2i_subtract(struct vec2i *result, struct vec2i *a, struct vec2i *b)
 {
 	vec2i_subtract((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i *psvec2i_scale(struct vec2i *result, struct vec2i *a, mfloat_t scalar)
 {
 	vec2i_scale((mint_t *)result, (mint_t *)a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i *psvec2i_multiply(struct vec2i *result, struct vec2i *a, struct vec2i *b)
 {
 	vec2i_multiply((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i *psvec2i_divide(struct vec2i *result, struct vec2i *a, struct vec2i *b)
 {
@@ -923,76 +923,76 @@ MATHC_INLINE mfloat_t psvec2i_distance_squared_to(struct vec2i *a, struct vec2i 
 MATHC_INLINE bool psvec3_is_zero(struct vec3 *a)
 {
 	return vec3_is_zero((mfloat_t *)a);
-};
+}
 
 MATHC_INLINE bool psvec3_is_near_zero(struct vec3 *a, mfloat_t epsilon)
 {
 	return vec3_is_near_zero((mfloat_t *)a, epsilon);
-};
+}
 
 MATHC_INLINE bool psvec3_is_equal(struct vec3 *a, struct vec3 *b)
 {
 	return vec3_is_equal((mfloat_t *)a, (mfloat_t *)b);
-};
+}
 
 MATHC_INLINE bool psvec3_is_nearly_equal(struct vec3 *a, struct vec3 *b, mfloat_t epsilon)
 {
 	return vec3_is_nearly_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
-};
+}
 
 MATHC_INLINE struct vec3 *psvec3(struct vec3 *result, mfloat_t x, mfloat_t y, mfloat_t z)
 {
 	vec3((mfloat_t *)result, x, y, z);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 *psvec3_assign(struct vec3 *result, struct vec3 *a)
 {
 	vec3_assign((mfloat_t *)result, (mfloat_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 *psvec3_assign_vec3i(struct vec3 *result, struct vec3i *a)
 {
 	vec3_assign_vec3i((mfloat_t *)result, (mint_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 *psvec3_zero(struct vec3 *result)
 {
 	vec3_zero((mfloat_t *)result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 *psvec3_add(struct vec3 *result, struct vec3 *a, struct vec3 *b)
 {
 	vec3_add((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 *psvec3_subtract(struct vec3 *result, struct vec3 *a, struct vec3 *b)
 {
 	vec3_subtract((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 *psvec3_scale(struct vec3 *result, struct vec3 *a, mfloat_t scalar)
 {
 	vec3_scale((mfloat_t *)result, (mfloat_t *)a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 *psvec3_multiply(struct vec3 *result, struct vec3 *a, struct vec3 *b)
 {
 	vec3_multiply((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 *psvec3_multiply_mat3(struct vec3 *result, struct vec3 *a, struct mat3 *m)
 {
 	vec3_multiply_mat3((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)m);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 *psvec3_divide(struct vec3 *result, struct vec3 *a, struct vec3 *b)
 {
@@ -1125,66 +1125,66 @@ MATHC_INLINE mfloat_t psvec3_distance_squared_to(struct vec3 *a, struct vec3 *b)
 MATHC_INLINE bool psvec3i_is_zero(struct vec3i *a)
 {
 	return vec3i_is_zero((mint_t *)a);
-};
+}
 
 MATHC_INLINE bool psvec3i_is_equal(struct vec3i *a, struct vec3i *b)
 {
 	return vec3i_is_equal((mint_t *)a, (mint_t *)b);
-};
+}
 
 MATHC_INLINE struct vec3i *psvec3i(struct vec3i *result, mfloat_t x, mfloat_t y, mfloat_t z)
 {
 	vec3i((mint_t *)result, x, y, z);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i *psvec3i_assign(struct vec3i *result, struct vec3i *a)
 {
 	vec3i_assign((mint_t *)result, (mint_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i *psvec3i_assign_vec3(struct vec3i *result, struct vec3 *a)
 {
 	vec3i_assign_vec3((mint_t *)result, (mfloat_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i *psvec3i_zero(struct vec3i *result)
 {
 	vec3i_zero((mint_t *)result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i *psvec3i_add(struct vec3i *result, struct vec3i *a, struct vec3i *b)
 {
 	vec3i_add((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i *psvec3i_subtract(struct vec3i *result, struct vec3i *a, struct vec3i *b)
 {
 	vec3i_subtract((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i *psvec3i_scale(struct vec3i *result, struct vec3i *a, mfloat_t scalar)
 {
 	vec3i_scale((mint_t *)result, (mint_t *)a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i *psvec3i_multiply(struct vec3i *result, struct vec3i *a, struct vec3i *b)
 {
 	vec3i_multiply((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i *psvec3i_multiply_mat3(struct vec3i *result, struct vec3i *a, struct mat3 *m)
 {
 	vec3i_multiply_mat3((mint_t *)result, (mint_t *)a, (mfloat_t *)m);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i *psvec3i_divide(struct vec3i *result, struct vec3i *a, struct vec3i *b)
 {
@@ -1317,76 +1317,76 @@ MATHC_INLINE mfloat_t psvec3i_distance_squared_to(struct vec3i *a, struct vec3i 
 MATHC_INLINE bool psvec4_is_zero(struct vec4 *a)
 {
 	return vec4_is_zero((mfloat_t *)a);
-};
+}
 
 MATHC_INLINE bool psvec4_is_near_zero(struct vec4 *a, mfloat_t epsilon)
 {
 	return vec4_is_near_zero((mfloat_t *)a, epsilon);
-};
+}
 
 MATHC_INLINE bool psvec4_is_equal(struct vec4 *a, struct vec4 *b)
 {
 	return vec4_is_equal((mfloat_t *)a, (mfloat_t *)b);
-};
+}
 
 MATHC_INLINE bool psvec4_is_nearly_equal(struct vec4 *a, struct vec4 *b, mfloat_t epsilon)
 {
 	return vec4_is_nearly_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
-};
+}
 
 MATHC_INLINE struct vec4 *psvec4(struct vec4 *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
 {
 	vec4((mfloat_t *)result, x, y, z, w);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 *psvec4_assign(struct vec4 *result, struct vec4 *a)
 {
 	vec4_assign((mfloat_t *)result, (mfloat_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 *psvec4_assign_vec4i(struct vec4 *result, struct vec4i *a)
 {
 	vec4_assign_vec4i((mfloat_t *)result, (mint_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 *psvec4_zero(struct vec4 *result)
 {
 	vec4_zero((mfloat_t *)result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 *psvec4_add(struct vec4 *result, struct vec4 *a, struct vec4 *b)
 {
 	vec4_add((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 *psvec4_subtract(struct vec4 *result, struct vec4 *a, struct vec4 *b)
 {
 	vec4_subtract((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 *psvec4_scale(struct vec4 *result, struct vec4 *a, mfloat_t scalar)
 {
 	vec4_scale((mfloat_t *)result, (mfloat_t *)a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 *psvec4_multiply(struct vec4 *result, struct vec4 *a, struct vec4 *b)
 {
 	vec4_multiply((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 *psvec4_multiply_mat4(struct vec4 *result, struct vec4 *a, struct mat4 *m)
 {
 	vec4_multiply_mat4((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)m);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 *psvec4_divide(struct vec4 *result, struct vec4 *a, struct vec4 *b)
 {
@@ -1464,66 +1464,66 @@ MATHC_INLINE struct vec4 *psvec4_lerp(struct vec4 *result, struct vec4 *a, struc
 MATHC_INLINE bool psvec4i_is_zero(struct vec4i *a)
 {
 	return vec4i_is_zero((mint_t *)a);
-};
+}
 
 MATHC_INLINE bool psvec4i_is_equal(struct vec4i *a, struct vec4i *b)
 {
 	return vec4i_is_equal((mint_t *)a, (mint_t *)b);
-};
+}
 
 MATHC_INLINE struct vec4i *psvec4i(struct vec4i *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
 {
 	vec4i((mint_t *)result, x, y, z, w);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i *psvec4i_assign(struct vec4i *result, struct vec4i *a)
 {
 	vec4i_assign((mint_t *)result, (mint_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i *psvec4i_assign_vec4(struct vec4i *result, struct vec4 *a)
 {
 	vec4i_assign_vec4((mint_t *)result, (mfloat_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i *psvec4i_zero(struct vec4i *result)
 {
 	vec4i_zero((mint_t *)result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i *psvec4i_add(struct vec4i *result, struct vec4i *a, struct vec4i *b)
 {
 	vec4i_add((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i *psvec4i_subtract(struct vec4i *result, struct vec4i *a, struct vec4i *b)
 {
 	vec4i_subtract((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i *psvec4i_scale(struct vec4i *result, struct vec4i *a, mfloat_t scalar)
 {
 	vec4i_scale((mint_t *)result, (mint_t *)a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i *psvec4i_multiply(struct vec4i *result, struct vec4i *a, struct vec4i *b)
 {
 	vec4i_multiply((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i *psvec4i_multiply_mat4(struct vec4i *result, struct vec4i *a, struct mat4 *m)
 {
 	vec4i_multiply_mat4((mint_t *)result, (mint_t *)a, (mfloat_t *)m);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i *psvec4i_divide(struct vec4i *result, struct vec4i *a, struct vec4i *b)
 {
@@ -1601,58 +1601,58 @@ MATHC_INLINE struct vec4i *psvec4i_lerp(struct vec4i *result, struct vec4i *a, s
 MATHC_INLINE bool psquat_is_zero(struct quat *a)
 {
 	return quat_is_zero((mfloat_t *)a);
-};
+}
 
 MATHC_INLINE bool psquat_is_near_zero(struct quat *a, mfloat_t epsilon)
 {
 	return quat_is_near_zero((mfloat_t *)a, epsilon);
-};
+}
 
 MATHC_INLINE bool psquat_is_equal(struct quat *a, struct quat *b)
 {
 	return quat_is_equal((mfloat_t *)a, (mfloat_t *)b);
-};
+}
 
 MATHC_INLINE bool psquat_is_nearly_equal(struct quat *a, struct quat *b, mfloat_t epsilon)
 {
 	return quat_is_nearly_equal((mfloat_t *)a, (mfloat_t *)b, epsilon);
-};
+}
 
 MATHC_INLINE struct quat *psquat(struct quat *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
 {
 	quat((mfloat_t *)result, x, y, z, w);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat *psquat_assign(struct quat *result, struct quat *a)
 {
 	quat_assign((mfloat_t *)result, (mfloat_t *)a);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat *psquat_zero(struct quat *result)
 {
 	quat_zero((mfloat_t *)result);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat *psquat_null(struct quat *result)
 {
 	quat_null((mfloat_t *)result);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat *psquat_scale(struct quat *result, struct quat *a, mfloat_t scalar)
 {
 	quat_scale((mfloat_t *)result, (mfloat_t *)a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat *psquat_multiply(struct quat *result, struct quat *a, struct quat *b)
 {
 	quat_multiply((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat *psquat_divide(struct quat *result, struct quat *a, struct quat *b)
 {
@@ -1786,7 +1786,7 @@ MATHC_INLINE struct mat2 *psmat2_transpose(struct mat2 *result, struct mat2 *m)
 {
 	mat2_transpose((mfloat_t *)result, (mfloat_t *)m);
 	return result;
-};
+}
 
 MATHC_INLINE struct mat2 *psmat2_adjugate(struct mat2 *result, struct mat2 *m)
 {
@@ -1876,7 +1876,7 @@ MATHC_INLINE struct mat3 *psmat3_transpose(struct mat3 *result, struct mat3 *m)
 {
 	mat3_transpose((mfloat_t *)result, (mfloat_t *)m);
 	return result;
-};
+}
 
 MATHC_INLINE struct mat3 *psmat3_cofactor(struct mat3 *result, struct mat3 *m)
 {
@@ -1996,7 +1996,7 @@ MATHC_INLINE struct mat4 *psmat4_transpose(struct mat4 *result, struct mat4 *m)
 {
 	mat4_transpose((mfloat_t *)result, (mfloat_t *)m);
 	return result;
-};
+}
 
 MATHC_INLINE struct mat4 *psmat4_adjugate(struct mat4 *result, struct mat4 *m)
 {
@@ -2112,71 +2112,71 @@ MATHC_INLINE struct mat4 *psmat4_lerp(struct mat4 *result, struct mat4 *a, struc
 MATHC_INLINE bool svec2_is_zero(struct vec2 a)
 {
 	return vec2_is_zero((mfloat_t *)&a);
-};
+}
 
 MATHC_INLINE bool svec2_is_near_zero(struct vec2 a, mfloat_t epsilon)
 {
 	return vec2_is_near_zero((mfloat_t *)&a, epsilon);
-};
+}
 
 MATHC_INLINE bool svec2_is_equal(struct vec2 a, struct vec2 b)
 {
 	return vec2_is_equal((mfloat_t *)&a, (mfloat_t *)&b);
-};
+}
 
 MATHC_INLINE bool svec2_is_nearly_equal(struct vec2 a, struct vec2 b, mfloat_t epsilon)
 {
 	return vec2_is_nearly_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
-};
+}
 
 MATHC_INLINE struct vec2 svec2(mfloat_t x, mfloat_t y)
 {
 	struct vec2 result;
 	vec2((mfloat_t *)&result, x, y);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 svec2_assign(struct vec2 a)
 {
 	struct vec2 result;
 	vec2_assign((mfloat_t *)&result, (mfloat_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 svec2_zero(void)
 {
 	struct vec2 result;
 	vec2_zero((mfloat_t *)&result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 svec2_add(struct vec2 a, struct vec2 b)
 {
 	struct vec2 result;
 	vec2_add((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 svec2_subtract(struct vec2 a, struct vec2 b)
 {
 	struct vec2 result;
 	vec2_subtract((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 svec2_scale(struct vec2 a, mfloat_t scalar)
 {
 	struct vec2 result;
 	vec2_scale((mfloat_t *)&result, (mfloat_t *)&a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 svec2_multiply(struct vec2 a, struct vec2 b)
 {
 	struct vec2 result;
 	vec2_multiply((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2 svec2_divide(struct vec2 a, struct vec2 b)
 {
@@ -2338,68 +2338,68 @@ MATHC_INLINE mfloat_t svec2_distance_squared_to(struct vec2 a, struct vec2 b)
 MATHC_INLINE bool svec2i_is_zero(struct vec2i a)
 {
 	return vec2i_is_zero((mint_t *)&a);
-};
+}
 
 MATHC_INLINE bool svec2i_is_equal(struct vec2i a, struct vec2i b)
 {
 	return vec2i_is_equal((mint_t *)&a, (mint_t *)&b);
-};
+}
 
 MATHC_INLINE struct vec2i svec2i(mfloat_t x, mfloat_t y)
 {
 	struct vec2i result;
 	vec2i((mint_t *)&result, x, y);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i svec2i_assign(struct vec2i a)
 {
 	struct vec2i result;
 	vec2i_assign((mint_t *)&result, (mint_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i svec2i_assign_vec2(struct vec2 *a)
 {
 	struct vec2i result;
 	vec2i_assign_vec2((mint_t *)&result, (mfloat_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i svec2i_zero(void)
 {
 	struct vec2i result;
 	vec2i_zero((mint_t *)&result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i svec2i_add(struct vec2i a, struct vec2i b)
 {
 	struct vec2i result;
 	vec2i_add((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i svec2i_subtract(struct vec2i a, struct vec2i b)
 {
 	struct vec2i result;
 	vec2i_subtract((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i svec2i_scale(struct vec2i a, mfloat_t scalar)
 {
 	struct vec2i result;
 	vec2i_scale((mint_t *)&result, (mint_t *)&a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i svec2i_multiply(struct vec2i a, struct vec2i b)
 {
 	struct vec2i result;
 	vec2i_multiply((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec2i svec2i_divide(struct vec2i a, struct vec2i b)
 {
@@ -2561,85 +2561,85 @@ MATHC_INLINE mfloat_t svec2i_distance_squared_to(struct vec2i a, struct vec2i b)
 MATHC_INLINE bool svec3_is_zero(struct vec3 a)
 {
 	return vec3_is_zero((mfloat_t *)&a);
-};
+}
 
 MATHC_INLINE bool svec3_is_near_zero(struct vec3 a, mfloat_t epsilon)
 {
 	return vec3_is_near_zero((mfloat_t *)&a, epsilon);
-};
+}
 
 MATHC_INLINE bool svec3_is_equal(struct vec3 a, struct vec3 b)
 {
 	return vec3_is_equal((mfloat_t *)&a, (mfloat_t *)&b);
-};
+}
 
 MATHC_INLINE bool svec3_is_nearly_equal(struct vec3 a, struct vec3 b, mfloat_t epsilon)
 {
 	return vec3_is_nearly_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
-};
+}
 
 MATHC_INLINE struct vec3 svec3(mfloat_t x, mfloat_t y, mfloat_t z)
 {
 	struct vec3 result;
 	vec3((mfloat_t *)&result, x, y, z);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 svec3_assign(struct vec3 a)
 {
 	struct vec3 result;
 	vec3_assign((mfloat_t *)&result, (mfloat_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 svec3_assign_vec3i(struct vec3i a)
 {
 	struct vec3 result;
 	vec3_assign_vec3i((mfloat_t *)&result, (mint_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 svec3_zero(void)
 {
 	struct vec3 result;
 	vec3_zero((mfloat_t *)&result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 svec3_add(struct vec3 a, struct vec3 b)
 {
 	struct vec3 result;
 	vec3_add((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 svec3_subtract(struct vec3 a, struct vec3 b)
 {
 	struct vec3 result;
 	vec3_subtract((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 svec3_scale(struct vec3 a, mfloat_t scalar)
 {
 	struct vec3 result;
 	vec3_scale((mfloat_t *)&result, (mfloat_t *)&a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 svec3_multiply(struct vec3 a, struct vec3 b)
 {
 	struct vec3 result;
 	vec3_multiply((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 svec3_multiply_mat3(struct vec3 a, struct mat3 m)
 {
 	struct vec3 result;
 	vec3_multiply_mat3((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&m);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3 svec3_divide(struct vec3 a, struct vec3 b)
 {
@@ -2789,75 +2789,75 @@ MATHC_INLINE mfloat_t svec3_distance_squared_to(struct vec3 a, struct vec3 b)
 MATHC_INLINE bool svec3i_is_zero(struct vec3i a)
 {
 	return vec3i_is_zero((mint_t *)&a);
-};
+}
 
 MATHC_INLINE bool svec3i_is_equal(struct vec3i a, struct vec3i b)
 {
 	return vec3i_is_equal((mint_t *)&a, (mint_t *)&b);
-};
+}
 
 MATHC_INLINE struct vec3i svec3i(mint_t x, mint_t y, mint_t z)
 {
 	struct vec3i result;
 	vec3i((mint_t *)&result, x, y, z);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i svec3i_assign(struct vec3i a)
 {
 	struct vec3i result;
 	vec3i_assign((mint_t *)&result, (mint_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i svec3i_assign_vec3(struct vec3 a)
 {
 	struct vec3i result;
 	vec3i_assign_vec3((mint_t *)&result, (mfloat_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i svec3i_zero(void)
 {
 	struct vec3i result;
 	vec3i_zero((mint_t *)&result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i svec3i_add(struct vec3i a, struct vec3i b)
 {
 	struct vec3i result;
 	vec3i_add((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i svec3i_subtract(struct vec3i a, struct vec3i b)
 {
 	struct vec3i result;
 	vec3i_subtract((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i svec3i_scale(struct vec3i a, mint_t scalar)
 {
 	struct vec3i result;
 	vec3i_scale((mint_t *)&result, (mint_t *)&a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i svec3i_multiply(struct vec3i a, struct vec3i b)
 {
 	struct vec3i result;
 	vec3i_multiply((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i svec3i_multiply_mat3(struct vec3i a, struct mat3 m)
 {
 	struct vec3i result;
 	vec3i_multiply_mat3((mint_t *)&result, (mint_t *)&a, (mfloat_t *)&m);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec3i svec3i_divide(struct vec3i a, struct vec3i b)
 {
@@ -3007,85 +3007,85 @@ MATHC_INLINE mint_t svec3i_distance_squared_to(struct vec3i a, struct vec3i b)
 MATHC_INLINE bool svec4_is_zero(struct vec4 a)
 {
 	return vec4_is_zero((mfloat_t *)&a);
-};
+}
 
 MATHC_INLINE bool svec4_is_near_zero(struct vec4 a, mfloat_t epsilon)
 {
 	return vec4_is_near_zero((mfloat_t *)&a, epsilon);
-};
+}
 
 MATHC_INLINE bool svec4_is_equal(struct vec4 a, struct vec4 b)
 {
 	return vec4_is_equal((mfloat_t *)&a, (mfloat_t *)&b);
-};
+}
 
 MATHC_INLINE bool svec4_is_nearly_equal(struct vec4 a, struct vec4 b, mfloat_t epsilon)
 {
 	return vec4_is_nearly_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
-};
+}
 
 MATHC_INLINE struct vec4 svec4(mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
 {
 	struct vec4 result;
 	vec4((mfloat_t *)&result, x, y, z, w);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 svec4_assign(struct vec4 a)
 {
 	struct vec4 result;
 	vec4_assign((mfloat_t *)&result, (mfloat_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 svec4_assign_vec4i(struct vec4i a)
 {
 	struct vec4 result;
 	vec4_assign_vec4i((mfloat_t *)&result, (mint_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 svec4_zero(void)
 {
 	struct vec4 result;
 	vec4_zero((mfloat_t *)&result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 svec4_add(struct vec4 a, struct vec4 b)
 {
 	struct vec4 result;
 	vec4_add((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 svec4_subtract(struct vec4 a, struct vec4 b)
 {
 	struct vec4 result;
 	vec4_subtract((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 svec4_scale(struct vec4 a, mfloat_t scalar)
 {
 	struct vec4 result;
 	vec4_scale((mfloat_t *)&result, (mfloat_t *)&a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 svec4_multiply(struct vec4 a, struct vec4 b)
 {
 	struct vec4 result;
 	vec4_multiply((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 svec4_multiply_mat4(struct vec4 a, struct mat4 m)
 {
 	struct vec4 result;
 	vec4_multiply_mat4((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&m);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4 svec4_divide(struct vec4 a, struct vec4 b)
 {
@@ -3175,75 +3175,75 @@ MATHC_INLINE struct vec4 svec4_lerp(struct vec4 a, struct vec4 b, mfloat_t p)
 MATHC_INLINE bool svec4i_is_zero(struct vec4i a)
 {
 	return vec4i_is_zero((mint_t *)&a);
-};
+}
 
 MATHC_INLINE bool svec4i_is_equal(struct vec4i a, struct vec4i b)
 {
 	return vec4i_is_equal((mint_t *)&a, (mint_t *)&b);
-};
+}
 
 MATHC_INLINE struct vec4i svec4i(mint_t x, mint_t y, mint_t z, mint_t w)
 {
 	struct vec4i result;
 	vec4i((mint_t *)&result, x, y, z, w);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i svec4i_assign(struct vec4i a)
 {
 	struct vec4i result;
 	vec4i_assign((mint_t *)&result, (mint_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i svec4i_assign_vec4(struct vec4 a)
 {
 	struct vec4i result;
 	vec4i_assign_vec4((mint_t *)&result, (mfloat_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i svec4i_zero(void)
 {
 	struct vec4i result;
 	vec4i_zero((mint_t *)&result);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i svec4i_add(struct vec4i a, struct vec4i b)
 {
 	struct vec4i result;
 	vec4i_add((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i svec4i_subtract(struct vec4i a, struct vec4i b)
 {
 	struct vec4i result;
 	vec4i_subtract((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i svec4i_scale(struct vec4i a, mint_t scalar)
 {
 	struct vec4i result;
 	vec4i_scale((mint_t *)&result, (mint_t *)&a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i svec4i_multiply(struct vec4i a, struct vec4i b)
 {
 	struct vec4i result;
 	vec4i_multiply((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i svec4i_multiply_mat4(struct vec4i a, struct mat4 m)
 {
 	struct vec4i result;
 	vec4i_multiply_mat4((mint_t *)&result, (mint_t *)&a, (mfloat_t *)&m);
 	return result;
-};
+}
 
 MATHC_INLINE struct vec4i svec4i_divide(struct vec4i a, struct vec4i b)
 {
@@ -3333,64 +3333,64 @@ MATHC_INLINE struct vec4i svec4i_lerp(struct vec4i a, struct vec4i b, mint_t p)
 MATHC_INLINE bool squat_is_zero(struct quat a)
 {
 	return quat_is_zero((mfloat_t *)&a);
-};
+}
 
 MATHC_INLINE bool squat_is_near_zero(struct quat a, mfloat_t epsilon)
 {
 	return quat_is_near_zero((mfloat_t *)&a, epsilon);
-};
+}
 
 MATHC_INLINE bool squat_is_equal(struct quat a, struct quat b)
 {
 	return quat_is_equal((mfloat_t *)&a, (mfloat_t *)&b);
-};
+}
 
 MATHC_INLINE bool squat_is_nearly_equal(struct quat a, struct quat b, mfloat_t epsilon)
 {
 	return quat_is_nearly_equal((mfloat_t *)&a, (mfloat_t *)&b, epsilon);
-};
+}
 
 MATHC_INLINE struct quat squat(mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
 {
 	struct quat result;
 	quat((mfloat_t *)&result, x, y, z, w);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat squat_assign(struct quat a)
 {
 	struct quat result;
 	quat_assign((mfloat_t *)&result, (mfloat_t *)&a);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat squat_zero(void)
 {
 	struct quat result;
 	quat_zero((mfloat_t *)&result);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat squat_null(void)
 {
 	struct quat result;
 	quat_null((mfloat_t *)&result);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat squat_scale(struct quat a, mfloat_t scalar)
 {
 	struct quat result;
 	quat_scale((mfloat_t *)&result, (mfloat_t *)&a, scalar);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat squat_multiply(struct quat a, struct quat b)
 {
 	struct quat result;
 	quat_multiply((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
 	return result;
-};
+}
 
 MATHC_INLINE struct quat squat_divide(struct quat a, struct quat b)
 {
@@ -3542,7 +3542,7 @@ MATHC_INLINE struct mat2 smat2_transpose(struct mat2 m)
 	struct mat2 result;
 	mat2_transpose((mfloat_t *)&result, (mfloat_t *)&m);
 	return result;
-};
+}
 
 MATHC_INLINE struct mat2 smat2_adjugate(struct mat2 m)
 {
@@ -3646,7 +3646,7 @@ MATHC_INLINE struct mat3 smat3_transpose(struct mat3 m)
 	struct mat3 result;
 	mat3_transpose((mfloat_t *)&result, (mfloat_t *)&m);
 	return result;
-};
+}
 
 MATHC_INLINE struct mat3 smat3_cofactor(struct mat3 m)
 {
@@ -3785,7 +3785,7 @@ MATHC_INLINE struct mat4 smat4_transpose(struct mat4 m)
 	struct mat4 result;
 	mat4_transpose((mfloat_t *)&result, (mfloat_t *)&m);
 	return result;
-};
+}
 
 MATHC_INLINE struct mat4 smat4_adjugate(struct mat4 m)
 {
