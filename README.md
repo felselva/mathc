@@ -37,6 +37,12 @@ Or include `mathc.c` in a source file. This second approach is more useful and f
 #include <mathc.c>
 ```
 
+## Integer Type
+
+By default, `mint_t` is a `int32_t` if the header `stdint.h` is available. If the header `stdint.h` is not avaliable, disabled by defining `MATHC_NO_STDINT`, `mint_t` is a `int`. This can be changed by predefining `mint_t` as a desired type.
+
+Some operations integer vector will use float-point internally, then assign the float-point value back to the integer vector. The value assigned is rounded with `MVECI_ROUND`. By default, `MVECI_ROUND` is `MROUND`. This can be changed by predefining `MVECI_ROUND` to `MFLOOR` or `MCEIL`.
+
 ## Float-Point Type
 
 By default, `mfloat_t` is a `float`. This can be changed by predefining `mfloat_t` as a desired type.
@@ -47,10 +53,10 @@ By default, MATHC will use single-precision internally. This can be changed by p
 
 ## Types
 
-By default, MATHC types are can be declared as `mfloat_t` arrays or structures:
+By default, types are can be declared as `mfloat_t` arrays or `mint_t` arrays, or structures:
 
 ```c
-/* As arrays */
+/* As float arrays */
 mfloat_t texture_coordinates[VEC2_SIZE];
 mfloat_t position[VEC3_SIZE];
 mfloat_t rgba[VEC4_SIZE];
@@ -58,30 +64,30 @@ mfloat_t rotation[QUAT_SIZE];
 mfloat_t rotation_mat[MAT3_SIZE];
 mfloat_t model_mat[MAT4_SIZE];
 
-/* As structures */
+/* As float structures */
 struct vec2 texture_coordinates;
 struct vec3 position;
 struct vec4 rgba;
 struct quat rotation;
 struct mat3 rotation_mat;
 struct mat4 model_mat;
-```
 
-Note that the structures are composed of a union. This means that the members can be still accessed as a `mfloat_t` array:
+/* As integer arrays */
+mint_t texture_coordinates[VEC2_SIZE];
+mint_t position[VEC3_SIZE];
+mint_t rgba[VEC4_SIZE];
 
-```c
-struct vec3 position;
-
-printf("Position (Address: %p) = {%f, %f, %f}\n",
-	position.v,
-	position.v[0], position.v[1], position.v[2])
+/* As integer structures */
+struct vec2i texture_coordinates;
+struct vec3i position;
+struct vec4i rgba;
 ```
 
 By defining `MATHC_NO_STRUCTURES`, structure types will not defined.
 
 ## Functions
 
-By default, MATHC will declare functions that take `mfloat_t` array, structure values, and structure pointers as arguments:
+By default, MATHC will declare functions that take `mfloat_t` array or `mint_t` array, structure values, and structure pointers as arguments:
 
 ```c
 /* As array */
@@ -102,6 +108,8 @@ position = svec2_add(position, offset);
 psvec2_add(&position, &position, &offset);
 ```
 
+Functions that take structure as value have a prefix `s`. Functions that take structure pointers have a prefix `ps`.
+
 By defining `MATHC_NO_STRUCT_FUNCTIONS`, functions that take structure as value will not be defined.
 
 By defining `MATHC_NO_POINTER_STRUCT_FUNCTIONS`, functions that take structure pointers will not be defined.
@@ -113,10 +121,6 @@ The easing functions are an implementation of the functions presented in [easing
 Easing functions take a value inside the range `0.0-1.0` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range (Check the [easings.net](http://easings.net/) to see those functions).
 
 By defining `MATHC_NO_EASING_FUNCTIONS`, the easing functions will not be defined.
-
-## Contributing
-
-Check the file `CONTRIBUTING.md` for contribution rules and contributions of interest.
 
 ## LICENSE
 
