@@ -2073,7 +2073,7 @@ mfloat_t *mat2_transpose(mfloat_t *result, mfloat_t *m)
 	return result;
 }
 
-mfloat_t *mat2_adjugate(mfloat_t *result, mfloat_t *m)
+mfloat_t *mat2_cofactor(mfloat_t *result, mfloat_t *m)
 {
 	mfloat_t adjugate[MAT2_SIZE];
 	adjugate[0] = m[3];
@@ -2092,7 +2092,7 @@ mfloat_t *mat2_inverse(mfloat_t *result, mfloat_t *m)
 	mfloat_t inverse[MAT2_SIZE];
 	mfloat_t det = mat2_determinant(m);
 	if (!nearly_equal(det, MFLOAT_C(0.0), MFLT_EPSILON)) {
-		mat2_adjugate(inverse, m);
+		mat2_cofactor(inverse, m);
 		mat2_scale(inverse, inverse, MFLOAT_C(1.0) / det);
 		result[0] = inverse[0];
 		result[1] = inverse[1];
