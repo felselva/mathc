@@ -140,6 +140,15 @@ mfloat_t *vec2_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec2_multiply_mat2(mfloat_t *result, mfloat_t *a, mfloat_t *m)
+{
+	mfloat_t x = a[0];
+	mfloat_t y = a[1];
+	result[0] = m[0] * x + m[2] * y;
+	result[1] = m[1] * x + m[3] * y;
+	return result;
+}
+
 mfloat_t *vec2_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = a[0] / b[0];
@@ -413,6 +422,15 @@ mint_t *vec2i_multiply(mint_t *result, mint_t *a, mint_t *b)
 {
 	result[0] = a[0] * b[0];
 	result[1] = a[1] * b[1];
+	return result;
+}
+
+mfloat_t *vec2i_multiply_mat2(mfloat_t *result, mfloat_t *a, mfloat_t *m)
+{
+	mfloat_t x = a[0];
+	mfloat_t y = a[1];
+	result[0] = MVECI_ROUND(m[0] * x + m[2] * y);
+	result[1] = MVECI_ROUND(m[1] * x + m[3] * y);
 	return result;
 }
 
@@ -723,9 +741,9 @@ mfloat_t *vec3_multiply_mat3(mfloat_t *result, mfloat_t *a, mfloat_t *m)
 	mfloat_t x = a[0];
 	mfloat_t y = a[1];
 	mfloat_t z = a[2];
-	result[0] = MVECI_ROUND((m[0] * x) + (m[4] * y) + (m[8] * z));
-	result[1] = MVECI_ROUND((m[12] * x) + (m[1] * y) + (m[5] * z));
-	result[2] = MVECI_ROUND((m[9] * x) + (m[13] * y) + (m[2] * z));
+	result[0] = m[0] * x + m[3] * y + m[6] * z;
+	result[1] = m[1] * x + m[4] * y + m[7] * z;
+	result[2] = m[2] * x + m[5] * y + m[8] * z;
 	return result;
 }
 
@@ -1006,9 +1024,9 @@ mint_t *vec3i_multiply_mat3(mint_t *result, mint_t *a, mfloat_t *b)
 	mfloat_t x = a[0];
 	mfloat_t y = a[1];
 	mfloat_t z = a[2];
-	result[0] = MVECI_ROUND(((mfloat_t)b[0] * x) + ((mfloat_t)b[4] * y) + ((mfloat_t)b[8] * z));
-	result[1] = MVECI_ROUND(((mfloat_t)b[12] * x) + ((mfloat_t)b[1] * y) + ((mfloat_t)b[5] * z));
-	result[2] = MVECI_ROUND(((mfloat_t)b[9] * x) + ((mfloat_t)b[13] * y) + ((mfloat_t)b[2] * z));
+	result[0] = MVECI_ROUND((mfloat_t)b[0] * x + (mfloat_t)b[3] * y + (mfloat_t)b[6] * z);
+	result[1] = MVECI_ROUND((mfloat_t)b[1] * x + (mfloat_t)b[4] * y + (mfloat_t)b[7] * z);
+	result[2] = MVECI_ROUND((mfloat_t)b[2] * x + (mfloat_t)b[5] * y + (mfloat_t)b[8] * z);
 	return result;
 }
 
@@ -1316,10 +1334,10 @@ mfloat_t *vec4_multiply_mat4(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	mfloat_t y = a[1];
 	mfloat_t z = a[2];
 	mfloat_t w = a[3];
-	result[0] = (b[0] * x) + (b[4] * y) + (b[8] * z) + (b[12] * w);
-	result[1] = (b[1] * x) + (b[5] * y) + (b[9] * z) + (b[13] * w);
-	result[2] = (b[2] * x) + (b[6] * y) + (b[10] * z) + (b[14] * w);
-	result[3] = (b[3] * x) + (b[7] * y) + (b[11] * z) + (b[15] * w);
+	result[0] = b[0] * x + b[4] * y + b[8] * z + b[12] * w;
+	result[1] = b[1] * x + b[5] * y + b[9] * z + b[13] * w;
+	result[2] = b[2] * x + b[6] * y + b[10] * z + b[14] * w;
+	result[3] = b[3] * x + b[7] * y + b[11] * z + b[15] * w;
 	return result;
 }
 
@@ -1544,10 +1562,10 @@ mint_t *vec4i_multiply_mat4(mint_t *result, mint_t *a, mfloat_t *m)
 	mfloat_t y = a[1];
 	mfloat_t z = a[2];
 	mfloat_t w = a[3];
-	result[0] = MVECI_ROUND(((mfloat_t)m[0] * x) + ((mfloat_t)m[4] * y) + ((mfloat_t)m[8] * z) + ((mfloat_t)m[12] * w));
-	result[1] = MVECI_ROUND(((mfloat_t)m[1] * x) + ((mfloat_t)m[5] * y) + ((mfloat_t)m[9] * z) + ((mfloat_t)m[13] * w));
-	result[2] = MVECI_ROUND(((mfloat_t)m[2] * x) + ((mfloat_t)m[6] * y) + ((mfloat_t)m[10] * z) + ((mfloat_t)m[14] * w));
-	result[3] = MVECI_ROUND(((mfloat_t)m[3] * x) + ((mfloat_t)m[7] * y) + ((mfloat_t)m[11] * z) + ((mfloat_t)m[15] * w));
+	result[0] = MVECI_ROUND((mfloat_t)m[0] * x + (mfloat_t)m[4] * y + (mfloat_t)m[8] * z + (mfloat_t)m[12] * w);
+	result[1] = MVECI_ROUND((mfloat_t)m[1] * x + (mfloat_t)m[5] * y + (mfloat_t)m[9] * z + (mfloat_t)m[13] * w);
+	result[2] = MVECI_ROUND((mfloat_t)m[2] * x + (mfloat_t)m[6] * y + (mfloat_t)m[10] * z + (mfloat_t)m[14] * w);
+	result[3] = MVECI_ROUND((mfloat_t)m[3] * x + (mfloat_t)m[7] * y + (mfloat_t)m[11] * z + (mfloat_t)m[15] * w);
 	return result;
 }
 
