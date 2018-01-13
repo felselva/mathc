@@ -2269,7 +2269,7 @@ MATHC_INLINE struct vec2 svec2_min(struct vec2 a, struct vec2 b)
 MATHC_INLINE struct vec2 svec2_clamp(struct vec2 a, struct vec2 lower, struct vec2 higher)
 {
 	struct vec2 result;
-	vec3_clamp((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&lower, (mfloat_t *)&higher);
+	vec2_clamp((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&lower, (mfloat_t *)&higher);
 	return result;
 }
 
