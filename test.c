@@ -46,7 +46,6 @@ void printf_bool_test(struct cerror *error, char *msg, bool e, bool r)
 	} else {
 		printf("  Actual false\t");
 	}
-
 	if (e == r) {
 		error->passed = error->passed + 1;
 		printf("~passed~\n\n");
@@ -178,6 +177,73 @@ void printf_4f_test(struct cerror *error, char *msg, float e1, float e2, float e
 
 void vector2_tests(struct cerror *error)
 {
+	struct vec2 v;
+	struct mat2 m;
+	printf_bool_test(error, "Test `vec2_is_zero`", true, svec2_is_zero(svec2(0.0f, 0.0f)));
+	printf_bool_test(error, "Test `vec2_is_near_zero`", true, svec2_is_near_zero(svec2(0.0f, 0.0f), MFLT_EPSILON));
+	printf_bool_test(error, "Test `vec2_is_equal`", true, svec2_is_equal(svec2(1.0f / 3.0f, 7.0f / 3.0f), svec2(1.0f / 3.0f, 7.0f / 3.0f)));
+	printf_bool_test(error, "Test `vec2_is_nearly_equal`", true, svec2_is_nearly_equal(svec2(1.0f / 3.0f, 7.0f / 3.0f), svec2(1.0f / 3.0f, 7.0f / 3.0f), MFLT_EPSILON));
+	v = svec2(2.0f, 1.0f);
+	printf_2f_test(error, "Test `vec2`", 2.0f, 1.0f, v.x, v.y);
+	v = svec2_assign(svec2(2.0f, 1.0f));
+	printf_2f_test(error, "Test `vec2_assign`", 2.0f, 1.0f, v.x, v.y);
+	v = svec2_zero();
+	printf_2f_test(error, "Test `vec2_zero`", 0.0f, 0.0f, v.x, v.y);
+	v = svec2_add(svec2(3.0f, 1.0f), svec2(1.0f, 7.0f));
+	printf_2f_test(error, "Test `vec2_add`", 4.0f, 8.0f, v.x, v.y);
+	v = svec2_subtract(svec2(1.0f, 20.0f), svec2(3.0f, 7.0f));
+	printf_2f_test(error, "Test `vec2_subtract`", -2.0f, 13.0f, v.x, v.y);
+	v = svec2_scale(svec2(1.0f, 3.0f), 3.0f);
+	printf_2f_test(error, "Test `vec2_scale`", 3.0f, 9.0f, v.x, v.y);
+	v = svec2_multiply(svec2(1.0f, 3.0f), svec2(3.0f, 5.0f));
+	printf_2f_test(error, "Test `vec2_multiply`", 3.0f, 15.0f, v.x, v.y);
+	m.m11 = 0.8f;
+	m.m12 = 0.7f;
+	m.m21 = 0.5f;
+	m.m22 = 0.3f;
+	v = svec2_multiply_mat2(svec2(3.0f, 5.0f), m);
+	printf_2f_test(error, "Test `vec2_multiply_mat2`", 5.9f, 3.0f, v.x, v.y);
+	v = svec2_divide(svec2(1.0f, 3.0f), svec2(3.0f, 5.0f));
+	printf_2f_test(error, "Test `vec2_divide`", 0.3333333333f, 0.6f, v.x, v.y);
+	v = svec2_negative(svec2(3.0f, 5.0f));
+	printf_2f_test(error, "Test `vec2_negative`", -3.0f, -5.0f, v.x, v.y);
+	v = svec2_inverse(svec2(3.0f, 5.0f));
+	printf_2f_test(error, "Test `vec2_inverse`", 0.3333333333f, 0.2f, v.x, v.y);
+	v = svec2_abs(svec2(-7.0f, -3.0f));
+	printf_2f_test(error, "Test `vec2_abs`", 7.0, 3.0f, v.x, v.y);
+	v = svec2_floor(svec2(-7.2f, -3.7f));
+	printf_2f_test(error, "Test `vec2_floor`", -8.0, -4.0f, v.x, v.y);
+	v = svec2_ceil(svec2(-7.2f, -3.7f));
+	printf_2f_test(error, "Test `vec2_ceil`", -7.0, -3.0f, v.x, v.y);
+	v = svec2_round(svec2(-7.2f, -3.7f));
+	printf_2f_test(error, "Test `vec2_round`", -7.0, -4.0f, v.x, v.y);
+	v = svec2_max(svec2(-7.2f, -3.7f), svec2(1.0f, 3.7f));
+	printf_2f_test(error, "Test `vec2_max`", 1.0f, 3.7f, v.x, v.y);
+	v = svec2_min(svec2(-7.2f, -3.7f), svec2(1.0f, 3.7f));
+	printf_2f_test(error, "Test `vec2_min`", -7.2f, -3.7f, v.x, v.y);
+	v = svec2_clamp(svec2(-9.1f, 8.7f), svec2(-1.3f, 2.7f), svec2(3.3f, 5.7f));
+	printf_2f_test(error, "Test `vec2_clamp`", -1.3f, 5.7f, v.x, v.y);
+	v = svec2_normalize(svec2(1.0f, 1.0f));
+	printf_2f_test(error, "Test `vec2_normalize`", 0.7071067812f, 0.7071067812f, v.x, v.y);
+	v = svec2_slide(svec2(1.0f, 0.0f), svec2(-0.7071067812f, -0.7071067812f));
+	printf_2f_test(error, "Test `vec2_slide`", 0.5f, -0.5f, v.x, v.y);
+	v = svec2_reflect(svec2(1.0f, 0.0f), svec2(-0.7071067812f, -0.7071067812f));
+	printf_2f_test(error, "Test `vec2_reflect`", 0.0f, -1.0f, v.x, v.y);
+	v = svec2_tangent(svec2(1.0f, 0.0f));
+	printf_2f_test(error, "Test `vec2_tangent`", 0.0f, -1.0f, v.x, v.y);
+	v = svec2_rotate(svec2(1.0f, 0.0f), to_radians(45.0f));
+	printf_2f_test(error, "Test `vec2_rotate`", 0.7071067812f, 0.7071067812f, v.x, v.y);
+	v = svec2_lerp(svec2(3.0f, 3.0f), svec2(9.0f, 1.0f), 0.5f);
+	printf_2f_test(error, "Test `vec2_lerp`", 6.0f, 2.0f, v.x, v.y);
+	v = svec2_bezier3(svec2(3.0f, 3.0f), svec2(9.0f, 1.0f), svec2(14.0f, 7.0f), 0.5f);
+	printf_2f_test(error, "Test `vec2_bezier3`", 8.75f, 3.0f, v.x, v.y);
+	v = svec2_bezier4(svec2(3.0f, 3.0f), svec2(9.0f, 1.0f), svec2(14.0f, 7.0f), svec2(21.0f, 9.0f), 0.5f);
+	printf_2f_test(error, "Test `vec2_bezier4`", 11.625f, 4.5f, v.x, v.y);
+	printf_1f_test(error, "Test `vec2_dot`", 13.0f, svec2_dot(svec2(3.0f, 2.0f), svec2(1.0f, 5.0f)));
+	printf_1f_test(error, "Test `vec2_angle`", to_radians(45.0f), svec2_angle(svec2(2.0f, 2.0f)));
+	printf_1f_test(error, "Test `vec2_length`", 2.8284271247f, svec2_length(svec2(2.0f, 2.0f)));
+	printf_1f_test(error, "Test `vec2_length_squared`", 5.6568542495f, svec2_distance_to(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
+	printf_1f_test(error, "Test `vec2_distance_to`", 32.0f, svec2_distance_squared_to(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
 }
 
 void vector3_tests(struct cerror *error)
