@@ -235,6 +235,7 @@ mfloat_t *vec2_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar);
 mfloat_t *vec2_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec2_multiply_mat2(mfloat_t *result, mfloat_t *a, mfloat_t *m);
 mfloat_t *vec2_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_negative(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec2_inverse(mfloat_t *result, mfloat_t *a);
@@ -271,6 +272,7 @@ mint_t *vec2i_add(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_subtract(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_scale(mint_t *result, mint_t *a, mfloat_t scalar);
 mint_t *vec2i_multiply(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec2i_multiply_mat2(mint_t *result, mint_t *a, mfloat_t *m);
 mint_t *vec2i_divide(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_negative(mint_t *result, mint_t *a);
 mint_t *vec2i_inverse(mint_t *result, mint_t *a);
@@ -584,6 +586,12 @@ MATHC_INLINE struct vec2 *psvec2_multiply(struct vec2 *result, struct vec2 *a, s
 	return result;
 }
 
+MATHC_INLINE struct vec2 *psvec2_multiply_mat2(struct vec2 *result, struct vec2 *a, struct mat2 *m)
+{
+	vec2_multiply_mat2((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)m);
+	return result;
+}
+
 MATHC_INLINE struct vec2 *psvec2_divide(struct vec2 *result, struct vec2 *a, struct vec2 *b)
 {
 	vec2_divide((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
@@ -778,6 +786,12 @@ MATHC_INLINE struct vec2i *psvec2i_scale(struct vec2i *result, struct vec2i *a, 
 MATHC_INLINE struct vec2i *psvec2i_multiply(struct vec2i *result, struct vec2i *a, struct vec2i *b)
 {
 	vec2i_multiply((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_multiply_mat2(struct vec2i *result, struct vec2i *a, struct mat2 *m)
+{
+	vec2i_multiply_mat2((mint_t *)result, (mint_t *)a, (mfloat_t *)m);
 	return result;
 }
 
@@ -2178,6 +2192,13 @@ MATHC_INLINE struct vec2 svec2_multiply(struct vec2 a, struct vec2 b)
 	return result;
 }
 
+MATHC_INLINE struct vec2 svec2_multiply_mat2(struct vec2 a, struct mat2 m)
+{
+	struct vec2 result;
+	vec2_multiply_mat2((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&m);
+	return result;
+}
+
 MATHC_INLINE struct vec2 svec2_divide(struct vec2 a, struct vec2 b)
 {
 	struct vec2 result;
@@ -2398,6 +2419,13 @@ MATHC_INLINE struct vec2i svec2i_multiply(struct vec2i a, struct vec2i b)
 {
 	struct vec2i result;
 	vec2i_multiply((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_multiply_mat2(struct vec2i a, struct mat2 m)
+{
+	struct vec2i result;
+	vec2i_multiply_mat2((mint_t *)&result, (mint_t *)&a, (mfloat_t *)&m);
 	return result;
 }
 
