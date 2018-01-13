@@ -425,7 +425,7 @@ mint_t *vec2i_multiply(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
-mfloat_t *vec2i_multiply_mat2(mfloat_t *result, mfloat_t *a, mfloat_t *m)
+mint_t *vec2i_multiply_mat2(mint_t *result, mint_t *a, mfloat_t *m)
 {
 	mfloat_t x = a[0];
 	mfloat_t y = a[1];
@@ -465,29 +465,35 @@ mint_t *vec2i_inverse(mint_t *result, mint_t *a)
 
 mint_t *vec2i_abs(mint_t *result, mint_t *a)
 {
-	result[0] = MABS(a[0]);
-	result[1] = MABS(a[1]);
+	result[0] = a[0];
+	if (result[0] < 0) {
+		result[0] = -result[0];
+	}
+	result[1] = a[1];
+	if (result[1] < 0) {
+		result[1] = -result[1];
+	}
 	return result;
 }
 
 mint_t *vec2i_floor(mint_t *result, mfloat_t *a)
 {
-	result[0] = MFLOOR(a[0]);
-	result[1] = MFLOOR(a[1]);
+	result[0] = MFLOOR((mfloat_t)a[0]);
+	result[1] = MFLOOR((mfloat_t)a[1]);
 	return result;
 }
 
 mint_t *vec2i_ceil(mint_t *result, mfloat_t *a)
 {
-	result[0] = MCEIL(a[0]);
-	result[1] = MCEIL(a[1]);
+	result[0] = MCEIL((mfloat_t)a[0]);
+	result[1] = MCEIL((mfloat_t)a[1]);
 	return result;
 }
 
 mint_t *vec2i_round(mint_t *result, mfloat_t *a)
 {
-	result[0] = MROUND(a[0]);
-	result[1] = MROUND(a[1]);
+	result[0] = MROUND((mfloat_t)a[0]);
+	result[1] = MROUND((mfloat_t)a[1]);
 	return result;
 }
 
@@ -1068,33 +1074,42 @@ mint_t *vec3i_inverse(mint_t *result, mint_t *a)
 
 mint_t *vec3i_abs(mint_t *result, mint_t *a)
 {
-	result[0] = MABS(a[0]);
-	result[1] = MABS(a[1]);
-	result[2] = MABS(a[2]);
+	result[0] = a[0];
+	if (result[0] < 0) {
+		result[0] = -result[0];
+	}
+	result[1] = a[1];
+	if (result[1] < 0) {
+		result[1] = -result[1];
+	}
+	result[2] = a[2];
+	if (result[2] < 0) {
+		result[2] = -result[2];
+	}
 	return result;
 }
 
 mint_t *vec3i_floor(mint_t *result, mfloat_t *a)
 {
-	result[0] = MFLOOR(a[0]);
-	result[1] = MFLOOR(a[1]);
-	result[2] = MFLOOR(a[2]);
+	result[0] = MFLOOR((mfloat_t)a[0]);
+	result[1] = MFLOOR((mfloat_t)a[1]);
+	result[2] = MFLOOR((mfloat_t)a[2]);
 	return result;
 }
 
 mint_t *vec3i_ceil(mint_t *result, mfloat_t *a)
 {
-	result[0] = MCEIL(a[0]);
-	result[1] = MCEIL(a[1]);
-	result[2] = MCEIL(a[2]);
+	result[0] = MCEIL((mfloat_t)a[0]);
+	result[1] = MCEIL((mfloat_t)a[1]);
+	result[2] = MCEIL((mfloat_t)a[2]);
 	return result;
 }
 
 mint_t *vec3i_round(mint_t *result, mfloat_t *a)
 {
-	result[0] = MROUND(a[0]);
-	result[1] = MROUND(a[1]);
-	result[2] = MROUND(a[2]);
+	result[0] = MROUND((mfloat_t)a[0]);
+	result[1] = MROUND((mfloat_t)a[1]);
+	result[2] = MROUND((mfloat_t)a[2]);
 	return result;
 }
 
@@ -1614,28 +1629,39 @@ mint_t *vec4i_inverse(mint_t *result, mint_t *a)
 
 mint_t *vec4i_abs(mint_t *result, mint_t *a)
 {
-	result[0] = MABS(a[0]);
-	result[1] = MABS(a[1]);
-	result[2] = MABS(a[2]);
-	result[3] = MABS(a[3]);
-	return result;
+	result[0] = a[0];
+	if (result[0] < 0) {
+		result[0] = -result[0];
+	}
+	result[1] = a[1];
+	if (result[1] < 0) {
+		result[1] = -result[1];
+	}
+	result[2] = a[2];
+	if (result[2] < 0) {
+		result[2] = -result[2];
+	}
+	result[3] = a[3];
+	if (result[3] < 0) {
+		result[3] = -result[3];
+	}return result;
 }
 
 mint_t *vec4i_floor(mint_t *result, mfloat_t *a)
 {
-	result[0] = MFLOOR(a[0]);
-	result[1] = MFLOOR(a[1]);
-	result[2] = MFLOOR(a[2]);
-	result[3] = MFLOOR(a[3]);
+	result[0] = MFLOOR((mfloat_t)a[0]);
+	result[1] = MFLOOR((mfloat_t)a[1]);
+	result[2] = MFLOOR((mfloat_t)a[2]);
+	result[3] = MFLOOR((mfloat_t)a[3]);
 	return result;
 }
 
 mint_t *vec4i_ceil(mint_t *result, mfloat_t *a)
 {
-	result[0] = MCEIL(a[0]);
-	result[1] = MCEIL(a[1]);
-	result[2] = MCEIL(a[2]);
-	result[3] = MCEIL(a[3]);
+	result[0] = MCEIL((mfloat_t)a[0]);
+	result[1] = MCEIL((mfloat_t)a[1]);
+	result[2] = MCEIL((mfloat_t)a[2]);
+	result[3] = MCEIL((mfloat_t)a[3]);
 	return result;
 }
 
