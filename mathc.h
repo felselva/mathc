@@ -265,8 +265,8 @@ mfloat_t vec2_dot(mfloat_t *a, mfloat_t *b);
 mfloat_t vec2_angle(mfloat_t *a);
 mfloat_t vec2_length(mfloat_t *a);
 mfloat_t vec2_length_squared(mfloat_t *a);
-mfloat_t vec2_distance_to(mfloat_t *a, mfloat_t *b);
-mfloat_t vec2_distance_squared_to(mfloat_t *a, mfloat_t *b);
+mfloat_t vec2_distance(mfloat_t *a, mfloat_t *b);
+mfloat_t vec2_distance_squared(mfloat_t *a, mfloat_t *b);
 
 /* Vector 2D Integer */
 bool vec2i_is_zero(mint_t *a);
@@ -305,8 +305,8 @@ mfloat_t vec2i_dot(mint_t *a, mint_t *b);
 mfloat_t vec2i_angle(mint_t *a);
 mfloat_t vec2i_length(mint_t *a);
 mfloat_t vec2i_length_squared(mint_t *a);
-mfloat_t vec2i_distance_to(mint_t *a, mint_t *b);
-mfloat_t vec2i_distance_squared_to(mint_t *a, mint_t *b);
+mfloat_t vec2i_distance(mint_t *a, mint_t *b);
+mfloat_t vec2i_distance_squared(mint_t *a, mint_t *b);
 
 /* Vector 3D */
 bool vec3_is_zero(mfloat_t *a);
@@ -345,8 +345,8 @@ mfloat_t *vec3_bezier4(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t *c, 
 mfloat_t vec3_dot(mfloat_t *a, mfloat_t *b);
 mfloat_t vec3_length(mfloat_t *a);
 mfloat_t vec3_length_squared(mfloat_t *a);
-mfloat_t vec3_distance_to(mfloat_t *a, mfloat_t *b);
-mfloat_t vec3_distance_squared_to(mfloat_t *a, mfloat_t *b);
+mfloat_t vec3_distance(mfloat_t *a, mfloat_t *b);
+mfloat_t vec3_distance_squared(mfloat_t *a, mfloat_t *b);
 
 /* Vector 3D Integer */
 bool vec3i_is_zero(mint_t *a);
@@ -383,8 +383,8 @@ mint_t *vec3i_bezier4(mint_t *result, mint_t *a, mint_t *b, mint_t *c, mint_t *d
 mfloat_t vec3i_dot(mint_t *a, mint_t *b);
 mfloat_t vec3i_length(mint_t *a);
 mfloat_t vec3i_length_squared(mint_t *a);
-mfloat_t vec3i_distance_to(mint_t *a, mint_t *b);
-mfloat_t vec3i_distance_squared_to(mint_t *a, mint_t *b);
+mfloat_t vec3i_distance(mint_t *a, mint_t *b);
+mfloat_t vec3i_distance_squared(mint_t *a, mint_t *b);
 
 /* Vector 4D */
 bool vec4_is_zero(mfloat_t *a);
@@ -770,14 +770,14 @@ MATHC_INLINE mfloat_t psvec2_length(struct vec2 *a)
 	return vec2_length((mfloat_t *)a);
 }
 
-MATHC_INLINE mfloat_t psvec2_distance_to(struct vec2 *a, struct vec2 *b)
+MATHC_INLINE mfloat_t psvec2_distance(struct vec2 *a, struct vec2 *b)
 {
-	return vec2_distance_to((mfloat_t *)a, (mfloat_t *)b);
+	return vec2_distance((mfloat_t *)a, (mfloat_t *)b);
 }
 
-MATHC_INLINE mfloat_t psvec2_distance_squared_to(struct vec2 *a, struct vec2 *b)
+MATHC_INLINE mfloat_t psvec2_distance_squared(struct vec2 *a, struct vec2 *b)
 {
-	return vec2_distance_squared_to((mfloat_t *)a, (mfloat_t *)b);
+	return vec2_distance_squared((mfloat_t *)a, (mfloat_t *)b);
 }
 
 /* Vector 2D Integer */
@@ -991,14 +991,14 @@ MATHC_INLINE mfloat_t psvec2i_length(struct vec2i *a)
 	return vec2i_length((mint_t *)a);
 }
 
-MATHC_INLINE mfloat_t psvec2i_distance_to(struct vec2i *a, struct vec2i *b)
+MATHC_INLINE mfloat_t psvec2i_distance(struct vec2i *a, struct vec2i *b)
 {
-	return vec2i_distance_to((mint_t *)a, (mint_t *)b);
+	return vec2i_distance((mint_t *)a, (mint_t *)b);
 }
 
-MATHC_INLINE mfloat_t psvec2i_distance_squared_to(struct vec2i *a, struct vec2i *b)
+MATHC_INLINE mfloat_t psvec2i_distance_squared(struct vec2i *a, struct vec2i *b)
 {
-	return vec2i_distance_squared_to((mint_t *)a, (mint_t *)b);
+	return vec2i_distance_squared((mint_t *)a, (mint_t *)b);
 }
 
 /* Vector 3D */
@@ -1211,14 +1211,14 @@ MATHC_INLINE mfloat_t psvec3_length_squared(struct vec3 *a)
 	return vec3_length_squared((mfloat_t *)a);
 }
 
-MATHC_INLINE mfloat_t psvec3_distance_to(struct vec3 *a, struct vec3 *b)
+MATHC_INLINE mfloat_t psvec3_distance(struct vec3 *a, struct vec3 *b)
 {
-	return vec3_distance_to((mfloat_t *)a, (mfloat_t *)b);
+	return vec3_distance((mfloat_t *)a, (mfloat_t *)b);
 }
 
-MATHC_INLINE mfloat_t psvec3_distance_squared_to(struct vec3 *a, struct vec3 *b)
+MATHC_INLINE mfloat_t psvec3_distance_squared(struct vec3 *a, struct vec3 *b)
 {
-	return vec3_distance_squared_to((mfloat_t *)a, (mfloat_t *)b);
+	return vec3_distance_squared((mfloat_t *)a, (mfloat_t *)b);
 }
 
 /* Vector 3D Integer */
@@ -1421,14 +1421,14 @@ MATHC_INLINE mfloat_t psvec3i_length_squared(struct vec3i *a)
 	return vec3i_length_squared((mint_t *)a);
 }
 
-MATHC_INLINE mfloat_t psvec3i_distance_to(struct vec3i *a, struct vec3i *b)
+MATHC_INLINE mfloat_t psvec3i_distance(struct vec3i *a, struct vec3i *b)
 {
-	return vec3i_distance_to((mint_t *)a, (mint_t *)b);
+	return vec3i_distance((mint_t *)a, (mint_t *)b);
 }
 
-MATHC_INLINE mfloat_t psvec3i_distance_squared_to(struct vec3i *a, struct vec3i *b)
+MATHC_INLINE mfloat_t psvec3i_distance_squared(struct vec3i *a, struct vec3i *b)
 {
-	return vec3i_distance_squared_to((mint_t *)a, (mint_t *)b);
+	return vec3i_distance_squared((mint_t *)a, (mint_t *)b);
 }
 
 /* Vector 4D */
@@ -2537,14 +2537,14 @@ MATHC_INLINE mfloat_t svec2_length(struct vec2 a)
 	return vec2_length((mfloat_t *)&a);
 }
 
-MATHC_INLINE mfloat_t svec2_distance_to(struct vec2 a, struct vec2 b)
+MATHC_INLINE mfloat_t svec2_distance(struct vec2 a, struct vec2 b)
 {
-	return vec2_distance_to((mfloat_t *)&a, (mfloat_t *)&b);
+	return vec2_distance((mfloat_t *)&a, (mfloat_t *)&b);
 }
 
-MATHC_INLINE mfloat_t svec2_distance_squared_to(struct vec2 a, struct vec2 b)
+MATHC_INLINE mfloat_t svec2_distance_squared(struct vec2 a, struct vec2 b)
 {
-	return vec2_distance_squared_to((mfloat_t *)&a, (mfloat_t *)&b);
+	return vec2_distance_squared((mfloat_t *)&a, (mfloat_t *)&b);
 }
 
 /* Vector 2D Integer */
@@ -2781,14 +2781,14 @@ MATHC_INLINE mfloat_t svec2i_length(struct vec2i a)
 	return vec2i_length((mint_t *)&a);
 }
 
-MATHC_INLINE mfloat_t svec2i_distance_to(struct vec2i a, struct vec2i b)
+MATHC_INLINE mfloat_t svec2i_distance(struct vec2i a, struct vec2i b)
 {
-	return vec2i_distance_to((mint_t *)&a, (mint_t *)&b);
+	return vec2i_distance((mint_t *)&a, (mint_t *)&b);
 }
 
-MATHC_INLINE mfloat_t svec2i_distance_squared_to(struct vec2i a, struct vec2i b)
+MATHC_INLINE mfloat_t svec2i_distance_squared(struct vec2i a, struct vec2i b)
 {
-	return vec2i_distance_squared_to((mint_t *)&a, (mint_t *)&b);
+	return vec2i_distance_squared((mint_t *)&a, (mint_t *)&b);
 }
 
 /* Vector 3 */
@@ -3030,14 +3030,14 @@ MATHC_INLINE mfloat_t svec3_length_squared(struct vec3 a)
 	return vec3_length_squared((mfloat_t *)&a);
 }
 
-MATHC_INLINE mfloat_t svec3_distance_to(struct vec3 a, struct vec3 b)
+MATHC_INLINE mfloat_t svec3_distance(struct vec3 a, struct vec3 b)
 {
-	return vec3_distance_to((mfloat_t *)&a, (mfloat_t *)&b);
+	return vec3_distance((mfloat_t *)&a, (mfloat_t *)&b);
 }
 
-MATHC_INLINE mfloat_t svec3_distance_squared_to(struct vec3 a, struct vec3 b)
+MATHC_INLINE mfloat_t svec3_distance_squared(struct vec3 a, struct vec3 b)
 {
-	return vec3_distance_squared_to((mfloat_t *)&a, (mfloat_t *)&b);
+	return vec3_distance_squared((mfloat_t *)&a, (mfloat_t *)&b);
 }
 
 /* Vector 3 Integer */
@@ -3262,14 +3262,14 @@ MATHC_INLINE mint_t svec3i_length_squared(struct vec3i a)
 	return vec3i_length_squared((mint_t *)&a);
 }
 
-MATHC_INLINE mint_t svec3i_distance_to(struct vec3i a, struct vec3i b)
+MATHC_INLINE mint_t svec3i_distance(struct vec3i a, struct vec3i b)
 {
-	return vec3i_distance_to((mint_t *)&a, (mint_t *)&b);
+	return vec3i_distance((mint_t *)&a, (mint_t *)&b);
 }
 
-MATHC_INLINE mint_t svec3i_distance_squared_to(struct vec3i a, struct vec3i b)
+MATHC_INLINE mint_t svec3i_distance_squared(struct vec3i a, struct vec3i b)
 {
-	return vec3i_distance_squared_to((mint_t *)&a, (mint_t *)&b);
+	return vec3i_distance_squared((mint_t *)&a, (mint_t *)&b);
 }
 
 /* Vector 4D */

@@ -362,12 +362,12 @@ mfloat_t vec2_length_squared(mfloat_t *a)
 	return a[0] * a[0] + a[1] * a[1];
 }
 
-mfloat_t vec2_distance_to(mfloat_t *a, mfloat_t *b)
+mfloat_t vec2_distance(mfloat_t *a, mfloat_t *b)
 {
 	return MSQRT((a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]));
 }
 
-mfloat_t vec2_distance_squared_to(mfloat_t *a, mfloat_t *b)
+mfloat_t vec2_distance_squared(mfloat_t *a, mfloat_t *b)
 {
 	return (a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]);
 }
@@ -675,12 +675,12 @@ mfloat_t vec2i_length_squared(mint_t *a)
 	return a[0] * a[0] + a[1] * a[1];
 }
 
-mfloat_t vec2i_distance_to(mint_t *a, mint_t *b)
+mfloat_t vec2i_distance(mint_t *a, mint_t *b)
 {
 	return MSQRT((a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]));
 }
 
-mfloat_t vec2i_distance_squared_to(mint_t *a, mint_t *b)
+mfloat_t vec2i_distance_squared(mint_t *a, mint_t *b)
 {
 	return (a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]);
 }
@@ -1027,12 +1027,12 @@ mfloat_t vec3_length_squared(mfloat_t *a)
 	return a[0] * a[0] + a[1] * a[1] + a[2] * a[2];
 }
 
-mfloat_t vec3_distance_to(mfloat_t *a, mfloat_t *b)
+mfloat_t vec3_distance(mfloat_t *a, mfloat_t *b)
 {
 	return MSQRT((a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]) + (a[2] - b[2]) * (a[2] - b[2]));
 }
 
-mfloat_t vec3_distance_squared_to(mfloat_t *a, mfloat_t *b)
+mfloat_t vec3_distance_squared(mfloat_t *a, mfloat_t *b)
 {
 	return (a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]) + (a[2] - b[2]) * (a[2] - b[2]);
 }
@@ -1370,12 +1370,12 @@ mfloat_t vec3i_length_squared(mint_t *a)
 	return a[0] * a[0] + a[1] * a[1] + a[2] * a[2];
 }
 
-mfloat_t vec3i_distance_to(mint_t *a, mint_t *b)
+mfloat_t vec3i_distance(mint_t *a, mint_t *b)
 {
 	return MSQRT((a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]) + (a[2] - b[2]) * (a[2] - b[2]));
 }
 
-mfloat_t vec3i_distance_squared_to(mint_t *a, mint_t *b)
+mfloat_t vec3i_distance_squared(mint_t *a, mint_t *b)
 {
 	return (a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]) + (a[2] - b[2]) * (a[2] - b[2]);
 }
