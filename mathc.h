@@ -235,6 +235,7 @@ mfloat_t *vec2(mfloat_t *result, mfloat_t x, mfloat_t y);
 mfloat_t *vec2_assign(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec2_assign_vec2i(mfloat_t *result, mint_t *a);
 mfloat_t *vec2_zero(mfloat_t *result);
+mfloat_t *vec2_one(mfloat_t *result);
 mfloat_t *vec2_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar);
@@ -274,6 +275,7 @@ mint_t *vec2i(mint_t *result, mint_t x, mint_t y);
 mint_t *vec2i_assign(mint_t *result, mint_t *a);
 mint_t *vec2i_assign_vec2(mint_t *result, mfloat_t *a);
 mint_t *vec2i_zero(mint_t *result);
+mint_t *vec2i_one(mint_t *result);
 mint_t *vec2i_add(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_subtract(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_scale(mint_t *result, mint_t *a, mfloat_t scalar);
@@ -315,6 +317,7 @@ mfloat_t *vec3(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z);
 mfloat_t *vec3_assign(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec3_assign_vec3i(mfloat_t *result, mint_t *a);
 mfloat_t *vec3_zero(mfloat_t *result);
+mfloat_t *vec3_one(mfloat_t *result);
 mfloat_t *vec3_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar);
@@ -352,6 +355,7 @@ mint_t *vec3i(mint_t *result, mint_t x, mint_t y, mint_t z);
 mint_t *vec3i_assign(mint_t *result, mint_t *a);
 mint_t *vec3i_assign_vec3(mint_t *result, mfloat_t *a);
 mint_t *vec3i_zero(mint_t *result);
+mint_t *vec3i_one(mint_t *result);
 mint_t *vec3i_add(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_subtract(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_scale(mint_t *result, mint_t *a, mfloat_t scalar);
@@ -391,6 +395,7 @@ mfloat_t *vec4(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
 mfloat_t *vec4_assign(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec4_assign_vec4i(mfloat_t *result, mint_t *a);
 mfloat_t *vec4_zero(mfloat_t *result);
+mfloat_t *vec4_one(mfloat_t *result);
 mfloat_t *vec4_add(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar);
@@ -417,6 +422,7 @@ mint_t *vec4i(mint_t *result, mint_t x, mint_t y, mint_t z, mint_t w);
 mint_t *vec4i_assign(mint_t *result, mint_t *a);
 mint_t *vec4i_assign_vec4(mint_t *result, mfloat_t *a);
 mint_t *vec4i_zero(mint_t *result);
+mint_t *vec4i_one(mint_t *result);
 mint_t *vec4i_add(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec4i_subtract(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec4i_scale(mint_t *result, mint_t *a, mfloat_t scalar);
@@ -585,6 +591,12 @@ MATHC_INLINE struct vec2 *psvec2_assign_vec2i(struct vec2 *result, struct vec2i 
 MATHC_INLINE struct vec2 *psvec2_zero(struct vec2 *result)
 {
 	vec2_zero((mfloat_t *)result);
+	return result;
+}
+
+MATHC_INLINE struct vec2 *psvec2_one(struct vec2 *result)
+{
+	vec2_one((mfloat_t *)result);
 	return result;
 }
 
@@ -800,6 +812,12 @@ MATHC_INLINE struct vec2i *psvec2i_assign_vec2(struct vec2i *result, struct vec2
 MATHC_INLINE struct vec2i *psvec2i_zero(struct vec2i *result)
 {
 	vec2i_zero((mint_t *)result);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_one(struct vec2i *result)
+{
+	vec2i_one((mint_t *)result);
 	return result;
 }
 
@@ -1028,6 +1046,12 @@ MATHC_INLINE struct vec3 *psvec3_zero(struct vec3 *result)
 	return result;
 }
 
+MATHC_INLINE struct vec3 *psvec3_one(struct vec3 *result)
+{
+	vec3_one((mfloat_t *)result);
+	return result;
+}
+
 MATHC_INLINE struct vec3 *psvec3_add(struct vec3 *result, struct vec3 *a, struct vec3 *b)
 {
 	vec3_add((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
@@ -1229,6 +1253,12 @@ MATHC_INLINE struct vec3i *psvec3i_assign_vec3(struct vec3i *result, struct vec3
 MATHC_INLINE struct vec3i *psvec3i_zero(struct vec3i *result)
 {
 	vec3i_zero((mint_t *)result);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_one(struct vec3i *result)
+{
+	vec3i_one((mint_t *)result);
 	return result;
 }
 
@@ -1446,6 +1476,12 @@ MATHC_INLINE struct vec4 *psvec4_zero(struct vec4 *result)
 	return result;
 }
 
+MATHC_INLINE struct vec4 *psvec4_one(struct vec4 *result)
+{
+	vec4_one((mfloat_t *)result);
+	return result;
+}
+
 MATHC_INLINE struct vec4 *psvec4_add(struct vec4 *result, struct vec4 *a, struct vec4 *b)
 {
 	vec4_add((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
@@ -1586,6 +1622,12 @@ MATHC_INLINE struct vec4i *psvec4i_assign_vec4(struct vec4i *result, struct vec4
 MATHC_INLINE struct vec4i *psvec4i_zero(struct vec4i *result)
 {
 	vec4i_zero((mint_t *)result);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_one(struct vec4i *result)
+{
+	vec4i_one((mint_t *)result);
 	return result;
 }
 
@@ -2293,6 +2335,13 @@ MATHC_INLINE struct vec2 svec2_zero(void)
 	return result;
 }
 
+MATHC_INLINE struct vec2 svec2_one(void)
+{
+	struct vec2 result;
+	vec2_one((mfloat_t *)&result);
+	return result;
+}
+
 MATHC_INLINE struct vec2 svec2_add(struct vec2 a, struct vec2 b)
 {
 	struct vec2 result;
@@ -2791,6 +2840,13 @@ MATHC_INLINE struct vec3 svec3_zero(void)
 	return result;
 }
 
+MATHC_INLINE struct vec3 svec3_one(void)
+{
+	struct vec3 result;
+	vec3_one((mfloat_t *)&result);
+	return result;
+}
+
 MATHC_INLINE struct vec3 svec3_add(struct vec3 a, struct vec3 b)
 {
 	struct vec3 result;
@@ -3262,6 +3318,13 @@ MATHC_INLINE struct vec4 svec4_zero(void)
 {
 	struct vec4 result;
 	vec4_zero((mfloat_t *)&result);
+	return result;
+}
+
+MATHC_INLINE struct vec4 svec4_one(void)
+{
+	struct vec4 result;
+	vec4_one((mfloat_t *)&result);
 	return result;
 }
 

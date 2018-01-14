@@ -112,6 +112,13 @@ mfloat_t *vec2_zero(mfloat_t *result)
 	return result;
 }
 
+mfloat_t *vec2_one(mfloat_t *result)
+{
+	result[0] = MFLOAT_C(1.0);
+	result[1] = MFLOAT_C(1.0);
+	return result;
+}
+
 mfloat_t *vec2_add(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = a[0] + b[0];
@@ -409,6 +416,13 @@ mint_t *vec2i_zero(mint_t *result)
 {
 	result[0] = 0;
 	result[1] = 0;
+	return result;
+}
+
+mint_t *vec2i_one(mint_t *result)
+{
+	result[0] = 1;
+	result[1] = 1;
 	return result;
 }
 
@@ -740,6 +754,14 @@ mfloat_t *vec3_zero(mfloat_t *result)
 	return result;
 }
 
+mfloat_t *vec3_one(mfloat_t *result)
+{
+	result[0] = MFLOAT_C(1.0);
+	result[1] = MFLOAT_C(1.0);
+	result[2] = MFLOAT_C(1.0);
+	return result;
+}
+
 mfloat_t *vec3_add(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = a[0] + b[0];
@@ -1063,6 +1085,14 @@ mint_t *vec3i_zero(mint_t *result)
 	result[0] = 0;
 	result[1] = 0;
 	result[2] = 0;
+	return result;
+}
+
+mint_t *vec3i_one(mint_t *result)
+{
+	result[0] = 1;
+	result[1] = 1;
+	result[2] = 1;
 	return result;
 }
 
@@ -1423,6 +1453,15 @@ mfloat_t *vec4_zero(mfloat_t *result)
 	return result;
 }
 
+mfloat_t *vec4_one(mfloat_t *result)
+{
+	result[0] = MFLOAT_C(1.0);
+	result[1] = MFLOAT_C(1.0);
+	result[2] = MFLOAT_C(1.0);
+	result[3] = MFLOAT_C(1.0);
+	return result;
+}
+
 mfloat_t *vec4_add(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = a[0] + b[0];
@@ -1690,6 +1729,15 @@ mint_t *vec4i_zero(mint_t *result)
 	result[1] = 0;
 	result[2] = 0;
 	result[3] = 0;
+	return result;
+}
+
+mint_t *vec4i_one(mint_t *result)
+{
+	result[0] = 1;
+	result[1] = 1;
+	result[2] = 1;
+	result[3] = 1;
 	return result;
 }
 
