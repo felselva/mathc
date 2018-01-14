@@ -2642,11 +2642,13 @@ mfloat_t *mat3_cofactor(mfloat_t *result, mfloat_t *m)
 
 mfloat_t *mat3_adjugate(mfloat_t *result, mfloat_t *m)
 {
+	result = m;
 	return result;
 }
 
 mfloat_t *mat3_inverse(mfloat_t *result, mfloat_t *m)
 {
+	result = m;
 	return result;
 }
 
@@ -3031,6 +3033,7 @@ mfloat_t *mat4_transpose(mfloat_t *result, mfloat_t *m)
 
 mfloat_t *mat4_adjugate(mfloat_t *result, mfloat_t *m)
 {
+	result = m;
 	return result;
 }
 
