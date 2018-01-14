@@ -129,12 +129,12 @@ void printf_3f_test(struct cerror *error, char *msg, mfloat_t e1, mfloat_t e2, m
 		done = true;
 		printf("~passed with epsilon * 10.0~\n\n");
 	}
-	if (!done && nearly_equal(e1, r1, epsilon * 100.0f) && nearly_equal(e2, r2, epsilon * 100.0f) && nearly_equal(e2, r2, epsilon * 100.0f)) {
+	if (!done && nearly_equal(e1, r1, epsilon * 100.0f) && nearly_equal(e2, r2, epsilon * 100.0f) && nearly_equal(e3, r3, epsilon * 100.0f)) {
 		error->passed_with_e100 = error->passed_with_e100 + 1;
 		done = true;
 		printf("~passed with epsilon * 100.0~\n\n");
 	}
-	if (!done && nearly_equal(e1, r1, epsilon * 1000.0f) && nearly_equal(e2, r2, epsilon * 1000.0f) && nearly_equal(e2, r2, epsilon * 1000.0f)) {
+	if (!done && nearly_equal(e1, r1, epsilon * 1000.0f) && nearly_equal(e2, r2, epsilon * 1000.0f) && nearly_equal(e3, r3, epsilon * 1000.0f)) {
 		error->passed_with_e1000 = error->passed_with_e1000 + 1;
 		done = true;
 		printf("~passed with epsilon * 1000.0~\n\n");
@@ -149,12 +149,12 @@ void printf_4f_test(struct cerror *error, char *msg, mfloat_t e1, mfloat_t e2, m
 {
 	bool done = false;
 	printf("%s:\n\tExpected % .9f, % .9f, % .9f, % .9f\n\t  Actual % .9f, % .9f, % .9f, % .9f\t", msg, e1, e2, e3, e4, r1, r2, r3, r4);
-	if (nearly_equal(e1, r1, epsilon) && nearly_equal(e2, r2, epsilon) && nearly_equal(e3, r3, epsilon) && nearly_equal(e3, r3, epsilon)) {
+	if (nearly_equal(e1, r1, epsilon) && nearly_equal(e2, r2, epsilon) && nearly_equal(e3, r3, epsilon) && nearly_equal(e4, r4, epsilon)) {
 		error->passed = error->passed + 1;
 		done = true;
 		printf("~passed~\n\n");
 	}
-	if (!done && nearly_equal(e1, r1, epsilon * 10.0f) && nearly_equal(e2, r2, epsilon * 10.0f) && nearly_equal(e3, r3, epsilon * 10.0f) && nearly_equal(e3, r3, epsilon * 10.0f)) {
+	if (!done && nearly_equal(e1, r1, epsilon * 10.0f) && nearly_equal(e2, r2, epsilon * 10.0f) && nearly_equal(e3, r3, epsilon * 10.0f) && nearly_equal(e4, r4, epsilon * 10.0f)) {
 		error->passed_with_e10 = error->passed_with_e10 + 1;
 		done = true;
 		printf("~passed with epsilon * 10.0~\n\n");
@@ -245,14 +245,15 @@ void vec2_tests(struct cerror *error)
 	printf_2f_test(error, "Test `vec2_scale`", 3.0f, 9.0f, v.x, v.y);
 	v = svec2_multiply(svec2(1.0f, 3.0f), svec2(3.0f, 5.0f));
 	printf_2f_test(error, "Test `vec2_multiply`", 3.0f, 15.0f, v.x, v.y);
-	m.m11 = 0.8f;
-	m.m12 = 0.7f;
-	m.m21 = 0.5f;
-	m.m22 = 0.3f;
+	m = smat2(
+		0.8f, 0.7f,
+		0.5f, 0.3f);
 	v = svec2_multiply_mat2(svec2(3.0f, 5.0f), m);
 	printf_2f_test(error, "Test `vec2_multiply_mat2`", 5.9f, 3.0f, v.x, v.y);
 	v = svec2_divide(svec2(1.0f, 3.0f), svec2(3.0f, 5.0f));
 	printf_2f_test(error, "Test `vec2_divide`", 0.3333333333f, 0.6f, v.x, v.y);
+	v = svec2_snap(svec2(20.0f, -15.5f), svec2(16.0f, 16.0f));
+	printf_2f_test(error, "Test `vec2_snap`", 16.0f, -16.0f, v.x, v.y);
 	v = svec2_negative(svec2(3.0f, 5.0f));
 	printf_2f_test(error, "Test `vec2_negative`", -3.0f, -5.0f, v.x, v.y);
 	v = svec2_inverse(svec2(3.0f, 5.0f));
@@ -296,18 +297,60 @@ void vec2_tests(struct cerror *error)
 	printf_1f_test(error, "Test `vec2_distance_to`", 32.0f, svec2_distance_squared_to(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
 }
 
-void vec2i_tests(struct cerror *error)
+void vec3_tests(struct cerror *error)
 {
-	struct vec2i v;
-	struct mat2 m;
-	printf_bool_test(error, "Test `vec2i_is_zero`", true, svec2i_is_zero(svec2i(0, 0)));
-	printf_bool_test(error, "Test `vec2i_is_equal`", true, svec2i_is_equal(svec2i(1, 7), svec2i(1, 7)));
-	v = svec2i(2, 1);
-	printf_2i_test(error, "Test `vec2i`", 2, 1, v.x, v.y);
-}
-
-void vector3_tests(struct cerror *error)
-{
+	struct vec3 v;
+	struct mat3 m;
+	printf_bool_test(error, "Test `vec3_is_zero`", true, svec3_is_zero(svec3(0.0f, 0.0f, 0.0f)));
+	printf_bool_test(error, "Test `vec3_is_near_zero`", true, svec3_is_near_zero(svec3(0.0f, 0.0f, 0.0f), MFLT_EPSILON));
+	printf_bool_test(error, "Test `vec3_is_equal`", true, svec3_is_equal(svec3(1.0f / 3.0f, 7.0f / 3.0f, 5.0f / 3.0f), svec3(1.0f / 3.0f, 7.0f / 3.0f, 5.0f / 3.0f)));
+	printf_bool_test(error, "Test `vec3_is_nearly_equal`", true, svec3_is_nearly_equal(svec3(1.0f / 3.0f, 7.0f / 3.0f, 5.0f / 3.0f), svec3(1.0f / 3.0f, 7.0f / 3.0f, 5.0f / 3.0f), MFLT_EPSILON));
+	v = svec3(2.0f, 1.0f, 3.0f);
+	printf_3f_test(error, "Test `vec3`", 2.0f, 1.0f, 3.0f, v.x, v.y, v.z);
+	v = svec3_assign(svec3(2.0f, 1.0f, 3.0f));
+	printf_3f_test(error, "Test `vec3_assign`", 2.0f, 1.0f, 3.0f, v.x, v.y, v.z);
+	v = svec3_zero();
+	printf_3f_test(error, "Test `vec3_zero`", 0.0f, 0.0f, 0.0f, v.x, v.y, v.z);
+	v = svec3_add(svec3(3.0f, 1.0f, 4.0f), svec3(1.0f, 7.0f, 2.0f));
+	printf_3f_test(error, "Test `vec3_add`", 4.0f, 8.0f, 6.0f, v.x, v.y, v.z);
+	v = svec3_subtract(svec3(1.0f, 20.0f, 9.0f), svec3(3.0f, 7.0f, 7.0f));
+	printf_3f_test(error, "Test `vec3_subtract`", -2.0f, 13.0f, 2.0f, v.x, v.y, v.z);
+	v = svec3_scale(svec3(1.0f, 3.0f, 5.0f), 3.0f);
+	printf_3f_test(error, "Test `vec3_scale`", 3.0f, 9.0f, 15.0f, v.x, v.y, v.z);
+	v = svec3_multiply(svec3(1.0f, 3.0f, 5.0f), svec3(3.0f, 5.0f, 2.0f));
+	printf_3f_test(error, "Test `vec3_multiply`", 3.0f, 15.0f, 10.0f, v.x, v.y, v.z);
+	m = smat3(
+		1.0f, 2.0f, 3.0f,
+		4.0f, 5.0f, 6.0f,
+		7.0f, 8.0f, 9.0f);
+	v = svec3_multiply_mat3(svec3(2.0f, 1.0f, 3.0f), m);
+	printf_3f_test(error, "Test `vec3_multiply_mat3`", 13.0f, 31.0f, 49.0f, v.x, v.y, v.z);
+	v = svec3_divide(svec3(1.0f, 3.0f, 5.0f), svec3(3.0f, 5.0f, 2.0f));
+	printf_3f_test(error, "Test `vec3_divide`", 0.3333333333f, 0.6f, 2.5f, v.x, v.y, v.z);
+	v = svec3_snap(svec3(1.3f, -3.1f, 4.9f), svec3(0.5f, 0.5f, 0.5f));
+	printf_3f_test(error, "Test `vec3_snap`", 1.0f, -3.5f, 4.5f, v.x, v.y, v.z);
+	v = svec3_negative(svec3(3.0f, 5.0f, -7.0f));
+	printf_3f_test(error, "Test `vec3_negative`", -3.0f, -5.0f, 7.0f, v.x, v.y, v.z);
+	v = svec3_inverse(svec3(3.0f, 5.0f, 7.0f));
+	printf_3f_test(error, "Test `vec3_inverse`", 0.3333333333f, 0.2f, 0.1428571429f, v.x, v.y, v.z);
+	v = svec3_abs(svec3(-7.0f, -3.0f, 1.0f));
+	printf_3f_test(error, "Test `vec3_abs`", 7.0, 3.0f, 1.0f, v.x, v.y, v.z);
+	v = svec3_floor(svec3(-7.2f, -3.7f, 9.1f));
+	printf_3f_test(error, "Test `vec3_floor`", -8.0, -4.0f, 9.0f, v.x, v.y, v.z);
+	v = svec3_ceil(svec3(-7.2f, -3.7f, 0.99f));
+	printf_3f_test(error, "Test `vec3_ceil`", -7.0, -3.0f, 1.0f, v.x, v.y, v.z);
+	v = svec3_round(svec3(-7.2f, -3.7f, 0.01f));
+	printf_3f_test(error, "Test `vec3_round`", -7.0, -4.0f, 0.0f, v.x, v.y, v.z);
+	v = svec3_max(svec3(-7.2f, -3.7f, 9.0f), svec3(1.0f, 3.7f, 30.0f));
+	printf_3f_test(error, "Test `vec3_max`", 1.0f, 3.7f, 30.0f, v.x, v.y, v.z);
+	v = svec3_min(svec3(-7.2f, -3.7f, 9.0f), svec3(1.0f, 3.7f, 30.0f));
+	printf_3f_test(error, "Test `vec3_min`", -7.2f, -3.7f, 9.0f, v.x, v.y, v.z);
+	v = svec3_clamp(svec3(-9.1f, 8.7f, 0.4f), svec3(-1.3f, 2.7f, 0.7f), svec3(3.3f, 5.7f, 0.8f));
+	printf_3f_test(error, "Test `vec3_clamp`", -1.3f, 5.7f, 0.7f, v.x, v.y, v.z);
+	v = svec3_normalize(svec3(3.0f, 1.0f, 2.0f));
+	printf_3f_test(error, "Test `vec3_normalize`", 0.8017837257f, 0.2672612419f, 0.5345224838f, v.x, v.y, v.z);
+	v = svec3_project(svec3(-1.0f, 4.0f, 2.0f), svec3(1.0f, 5.0f, 3.0f));
+	printf_3f_test(error, "Test `vec3_project`", 0.7142857143f, 3.5714285714f, 2.1428571429, v.x, v.y, v.z);
 }
 
 void quaternion_tests(struct cerror *error)
@@ -326,8 +369,7 @@ int main(int argc, char **args)
 {
 	struct cerror error = {0};
 	vec2_tests(&error);
-	vec2i_tests(&error);
-	vector3_tests(&error);
+	vec3_tests(&error);
 	quaternion_tests(&error);
 	matrix_tests(&error);
 	intersection_tests(&error);
