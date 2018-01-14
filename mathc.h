@@ -459,6 +459,9 @@ mfloat_t quat_length(mfloat_t *a);
 mfloat_t quat_length_squared(mfloat_t *a);
 
 /* Matrix 2x2 */
+mfloat_t *mat2(mfloat_t *result,
+	mfloat_t m11, mfloat_t m12,
+	mfloat_t m21, mfloat_t m22);
 mfloat_t *mat2_zero(mfloat_t *result);
 mfloat_t *mat2_identity(mfloat_t *result);
 mfloat_t mat2_determinant(mfloat_t *m);
@@ -476,6 +479,10 @@ mfloat_t *mat2_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *mat2_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
 
 /* Matrix 3x3 */
+mfloat_t *mat3(mfloat_t *result,
+	mfloat_t m11, mfloat_t m12, mfloat_t m13,
+	mfloat_t m21, mfloat_t m22, mfloat_t m23,
+	mfloat_t m31, mfloat_t m32, mfloat_t m33);
 mfloat_t *mat3_zero(mfloat_t *result);
 mfloat_t *mat3_identity(mfloat_t *result);
 mfloat_t mat3_determinant(mfloat_t *m);
@@ -498,6 +505,11 @@ mfloat_t *mat3_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *mat3_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
 
 /* Matrix 4x4 */
+mfloat_t *mat4(mfloat_t *result,
+	mfloat_t m11, mfloat_t m12, mfloat_t m13, mfloat_t m14,
+	mfloat_t m21, mfloat_t m22, mfloat_t m23, mfloat_t m24,
+	mfloat_t m31, mfloat_t m32, mfloat_t m33, mfloat_t m34,
+	mfloat_t m41, mfloat_t m42, mfloat_t m43, mfloat_t m44);
 mfloat_t *mat4_zero(mfloat_t *result);
 mfloat_t *mat4_identity(mfloat_t *result);
 mfloat_t mat4_determinant(mfloat_t *m);
@@ -1793,6 +1805,16 @@ MATHC_INLINE mfloat_t psquat_length_squared(struct quat *a)
 }
 
 /* Matrix 2x2 */
+MATHC_INLINE struct mat2 *psmat2(struct mat2 *result,
+	mfloat_t m11, mfloat_t m12,
+	mfloat_t m21, mfloat_t m22)
+{
+	mat2((mfloat_t *)result,
+		m11, m12,
+		m21, m22);
+	return result;
+}
+
 MATHC_INLINE struct mat2 *psmat2_zero(struct mat2 *result)
 {
 	mat2_zero((mfloat_t *)result);
@@ -1883,6 +1905,18 @@ MATHC_INLINE struct mat2 *psmat2_lerp(struct mat2 *result, struct mat2 *a, struc
 }
 
 /* Matrix 3x3 */
+MATHC_INLINE struct mat3 *psmat3(struct mat3 *result,
+	mfloat_t m11, mfloat_t m12, mfloat_t m13,
+	mfloat_t m21, mfloat_t m22, mfloat_t m23,
+	mfloat_t m31, mfloat_t m32, mfloat_t m33)
+{
+	mat3((mfloat_t *)result,
+		m11, m12, m13,
+		m21, m22, m23,
+		m31, m32, m33);
+	return result;
+}
+
 MATHC_INLINE struct mat3 *psmat3_zero(struct mat3 *result)
 {
 	mat3_zero((mfloat_t *)result);
@@ -2003,6 +2037,20 @@ MATHC_INLINE struct mat3 *psmat3_lerp(struct mat3 *result, struct mat3 *a, struc
 }
 
 /* Matrix 4x4 */
+MATHC_INLINE struct mat4 *psmat4(struct mat4 *result,
+	mfloat_t m11, mfloat_t m12, mfloat_t m13, mfloat_t m14,
+	mfloat_t m21, mfloat_t m22, mfloat_t m23, mfloat_t m24,
+	mfloat_t m31, mfloat_t m32, mfloat_t m33, mfloat_t m34,
+	mfloat_t m41, mfloat_t m42, mfloat_t m43, mfloat_t m44)
+{
+	mat4((mfloat_t *)result,
+		m11, m12, m13, m14,
+		m21, m22, m23, m24,
+		m31, m32, m33, m34,
+		m41, m42, m43, m44);
+	return result;
+}
+
 MATHC_INLINE struct mat4 *psmat4_zero(struct mat4 *result)
 {
 	mat4_zero((mfloat_t *)result);
@@ -3585,6 +3633,17 @@ MATHC_INLINE mfloat_t squat_length_squared(struct quat a)
 }
 
 /* Matrix 2x2 */
+MATHC_INLINE struct mat2 smat2(
+	mfloat_t m11, mfloat_t m12,
+	mfloat_t m21, mfloat_t m22)
+{
+	struct mat2 result;
+	mat2((mfloat_t *)&result,
+		m11, m12,
+		m21, m22);
+	return result;
+}
+
 MATHC_INLINE struct mat2 smat2_zero(void)
 {
 	struct mat2 result;
@@ -3689,6 +3748,19 @@ MATHC_INLINE struct mat2 smat2_lerp(struct mat2 a, struct mat2 b, mfloat_t p)
 }
 
 /* Matrix 3x3 */
+MATHC_INLINE struct mat3 smat3(
+	mfloat_t m11, mfloat_t m12, mfloat_t m13,
+	mfloat_t m21, mfloat_t m22, mfloat_t m23,
+	mfloat_t m31, mfloat_t m32, mfloat_t m33)
+{
+	struct mat3 result;
+	mat3((mfloat_t *)&result,
+		m11, m12, m13,
+		m21, m22, m23,
+		m31, m32, m33);
+	return result;
+}
+
 MATHC_INLINE struct mat3 smat3_zero(void)
 {
 	struct mat3 result;
@@ -3828,6 +3900,21 @@ MATHC_INLINE struct mat3 smat3_lerp(struct mat3 a, struct mat3 b, mfloat_t p)
 }
 
 /* Matrix 4x4 */
+MATHC_INLINE struct mat4 smat4(
+	mfloat_t m11, mfloat_t m12, mfloat_t m13, mfloat_t m14,
+	mfloat_t m21, mfloat_t m22, mfloat_t m23, mfloat_t m24,
+	mfloat_t m31, mfloat_t m32, mfloat_t m33, mfloat_t m34,
+	mfloat_t m41, mfloat_t m42, mfloat_t m43, mfloat_t m44)
+{
+	struct mat4 result;
+	mat4((mfloat_t *)&result,
+		m11, m12, m13, m14,
+		m21, m22, m23, m24,
+		m31, m32, m33, m34,
+		m41, m42, m43, m44);
+	return result;
+}
+
 MATHC_INLINE struct mat4 smat4_zero(void)
 {
 	struct mat4 result;
