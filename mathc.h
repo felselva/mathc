@@ -251,6 +251,7 @@ mfloat_t *vec2_max(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_min(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher);
 mfloat_t *vec2_normalize(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec2_project(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_slide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_reflect(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_tangent(mfloat_t *result, mfloat_t *a);
@@ -288,6 +289,7 @@ mint_t *vec2i_max(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_min(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher);
 mint_t *vec2i_normalize(mint_t *result, mint_t *a);
+mint_t *vec2i_project(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_slide(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_reflect(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_tangent(mint_t *result, mint_t *a);
@@ -328,6 +330,7 @@ mfloat_t *vec3_min(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher);
 mfloat_t *vec3_cross(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_normalize(mfloat_t *result, mfloat_t *a);
+mfloat_t *vec3_project(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_slide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_reflect(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
@@ -363,6 +366,7 @@ mint_t *vec3i_min(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher);
 mint_t *vec3i_cross(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_normalize(mint_t *result, mint_t *a);
+mint_t *vec3i_project(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_slide(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_reflect(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p);
@@ -662,6 +666,12 @@ MATHC_INLINE struct vec2 *psvec2_normalize(struct vec2 *result, struct vec2 *a)
 	return result;
 }
 
+MATHC_INLINE struct vec2 *psvec2_project(struct vec2 *result, struct vec2 *a, struct vec2 *b)
+{
+	vec2_project((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
+	return result;
+}
+
 MATHC_INLINE struct vec2 *psvec2_slide(struct vec2 *result, struct vec2 *a, struct vec2 *b)
 {
 	vec2_slide((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
@@ -862,6 +872,12 @@ MATHC_INLINE struct vec2i *psvec2i_clamp(struct vec2i *result, struct vec2i *a, 
 MATHC_INLINE struct vec2i *psvec2i_normalize(struct vec2i *result, struct vec2i *a)
 {
 	vec2i_normalize((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_project(struct vec2i *result, struct vec2i *a, struct vec2i *b)
+{
+	vec2i_project((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
 }
 
@@ -1084,6 +1100,12 @@ MATHC_INLINE struct vec3 *psvec3_normalize(struct vec3 *result, struct vec3 *a)
 	return result;
 }
 
+MATHC_INLINE struct vec3 *psvec3_project(struct vec3 *result, struct vec3 *a, struct vec3 *b)
+{
+	vec3_project((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
+	return result;
+}
+
 MATHC_INLINE struct vec3 *psvec3_slide(struct vec3 *result, struct vec3 *a, struct vec3 *b)
 {
 	vec3_slide((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
@@ -1273,6 +1295,12 @@ MATHC_INLINE struct vec3i *psvec3i_cross(struct vec3i *result, struct vec3i *a, 
 MATHC_INLINE struct vec3i *psvec3i_normalize(struct vec3i *result, struct vec3i *a)
 {
 	vec3i_normalize((mint_t *)result, (mint_t *)a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_project(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_project((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
 }
 
@@ -2280,6 +2308,13 @@ MATHC_INLINE struct vec2 svec2_normalize(struct vec2 a)
 	return result;
 }
 
+MATHC_INLINE struct vec2 svec2_project(struct vec2 a, struct vec2 b)
+{
+	struct vec2 result;
+	vec2_project((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
+	return result;
+}
+
 MATHC_INLINE struct vec2 svec2_slide(struct vec2 a, struct vec2 b)
 {
 	struct vec2 result;
@@ -2507,6 +2542,13 @@ MATHC_INLINE struct vec2i svec2i_normalize(struct vec2i a)
 {
 	struct vec2i result;
 	vec2i_normalize((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_project(struct vec2i a, struct vec2i b)
+{
+	struct vec2i result;
+	vec2i_project((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
 }
 
@@ -2757,6 +2799,13 @@ MATHC_INLINE struct vec3 svec3_normalize(struct vec3 a)
 	return result;
 }
 
+MATHC_INLINE struct vec3 svec3_project(struct vec3 a, struct vec3 b)
+{
+	struct vec3 result;
+	vec3_project((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
+	return result;
+}
+
 MATHC_INLINE struct vec3 svec3_slide(struct vec3 a, struct vec3 b)
 {
 	struct vec3 result;
@@ -2972,6 +3021,13 @@ MATHC_INLINE struct vec3i svec3i_normalize(struct vec3i a)
 {
 	struct vec3i result;
 	vec3i_normalize((mint_t *)&result, (mint_t *)&a);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_project(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_project((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
 }
 

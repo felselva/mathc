@@ -253,6 +253,14 @@ mfloat_t *vec2_normalize(mfloat_t *result, mfloat_t *a)
 	return result;
 }
 
+mfloat_t *vec2_project(mfloat_t *result, mfloat_t *a, mfloat_t *b)
+{
+	mfloat_t s = vec2_dot(a, b) / vec2_dot(b, b);
+	result[0] = b[0] * s;
+	result[1] = b[1] * s;
+	return result;
+}
+
 mfloat_t *vec2_slide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	mfloat_t d = vec2_dot(a, b);
@@ -541,6 +549,14 @@ mint_t *vec2i_normalize(mint_t *result, mint_t *a)
 		result[0] = 0;
 		result[1] = 0;
 	}
+	return result;
+}
+
+mint_t *vec2i_project(mint_t *result, mint_t *a, mint_t *b)
+{
+	mfloat_t s = vec2i_dot(a, b) / vec2i_dot(b, b);
+	result[0] = MVECI_ROUND((mfloat_t)b[0] * s);
+	result[1] = MVECI_ROUND((mfloat_t)b[1] * s);
 	return result;
 }
 
@@ -865,6 +881,15 @@ mfloat_t *vec3_normalize(mfloat_t *result, mfloat_t *a)
 	return result;
 }
 
+mfloat_t *vec3_project(mfloat_t *result, mfloat_t *a, mfloat_t *b)
+{
+	mfloat_t s = vec3_dot(a, b) / vec3_dot(b, b);
+	result[0] = b[0] * s;
+	result[1] = b[1] * s;
+	result[2] = b[2] * s;
+	return result;
+}
+
 mfloat_t *vec3_slide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	mfloat_t d = vec3_dot(a, b);
@@ -1154,6 +1179,15 @@ mint_t *vec3i_normalize(mint_t *result, mint_t *a)
 		result[1] = 0;
 		result[2] = 0;
 	}
+	return result;
+}
+
+mint_t *vec3i_project(mint_t *result, mint_t *a, mint_t *b)
+{
+	mfloat_t s = vec3i_dot(a, b) / vec3i_dot(b, b);
+	result[0] = MVECI_ROUND((mfloat_t)b[0] * s);
+	result[1] = MVECI_ROUND((mfloat_t)b[1] * s);
+	result[2] = MVECI_ROUND((mfloat_t)b[2] * s);
 	return result;
 }
 
