@@ -853,6 +853,32 @@ mfloat_t *vec3_min(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec3_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher)
+{
+	result[0] = a[0];
+	result[1] = a[1];
+	result[2] = a[2];
+	if (result[0] < lower[0]) {
+		result[0] = lower[0];
+	}
+	if (result[0] > higher[0]) {
+		result[0] = higher[0];
+	}
+	if (result[1] < lower[1]) {
+		result[1] = lower[1];
+	}
+	if (result[1] > higher[1]) {
+		result[1] = higher[1];
+	}
+	if (result[2] < lower[2]) {
+		result[2] = lower[2];
+	}
+	if (result[2] > higher[2]) {
+		result[2] = higher[2];
+	}
+	return result;
+}
+
 mfloat_t *vec3_cross(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	mfloat_t cross[VEC3_SIZE];
@@ -1151,6 +1177,32 @@ mint_t *vec3i_min(mint_t *result, mint_t *a, mint_t *b)
 	result[0] = MMIN(a[0], b[0]);
 	result[1] = MMIN(a[1], b[1]);
 	result[2] = MMIN(a[2], b[2]);
+	return result;
+}
+
+mint_t *vec3i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher)
+{
+	result[0] = a[0];
+	result[1] = a[1];
+	result[2] = a[2];
+	if (result[0] < lower[0]) {
+		result[0] = lower[0];
+	}
+	if (result[0] > higher[0]) {
+		result[0] = higher[0];
+	}
+	if (result[1] < lower[1]) {
+		result[1] = lower[1];
+	}
+	if (result[1] > higher[1]) {
+		result[1] = higher[1];
+	}
+	if (result[2] < lower[2]) {
+		result[2] = lower[2];
+	}
+	if (result[2] > higher[2]) {
+		result[2] = higher[2];
+	}
 	return result;
 }
 
@@ -1487,6 +1539,39 @@ mfloat_t *vec4_min(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec4_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher)
+{
+	result[0] = a[0];
+	result[1] = a[1];
+	result[2] = a[2];
+	result[3] = a[3];
+	if (result[0] < lower[0]) {
+		result[0] = lower[0];
+	}
+	if (result[0] > higher[0]) {
+		result[0] = higher[0];
+	}
+	if (result[1] < lower[1]) {
+		result[1] = lower[1];
+	}
+	if (result[1] > higher[1]) {
+		result[1] = higher[1];
+	}
+	if (result[2] < lower[2]) {
+		result[2] = lower[2];
+	}
+	if (result[2] > higher[2]) {
+		result[2] = higher[2];
+	}
+	if (result[3] < lower[3]) {
+		result[3] = lower[3];
+	}
+	if (result[3] > higher[3]) {
+		result[3] = higher[3];
+	}
+	return result;
+}
+
 mfloat_t *vec4_normalize(mfloat_t *result, mfloat_t *a)
 {
 	mfloat_t length = MSQRT(a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3]);
@@ -1723,6 +1808,39 @@ mint_t *vec4i_min(mint_t *result, mint_t *a, mint_t *b)
 	result[1] = MMIN(a[1], b[1]);
 	result[2] = MMIN(a[2], b[2]);
 	result[3] = MMIN(a[3], b[3]);
+	return result;
+}
+
+mint_t *vec4i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher)
+{
+	result[0] = a[0];
+	result[1] = a[1];
+	result[2] = a[2];
+	result[3] = a[3];
+	if (result[0] < lower[0]) {
+		result[0] = lower[0];
+	}
+	if (result[0] > higher[0]) {
+		result[0] = higher[0];
+	}
+	if (result[1] < lower[1]) {
+		result[1] = lower[1];
+	}
+	if (result[1] > higher[1]) {
+		result[1] = higher[1];
+	}
+	if (result[2] < lower[2]) {
+		result[2] = lower[2];
+	}
+	if (result[2] > higher[2]) {
+		result[2] = higher[2];
+	}
+	if (result[3] < lower[3]) {
+		result[3] = lower[3];
+	}
+	if (result[3] > higher[3]) {
+		result[3] = higher[3];
+	}
 	return result;
 }
 
