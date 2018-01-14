@@ -2586,6 +2586,13 @@ MATHC_INLINE struct vec2i svec2i_zero(void)
 	return result;
 }
 
+MATHC_INLINE struct vec2i svec2i_one(void)
+{
+	struct vec2i result;
+	vec2i_one((mint_t *)&result);
+	return result;
+}
+
 MATHC_INLINE struct vec2i svec2i_add(struct vec2i a, struct vec2i b)
 {
 	struct vec2i result;
@@ -3079,6 +3086,13 @@ MATHC_INLINE struct vec3i svec3i_zero(void)
 	return result;
 }
 
+MATHC_INLINE struct vec3i svec3i_one(void)
+{
+	struct vec3i result;
+	vec3i_one((mint_t *)&result);
+	return result;
+}
+
 MATHC_INLINE struct vec3i svec3i_add(struct vec3i a, struct vec3i b)
 {
 	struct vec3i result;
@@ -3490,6 +3504,13 @@ MATHC_INLINE struct vec4i svec4i_zero(void)
 {
 	struct vec4i result;
 	vec4i_zero((mint_t *)&result);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_one(void)
+{
+	struct vec4i result;
+	vec4i_one((mint_t *)&result);
 	return result;
 }
 
