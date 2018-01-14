@@ -293,8 +293,8 @@ void vec2_tests(struct cerror *error)
 	printf_1f_test(error, "Test `vec2_dot`", 13.0f, svec2_dot(svec2(3.0f, 2.0f), svec2(1.0f, 5.0f)));
 	printf_1f_test(error, "Test `vec2_angle`", to_radians(45.0f), svec2_angle(svec2(2.0f, 2.0f)));
 	printf_1f_test(error, "Test `vec2_length`", 2.8284271247f, svec2_length(svec2(2.0f, 2.0f)));
-	printf_1f_test(error, "Test `vec2_length_squared`", 5.6568542495f, svec2_distance_to(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
-	printf_1f_test(error, "Test `vec2_distance_to`", 32.0f, svec2_distance_squared_to(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
+	printf_1f_test(error, "Test `vec2_length_squared`", 5.6568542495f, svec2_distance(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
+	printf_1f_test(error, "Test `vec2_distance`", 32.0f, svec2_distance_squared(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
 }
 
 void vec3_tests(struct cerror *error)
