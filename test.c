@@ -37,14 +37,14 @@ struct cerror {
 void printf_bool_test(struct cerror *error, char *msg, bool e, bool r)
 {
 	if (e) {
-		printf("%s:\n\tExpected true\n\t", msg);
+		printf("%s:\n\tExpected  true\n\t", msg);
 	} else {
-		printf("%s:\n\tExpected false\n\t", msg);
+		printf("%s:\n\tExpected  false\n\t", msg);
 	}
 	if (r) {
-		printf("  Actual true\t");
+		printf("  Actual  true\t");
 	} else {
-		printf("  Actual false\t");
+		printf("  Actual  false\t");
 	}
 	if (e == r) {
 		error->passed = error->passed + 1;
@@ -55,10 +55,10 @@ void printf_bool_test(struct cerror *error, char *msg, bool e, bool r)
 	}
 }
 
-void printf_1f_test(struct cerror *error, char *msg, float e1, float r1)
+void printf_1f_test(struct cerror *error, char *msg, mfloat_t e1, mfloat_t r1)
 {
 	bool done = false;
-	printf("%s:\n\tExpected % .4f\n\t  Actual  % .4f\t", msg, e1, r1);
+	printf("%s:\n\tExpected % .4f\n\t  Actual % .4f\t", msg, e1, r1);
 	if (nearly_equal(e1, r1, epsilon)) {
 		error->passed = error->passed + 1;
 		done = true;
@@ -85,7 +85,7 @@ void printf_1f_test(struct cerror *error, char *msg, float e1, float r1)
 	}
 }
 
-void printf_2f_test(struct cerror *error, char *msg, float e1, float e2, float r1, float r2)
+void printf_2f_test(struct cerror *error, char *msg, mfloat_t e1, mfloat_t e2, mfloat_t r1, mfloat_t r2)
 {
 	bool done = false;
 	printf("%s:\n\tExpected % .4f, % .4f\n\t  Actual % .4f, % .4f\t", msg, e1, e2, r1, r2);
@@ -115,7 +115,7 @@ void printf_2f_test(struct cerror *error, char *msg, float e1, float e2, float r
 	}
 }
 
-void printf_3f_test(struct cerror *error, char *msg, float e1, float e2, float e3, float r1, float r2, float r3)
+void printf_3f_test(struct cerror *error, char *msg, mfloat_t e1, mfloat_t e2, mfloat_t e3, mfloat_t r1, mfloat_t r2, mfloat_t r3)
 {
 	bool done = false;
 	printf("%s:\n\tExpected % .4f, % .4f, % .4f\n\t  Actual % .4f, % .4f, % .4f\t", msg, e1, e2, e3, r1, r2, r3);
@@ -145,7 +145,7 @@ void printf_3f_test(struct cerror *error, char *msg, float e1, float e2, float e
 	}
 }
 
-void printf_4f_test(struct cerror *error, char *msg, float e1, float e2, float e3, float e4, float r1, float r2, float r3, float r4)
+void printf_4f_test(struct cerror *error, char *msg, mfloat_t e1, mfloat_t e2, mfloat_t e3, mfloat_t e4, mfloat_t r1, mfloat_t r2, mfloat_t r3, mfloat_t r4)
 {
 	bool done = false;
 	printf("%s:\n\tExpected % .9f, % .9f, % .9f, % .9f\n\t  Actual % .9f, % .9f, % .9f, % .9f\t", msg, e1, e2, e3, e4, r1, r2, r3, r4);
@@ -175,7 +175,55 @@ void printf_4f_test(struct cerror *error, char *msg, float e1, float e2, float e
 	}
 }
 
-void vector2_tests(struct cerror *error)
+void printf_1i_test(struct cerror *error, char *msg, mint_t e1, mint_t r1)
+{
+	printf("%s:\n\tExpected % d\n\t  Actual % d\t", msg, e1, r1);
+	if (e1 == r1) {
+		error->passed = error->passed + 1;
+		printf("~passed~\n\n");
+	} else {
+		error->failed = error->failed + 1;
+		printf("~failed~\n\n");
+	}
+}
+
+void printf_2i_test(struct cerror *error, char *msg, mint_t e1, mint_t e2, mint_t r1, mint_t r2)
+{
+	printf("%s:\n\tExpected % d, % d\n\t  Actual % d, % d\t", msg, e1, e2, r1, r2);
+	if (e1 == r1 && e2 == r2) {
+		error->passed = error->passed + 1;
+		printf("~passed~\n\n");
+	} else {
+		error->failed = error->failed + 1;
+		printf("~failed~\n\n");
+	}
+}
+
+void printf_3i_test(struct cerror *error, char *msg, mint_t e1, mint_t e2, mint_t e3, mint_t r1, mint_t r2, mint_t r3)
+{
+	printf("%s:\n\tExpected % d, % d, % d\n\t  Actual  % d, % d, % d\t", msg, e1, e2, e3, r1, r2, r3);
+	if (e1 == r1 && e2 == r2 && e3 == r3) {
+		error->passed = error->passed + 1;
+		printf("~passed~\n\n");
+	} else {
+		error->failed = error->failed + 1;
+		printf("~failed~\n\n");
+	}
+}
+
+void printf_4i_test(struct cerror *error, char *msg, mint_t e1, mint_t e2, mint_t e3, mint_t e4, mint_t r1, mint_t r2, mint_t r3, mint_t r4)
+{
+	printf("%s:\n\tExpected % d, % d, % d, % d\n\t  Actual  % d, % d, % d, % d\t", msg, e1, e2, e3, e4, r1, r2, r3, r4);
+	if (e1 == r1 && e2 == r2 && e3 == r3 && e4 == r4) {
+		error->passed = error->passed + 1;
+		printf("~passed~\n\n");
+	} else {
+		error->failed = error->failed + 1;
+		printf("~failed~\n\n");
+	}
+}
+
+void vec2_tests(struct cerror *error)
 {
 	struct vec2 v;
 	struct mat2 m;
@@ -225,6 +273,8 @@ void vector2_tests(struct cerror *error)
 	printf_2f_test(error, "Test `vec2_clamp`", -1.3f, 5.7f, v.x, v.y);
 	v = svec2_normalize(svec2(1.0f, 1.0f));
 	printf_2f_test(error, "Test `vec2_normalize`", 0.7071067812f, 0.7071067812f, v.x, v.y);
+	v = svec2_project(svec2(2.0f, 2.0f), svec2(0.5f, 1.0f));
+	printf_2f_test(error, "Test `vec2_project`", 1.2f, 2.4f, v.x, v.y);
 	v = svec2_slide(svec2(1.0f, 0.0f), svec2(-0.7071067812f, -0.7071067812f));
 	printf_2f_test(error, "Test `vec2_slide`", 0.5f, -0.5f, v.x, v.y);
 	v = svec2_reflect(svec2(1.0f, 0.0f), svec2(-0.7071067812f, -0.7071067812f));
@@ -246,6 +296,16 @@ void vector2_tests(struct cerror *error)
 	printf_1f_test(error, "Test `vec2_distance_to`", 32.0f, svec2_distance_squared_to(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
 }
 
+void vec2i_tests(struct cerror *error)
+{
+	struct vec2i v;
+	struct mat2 m;
+	printf_bool_test(error, "Test `vec2i_is_zero`", true, svec2i_is_zero(svec2i(0, 0)));
+	printf_bool_test(error, "Test `vec2i_is_equal`", true, svec2i_is_equal(svec2i(1, 7), svec2i(1, 7)));
+	v = svec2i(2, 1);
+	printf_2i_test(error, "Test `vec2i`", 2, 1, v.x, v.y);
+}
+
 void vector3_tests(struct cerror *error)
 {
 }
@@ -264,8 +324,9 @@ void intersection_tests(struct cerror *error)
 
 int main(int argc, char **args)
 {
-	struct cerror error = {0, 0, 0, 0, 0};
-	vector2_tests(&error);
+	struct cerror error = {0};
+	vec2_tests(&error);
+	vec2i_tests(&error);
 	vector3_tests(&error);
 	quaternion_tests(&error);
 	matrix_tests(&error);
