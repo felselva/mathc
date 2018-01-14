@@ -2279,6 +2279,13 @@ MATHC_INLINE struct vec2 svec2_assign(struct vec2 a)
 	return result;
 }
 
+MATHC_INLINE struct vec2 svec2_assign_vec2i(struct vec2i a)
+{
+	struct vec2 result;
+	vec2_assign_vec2i((mfloat_t *)&result, (mint_t *)&a);
+	return result;
+}
+
 MATHC_INLINE struct vec2 svec2_zero(void)
 {
 	struct vec2 result;
