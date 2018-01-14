@@ -241,6 +241,7 @@ mfloat_t *vec2_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar);
 mfloat_t *vec2_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_multiply_mat2(mfloat_t *result, mfloat_t *a, mfloat_t *m);
 mfloat_t *vec2_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec2_snap(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_negative(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec2_inverse(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec2_abs(mfloat_t *result, mfloat_t *a);
@@ -279,6 +280,7 @@ mint_t *vec2i_scale(mint_t *result, mint_t *a, mfloat_t scalar);
 mint_t *vec2i_multiply(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_multiply_mat2(mint_t *result, mint_t *a, mfloat_t *m);
 mint_t *vec2i_divide(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec2i_snap(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_negative(mint_t *result, mint_t *a);
 mint_t *vec2i_inverse(mint_t *result, mint_t *a);
 mint_t *vec2i_abs(mint_t *result, mint_t *a);
@@ -319,6 +321,7 @@ mfloat_t *vec3_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar);
 mfloat_t *vec3_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_multiply_mat3(mfloat_t *result, mfloat_t *a, mfloat_t *m);
 mfloat_t *vec3_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec3_snap(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_negative(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec3_inverse(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec3_abs(mfloat_t *result, mfloat_t *a);
@@ -355,6 +358,7 @@ mint_t *vec3i_scale(mint_t *result, mint_t *a, mfloat_t scalar);
 mint_t *vec3i_multiply(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_multiply_mat3(mint_t *result, mint_t *a, mfloat_t *m);
 mint_t *vec3i_divide(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec3i_snap(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_negative(mint_t *result, mint_t *a);
 mint_t *vec3i_inverse(mint_t *result, mint_t *a);
 mint_t *vec3i_abs(mint_t *result, mint_t *a);
@@ -393,6 +397,7 @@ mfloat_t *vec4_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar);
 mfloat_t *vec4_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_multiply_mat4(mfloat_t *result, mfloat_t *a, mfloat_t *m);
 mfloat_t *vec4_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *vec4_snap(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_negative(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec4_inverse(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec4_abs(mfloat_t *result, mfloat_t *a);
@@ -418,6 +423,7 @@ mint_t *vec4i_scale(mint_t *result, mint_t *a, mfloat_t scalar);
 mint_t *vec4i_multiply(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec4i_multiply_mat4(mint_t *result, mint_t *a, mfloat_t *m);
 mint_t *vec4i_divide(mint_t *result, mint_t *a, mint_t *b);
+mint_t *vec4i_snap(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec4i_negative(mint_t *result, mint_t *a);
 mint_t *vec4i_inverse(mint_t *result, mint_t *a);
 mint_t *vec4i_abs(mint_t *result, mint_t *a);
@@ -615,6 +621,12 @@ MATHC_INLINE struct vec2 *psvec2_multiply_mat2(struct vec2 *result, struct vec2 
 MATHC_INLINE struct vec2 *psvec2_divide(struct vec2 *result, struct vec2 *a, struct vec2 *b)
 {
 	vec2_divide((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec2 *psvec2_snap(struct vec2 *result, struct vec2 *a, struct vec2 *b)
+{
+	vec2_snap((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
 	return result;
 }
 
@@ -824,6 +836,12 @@ MATHC_INLINE struct vec2i *psvec2i_multiply_mat2(struct vec2i *result, struct ve
 MATHC_INLINE struct vec2i *psvec2i_divide(struct vec2i *result, struct vec2i *a, struct vec2i *b)
 {
 	vec2i_divide((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i *psvec2i_snap(struct vec2i *result, struct vec2i *a, struct vec2i *b)
+{
+	vec2i_snap((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
 }
 
@@ -1046,6 +1064,12 @@ MATHC_INLINE struct vec3 *psvec3_divide(struct vec3 *result, struct vec3 *a, str
 	return result;
 }
 
+MATHC_INLINE struct vec3 *psvec3_snap(struct vec3 *result, struct vec3 *a, struct vec3 *b)
+{
+	vec3_snap((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
+	return result;
+}
+
 MATHC_INLINE struct vec3 *psvec3_negative(struct vec3 *result, struct vec3 *a)
 {
 	vec3_negative((mfloat_t *)result, (mfloat_t *)a);
@@ -1241,6 +1265,12 @@ MATHC_INLINE struct vec3i *psvec3i_multiply_mat3(struct vec3i *result, struct ve
 MATHC_INLINE struct vec3i *psvec3i_divide(struct vec3i *result, struct vec3i *a, struct vec3i *b)
 {
 	vec3i_divide((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i *psvec3i_snap(struct vec3i *result, struct vec3i *a, struct vec3i *b)
+{
+	vec3i_snap((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
 }
 
@@ -1452,6 +1482,12 @@ MATHC_INLINE struct vec4 *psvec4_divide(struct vec4 *result, struct vec4 *a, str
 	return result;
 }
 
+MATHC_INLINE struct vec4 *psvec4_snap(struct vec4 *result, struct vec4 *a, struct vec4 *b)
+{
+	vec4_snap((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
+	return result;
+}
+
 MATHC_INLINE struct vec4 *psvec4_negative(struct vec4 *result, struct vec4 *a)
 {
 	vec4_negative((mfloat_t *)result, (mfloat_t *)a);
@@ -1586,6 +1622,12 @@ MATHC_INLINE struct vec4i *psvec4i_multiply_mat4(struct vec4i *result, struct ve
 MATHC_INLINE struct vec4i *psvec4i_divide(struct vec4i *result, struct vec4i *a, struct vec4i *b)
 {
 	vec4i_divide((mint_t *)result, (mint_t *)a, (mint_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct vec4i *psvec4i_snap(struct vec4i *result, struct vec4i *a, struct vec4i *b)
+{
+	vec4i_snap((mint_t *)result, (mint_t *)a, (mint_t *)b);
 	return result;
 }
 
@@ -2286,6 +2328,13 @@ MATHC_INLINE struct vec2 svec2_divide(struct vec2 a, struct vec2 b)
 	return result;
 }
 
+MATHC_INLINE struct vec2 svec2_snap(struct vec2 a, struct vec2 b)
+{
+	struct vec2 result;
+	vec2_snap((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
+	return result;
+}
+
 MATHC_INLINE struct vec2 svec2_negative(struct vec2 a)
 {
 	struct vec2 result;
@@ -2520,6 +2569,13 @@ MATHC_INLINE struct vec2i svec2i_divide(struct vec2i a, struct vec2i b)
 {
 	struct vec2i result;
 	vec2i_divide((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec2i svec2i_snap(struct vec2i a, struct vec2i b)
+{
+	struct vec2i result;
+	vec2i_snap((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
 }
 
@@ -2770,6 +2826,13 @@ MATHC_INLINE struct vec3 svec3_divide(struct vec3 a, struct vec3 b)
 	return result;
 }
 
+MATHC_INLINE struct vec3 svec3_snap(struct vec3 a, struct vec3 b)
+{
+	struct vec3 result;
+	vec3_snap((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
+	return result;
+}
+
 MATHC_INLINE struct vec3 svec3_negative(struct vec3 a)
 {
 	struct vec3 result;
@@ -2992,6 +3055,13 @@ MATHC_INLINE struct vec3i svec3i_divide(struct vec3i a, struct vec3i b)
 {
 	struct vec3i result;
 	vec3i_divide((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec3i svec3i_snap(struct vec3i a, struct vec3i b)
+{
+	struct vec3i result;
+	vec3i_snap((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
 }
 
@@ -3230,6 +3300,13 @@ MATHC_INLINE struct vec4 svec4_divide(struct vec4 a, struct vec4 b)
 	return result;
 }
 
+MATHC_INLINE struct vec4 svec4_snap(struct vec4 a, struct vec4 b)
+{
+	struct vec4 result;
+	vec4_snap((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
+	return result;
+}
+
 MATHC_INLINE struct vec4 svec4_negative(struct vec4 a)
 {
 	struct vec4 result;
@@ -3385,6 +3462,13 @@ MATHC_INLINE struct vec4i svec4i_divide(struct vec4i a, struct vec4i b)
 {
 	struct vec4i result;
 	vec4i_divide((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct vec4i svec4i_snap(struct vec4i a, struct vec4i b)
+{
+	struct vec4i result;
+	vec4i_snap((mint_t *)&result, (mint_t *)&a, (mint_t *)&b);
 	return result;
 }
 

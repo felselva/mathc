@@ -156,6 +156,13 @@ mfloat_t *vec2_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec2_snap(mfloat_t *result, mfloat_t *a, mfloat_t *b)
+{
+	result[0] = MFLOOR(a[0] / b[0]) * b[0];
+	result[1] = MFLOOR(a[1] / b[1]) * b[1];
+	return result;
+}
+
 mfloat_t *vec2_negative(mfloat_t *result, mfloat_t *a)
 {
 	result[0] = -a[0];
@@ -446,6 +453,13 @@ mint_t *vec2i_divide(mint_t *result, mint_t *a, mint_t *b)
 {
 	result[0] = a[0] / b[0];
 	result[1] = a[1] / b[1];
+	return result;
+}
+
+mint_t *vec2i_snap(mint_t *result, mint_t *a, mint_t *b)
+{
+	result[0] = (a[0] / b[0]) * b[0];
+	result[0] = (a[0] / b[0]) * b[0];
 	return result;
 }
 
@@ -777,6 +791,14 @@ mfloat_t *vec3_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec3_snap(mfloat_t *result, mfloat_t *a, mfloat_t *b)
+{
+	result[0] = MFLOOR(a[0] / b[0]) * b[0];
+	result[1] = MFLOOR(a[1] / b[1]) * b[1];
+	result[2] = MFLOOR(a[2] / b[2]) * b[2];
+	return result;
+}
+
 mfloat_t *vec3_negative(mfloat_t *result, mfloat_t *a)
 {
 	result[0] = -a[0];
@@ -1092,6 +1114,14 @@ mint_t *vec3i_divide(mint_t *result, mint_t *a, mint_t *b)
 	result[0] = MVECI_ROUND((mfloat_t)a[0] / (mfloat_t)b[0]);
 	result[1] = MVECI_ROUND((mfloat_t)a[1] / (mfloat_t)b[1]);
 	result[2] = MVECI_ROUND((mfloat_t)a[2] / (mfloat_t)b[2]);
+	return result;
+}
+
+mint_t *vec3i_snap(mint_t *result, mint_t *a, mint_t *b)
+{
+	result[0] = (a[0] / b[0]) * b[0];
+	result[1] = (a[1] / b[1]) * b[1];
+	result[2] = (a[2] / b[2]) * b[2];
 	return result;
 }
 
@@ -1451,6 +1481,15 @@ mfloat_t *vec4_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec4_snap(mfloat_t *result, mfloat_t *a, mfloat_t *b)
+{
+	result[0] = MFLOOR(a[0] / b[0]) * b[0];
+	result[1] = MFLOOR(a[1] / b[1]) * b[1];
+	result[2] = MFLOOR(a[2] / b[2]) * b[2];
+	result[3] = MFLOOR(a[3] / b[3]) * b[3];
+	return result;
+}
+
 mfloat_t *vec4_negative(mfloat_t *result, mfloat_t *a)
 {
 	result[0] = -a[0];
@@ -1709,6 +1748,15 @@ mint_t *vec4i_divide(mint_t *result, mint_t *a, mint_t *b)
 	result[1] = MVECI_ROUND((mfloat_t)a[1] / (mfloat_t)b[1]);
 	result[2] = MVECI_ROUND((mfloat_t)a[2] / (mfloat_t)b[2]);
 	result[3] = MVECI_ROUND((mfloat_t)a[3] / (mfloat_t)b[3]);
+	return result;
+}
+
+mint_t *vec4i_snap(mint_t *result, mint_t *a, mint_t *b)
+{
+	result[0] = (a[0] / b[0]) * b[0];
+	result[1] = (a[1] / b[1]) * b[1];
+	result[2] = (a[2] / b[2]) * b[2];
+	result[3] = (a[3] / b[3]) * b[3];
 	return result;
 }
 
