@@ -293,8 +293,9 @@ void vec2_tests(struct cerror *error)
 	printf_1f_test(error, "Test `vec2_dot`", 13.0f, svec2_dot(svec2(3.0f, 2.0f), svec2(1.0f, 5.0f)));
 	printf_1f_test(error, "Test `vec2_angle`", to_radians(45.0f), svec2_angle(svec2(2.0f, 2.0f)));
 	printf_1f_test(error, "Test `vec2_length`", 2.8284271247f, svec2_length(svec2(2.0f, 2.0f)));
-	printf_1f_test(error, "Test `vec2_length_squared`", 5.6568542495f, svec2_distance(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
-	printf_1f_test(error, "Test `vec2_distance`", 32.0f, svec2_distance_squared(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
+	printf_1f_test(error, "Test `vec2_length_squared`", 8.0f, svec2_length_squared(svec2(2.0f, 2.0f)));
+	printf_1f_test(error, "Test `vec2_distance`", 5.6568542495f, svec2_distance(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
+	printf_1f_test(error, "Test `vec2_distance_squared`", 32.0f, svec2_distance_squared(svec2(2.0f, 2.0f), svec2(6.0f, 6.0f)));
 }
 
 void vec3_tests(struct cerror *error)
@@ -351,17 +352,24 @@ void vec3_tests(struct cerror *error)
 	printf_3f_test(error, "Test `vec3_normalize`", 0.8017837257f, 0.2672612419f, 0.5345224838f, v.x, v.y, v.z);
 	v = svec3_project(svec3(-1.0f, 4.0f, 2.0f), svec3(1.0f, 5.0f, 3.0f));
 	printf_3f_test(error, "Test `vec3_project`", 0.7142857143f, 3.5714285714f, 2.1428571429, v.x, v.y, v.z);
+	v = svec3_slide(svec3(1.0f, 0.5f, -1.0f), svec3(-0.1f, 0.0f, 1.0f));
+	printf_3f_test(error, "Test `vec3_slide`", 0.89f,  0.5f,  0.1f, v.x, v.y, v.z);
+	v = svec3_reflect(svec3(1.0f, 0.5f, -1.0f), svec3(-0.1f, 0.0f, 1.0f));
+	printf_3f_test(error, "Test `vec3_reflect`", 0.78f,  0.5f,  1.2f, v.x, v.y, v.z);
+	v = svec3_lerp(svec3(3.0f, 3.0f, 3.0f), svec3(9.0f, 1.0f, 30.0f), 0.5f);
+	printf_3f_test(error, "Test `vec3_lerp`", 6.0f,  2.0f,  16.5f, v.x, v.y, v.z);
+	v = svec3_bezier3(svec3(-1.0f, -0.5f, 0.2f), svec3(1.5f, 0.15f, 0.5f), svec3(1.0f, -1.0f, 0.0f), 0.5f);
+	printf_3f_test(error, "Test `vec3_bezier3`", 0.75f, -0.3f, 0.3f, v.x, v.y, v.z);
+	v = svec3_bezier4(svec3(3.0f, 3.0f, 3.0f), svec3(9.0f, 7.0f, 9.0f), svec3(-4.0f, 6.0f, 7.0f), svec3(-5.0f, 1.0f, 2.0f), 0.5f);
+	printf_3f_test(error, "Test `vec3_bezier4`", 1.625f, 5.375f, 6.625f, v.x, v.y, v.z);
+	printf_1f_test(error, "Test `vec3_dot`", 44.0f, svec3_dot(svec3(1.0f, 2.0f, 3.0f), svec3(6.0f, 7.0f, 8.0f)));
+	printf_1f_test(error, "Test `vec3_length`", 3.4641016151f, svec3_length(svec3(2.0f, 2.0f, 2.0f)));
+	printf_1f_test(error, "Test `vec3_length_squared`", 12.0f, svec3_length_squared(svec3(2.0f, 2.0f, 2.0f)));
+	printf_1f_test(error, "Test `vec3_distance`", 6.9282032303f, svec3_distance(svec3(2.0f, 2.0f, 2.0f), svec3(6.0f, 6.0f, 6.0f)));
+	printf_1f_test(error, "Test `vec3_distance_squared`", 48.0f, svec3_distance_squared(svec3(2.0f, 2.0f, 2.0f), svec3(6.0f, 6.0f, 6.0f)));
 }
 
 void quaternion_tests(struct cerror *error)
-{
-}
-
-void matrix_tests(struct cerror *error)
-{
-}
-
-void intersection_tests(struct cerror *error)
 {
 }
 
@@ -371,8 +379,6 @@ int main(int argc, char **args)
 	vec2_tests(&error);
 	vec3_tests(&error);
 	quaternion_tests(&error);
-	matrix_tests(&error);
-	intersection_tests(&error);
 	printf("\nTotal of failed tests: %d\n", error.failed);
 	printf("Total of tests that passed: %d\n", error.passed);
 	printf("Total of tests that passed with epsilon * 10.0: %d\n", error.passed_with_e10);
