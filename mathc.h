@@ -117,10 +117,10 @@ struct vec3 {
 };
 
 struct vec4 {
-	mint_t x;
-	mint_t y;
-	mint_t z;
-	mint_t w;
+	mfloat_t x;
+	mfloat_t y;
+	mfloat_t z;
+	mfloat_t w;
 };
 
 struct vec2i {
