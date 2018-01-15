@@ -426,8 +426,8 @@ mint_t *vec2i_subtract(mint_t *result, mint_t *a, mint_t *b)
 
 mint_t *vec2i_scale(mint_t *result, mint_t *a, mfloat_t scalar)
 {
-	result[0] = (mfloat_t)a[0] * scalar;
-	result[1] = (mfloat_t)a[1] * scalar;
+	result[0] = a[0] * scalar;
+	result[1] = a[1] * scalar;
 	return result;
 }
 
@@ -498,22 +498,22 @@ mint_t *vec2i_abs(mint_t *result, mint_t *a)
 
 mint_t *vec2i_floor(mint_t *result, mfloat_t *a)
 {
-	result[0] = MFLOOR((mfloat_t)a[0]);
-	result[1] = MFLOOR((mfloat_t)a[1]);
+	result[0] = MFLOOR(a[0]);
+	result[1] = MFLOOR(a[1]);
 	return result;
 }
 
 mint_t *vec2i_ceil(mint_t *result, mfloat_t *a)
 {
-	result[0] = MCEIL((mfloat_t)a[0]);
-	result[1] = MCEIL((mfloat_t)a[1]);
+	result[0] = MCEIL(a[0]);
+	result[1] = MCEIL(a[1]);
 	return result;
 }
 
 mint_t *vec2i_round(mint_t *result, mfloat_t *a)
 {
-	result[0] = MROUND((mfloat_t)a[0]);
-	result[1] = MROUND((mfloat_t)a[1]);
+	result[0] = MROUND(a[0]);
+	result[1] = MROUND(a[1]);
 	return result;
 }
 
@@ -555,8 +555,8 @@ mint_t *vec2i_normalize(mint_t *result, mint_t *a)
 	mfloat_t length = MSQRT(a[0] * a[0] + a[1] * a[1]);
 	if (!nearly_equal(length, MFLOAT_C(0.0), MFLT_EPSILON)) {
 		length = MFLOAT_C(1.0) / length;
-		result[0] = (mfloat_t)a[0] * length;
-		result[1] = (mfloat_t)a[1] * length;
+		result[0] = a[0] * length;
+		result[1] = a[1] * length;
 	} else {
 		result[0] = 0;
 		result[1] = 0;
@@ -567,24 +567,24 @@ mint_t *vec2i_normalize(mint_t *result, mint_t *a)
 mint_t *vec2i_project(mint_t *result, mint_t *a, mint_t *b)
 {
 	mfloat_t s = vec2i_dot(a, b) / vec2i_dot(b, b);
-	result[0] = (mfloat_t)b[0] * s;
-	result[1] = (mfloat_t)b[1] * s;
+	result[0] = b[0] * s;
+	result[1] = b[1] * s;
 	return result;
 }
 
 mint_t *vec2i_slide(mint_t *result, mint_t *a, mint_t *b)
 {
 	mfloat_t d = vec2i_dot(a, b);
-	result[0] = a[0] - (mfloat_t)b[0] * d;
-	result[1] = a[1] - (mfloat_t)b[1] * d;
+	result[0] = a[0] - b[0] * d;
+	result[1] = a[1] - b[1] * d;
 	return result;
 }
 
 mint_t *vec2i_reflect(mint_t *result, mint_t *a, mint_t *b)
 {
 	mfloat_t d = MFLOAT_C(2.0) * vec2i_dot(a, b);
-	result[0] = (mfloat_t)a[0] - (mfloat_t)b[0] * d;
-	result[1] = (mfloat_t)a[1] - (mfloat_t)b[1] * d;
+	result[0] = a[0] - b[0] * d;
+	result[1] = a[1] - b[1] * d;
 	return result;
 }
 
@@ -608,8 +608,8 @@ mint_t *vec2i_rotate(mint_t *result, mint_t *a, mfloat_t angle)
 
 mint_t *vec2i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p)
 {
-	result[0] = a[0] + (mfloat_t)(b[0] - a[0]) * p;
-	result[1] = a[1] + (mfloat_t)(b[1] - a[1]) * p;
+	result[0] = a[0] + (b[0] - a[0]) * p;
+	result[1] = a[1] + (b[1] - a[1]) * p;
 	return result;
 }
 
@@ -1082,9 +1082,9 @@ mint_t *vec3i_subtract(mint_t *result, mint_t *a, mint_t *b)
 
 mint_t *vec3i_scale(mint_t *result, mint_t *a, mfloat_t scalar)
 {
-	result[0] = (mfloat_t)a[0] * scalar;
-	result[1] = (mfloat_t)a[1] * scalar;
-	result[2] = (mfloat_t)a[2] * scalar;
+	result[0] = a[0] * scalar;
+	result[1] = a[1] * scalar;
+	result[2] = a[2] * scalar;
 	return result;
 }
 
@@ -1109,9 +1109,9 @@ mint_t *vec3i_multiply_mat3(mint_t *result, mint_t *a, mfloat_t *m)
 
 mint_t *vec3i_divide(mint_t *result, mint_t *a, mint_t *b)
 {
-	result[0] = (mfloat_t)a[0] / (mfloat_t)b[0];
-	result[1] = (mfloat_t)a[1] / (mfloat_t)b[1];
-	result[2] = (mfloat_t)a[2] / (mfloat_t)b[2];
+	result[0] = a[0] / b[0];
+	result[1] = a[1] / b[1];
+	result[2] = a[2] / b[2];
 	return result;
 }
 
@@ -1170,25 +1170,25 @@ mint_t *vec3i_abs(mint_t *result, mint_t *a)
 
 mint_t *vec3i_floor(mint_t *result, mfloat_t *a)
 {
-	result[0] = MFLOOR((mfloat_t)a[0]);
-	result[1] = MFLOOR((mfloat_t)a[1]);
-	result[2] = MFLOOR((mfloat_t)a[2]);
+	result[0] = MFLOOR(a[0]);
+	result[1] = MFLOOR(a[1]);
+	result[2] = MFLOOR(a[2]);
 	return result;
 }
 
 mint_t *vec3i_ceil(mint_t *result, mfloat_t *a)
 {
-	result[0] = MCEIL((mfloat_t)a[0]);
-	result[1] = MCEIL((mfloat_t)a[1]);
-	result[2] = MCEIL((mfloat_t)a[2]);
+	result[0] = MCEIL(a[0]);
+	result[1] = MCEIL(a[1]);
+	result[2] = MCEIL(a[2]);
 	return result;
 }
 
 mint_t *vec3i_round(mint_t *result, mfloat_t *a)
 {
-	result[0] = MROUND((mfloat_t)a[0]);
-	result[1] = MROUND((mfloat_t)a[1]);
-	result[2] = MROUND((mfloat_t)a[2]);
+	result[0] = MROUND(a[0]);
+	result[1] = MROUND(a[1]);
+	result[2] = MROUND(a[2]);
 	return result;
 }
 
@@ -1251,9 +1251,9 @@ mint_t *vec3i_normalize(mint_t *result, mint_t *a)
 	mfloat_t length = MSQRT(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
 	if (!nearly_equal(length, MFLOAT_C(0.0), MFLT_EPSILON)) {
 		length = MFLOAT_C(1.0) / length;
-		result[0] = (mfloat_t)a[0] * length;
-		result[1] = (mfloat_t)a[1] * length;
-		result[2] = (mfloat_t)a[2] * length;
+		result[0] = a[0] * length;
+		result[1] = a[1] * length;
+		result[2] = a[2] * length;
 	} else {
 		result[0] = 0;
 		result[1] = 0;
@@ -1265,35 +1265,35 @@ mint_t *vec3i_normalize(mint_t *result, mint_t *a)
 mint_t *vec3i_project(mint_t *result, mint_t *a, mint_t *b)
 {
 	mfloat_t s = vec3i_dot(a, b) / vec3i_dot(b, b);
-	result[0] = (mfloat_t)b[0] * s;
-	result[1] = (mfloat_t)b[1] * s;
-	result[2] = (mfloat_t)b[2] * s;
+	result[0] = b[0] * s;
+	result[1] = b[1] * s;
+	result[2] = b[2] * s;
 	return result;
 }
 
 mint_t *vec3i_slide(mint_t *result, mint_t *a, mint_t *b)
 {
 	mfloat_t d = vec3i_dot(a, b);
-	result[0] = (mfloat_t)a[0] - (mfloat_t)b[0] * d;
-	result[1] = (mfloat_t)a[1] - (mfloat_t)b[1] * d;
-	result[2] = (mfloat_t)a[2] - (mfloat_t)b[2] * d;
+	result[0] = a[0] - b[0] * d;
+	result[1] = a[1] - b[1] * d;
+	result[2] = a[2] - b[2] * d;
 	return result;
 }
 
 mint_t *vec3i_reflect(mint_t *result, mint_t *a, mint_t *b)
 {
 	mfloat_t d = MFLOAT_C(2.0) * vec3i_dot(a, b);
-	result[0] = (mfloat_t)a[0] - (mfloat_t)b[0] * d;
-	result[1] = (mfloat_t)a[1] - (mfloat_t)b[1] * d;
-	result[2] = (mfloat_t)a[2] - (mfloat_t)b[2] * d;
+	result[0] = a[0] - b[0] * d;
+	result[1] = a[1] - b[1] * d;
+	result[2] = a[2] - b[2] * d;
 	return result;
 }
 
 mint_t *vec3i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p)
 {
-	result[0] = a[0] + (mfloat_t)(b[0] - a[0]) * p;
-	result[1] = a[1] + (mfloat_t)(b[1] - a[1]) * p;
-	result[2] = a[2] + (mfloat_t)(b[2] - a[2]) * p;
+	result[0] = a[0] + (b[0] - a[0]) * p;
+	result[1] = a[1] + (b[1] - a[1]) * p;
+	result[2] = a[2] + (b[2] - a[2]) * p;
 	return result;
 }
 
@@ -1713,10 +1713,10 @@ mint_t *vec4i_subtract(mint_t *result, mint_t *a, mint_t *b)
 
 mint_t *vec4i_scale(mint_t *result, mint_t *a, mfloat_t scalar)
 {
-	result[0] = (mfloat_t)a[0] * scalar;
-	result[1] = (mfloat_t)a[1] * scalar;
-	result[2] = (mfloat_t)a[2] * scalar;
-	result[3] = (mfloat_t)a[3] * scalar;
+	result[0] = a[0] * scalar;
+	result[1] = a[1] * scalar;
+	result[2] = a[2] * scalar;
+	result[3] = a[3] * scalar;
 	return result;
 }
 
@@ -1744,10 +1744,10 @@ mint_t *vec4i_multiply_mat4(mint_t *result, mint_t *a, mfloat_t *m)
 
 mint_t *vec4i_divide(mint_t *result, mint_t *a, mint_t *b)
 {
-	result[0] = (mfloat_t)a[0] / (mfloat_t)b[0];
-	result[1] = (mfloat_t)a[1] / (mfloat_t)b[1];
-	result[2] = (mfloat_t)a[2] / (mfloat_t)b[2];
-	result[3] = (mfloat_t)a[3] / (mfloat_t)b[3];
+	result[0] = a[0] / b[0];
+	result[1] = a[1] / b[1];
+	result[2] = a[2] / b[2];
+	result[3] = a[3] / b[3];
 	return result;
 }
 
@@ -1816,19 +1816,19 @@ mint_t *vec4i_abs(mint_t *result, mint_t *a)
 
 mint_t *vec4i_floor(mint_t *result, mfloat_t *a)
 {
-	result[0] = MFLOOR((mfloat_t)a[0]);
-	result[1] = MFLOOR((mfloat_t)a[1]);
-	result[2] = MFLOOR((mfloat_t)a[2]);
-	result[3] = MFLOOR((mfloat_t)a[3]);
+	result[0] = MFLOOR(a[0]);
+	result[1] = MFLOOR(a[1]);
+	result[2] = MFLOOR(a[2]);
+	result[3] = MFLOOR(a[3]);
 	return result;
 }
 
 mint_t *vec4i_ceil(mint_t *result, mfloat_t *a)
 {
-	result[0] = MCEIL((mfloat_t)a[0]);
-	result[1] = MCEIL((mfloat_t)a[1]);
-	result[2] = MCEIL((mfloat_t)a[2]);
-	result[3] = MCEIL((mfloat_t)a[3]);
+	result[0] = MCEIL(a[0]);
+	result[1] = MCEIL(a[1]);
+	result[2] = MCEIL(a[2]);
+	result[3] = MCEIL(a[3]);
 	return result;
 }
 
@@ -1897,10 +1897,10 @@ mint_t *vec4i_normalize(mint_t *result, mint_t *a)
 	mfloat_t length = MSQRT(a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3]);
 	if (!nearly_equal(length, MFLOAT_C(0.0), MFLT_EPSILON)) {
 		length = MFLOAT_C(1.0) / length;
-		result[0] = (mfloat_t)a[0] * length;
-		result[1] = (mfloat_t)a[1] * length;
-		result[2] = (mfloat_t)a[2] * length;
-		result[3] = (mfloat_t)a[3] * length;
+		result[0] = a[0] * length;
+		result[1] = a[1] * length;
+		result[2] = a[2] * length;
+		result[3] = a[3] * length;
 	} else {
 		result[0] = 0;
 		result[1] = 0;
@@ -1912,10 +1912,10 @@ mint_t *vec4i_normalize(mint_t *result, mint_t *a)
 
 mint_t *vec4i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p)
 {
-	result[0] = a[0] + (mfloat_t)(b[0] - a[0]) * p;
-	result[1] = a[1] + (mfloat_t)(b[1] - a[1]) * p;
-	result[2] = a[2] + (mfloat_t)(b[2] - a[2]) * p;
-	result[3] = a[3] + (mfloat_t)(b[3] - a[3]) * p;
+	result[0] = a[0] + (b[0] - a[0]) * p;
+	result[1] = a[1] + (b[1] - a[1]) * p;
+	result[2] = a[2] + (b[2] - a[2]) * p;
+	result[3] = a[3] + (b[3] - a[3]) * p;
 	return result;
 }
 
