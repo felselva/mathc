@@ -359,20 +359,12 @@ mfloat_t vec2_distance_squared(mfloat_t *a, mfloat_t *b)
 /* Vector 2D Integer */
 bool vec2i_is_zero(mint_t *a)
 {
-	bool is_zero = false;
-	if (a[0] == 0 && a[1] == 0) {
-		is_zero = true;
-	}
-	return is_zero;
+	return a[0] == 0 && a[1] == 0;
 }
 
 bool vec2i_is_equal(mint_t *a, mint_t *b)
 {
-	bool is_equal = false;
-	if (a[0] == b[0] && a[1] == b[1]) {
-		is_equal = true;
-	}
-	return is_equal;
+	return a[0] == b[0] && a[1] == b[1];
 }
 
 mint_t *vec2i(mint_t *result, mint_t x, mint_t y)
@@ -1008,20 +1000,12 @@ mfloat_t vec3_distance_squared(mfloat_t *a, mfloat_t *b)
 /* Vector 3D Integer */
 bool vec3i_is_zero(mint_t *a)
 {
-	bool is_zero = false;
-	if (a[0] == 0 && a[1] == 0) {
-		is_zero = true;
-	}
-	return is_zero;
+	return a[0] == 0 && a[1] == 0;
 }
 
 bool vec3i_is_equal(mint_t *a, mint_t *b)
 {
-	bool is_equal = false;
-	if (a[0] == b[0] && a[1] == b[1]) {
-		is_equal = true;
-	}
-	return is_equal;
+	return a[0] == b[0] && a[1] == b[1];
 }
 
 mint_t *vec3i(mint_t *result, mint_t x, mint_t y, mint_t z)
@@ -1632,20 +1616,12 @@ mfloat_t *vec4_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p)
 /* Vector 4D Integer */
 bool vec4i_is_zero(mint_t *a)
 {
-	bool is_zero = false;
-	if (a[0] == 0 && a[1] == 0 && a[2] == 0 && a[3] == 0) {
-		is_zero = true;
-	}
-	return is_zero;
+	return a[0] == 0 && a[1] == 0 && a[2] == 0 && a[3] == 0;
 }
 
 bool vec4i_is_equal(mint_t *a, mint_t *b)
 {
-	bool is_equal = false;
-	if (a[0] == b[0] && a[1] == b[1] && a[2] == b[2] && a[3] == b[3]) {
-		is_equal = true;
-	}
-	return is_equal;
+	return a[0] == b[0] && a[1] == b[1] && a[2] == b[2] && a[3] == b[3];
 }
 
 mint_t *vec4i(mint_t *result, mint_t x, mint_t y, mint_t z, mint_t w)
