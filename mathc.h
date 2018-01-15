@@ -2655,21 +2655,21 @@ MATHC_INLINE struct vec2i svec2i_abs(struct vec2i a)
 	return result;
 }
 
-MATHC_INLINE struct vec2i svec2i_floor(struct vec2 *a)
+MATHC_INLINE struct vec2i svec2i_floor(struct vec2 a)
 {
 	struct vec2i result;
 	vec2i_floor((mint_t *)&result, (mfloat_t *)&a);
 	return result;
 }
 
-MATHC_INLINE struct vec2i svec2i_ceil(struct vec2 *a)
+MATHC_INLINE struct vec2i svec2i_ceil(struct vec2 a)
 {
 	struct vec2i result;
 	vec2i_ceil((mint_t *)&result, (mfloat_t *)&a);
 	return result;
 }
 
-MATHC_INLINE struct vec2i svec2i_round(struct vec2 *a)
+MATHC_INLINE struct vec2i svec2i_round(struct vec2 a)
 {
 	struct vec2i result;
 	vec2i_round((mint_t *)&result, (mfloat_t *)&a);
