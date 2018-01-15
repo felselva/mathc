@@ -100,19 +100,6 @@ the following restrictions:
 	#define MFLOAT_C(c) c ## f
 #endif
 
-#ifdef MVECI_ROUND_ROUND_FUNC
-	#define MVECI_ROUND MROUND
-#endif
-#ifdef MVECI_ROUND_FLOOR_FUNC
-	#define MVECI_ROUND MFLOOR
-#endif
-#ifdef MVECI_ROUND_CEIL_FUNC
-	#define MVECI_ROUND MCEIL
-#endif
-#ifndef MVECI_ROUND
-	#define MVECI_ROUND MFLOOR
-#endif
-
 /* Enable or disable structures */
 #ifdef MATHC_NO_STRUCTURES
 	#define MATHC_NO_POINTER_STRUCT_FUNCTIONS
