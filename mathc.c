@@ -50,38 +50,22 @@ mfloat_t to_degrees(mfloat_t radians)
 /* Vector 2D */
 bool vec2_is_zero(mfloat_t *a)
 {
-	bool is_zero = false;
-	if (nearly_equal(a[0], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[1], MFLOAT_C(0.0), MFLT_EPSILON)) {
-		is_zero = true;
-	}
-	return is_zero;
+	return nearly_equal(a[0], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[1], MFLOAT_C(0.0), MFLT_EPSILON);
 }
 
 bool vec2_is_near_zero(mfloat_t *a, mfloat_t epsilon)
 {
-	bool is_near_zero = false;
-	if (nearly_equal(a[0], MFLOAT_C(0.0), epsilon) && nearly_equal(a[1], MFLOAT_C(0.0), epsilon)) {
-		is_near_zero = true;
-	}
-	return is_near_zero;
+	return nearly_equal(a[0], MFLOAT_C(0.0), epsilon) && nearly_equal(a[1], MFLOAT_C(0.0), epsilon);
 }
 
 bool vec2_is_equal(mfloat_t *a, mfloat_t *b)
 {
-	bool is_equal = false;
-	if (nearly_equal(a[0], b[0], MFLT_EPSILON) && nearly_equal(a[1], b[1], MFLT_EPSILON)) {
-		is_equal = true;
-	}
-	return is_equal;
+	return nearly_equal(a[0], b[0], MFLT_EPSILON) && nearly_equal(a[1], b[1], MFLT_EPSILON);
 }
 
 bool vec2_is_nearly_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon)
 {
-	bool is_equal = false;
-	if (nearly_equal(a[0], b[0], epsilon) && nearly_equal(a[1], b[1], epsilon)) {
-		is_equal = true;
-	}
-	return is_equal;
+	return nearly_equal(a[0], b[0], epsilon) && nearly_equal(a[1], b[1], epsilon);
 }
 
 mfloat_t *vec2(mfloat_t *result, mfloat_t x, mfloat_t y)
@@ -688,38 +672,22 @@ mfloat_t vec2i_distance_squared(mint_t *a, mint_t *b)
 /* Vector 3D */
 bool vec3_is_zero(mfloat_t *a)
 {
-	bool is_zero = false;
-	if (nearly_equal(a[0], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[1], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[2], MFLOAT_C(0.0), MFLT_EPSILON)) {
-		is_zero = true;
-	}
-	return is_zero;
+	return nearly_equal(a[0], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[1], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[2], MFLOAT_C(0.0), MFLT_EPSILON);
 }
 
 bool vec3_is_near_zero(mfloat_t *a, mfloat_t epsilon)
 {
-	bool is_near_zero = false;
-	if (nearly_equal(a[0], MFLOAT_C(0.0), epsilon) && nearly_equal(a[1], MFLOAT_C(0.0), epsilon) && nearly_equal(a[2], MFLOAT_C(0.0), epsilon)) {
-		is_near_zero = true;
-	}
-	return is_near_zero;
+	return nearly_equal(a[0], MFLOAT_C(0.0), epsilon) && nearly_equal(a[1], MFLOAT_C(0.0), epsilon) && nearly_equal(a[2], MFLOAT_C(0.0), epsilon);
 }
 
 bool vec3_is_equal(mfloat_t *a, mfloat_t *b)
 {
-	bool is_equal = false;
-	if (nearly_equal(a[0], b[0], MFLT_EPSILON) && nearly_equal(a[1], b[1], MFLT_EPSILON) && nearly_equal(a[2], b[2], MFLT_EPSILON)) {
-		is_equal = true;
-	}
-	return is_equal;
+	return nearly_equal(a[0], b[0], MFLT_EPSILON) && nearly_equal(a[1], b[1], MFLT_EPSILON) && nearly_equal(a[2], b[2], MFLT_EPSILON);
 }
 
 bool vec3_is_nearly_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon)
 {
-	bool is_equal = false;
-	if (nearly_equal(a[0], b[0], epsilon) && nearly_equal(a[1], b[1], epsilon) && nearly_equal(a[2], b[2], epsilon)) {
-		is_equal = true;
-	}
-	return is_equal;
+	return nearly_equal(a[0], b[0], epsilon) && nearly_equal(a[1], b[1], epsilon) && nearly_equal(a[2], b[2], epsilon);
 }
 
 mfloat_t *vec3(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z)
@@ -1383,38 +1351,22 @@ mfloat_t vec3i_distance_squared(mint_t *a, mint_t *b)
 /* Vector 4D */
 bool vec4_is_zero(mfloat_t *a)
 {
-	bool is_zero = false;
-	if (nearly_equal(a[0], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[1], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[2], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[3], MFLOAT_C(0.0), MFLT_EPSILON)) {
-		is_zero = true;
-	}
-	return is_zero;
+	return nearly_equal(a[0], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[1], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[2], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[3], MFLOAT_C(0.0), MFLT_EPSILON);
 }
 
 bool vec4_is_near_zero(mfloat_t *a, mfloat_t epsilon)
 {
-	bool is_near_zero = false;
-	if (nearly_equal(a[0], MFLOAT_C(0.0), epsilon) && nearly_equal(a[1], MFLOAT_C(0.0), epsilon) && nearly_equal(a[2], MFLOAT_C(0.0), epsilon) && nearly_equal(a[3], MFLOAT_C(0.0), epsilon)) {
-		is_near_zero = true;
-	}
-	return is_near_zero;
+	return nearly_equal(a[0], MFLOAT_C(0.0), epsilon) && nearly_equal(a[1], MFLOAT_C(0.0), epsilon) && nearly_equal(a[2], MFLOAT_C(0.0), epsilon) && nearly_equal(a[3], MFLOAT_C(0.0), epsilon);
 }
 
 bool vec4_is_equal(mfloat_t *a, mfloat_t *b)
 {
-	bool is_equal = false;
-	if (nearly_equal(a[0], b[0], MFLT_EPSILON) && nearly_equal(a[1], b[1], MFLT_EPSILON) && nearly_equal(a[2], b[2], MFLT_EPSILON) && nearly_equal(a[3], b[3], MFLT_EPSILON)) {
-		is_equal = true;
-	}
-	return is_equal;
+	return nearly_equal(a[0], b[0], MFLT_EPSILON) && nearly_equal(a[1], b[1], MFLT_EPSILON) && nearly_equal(a[2], b[2], MFLT_EPSILON) && nearly_equal(a[3], b[3], MFLT_EPSILON);
 }
 
 bool vec4_is_nearly_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon)
 {
-	bool is_equal = false;
-	if (nearly_equal(a[0], b[0], epsilon) && nearly_equal(a[1], b[1], epsilon) && nearly_equal(a[2], b[2], epsilon) && nearly_equal(a[3], b[3], epsilon)) {
-		is_equal = true;
-	}
-	return is_equal;
+	return nearly_equal(a[0], b[0], epsilon) && nearly_equal(a[1], b[1], epsilon) && nearly_equal(a[2], b[2], epsilon) && nearly_equal(a[3], b[3], epsilon);
 }
 
 mfloat_t *vec4(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
@@ -1970,38 +1922,22 @@ mint_t *vec4i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p)
 /* Quaternion */
 bool quat_is_zero(mfloat_t *a)
 {
-	bool is_zero = false;
-	if (nearly_equal(a[0], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[1], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[2], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[3], MFLOAT_C(0.0), MFLT_EPSILON)) {
-		is_zero = true;
-	}
-	return is_zero;
+	return nearly_equal(a[0], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[1], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[2], MFLOAT_C(0.0), MFLT_EPSILON) && nearly_equal(a[3], MFLOAT_C(0.0), MFLT_EPSILON);
 }
 
 bool quat_is_near_zero(mfloat_t *a, mfloat_t epsilon)
 {
-	bool is_near_zero = false;
-	if (nearly_equal(a[0], MFLOAT_C(0.0), epsilon) && nearly_equal(a[1], MFLOAT_C(0.0), epsilon) && nearly_equal(a[2], MFLOAT_C(0.0), epsilon) && nearly_equal(a[3], MFLOAT_C(0.0), epsilon)) {
-		is_near_zero = true;
-	}
-	return is_near_zero;
+	return nearly_equal(a[0], MFLOAT_C(0.0), epsilon) && nearly_equal(a[1], MFLOAT_C(0.0), epsilon) && nearly_equal(a[2], MFLOAT_C(0.0), epsilon) && nearly_equal(a[3], MFLOAT_C(0.0), epsilon);
 }
 
 bool quat_is_equal(mfloat_t *a, mfloat_t *b)
 {
-	bool is_equal = false;
-	if (nearly_equal(a[0], b[0], MFLT_EPSILON) && nearly_equal(a[1], b[1], MFLT_EPSILON) && nearly_equal(a[2], b[2], MFLT_EPSILON) && nearly_equal(a[3], b[3], MFLT_EPSILON)) {
-		is_equal = true;
-	}
-	return is_equal;
+	return nearly_equal(a[0], b[0], MFLT_EPSILON) && nearly_equal(a[1], b[1], MFLT_EPSILON) && nearly_equal(a[2], b[2], MFLT_EPSILON) && nearly_equal(a[3], b[3], MFLT_EPSILON);
 }
 
 bool quat_is_nearly_equal(mfloat_t *a, mfloat_t *b, mfloat_t epsilon)
 {
-	bool is_equal = false;
-	if (nearly_equal(a[0], b[0], epsilon) && nearly_equal(a[1], b[1], epsilon) && nearly_equal(a[2], b[2], epsilon) && nearly_equal(a[3], b[3], epsilon)) {
-		is_equal = true;
-	}
-	return is_equal;
+	return nearly_equal(a[0], b[0], epsilon) && nearly_equal(a[1], b[1], epsilon) && nearly_equal(a[2], b[2], epsilon) && nearly_equal(a[3], b[3], epsilon);
 }
 
 mfloat_t *quat(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w)
