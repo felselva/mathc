@@ -163,12 +163,12 @@ mfloat_t *vec2_negative(mfloat_t *result, mfloat_t *a)
 
 mfloat_t *vec2_inverse(mfloat_t *result, mfloat_t *a)
 {
-	if (a[0] != MFLOAT_C(0.0)) {
+	if (!nearly_equal(a[0], MFLOAT_C(0.0), MFLT_EPSILON)) {
 		result[0] = MFLOAT_C(1.0) / a[0];
 	} else {
 		result[0] = MFLOAT_C(0.0);
 	}
-	if (a[1] != MFLOAT_C(0.0)) {
+	if (!nearly_equal(a[1], MFLOAT_C(0.0), MFLT_EPSILON)) {
 		result[1] = MFLOAT_C(1.0) / a[1];
 	} else {
 		result[1] = MFLOAT_C(0.0);
