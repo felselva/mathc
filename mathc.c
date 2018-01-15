@@ -24,15 +24,10 @@ the following restrictions:
 bool nearly_equal(mfloat_t a, mfloat_t b, mfloat_t epsilon)
 {
 	bool result = false;
-	mfloat_t abs_a = MABS(a);
-	mfloat_t abs_b = MABS(b);
-	mfloat_t diff = MABS(a - b);
 	if (a == b) {
 		result = true;
-	} else if (a == MFLOAT_C(0.0) || b == MFLOAT_C(0.0) || diff < MFLT_EPSILON) {
-		result = diff < epsilon;
 	} else {
-		result = diff / MMIN(abs_a + abs_b, FLT_MAX) < epsilon;
+		result = MABS(a - b) < epsilon;
 	}
 	return result;
 }
