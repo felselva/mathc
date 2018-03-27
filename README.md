@@ -11,15 +11,17 @@ MATHC (version 2) is a simple math library for 2D and 3D programming. It contain
 
 ## Configuring
 
-MATHC can be configured with the following preprocessors (described in the following sections of this document):
+MATHC can be configured with the following preprocessors:
 
-- `MATHC_NO_STDBOOL`
-- `mfloat_t`
-- `MATHC_DOUBLE_PRECISION`
-- `MATHC_NO_STRUCTURES`
-- `MATHC_NO_POINTER_STRUCT_FUNCTIONS`
-- `MATHC_NO_STRUCT_FUNCTIONS`
-- `MATHC_NO_EASING_FUNCTIONS`
+- `MATHC_NO_STDBOOL`: don't include `stdbool.h` and define a `bool` type to replace the standard.
+- `MATHC_NO_STDINT`: don't include `stdint.h`.
+- `mint_t`: the integer type is `int32_t` by default.
+- `mfloat_t`: the floating-point is `float` by default.
+- `MATHC_DOUBLE_PRECISION`: use the standard math functions with double precision.
+- `MATHC_NO_STRUCTURES`: don't define structures.
+- `MATHC_NO_POINTER_STRUCT_FUNCTIONS`: don't define functions that take pointer to structures.
+- `MATHC_NO_STRUCT_FUNCTIONS`: don't define functions that take structures as value.
+- `MATHC_NO_EASING_FUNCTIONS`: don't define easing functions.
 
 You can define these macros during compilation time with flags:
 
@@ -37,21 +39,9 @@ Or include `mathc.c` in a source file. This second approach is more useful and f
 #include <mathc.c>
 ```
 
-## Integer Type
-
-By default, `mint_t` is a `int32_t` if the header `stdint.h` is available. If the header `stdint.h` is not avaliable, disabled by defining `MATHC_NO_STDINT`, `mint_t` is a `int`. This can be changed by predefining `mint_t` as a desired type.
-
-## Float-Point Type
-
-By default, `mfloat_t` is a `float`. This can be changed by predefining `mfloat_t` as a desired type.
-
-## Math Precision
-
-By default, MATHC will use single-precision internally. This can be changed by predefining `MATHC_DOUBLE_PRECISION`.
-
 ## Types
 
-By default, types are can be declared as `mfloat_t` arrays or `mint_t` arrays, or structures:
+By default, types are can be declared as `mfloat_t` arrays, `mint_t` arrays, or structures:
 
 ```c
 /* As float arrays */
@@ -81,11 +71,9 @@ struct vec3i position;
 struct vec4i rgba;
 ```
 
-By defining `MATHC_NO_STRUCTURES`, structure types will not defined.
-
 ## Functions
 
-By default, MATHC will declare functions that take `mfloat_t` array or `mint_t` array, structure values, and structure pointers as arguments:
+By default, MATHC has functions that take as argument `mfloat_t` arrays, `mint_t` arrays, structures as value, or pointers to structure:
 
 ```c
 /* As array */
@@ -96,29 +84,26 @@ vec2_add(position,
 	vec2(position, 0.0f, 0.0f),
 	vec2(offset, 1.0f, 1.0f));
 
-/* As structures */
+/* As structure value */
 struct vec2 position = svec2(0.0f, 0.0f);
 struct vec2 offset = svec2(1.0f, 1.0f);
-
-/* As structure value */
 position = svec2_add(position, offset);
+
 /* As structure pointer */
+struct vec2 position;
+struct vec2 offset;
+psvec2(&position, 0.0f, 0.0f)
+psvec2(&offset, 1.0f, 1.0f)
 psvec2_add(&position, &position, &offset);
 ```
 
 Functions that take structure as value have a prefix `s`. Functions that take structure pointers have a prefix `ps`.
-
-By defining `MATHC_NO_STRUCT_FUNCTIONS`, functions that take structure as value will not be defined.
-
-By defining `MATHC_NO_POINTER_STRUCT_FUNCTIONS`, functions that take structure pointers will not be defined.
 
 ## Easing Functions
 
 The easing functions are an implementation of the functions presented in [easings.net](http://easings.net/), useful particularly for animations.
 
 Easing functions take a value inside the range `0.0-1.0` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range (Check the [easings.net](http://easings.net/) to see those functions).
-
-By defining `MATHC_NO_EASING_FUNCTIONS`, the easing functions will not be defined.
 
 ## LICENSE
 
