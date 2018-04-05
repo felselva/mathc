@@ -22,9 +22,9 @@ the following restrictions:
 #define MATHC_H
 
 #include <math.h>
-#include <float.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <float.h>
 
 /* Integer type */
 #ifndef mint_t
