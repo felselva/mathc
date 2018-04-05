@@ -105,6 +105,20 @@ mfloat_t *vec2_add(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec2_add_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] + i;
+	result[1] = a[1] + i;
+	return result;
+}
+
+mfloat_t *vec2_add_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] + f;
+	result[1] = a[1] + f;
+	return result;
+}
+
 mfloat_t *vec2_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = a[0] - b[0];
@@ -112,17 +126,43 @@ mfloat_t *vec2_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec2_subtract_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] - i;
+	result[1] = a[1] - i;
+	return result;
+}
+
+mfloat_t *vec2_subtract_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] - f;
+	result[1] = a[1] - f;
+	return result;
+}
+
 mfloat_t *vec2_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar)
 {
-	result[0] = a[0] * scalar;
-	result[1] = a[1] * scalar;
-	return result;
+	return vec2_multiply_f(result, a, scalar);
 }
 
 mfloat_t *vec2_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = a[0] * b[0];
 	result[1] = a[1] * b[1];
+	return result;
+}
+
+mfloat_t *vec2_multiply_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] * i;
+	result[1] = a[1] * i;
+	return result;
+}
+
+mfloat_t *vec2_multiply_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] * f;
+	result[1] = a[1] * f;
 	return result;
 }
 
@@ -142,10 +182,38 @@ mfloat_t *vec2_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec2_divide_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] / i;
+	result[1] = a[1] / i;
+	return result;
+}
+
+mfloat_t *vec2_divide_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] / f;
+	result[1] = a[1] / f;
+	return result;
+}
+
 mfloat_t *vec2_snap(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = MFLOOR(a[0] / b[0]) * b[0];
 	result[1] = MFLOOR(a[1] / b[1]) * b[1];
+	return result;
+}
+
+mfloat_t *vec2_snap_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = MFLOOR(a[0] / i) * i;
+	result[1] = MFLOOR(a[1] / i) * i;
+	return result;
+}
+
+mfloat_t *vec2_snap_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = MFLOOR(a[0] / f) * f;
+	result[1] = MFLOOR(a[1] / f) * f;
 	return result;
 }
 
@@ -236,9 +304,8 @@ mfloat_t *vec2_normalize(mfloat_t *result, mfloat_t *a)
 {
 	mfloat_t length = MSQRT(a[0] * a[0] + a[1] * a[1]);
 	if (!nearly_equal(length, MFLOAT_C(0.0), MFLT_EPSILON)) {
-		length = MFLOAT_C(1.0) / length;
-		result[0] = a[0] * length;
-		result[1] = a[1] * length;
+		result[0] = a[0] / length;
+		result[1] = a[1] / length;
 	} else {
 		result[0] = MFLOAT_C(0.0);
 		result[1] = MFLOAT_C(0.0);
@@ -404,6 +471,13 @@ mint_t *vec2i_add(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec2i_add_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] + i;
+	result[1] = a[1] + i;
+	return result;
+}
+
 mint_t *vec2i_subtract(mint_t *result, mint_t *a, mint_t *b)
 {
 	result[0] = a[0] - b[0];
@@ -411,17 +485,36 @@ mint_t *vec2i_subtract(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
-mint_t *vec2i_scale(mint_t *result, mint_t *a, mfloat_t scalar)
+mint_t *vec2i_subtract_i(mint_t *result, mint_t *a, mint_t i)
 {
-	result[0] = a[0] * scalar;
-	result[1] = a[1] * scalar;
+	result[0] = a[0] - i;
+	result[1] = a[1] - i;
 	return result;
+}
+
+mint_t *vec2i_scale(mint_t *result, mint_t *a, mfloat_t scale)
+{
+	return vec2i_multiply_f(result, a, scale);
 }
 
 mint_t *vec2i_multiply(mint_t *result, mint_t *a, mint_t *b)
 {
 	result[0] = a[0] * b[0];
 	result[1] = a[1] * b[1];
+	return result;
+}
+
+mint_t *vec2i_multiply_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] * i;
+	result[1] = a[1] * i;
+	return result;
+}
+
+mint_t *vec2i_multiply_f(mint_t *result, mint_t *a, mfloat_t f)
+{
+	result[0] = a[0] * f;
+	result[1] = a[1] * f;
 	return result;
 }
 
@@ -441,6 +534,20 @@ mint_t *vec2i_divide(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec2i_divide_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] * i;
+	result[1] = a[1] * i;
+	return result;
+}
+
+mint_t *vec2i_divide_f(mint_t *result, mint_t *a, mfloat_t f)
+{
+	result[0] = a[0] * f;
+	result[1] = a[1] * f;
+	return result;
+}
+
 mint_t *vec2i_snap(mint_t *result, mint_t *a, mint_t *b)
 {
 	result[0] = (a[0] / b[0]) * b[0];
@@ -448,25 +555,24 @@ mint_t *vec2i_snap(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec2i_snap_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = (a[0] / i) * i;
+	result[0] = (a[0] / i) * i;
+	return result;
+}
+
+mint_t *vec2i_snap_f(mint_t *result, mint_t *a, mfloat_t f)
+{
+	result[0] = (a[0] / f) * f;
+	result[0] = (a[0] / f) * f;
+	return result;
+}
+
 mint_t *vec2i_negative(mint_t *result, mint_t *a)
 {
 	result[0] = -a[0];
 	result[1] = -a[1];
-	return result;
-}
-
-mint_t *vec2i_inverse(mint_t *result, mint_t *a)
-{
-	if (a[0] != 0) {
-		result[0] = MFLOAT_C(1.0) / (mfloat_t)a[0];
-	} else {
-		result[0] = 0;
-	}
-	if (a[1] == 0) {
-		result[1] = MFLOAT_C(1.0) / (mfloat_t)a[1];
-	} else {
-		result[1] = 0;
-	}
 	return result;
 }
 
@@ -541,9 +647,8 @@ mint_t *vec2i_normalize(mint_t *result, mint_t *a)
 {
 	mfloat_t length = MSQRT(a[0] * a[0] + a[1] * a[1]);
 	if (!nearly_equal(length, MFLOAT_C(0.0), MFLT_EPSILON)) {
-		length = MFLOAT_C(1.0) / length;
-		result[0] = a[0] * length;
-		result[1] = a[1] * length;
+		result[0] = a[0] / length;
+		result[1] = a[1] / length;
 	} else {
 		result[0] = 0;
 		result[1] = 0;
@@ -725,6 +830,22 @@ mfloat_t *vec3_add(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec3_add_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] + i;
+	result[1] = a[1] + i;
+	result[2] = a[2] + i;
+	return result;
+}
+
+mfloat_t *vec3_add_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] + f;
+	result[1] = a[1] + f;
+	result[2] = a[2] + f;
+	return result;
+}
+
 mfloat_t *vec3_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = a[0] - b[0];
@@ -733,12 +854,25 @@ mfloat_t *vec3_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec3_subtract_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] - i;
+	result[1] = a[1] - i;
+	result[2] = a[2] - i;
+	return result;
+}
+
+mfloat_t *vec3_subtract_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] - f;
+	result[1] = a[1] - f;
+	result[2] = a[2] - f;
+	return result;
+}
+
 mfloat_t *vec3_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar)
 {
-	result[0] = a[0] * scalar;
-	result[1] = a[1] * scalar;
-	result[2] = a[2] * scalar;
-	return result;
+	return vec3_multiply_f(result, a, scalar);
 }
 
 mfloat_t *vec3_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b)
@@ -746,6 +880,22 @@ mfloat_t *vec3_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	result[0] = a[0] * b[0];
 	result[1] = a[1] * b[1];
 	result[2] = a[2] * b[2];
+	return result;
+}
+
+mfloat_t *vec3_multiply_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] * i;
+	result[1] = a[1] * i;
+	result[2] = a[2] * i;
+	return result;
+}
+
+mfloat_t *vec3_multiply_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] * f;
+	result[1] = a[1] * f;
+	result[2] = a[2] * f;
 	return result;
 }
 
@@ -768,11 +918,43 @@ mfloat_t *vec3_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec3_divide_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] / i;
+	result[1] = a[1] / i;
+	result[2] = a[2] / i;
+	return result;
+}
+
+mfloat_t *vec3_divide_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] / f;
+	result[1] = a[1] / f;
+	result[2] = a[2] / f;
+	return result;
+}
+
 mfloat_t *vec3_snap(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = MFLOOR(a[0] / b[0]) * b[0];
 	result[1] = MFLOOR(a[1] / b[1]) * b[1];
 	result[2] = MFLOOR(a[2] / b[2]) * b[2];
+	return result;
+}
+
+mfloat_t *vec3_snap_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = MFLOOR(a[0] / i) * i;
+	result[1] = MFLOOR(a[1] / i) * i;
+	result[2] = MFLOOR(a[2] / i) * i;
+	return result;
+}
+
+mfloat_t *vec3_snap_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = MFLOOR(a[0] / f) * f;
+	result[1] = MFLOOR(a[1] / f) * f;
+	result[2] = MFLOOR(a[2] / f) * f;
 	return result;
 }
 
@@ -894,10 +1076,9 @@ mfloat_t *vec3_normalize(mfloat_t *result, mfloat_t *a)
 {
 	mfloat_t length = MSQRT(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
 	if (!nearly_equal(length, MFLOAT_C(0.0), MFLT_EPSILON)) {
-		length = MFLOAT_C(1.0) / length;
-		result[0] = a[0] * length;
-		result[1] = a[1] * length;
-		result[2] = a[2] * length;
+		result[0] = a[0] / length;
+		result[1] = a[1] / length;
+		result[2] = a[2] / length;
 	} else {
 		result[0] = MFLOAT_C(0.0);
 		result[1] = MFLOAT_C(0.0);
@@ -1051,6 +1232,14 @@ mint_t *vec3i_add(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec3i_add_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] + i;
+	result[1] = a[1] + i;
+	result[2] = a[2] + i;
+	return result;
+}
+
 mint_t *vec3i_subtract(mint_t *result, mint_t *a, mint_t *b)
 {
 	result[0] = a[0] - b[0];
@@ -1059,12 +1248,17 @@ mint_t *vec3i_subtract(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec3i_subtract_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] - i;
+	result[1] = a[1] - i;
+	result[2] = a[2] - i;
+	return result;
+}
+
 mint_t *vec3i_scale(mint_t *result, mint_t *a, mfloat_t scalar)
 {
-	result[0] = a[0] * scalar;
-	result[1] = a[1] * scalar;
-	result[2] = a[2] * scalar;
-	return result;
+	return vec3i_multiply_f(result, a, scalar);
 }
 
 mint_t *vec3i_multiply(mint_t *result, mint_t *a, mint_t *b)
@@ -1072,6 +1266,22 @@ mint_t *vec3i_multiply(mint_t *result, mint_t *a, mint_t *b)
 	result[0] = a[0] * b[0];
 	result[1] = a[1] * b[1];
 	result[2] = a[2] * b[2];
+	return result;
+}
+
+mint_t *vec3i_multiply_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] * i;
+	result[1] = a[1] * i;
+	result[2] = a[2] * i;
+	return result;
+}
+
+mint_t *vec3i_multiply_f(mint_t *result, mint_t *a, mfloat_t f)
+{
+	result[0] = a[0] * f;
+	result[1] = a[1] * f;
+	result[2] = a[2] * f;
 	return result;
 }
 
@@ -1094,6 +1304,14 @@ mint_t *vec3i_divide(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec3i_divide_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] / i;
+	result[1] = a[1] / i;
+	result[2] = a[2] / i;
+	return result;
+}
+
 mint_t *vec3i_snap(mint_t *result, mint_t *a, mint_t *b)
 {
 	result[0] = (a[0] / b[0]) * b[0];
@@ -1102,31 +1320,19 @@ mint_t *vec3i_snap(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec3i_snap_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = (a[0] / i) * i;
+	result[1] = (a[1] / i) * i;
+	result[2] = (a[2] / i) * i;
+	return result;
+}
+
 mint_t *vec3i_negative(mint_t *result, mint_t *a)
 {
 	result[0] = -a[0];
 	result[1] = -a[1];
 	result[2] = -a[2];
-	return result;
-}
-
-mint_t *vec3i_inverse(mint_t *result, mint_t *a)
-{
-	if (a[0] != 0) {
-		result[0] = MFLOAT_C(1.0) / (mfloat_t)a[0];
-	} else {
-		result[0] = 0;
-	}
-	if (a[1] != 0) {
-		result[1] = MFLOAT_C(1.0) / (mfloat_t)a[1];
-	} else {
-		result[1] = 0;
-	}
-	if (a[2] != 0) {
-		result[2] = MFLOAT_C(1.0) / (mfloat_t)a[2];
-	} else {
-		result[2] = 0;
-	}
 	return result;
 }
 
@@ -1229,10 +1435,9 @@ mint_t *vec3i_normalize(mint_t *result, mint_t *a)
 {
 	mfloat_t length = MSQRT(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
 	if (!nearly_equal(length, MFLOAT_C(0.0), MFLT_EPSILON)) {
-		length = MFLOAT_C(1.0) / length;
-		result[0] = a[0] * length;
-		result[1] = a[1] * length;
-		result[2] = a[2] * length;
+		result[0] = a[0] / length;
+		result[1] = a[1] / length;
+		result[2] = a[2] / length;
 	} else {
 		result[0] = 0;
 		result[1] = 0;
@@ -1402,6 +1607,24 @@ mfloat_t *vec4_add(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec4_add_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] + i;
+	result[1] = a[1] + i;
+	result[2] = a[2] + i;
+	result[3] = a[3] + i;
+	return result;
+}
+
+mfloat_t *vec4_add_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] + f;
+	result[1] = a[1] + f;
+	result[2] = a[2] + f;
+	result[3] = a[3] + f;
+	return result;
+}
+
 mfloat_t *vec4_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = a[0] - b[0];
@@ -1411,13 +1634,27 @@ mfloat_t *vec4_subtract(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec4_subtract_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] - i;
+	result[1] = a[1] - i;
+	result[2] = a[2] - i;
+	result[3] = a[3] - i;
+	return result;
+}
+
+mfloat_t *vec4_subtract_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] - f;
+	result[1] = a[1] - f;
+	result[2] = a[2] - f;
+	result[3] = a[3] - f;
+	return result;
+}
+
 mfloat_t *vec4_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar)
 {
-	result[0] = a[0] * scalar;
-	result[1] = a[1] * scalar;
-	result[2] = a[2] * scalar;
-	result[3] = a[3] * scalar;
-	return result;
+	return vec4_multiply_f(result, a, scalar);
 }
 
 mfloat_t *vec4_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b)
@@ -1426,6 +1663,24 @@ mfloat_t *vec4_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	result[1] = a[1] * b[1];
 	result[2] = a[2] * b[2];
 	result[3] = a[3] * b[3];
+	return result;
+}
+
+mfloat_t *vec4_multiply_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] * i;
+	result[1] = a[1] * i;
+	result[2] = a[2] * i;
+	result[3] = a[3] * i;
+	return result;
+}
+
+mfloat_t *vec4_multiply_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] * f;
+	result[1] = a[1] * f;
+	result[2] = a[2] * f;
+	result[3] = a[3] * f;
 	return result;
 }
 
@@ -1451,12 +1706,48 @@ mfloat_t *vec4_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *vec4_divide_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = a[0] / i;
+	result[1] = a[1] / i;
+	result[2] = a[2] / i;
+	result[3] = a[3] / i;
+	return result;
+}
+
+mfloat_t *vec4_divide_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] / f;
+	result[1] = a[1] / f;
+	result[2] = a[2] / f;
+	result[3] = a[3] / f;
+	return result;
+}
+
 mfloat_t *vec4_snap(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	result[0] = MFLOOR(a[0] / b[0]) * b[0];
 	result[1] = MFLOOR(a[1] / b[1]) * b[1];
 	result[2] = MFLOOR(a[2] / b[2]) * b[2];
 	result[3] = MFLOOR(a[3] / b[3]) * b[3];
+	return result;
+}
+
+mfloat_t *vec4_snap_i(mfloat_t *result, mfloat_t *a, mint_t i)
+{
+	result[0] = MFLOOR(a[0] / i) * i;
+	result[1] = MFLOOR(a[1] / i) * i;
+	result[2] = MFLOOR(a[2] / i) * i;
+	result[3] = MFLOOR(a[3] / i) * i;
+	return result;
+}
+
+mfloat_t *vec4_snap_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = MFLOOR(a[0] / f) * f;
+	result[1] = MFLOOR(a[1] / f) * f;
+	result[2] = MFLOOR(a[2] / f) * f;
+	result[3] = MFLOOR(a[3] / f) * f;
 	return result;
 }
 
@@ -1585,11 +1876,10 @@ mfloat_t *vec4_normalize(mfloat_t *result, mfloat_t *a)
 {
 	mfloat_t length = MSQRT(a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3]);
 	if (!nearly_equal(length, MFLOAT_C(0.0), MFLT_EPSILON)) {
-		length = MFLOAT_C(1.0) / length;
-		result[0] = a[0] * length;
-		result[1] = a[1] * length;
-		result[2] = a[2] * length;
-		result[3] = a[3] * length;
+		result[0] = a[0] / length;
+		result[1] = a[1] / length;
+		result[2] = a[2] / length;
+		result[3] = a[3] / length;
 	} else {
 		result[0] = MFLOAT_C(0.0);
 		result[1] = MFLOAT_C(0.0);
@@ -1673,6 +1963,15 @@ mint_t *vec4i_add(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec4i_add_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] + i;
+	result[1] = a[1] + i;
+	result[2] = a[2] + i;
+	result[3] = a[3] + i;
+	return result;
+}
+
 mint_t *vec4i_subtract(mint_t *result, mint_t *a, mint_t *b)
 {
 	result[0] = a[0] - b[0];
@@ -1682,13 +1981,18 @@ mint_t *vec4i_subtract(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec4i_subtract_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] - i;
+	result[1] = a[1] - i;
+	result[2] = a[2] - i;
+	result[3] = a[3] - i;
+	return result;
+}
+
 mint_t *vec4i_scale(mint_t *result, mint_t *a, mfloat_t scalar)
 {
-	result[0] = a[0] * scalar;
-	result[1] = a[1] * scalar;
-	result[2] = a[2] * scalar;
-	result[3] = a[3] * scalar;
-	return result;
+	return vec4i_multiply_f(result, a, scalar);
 }
 
 mint_t *vec4i_multiply(mint_t *result, mint_t *a, mint_t *b)
@@ -1697,6 +2001,24 @@ mint_t *vec4i_multiply(mint_t *result, mint_t *a, mint_t *b)
 	result[1] = a[1] * b[1];
 	result[2] = a[2] * b[2];
 	result[3] = a[3] * b[3];
+	return result;
+}
+
+mint_t *vec4i_multiply_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] * i;
+	result[1] = a[1] * i;
+	result[2] = a[2] * i;
+	result[3] = a[3] * i;
+	return result;
+}
+
+mint_t *vec4i_multiply_f(mint_t *result, mint_t *a, mfloat_t f)
+{
+	result[0] = a[0] * f;
+	result[1] = a[1] * f;
+	result[2] = a[2] * f;
+	result[3] = a[3] * f;
 	return result;
 }
 
@@ -1722,6 +2044,24 @@ mint_t *vec4i_divide(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec4i_divide_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = a[0] / i;
+	result[1] = a[1] / i;
+	result[2] = a[2] / i;
+	result[3] = a[3] / i;
+	return result;
+}
+
+mint_t *vec4i_divide_f(mint_t *result, mint_t *a, mfloat_t f)
+{
+	result[0] = a[0] / f;
+	result[1] = a[1] / f;
+	result[2] = a[2] / f;
+	result[3] = a[3] / f;
+	return result;
+}
+
 mint_t *vec4i_snap(mint_t *result, mint_t *a, mint_t *b)
 {
 	result[0] = (a[0] / b[0]) * b[0];
@@ -1731,37 +2071,30 @@ mint_t *vec4i_snap(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
+mint_t *vec4i_snap_i(mint_t *result, mint_t *a, mint_t i)
+{
+	result[0] = (a[0] / i) * i;
+	result[1] = (a[1] / i) * i;
+	result[2] = (a[2] / i) * i;
+	result[3] = (a[3] / i) * i;
+	return result;
+}
+
+mint_t *vec4i_snap_f(mint_t *result, mint_t *a, mfloat_t f)
+{
+	result[0] = (a[0] / f) * f;
+	result[1] = (a[1] / f) * f;
+	result[2] = (a[2] / f) * f;
+	result[3] = (a[3] / f) * f;
+	return result;
+}
+
 mint_t *vec4i_negative(mint_t *result, mint_t *a)
 {
 	result[0] = -a[0];
 	result[1] = -a[1];
 	result[2] = -a[2];
 	result[3] = -a[3];
-	return result;
-}
-
-mint_t *vec4i_inverse(mint_t *result, mint_t *a)
-{
-	if (a[0] != 0) {
-		result[0] = MFLOAT_C(1.0) / (mfloat_t)a[0];
-	} else {
-		result[0] = 0;
-	}
-	if (a[1] != 0) {
-		result[1] = MFLOAT_C(1.0) / (mfloat_t)a[1];
-	} else {
-		result[1] = 0;
-	}
-	if (a[2] != 0) {
-		result[2] = MFLOAT_C(1.0) / (mfloat_t)a[2];
-	} else {
-		result[2] = 0;
-	}
-	if (a[3] != 0) {
-		result[3] = MFLOAT_C(1.0) / (mfloat_t)a[3];
-	} else {
-		result[3] = 0;
-	}
 	return result;
 }
 
@@ -1867,11 +2200,10 @@ mint_t *vec4i_normalize(mint_t *result, mint_t *a)
 {
 	mfloat_t length = MSQRT(a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3]);
 	if (!nearly_equal(length, MFLOAT_C(0.0), MFLT_EPSILON)) {
-		length = MFLOAT_C(1.0) / length;
-		result[0] = a[0] * length;
-		result[1] = a[1] * length;
-		result[2] = a[2] * length;
-		result[3] = a[3] * length;
+		result[0] = a[0] / length;
+		result[1] = a[1] / length;
+		result[2] = a[2] / length;
+		result[3] = a[3] / length;
 	} else {
 		result[0] = 0;
 		result[1] = 0;
