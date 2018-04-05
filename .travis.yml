@@ -1,7 +1,7 @@
 language: c
 compiler:
-  - clang
   - gcc
+  - clang
 
 script:
-  - ./run_tests.sh
+  - ./test.sh

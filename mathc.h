@@ -53,7 +53,7 @@ the following restrictions:
 #define MAT3_SIZE 9
 #define MAT4_SIZE 16
 
-/* Float-point precision used internally */
+/* Floating-point precision used internally */
 #ifdef MATHC_DOUBLE_PRECISION
 #define MPI 3.14159265358979323846
 #define MPI_2 1.57079632679489661923
@@ -138,7 +138,7 @@ struct quat {
 };
 
 /*
-Matrix 2x2 representation:
+Matrix 2×2 representation:
 0/m11 2/m12
 1/m21 3/m22
 */
@@ -150,7 +150,7 @@ struct mat2 {
 };
 
 /*
-Matrix 3x3 representation:
+Matrix 3×3 representation:
 0/m11 3/m12 6/m13
 1/m21 4/m22 7/m23
 2/m31 5/m32 8/m33
@@ -168,7 +168,7 @@ struct mat3 {
 };
 
 /*
-Matrix 4x4 representation:
+Matrix 4×4 representation:
 0/m11 4/m12  8/m13 12/m14
 1/m21 5/m22  9/m23 13/m24
 2/m31 6/m32 10/m33 14/m34
@@ -450,7 +450,7 @@ mfloat_t quat_angle(mfloat_t *a, mfloat_t *b);
 mfloat_t quat_length(mfloat_t *a);
 mfloat_t quat_length_squared(mfloat_t *a);
 
-/* Matrix 2x2 */
+/* Matrix 2×2 */
 mfloat_t *mat2(mfloat_t *result,
 	mfloat_t m11, mfloat_t m12,
 	mfloat_t m21, mfloat_t m22);
@@ -470,7 +470,7 @@ mfloat_t *mat2_scale(mfloat_t *result, mfloat_t *m, mfloat_t scalar);
 mfloat_t *mat2_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *mat2_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
 
-/* Matrix 3x3 */
+/* Matrix 3×3 */
 mfloat_t *mat3(mfloat_t *result,
 	mfloat_t m11, mfloat_t m12, mfloat_t m13,
 	mfloat_t m21, mfloat_t m22, mfloat_t m23,
@@ -496,7 +496,7 @@ mfloat_t *mat3_scale(mfloat_t *result, mfloat_t *m, mfloat_t scalar);
 mfloat_t *mat3_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *mat3_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
 
-/* Matrix 4x4 */
+/* Matrix 4×4 */
 mfloat_t *mat4(mfloat_t *result,
 	mfloat_t m11, mfloat_t m12, mfloat_t m13, mfloat_t m14,
 	mfloat_t m21, mfloat_t m22, mfloat_t m23, mfloat_t m24,
@@ -1868,7 +1868,7 @@ MATHC_INLINE mfloat_t psquat_length_squared(struct quat *a)
 	return quat_length_squared((mfloat_t *)a);
 }
 
-/* Matrix 2x2 */
+/* Matrix 2×2 */
 MATHC_INLINE struct mat2 *psmat2(struct mat2 *result,
 	mfloat_t m11, mfloat_t m12,
 	mfloat_t m21, mfloat_t m22)
@@ -1968,7 +1968,7 @@ MATHC_INLINE struct mat2 *psmat2_lerp(struct mat2 *result, struct mat2 *a, struc
 	return result;
 }
 
-/* Matrix 3x3 */
+/* Matrix 3×3 */
 MATHC_INLINE struct mat3 *psmat3(struct mat3 *result,
 	mfloat_t m11, mfloat_t m12, mfloat_t m13,
 	mfloat_t m21, mfloat_t m22, mfloat_t m23,
@@ -2100,7 +2100,7 @@ MATHC_INLINE struct mat3 *psmat3_lerp(struct mat3 *result, struct mat3 *a, struc
 	return result;
 }
 
-/* Matrix 4x4 */
+/* Matrix 4×4 */
 MATHC_INLINE struct mat4 *psmat4(struct mat4 *result,
 	mfloat_t m11, mfloat_t m12, mfloat_t m13, mfloat_t m14,
 	mfloat_t m21, mfloat_t m22, mfloat_t m23, mfloat_t m24,
@@ -3787,7 +3787,7 @@ MATHC_INLINE mfloat_t squat_length_squared(struct quat a)
 	return quat_length_squared((mfloat_t *)&a);
 }
 
-/* Matrix 2x2 */
+/* Matrix 2×2 */
 MATHC_INLINE struct mat2 smat2(
 	mfloat_t m11, mfloat_t m12,
 	mfloat_t m21, mfloat_t m22)
@@ -3902,7 +3902,7 @@ MATHC_INLINE struct mat2 smat2_lerp(struct mat2 a, struct mat2 b, mfloat_t p)
 	return result;
 }
 
-/* Matrix 3x3 */
+/* Matrix 3×3 */
 MATHC_INLINE struct mat3 smat3(
 	mfloat_t m11, mfloat_t m12, mfloat_t m13,
 	mfloat_t m21, mfloat_t m22, mfloat_t m23,
@@ -4054,7 +4054,7 @@ MATHC_INLINE struct mat3 smat3_lerp(struct mat3 a, struct mat3 b, mfloat_t p)
 	return result;
 }
 
-/* Matrix 4x4 */
+/* Matrix 4×4 */
 MATHC_INLINE struct mat4 smat4(
 	mfloat_t m11, mfloat_t m12, mfloat_t m13, mfloat_t m14,
 	mfloat_t m21, mfloat_t m22, mfloat_t m23, mfloat_t m24,

@@ -2198,7 +2198,7 @@ mfloat_t quat_length_squared(mfloat_t *a)
 	return a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3];
 }
 
-/* Matrix 2x2 */
+/* Matrix 2×2 */
 mfloat_t *mat2(mfloat_t *result,
 	mfloat_t m11, mfloat_t m12,
 	mfloat_t m21, mfloat_t m22)
@@ -2355,7 +2355,7 @@ mfloat_t *mat2_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p)
 	return result;
 }
 
-/* Matrix 3x3 */
+/* Matrix 3×3 */
 mfloat_t *mat3(mfloat_t *result,
 	mfloat_t m11, mfloat_t m12, mfloat_t m13,
 	mfloat_t m21, mfloat_t m22, mfloat_t m23,
@@ -2738,7 +2738,7 @@ mfloat_t *mat3_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p)
 	return result;
 }
 
-/* Matrix 4x4 */
+/* Matrix 4×4 */
 mfloat_t *mat4(mfloat_t *result,
 	mfloat_t m11, mfloat_t m12, mfloat_t m13, mfloat_t m14,
 	mfloat_t m21, mfloat_t m22, mfloat_t m23, mfloat_t m24,
