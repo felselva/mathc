@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ferreiradaselva/mathc.svg?branch=master)](https://travis-ci.org/ferreiradaselva/mathc)
 
-MATHC (version 2) is a simple math library for 2D and 3D programming. It contains implementations for:
+MATHC is a simple math library for 2D and 3D programming. It contains implementations for:
 
 - Vectors (2D, 3D and 4D)
 - Quaternions
@@ -11,33 +11,16 @@ MATHC (version 2) is a simple math library for 2D and 3D programming. It contain
 
 ## Configuring
 
-MATHC can be configured with the following preprocessors:
+MATHC can be configured using preprocessors:
 
-- `MATHC_NO_STDBOOL`: don't include `stdbool.h` and define a `bool` type to replace the standard.
-- `MATHC_NO_STDINT`: don't include `stdint.h`.
-- `mint_t`: the integer type is `int32_t` by default.
-- `mfloat_t`: the floating-point is `float` by default.
+- `mint_t`: the integer type, which is `int32_t` by default. Can be used to define `mint_t` as any other integer type.
+- `mfloat_t`: the floating-point, which is `float` by default. Can be used to define `mfloat_t` as any other floating-point type.
+- `MATHC_USE_INT64`: define `mint_t` as `int64_t`.
+- `MATHC_USE_DOUBLE`: define `mfloat_t` as `double`.
 - `MATHC_DOUBLE_PRECISION`: use the standard math functions with double precision.
-- `MATHC_NO_STRUCTURES`: don't define structures.
 - `MATHC_NO_POINTER_STRUCT_FUNCTIONS`: don't define functions that take pointer to structures.
 - `MATHC_NO_STRUCT_FUNCTIONS`: don't define functions that take structures as value.
 - `MATHC_NO_EASING_FUNCTIONS`: don't define easing functions.
-
-You can define these macros during compilation time with flags:
-
-```
-gcc -DMATHC_NO_STDBOOL=ON -Dmfloat_t=double -DMATHC_DOUBLE_PRECISION=ON
-```
-
-Or include `mathc.c` in a source file. This second approach is more useful and flexible, because you can define `mfloat_t` as a different type other than the built-in types `float` or `double`, such as `GLfloat`:
-
-```c
-/* In a *.c file */
-#include <GL.h>
-#define mfloat_t GLfloat
-#define MATHC_DOUBLE_PRECISION
-#include <mathc.c>
-```
 
 ## Types
 
