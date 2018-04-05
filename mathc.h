@@ -23,31 +23,19 @@ the following restrictions:
 
 #include <math.h>
 #include <float.h>
-#ifdef MATHC_NO_STDBOOL
-	#define bool int
-	#define true 1
-	#define false 0
-#else
-	#include <stdbool.h>
-#endif
-#ifndef MATHC_NO_STDINT
-	#include <stdint.h>
-#endif
+#include <stdbool.h>
+#include <stdint.h>
 
 #define MATHC_MAJOR_VERSION 2
 #define MATHC_MINOR_VERSION 0
 #define MATHC_PATCH_VERSION 0
 
 /* Component type */
-#ifndef mfloat_t
-	#define mfloat_t float
-#endif
 #ifndef mint_t
-	#ifndef MATHC_NO_STDINT
-		#define mint_t int32_t
-	#else
-		#define mint_t int
-	#endif
+#define mint_t int32_t
+#endif
+#ifndef mfloat_t
+#define mfloat_t float
 #endif
 
 /* Array sizes for declarations */
@@ -61,50 +49,45 @@ the following restrictions:
 
 /* Float-point precision used internally */
 #ifdef MATHC_DOUBLE_PRECISION
-	#define MPI 3.14159265358979323846
-	#define MPI_2 1.57079632679489661923
-	#define MPI_4 0.78539816339744830962
-	#define MFLT_EPSILON DBL_EPSILON
-	#define MABS fabs
-	#define MMIN fmin
-	#define MMAX fmax
-	#define MSQRT sqrt
-	#define MSIN sin
-	#define MCOS cos
-	#define MACOS acos
-	#define MTAN tan
-	#define MATAN2 atan2
-	#define MPOW pow
-	#define MFLOOR floor
-	#define MCEIL ceil
-	#define MROUND round
-	#define MFLOAT_C(c) c
+#define MPI 3.14159265358979323846
+#define MPI_2 1.57079632679489661923
+#define MPI_4 0.78539816339744830962
+#define MFLT_EPSILON DBL_EPSILON
+#define MABS fabs
+#define MMIN fmin
+#define MMAX fmax
+#define MSQRT sqrt
+#define MSIN sin
+#define MCOS cos
+#define MACOS acos
+#define MTAN tan
+#define MATAN2 atan2
+#define MPOW pow
+#define MFLOOR floor
+#define MCEIL ceil
+#define MROUND round
+#define MFLOAT_C(c) c
 #else
-	#define MPI 3.1415926536f
-	#define MPI_2 1.5707963268f
-	#define MPI_4 0.7853981634f
-	#define MFLT_EPSILON FLT_EPSILON
-	#define MABS fabsf
-	#define MMIN fminf
-	#define MMAX fmaxf
-	#define MSQRT sqrtf
-	#define MSIN sinf
-	#define MCOS cosf
-	#define MACOS acosf
-	#define MTAN tanf
-	#define MATAN2 atan2f
-	#define MPOW powf
-	#define MFLOOR floorf
-	#define MCEIL ceilf
-	#define MROUND roundf
-	#define MFLOAT_C(c) c ## f
+#define MPI 3.1415926536f
+#define MPI_2 1.5707963268f
+#define MPI_4 0.7853981634f
+#define MFLT_EPSILON FLT_EPSILON
+#define MABS fabsf
+#define MMIN fminf
+#define MMAX fmaxf
+#define MSQRT sqrtf
+#define MSIN sinf
+#define MCOS cosf
+#define MACOS acosf
+#define MTAN tanf
+#define MATAN2 atan2f
+#define MPOW powf
+#define MFLOOR floorf
+#define MCEIL ceilf
+#define MROUND roundf
+#define MFLOAT_C(c) c ## f
 #endif
 
-/* Enable or disable structures */
-#ifdef MATHC_NO_STRUCTURES
-	#define MATHC_NO_POINTER_STRUCT_FUNCTIONS
-	#define MATHC_NO_STRUCT_FUNCTIONS
-#else
 struct vec2 {
 	mfloat_t x;
 	mfloat_t y;
@@ -203,14 +186,13 @@ struct mat4 {
 	mfloat_t m34;
 	mfloat_t m44;
 };
-#endif
 
 #if !defined(MATHC_NO_POINTER_STRUCT_FUNCTIONS) || !defined(MATHC_NO_STRUCT_FUNCTIONS)
-	#ifdef _MSC_VER
-		#define MATHC_INLINE __forceinline
-	#else
-		#define MATHC_INLINE inline __attribute__((always_inline))
-	#endif
+#ifdef _MSC_VER
+#define MATHC_INLINE __forceinline
+#else
+#define MATHC_INLINE inline __attribute__((always_inline))
+#endif
 #endif
 
 /* Utils */
