@@ -105,11 +105,9 @@ The easing functions are an implementation of the functions presented in [easing
 
 Easing functions take a value inside the range `0.0-1.0` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range (Check the [easings.net](http://easings.net/) to see those functions).
 
-## LICENSE
+# License
 
-The source code of this project is licensed under the terms of the ZLIB license:
-
-Copyright (C) 2016 Felipe Ferreira da Silva
+Copyright © 2018 Felipe Ferreira da Silva
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 
