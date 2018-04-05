@@ -26,16 +26,22 @@ the following restrictions:
 #include <stdbool.h>
 #include <stdint.h>
 
-#define MATHC_MAJOR_VERSION 2
-#define MATHC_MINOR_VERSION 0
-#define MATHC_PATCH_VERSION 0
-
-/* Component type */
+/* Integer type */
 #ifndef mint_t
+#ifdef MATHC_USE_INT64
+#define mint_t int64_t
+#else
 #define mint_t int32_t
 #endif
+#endif
+
+/* Floating-point type */
 #ifndef mfloat_t
+#ifdef MATHC_USE_DOUBLE
+#define mfloat_t double
+#else
 #define mfloat_t float
+#endif
 #endif
 
 /* Array sizes for declarations */
