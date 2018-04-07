@@ -281,21 +281,21 @@ mfloat_t *vec2_min(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
-mfloat_t *vec2_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher)
+mfloat_t *vec2_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *min, mfloat_t *max)
 {
 	result[0] = a[0];
 	result[1] = a[1];
-	if (result[0] < lower[0]) {
-		result[0] = lower[0];
+	if (result[0] < min[0]) {
+		result[0] = min[0];
 	}
-	if (result[0] > higher[0]) {
-		result[0] = higher[0];
+	if (result[0] > max[0]) {
+		result[0] = max[0];
 	}
-	if (result[1] < lower[1]) {
-		result[1] = lower[1];
+	if (result[1] < min[1]) {
+		result[1] = min[1];
 	}
-	if (result[1] > higher[1]) {
-		result[1] = higher[1];
+	if (result[1] > max[1]) {
+		result[1] = max[1];
 	}
 	return result;
 }
@@ -624,21 +624,21 @@ mint_t *vec2i_min(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
-mint_t *vec2i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher)
+mint_t *vec2i_clamp(mint_t *result, mint_t *a, mint_t *min, mint_t *max)
 {
 	result[0] = a[0];
 	result[1] = a[1];
-	if (result[0] < lower[0]) {
-		result[0] = lower[0];
+	if (result[0] < min[0]) {
+		result[0] = min[0];
 	}
-	if (result[0] > higher[0]) {
-		result[0] = higher[0];
+	if (result[0] > max[0]) {
+		result[0] = max[0];
 	}
-	if (result[1] < lower[1]) {
-		result[1] = lower[1];
+	if (result[1] < min[1]) {
+		result[1] = min[1];
 	}
-	if (result[1] > higher[1]) {
-		result[1] = higher[1];
+	if (result[1] > max[1]) {
+		result[1] = max[1];
 	}
 	return result;
 }
@@ -1034,28 +1034,28 @@ mfloat_t *vec3_min(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
-mfloat_t *vec3_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher)
+mfloat_t *vec3_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *min, mfloat_t *max)
 {
 	result[0] = a[0];
 	result[1] = a[1];
 	result[2] = a[2];
-	if (result[0] < lower[0]) {
-		result[0] = lower[0];
+	if (result[0] < min[0]) {
+		result[0] = min[0];
 	}
-	if (result[0] > higher[0]) {
-		result[0] = higher[0];
+	if (result[0] > max[0]) {
+		result[0] = max[0];
 	}
-	if (result[1] < lower[1]) {
-		result[1] = lower[1];
+	if (result[1] < min[1]) {
+		result[1] = min[1];
 	}
-	if (result[1] > higher[1]) {
-		result[1] = higher[1];
+	if (result[1] > max[1]) {
+		result[1] = max[1];
 	}
-	if (result[2] < lower[2]) {
-		result[2] = lower[2];
+	if (result[2] < min[2]) {
+		result[2] = min[2];
 	}
-	if (result[2] > higher[2]) {
-		result[2] = higher[2];
+	if (result[2] > max[2]) {
+		result[2] = max[2];
 	}
 	return result;
 }
@@ -1393,28 +1393,28 @@ mint_t *vec3i_min(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
-mint_t *vec3i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher)
+mint_t *vec3i_clamp(mint_t *result, mint_t *a, mint_t *min, mint_t *max)
 {
 	result[0] = a[0];
 	result[1] = a[1];
 	result[2] = a[2];
-	if (result[0] < lower[0]) {
-		result[0] = lower[0];
+	if (result[0] < min[0]) {
+		result[0] = min[0];
 	}
-	if (result[0] > higher[0]) {
-		result[0] = higher[0];
+	if (result[0] > max[0]) {
+		result[0] = max[0];
 	}
-	if (result[1] < lower[1]) {
-		result[1] = lower[1];
+	if (result[1] < min[1]) {
+		result[1] = min[1];
 	}
-	if (result[1] > higher[1]) {
-		result[1] = higher[1];
+	if (result[1] > max[1]) {
+		result[1] = max[1];
 	}
-	if (result[2] < lower[2]) {
-		result[2] = lower[2];
+	if (result[2] < min[2]) {
+		result[2] = min[2];
 	}
-	if (result[2] > higher[2]) {
-		result[2] = higher[2];
+	if (result[2] > max[2]) {
+		result[2] = max[2];
 	}
 	return result;
 }
@@ -1839,35 +1839,35 @@ mfloat_t *vec4_min(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
-mfloat_t *vec4_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher)
+mfloat_t *vec4_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *min, mfloat_t *max)
 {
 	result[0] = a[0];
 	result[1] = a[1];
 	result[2] = a[2];
 	result[3] = a[3];
-	if (result[0] < lower[0]) {
-		result[0] = lower[0];
+	if (result[0] < min[0]) {
+		result[0] = min[0];
 	}
-	if (result[0] > higher[0]) {
-		result[0] = higher[0];
+	if (result[0] > max[0]) {
+		result[0] = max[0];
 	}
-	if (result[1] < lower[1]) {
-		result[1] = lower[1];
+	if (result[1] < min[1]) {
+		result[1] = min[1];
 	}
-	if (result[1] > higher[1]) {
-		result[1] = higher[1];
+	if (result[1] > max[1]) {
+		result[1] = max[1];
 	}
-	if (result[2] < lower[2]) {
-		result[2] = lower[2];
+	if (result[2] < min[2]) {
+		result[2] = min[2];
 	}
-	if (result[2] > higher[2]) {
-		result[2] = higher[2];
+	if (result[2] > max[2]) {
+		result[2] = max[2];
 	}
-	if (result[3] < lower[3]) {
-		result[3] = lower[3];
+	if (result[3] < min[3]) {
+		result[3] = min[3];
 	}
-	if (result[3] > higher[3]) {
-		result[3] = higher[3];
+	if (result[3] > max[3]) {
+		result[3] = max[3];
 	}
 	return result;
 }
@@ -2163,35 +2163,35 @@ mint_t *vec4i_min(mint_t *result, mint_t *a, mint_t *b)
 	return result;
 }
 
-mint_t *vec4i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher)
+mint_t *vec4i_clamp(mint_t *result, mint_t *a, mint_t *min, mint_t *max)
 {
 	result[0] = a[0];
 	result[1] = a[1];
 	result[2] = a[2];
 	result[3] = a[3];
-	if (result[0] < lower[0]) {
-		result[0] = lower[0];
+	if (result[0] < min[0]) {
+		result[0] = min[0];
 	}
-	if (result[0] > higher[0]) {
-		result[0] = higher[0];
+	if (result[0] > max[0]) {
+		result[0] = max[0];
 	}
-	if (result[1] < lower[1]) {
-		result[1] = lower[1];
+	if (result[1] < min[1]) {
+		result[1] = min[1];
 	}
-	if (result[1] > higher[1]) {
-		result[1] = higher[1];
+	if (result[1] > max[1]) {
+		result[1] = max[1];
 	}
-	if (result[2] < lower[2]) {
-		result[2] = lower[2];
+	if (result[2] < min[2]) {
+		result[2] = min[2];
 	}
-	if (result[2] > higher[2]) {
-		result[2] = higher[2];
+	if (result[2] > max[2]) {
+		result[2] = max[2];
 	}
-	if (result[3] < lower[3]) {
-		result[3] = lower[3];
+	if (result[3] < min[3]) {
+		result[3] = min[3];
 	}
-	if (result[3] > higher[3]) {
-		result[3] = higher[3];
+	if (result[3] > max[3]) {
+		result[3] = max[3];
 	}
 	return result;
 }

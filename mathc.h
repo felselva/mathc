@@ -241,7 +241,7 @@ mfloat_t *vec2_ceil(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec2_round(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec2_max(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_min(mfloat_t *result, mfloat_t *a, mfloat_t *b);
-mfloat_t *vec2_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher);
+mfloat_t *vec2_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *min, mfloat_t *max);
 mfloat_t *vec2_normalize(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec2_project(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec2_slide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
@@ -288,7 +288,7 @@ mint_t *vec2i_ceil(mint_t *result, mfloat_t *a);
 mint_t *vec2i_round(mint_t *result, mfloat_t *a);
 mint_t *vec2i_max(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_min(mint_t *result, mint_t *a, mint_t *b);
-mint_t *vec2i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher);
+mint_t *vec2i_clamp(mint_t *result, mint_t *a, mint_t *min, mint_t *max);
 mint_t *vec2i_normalize(mint_t *result, mint_t *a);
 mint_t *vec2i_project(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec2i_slide(mint_t *result, mint_t *a, mint_t *b);
@@ -340,7 +340,7 @@ mfloat_t *vec3_ceil(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec3_round(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec3_max(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_min(mfloat_t *result, mfloat_t *a, mfloat_t *b);
-mfloat_t *vec3_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher);
+mfloat_t *vec3_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *min, mfloat_t *max);
 mfloat_t *vec3_cross(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec3_normalize(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec3_project(mfloat_t *result, mfloat_t *a, mfloat_t *b);
@@ -385,7 +385,7 @@ mint_t *vec3i_ceil(mint_t *result, mfloat_t *a);
 mint_t *vec3i_round(mint_t *result, mfloat_t *a);
 mint_t *vec3i_max(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_min(mint_t *result, mint_t *a, mint_t *b);
-mint_t *vec3i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher);
+mint_t *vec3i_clamp(mint_t *result, mint_t *a, mint_t *min, mint_t *max);
 mint_t *vec3i_cross(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec3i_normalize(mint_t *result, mint_t *a);
 mint_t *vec3i_project(mint_t *result, mint_t *a, mint_t *b);
@@ -435,7 +435,7 @@ mfloat_t *vec4_ceil(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec4_round(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec4_max(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *vec4_min(mfloat_t *result, mfloat_t *a, mfloat_t *b);
-mfloat_t *vec4_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *lower, mfloat_t *higher);
+mfloat_t *vec4_clamp(mfloat_t *result, mfloat_t *a, mfloat_t *min, mfloat_t *max);
 mfloat_t *vec4_normalize(mfloat_t *result, mfloat_t *a);
 mfloat_t *vec4_lerp(mfloat_t *result, mfloat_t *a, mfloat_t *b, mfloat_t p);
 
@@ -469,7 +469,7 @@ mint_t *vec4i_ceil(mint_t *result, mfloat_t *a);
 mint_t *vec4i_round(mint_t *result, mfloat_t *a);
 mint_t *vec4i_max(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec4i_min(mint_t *result, mint_t *a, mint_t *b);
-mint_t *vec4i_clamp(mint_t *result, mint_t *a, mint_t *lower, mint_t *higher);
+mint_t *vec4i_clamp(mint_t *result, mint_t *a, mint_t *min, mint_t *max);
 mint_t *vec4i_normalize(mint_t *result, mint_t *a);
 mint_t *vec4i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p);
 
@@ -781,9 +781,9 @@ MATHC_INLINE struct vec2 *psvec2_min(struct vec2 *result, struct vec2 *a, struct
 	return result;
 }
 
-MATHC_INLINE struct vec2 *psvec2_clamp(struct vec2 *result, struct vec2 *a, struct vec2 *lower, struct vec2 *higher)
+MATHC_INLINE struct vec2 *psvec2_clamp(struct vec2 *result, struct vec2 *a, struct vec2 *min, struct vec2 *max)
 {
-	vec2_clamp((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)lower, (mfloat_t *)higher);
+	vec2_clamp((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)min, (mfloat_t *)max);
 	return result;
 }
 
@@ -1044,9 +1044,9 @@ MATHC_INLINE struct vec2i *psvec2i_min(struct vec2i *result, struct vec2i *a, st
 	return result;
 }
 
-MATHC_INLINE struct vec2i *psvec2i_clamp(struct vec2i *result, struct vec2i *a, struct vec2i *lower, struct vec2i *higher)
+MATHC_INLINE struct vec2i *psvec2i_clamp(struct vec2i *result, struct vec2i *a, struct vec2i *min, struct vec2i *max)
 {
-	vec2i_clamp((mint_t *)result, (mint_t *)a, (mint_t *)lower, (mint_t *)higher);
+	vec2i_clamp((mint_t *)result, (mint_t *)a, (mint_t *)min, (mint_t *)max);
 	return result;
 }
 
@@ -1335,9 +1335,9 @@ MATHC_INLINE struct vec3 *psvec3_min(struct vec3 *result, struct vec3 *a, struct
 	return result;
 }
 
-MATHC_INLINE struct vec3 *psvec3_clamp(struct vec3 *result, struct vec3 *a, struct vec3 *lower, struct vec3 *higher)
+MATHC_INLINE struct vec3 *psvec3_clamp(struct vec3 *result, struct vec3 *a, struct vec3 *min, struct vec3 *max)
 {
-	vec3_clamp((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)lower, (mfloat_t *)higher);
+	vec3_clamp((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)min, (mfloat_t *)max);
 	return result;
 }
 
@@ -1587,9 +1587,9 @@ MATHC_INLINE struct vec3i *psvec3i_min(struct vec3i *result, struct vec3i *a, st
 	return result;
 }
 
-MATHC_INLINE struct vec3i *psvec3i_clamp(struct vec3i *result, struct vec3i *a, struct vec3i *lower, struct vec3i *higher)
+MATHC_INLINE struct vec3i *psvec3i_clamp(struct vec3i *result, struct vec3i *a, struct vec3i *min, struct vec3i *max)
 {
-	vec3i_clamp((mint_t *)result, (mint_t *)a, (mint_t *)lower, (mint_t *)higher);
+	vec3i_clamp((mint_t *)result, (mint_t *)a, (mint_t *)min, (mint_t *)max);
 	return result;
 }
 
@@ -1867,9 +1867,9 @@ MATHC_INLINE struct vec4 *psvec4_min(struct vec4 *result, struct vec4 *a, struct
 	return result;
 }
 
-MATHC_INLINE struct vec4 *psvec4_clamp(struct vec4 *result, struct vec4 *a, struct vec4 *lower, struct vec4 *higher)
+MATHC_INLINE struct vec4 *psvec4_clamp(struct vec4 *result, struct vec4 *a, struct vec4 *min, struct vec4 *max)
 {
-	vec4_clamp((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)lower, (mfloat_t *)higher);
+	vec4_clamp((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)min, (mfloat_t *)max);
 	return result;
 }
 
@@ -2058,9 +2058,9 @@ MATHC_INLINE struct vec4i *psvec4i_min(struct vec4i *result, struct vec4i *a, st
 	return result;
 }
 
-MATHC_INLINE struct vec4i *psvec4i_clamp(struct vec4i *result, struct vec4i *a, struct vec4i *lower, struct vec4i *higher)
+MATHC_INLINE struct vec4i *psvec4i_clamp(struct vec4i *result, struct vec4i *a, struct vec4i *min, struct vec4i *max)
 {
-	vec4i_clamp((mint_t *)result, (mint_t *)a, (mint_t *)lower, (mint_t *)higher);
+	vec4i_clamp((mint_t *)result, (mint_t *)a, (mint_t *)min, (mint_t *)max);
 	return result;
 }
 
@@ -2840,10 +2840,10 @@ MATHC_INLINE struct vec2 svec2_min(struct vec2 a, struct vec2 b)
 	return result;
 }
 
-MATHC_INLINE struct vec2 svec2_clamp(struct vec2 a, struct vec2 lower, struct vec2 higher)
+MATHC_INLINE struct vec2 svec2_clamp(struct vec2 a, struct vec2 min, struct vec2 max)
 {
 	struct vec2 result;
-	vec2_clamp((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&lower, (mfloat_t *)&higher);
+	vec2_clamp((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&min, (mfloat_t *)&max);
 	return result;
 }
 
@@ -3140,10 +3140,10 @@ MATHC_INLINE struct vec2i svec2i_min(struct vec2i a, struct vec2i b)
 	return result;
 }
 
-MATHC_INLINE struct vec2i svec2i_clamp(struct vec2i a, struct vec2i lower, struct vec2i higher)
+MATHC_INLINE struct vec2i svec2i_clamp(struct vec2i a, struct vec2i min, struct vec2i max)
 {
 	struct vec2i result;
-	vec2i_clamp((mint_t *)&result, (mint_t *)&a, (mint_t *)&lower, (mint_t *)&higher);
+	vec2i_clamp((mint_t *)&result, (mint_t *)&a, (mint_t *)&min, (mint_t *)&max);
 	return result;
 }
 
@@ -3471,10 +3471,10 @@ MATHC_INLINE struct vec3 svec3_min(struct vec3 a, struct vec3 b)
 	return result;
 }
 
-MATHC_INLINE struct vec3 svec3_clamp(struct vec3 a, struct vec3 lower, struct vec3 higher)
+MATHC_INLINE struct vec3 svec3_clamp(struct vec3 a, struct vec3 min, struct vec3 max)
 {
 	struct vec3 result;
-	vec3_clamp((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&lower, (mfloat_t *)&higher);
+	vec3_clamp((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&min, (mfloat_t *)&max);
 	return result;
 }
 
@@ -3759,10 +3759,10 @@ MATHC_INLINE struct vec3i svec3i_min(struct vec3i a, struct vec3i b)
 	return result;
 }
 
-MATHC_INLINE struct vec3i svec3i_clamp(struct vec3i a, struct vec3i lower, struct vec3i higher)
+MATHC_INLINE struct vec3i svec3i_clamp(struct vec3i a, struct vec3i min, struct vec3i max)
 {
 	struct vec3i result;
-	vec3i_clamp((mint_t *)&result, (mint_t *)&a, (mint_t *)&lower, (mint_t *)&higher);
+	vec3i_clamp((mint_t *)&result, (mint_t *)&a, (mint_t *)&min, (mint_t *)&max);
 	return result;
 }
 
@@ -4078,10 +4078,10 @@ MATHC_INLINE struct vec4 svec4_min(struct vec4 a, struct vec4 b)
 	return result;
 }
 
-MATHC_INLINE struct vec4 svec4_clamp(struct vec4 a, struct vec4 lower, struct vec4 higher)
+MATHC_INLINE struct vec4 svec4_clamp(struct vec4 a, struct vec4 min, struct vec4 max)
 {
 	struct vec4 result;
-	vec4_clamp((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&lower, (mfloat_t *)&higher);
+	vec4_clamp((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&min, (mfloat_t *)&max);
 	return result;
 }
 
@@ -4243,10 +4243,10 @@ MATHC_INLINE struct vec4i svec4i_min(struct vec4i a, struct vec4i b)
 	return result;
 }
 
-MATHC_INLINE struct vec4i svec4i_clamp(struct vec4i a, struct vec4i lower, struct vec4i higher)
+MATHC_INLINE struct vec4i svec4i_clamp(struct vec4i a, struct vec4i min, struct vec4i max)
 {
 	struct vec4i result;
-	vec4i_clamp((mint_t *)&result, (mint_t *)&a, (mint_t *)&lower, (mint_t *)&higher);
+	vec4i_clamp((mint_t *)&result, (mint_t *)&a, (mint_t *)&min, (mint_t *)&max);
 	return result;
 }
 
