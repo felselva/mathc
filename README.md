@@ -4,27 +4,35 @@
 
 MATHC is a simple math library for 2D and 3D programming. It contains implementations for:
 
-- Vectors (2D, 3D and 4D)
+- Vectors (2D, 3D and 4D) (integer and floating-point)
 - Quaternions
 - Matrices (2×2, 3×3, and 4×4)
 - Easing functions
 
 ## Configuring
 
+By default, `mint_t` is of type `int32_t` and `mfloat_t` is of type `float`.
+
 MATHC can be configured using preprocessors:
 
-- `mint_t`: the integer type, which is `int32_t` by default. Can be used to define `mint_t` as any other integer type.
-- `mfloat_t`: the floating-point, which is `float` by default. Can be used to define `mfloat_t` as any other floating-point type.
-- `MATHC_USE_INT64`: define `mint_t` as `int64_t`.
-- `MATHC_USE_DOUBLE`: define `mfloat_t` as `double`.
-- `MATHC_DOUBLE_PRECISION`: use the standard math functions with double precision.
-- `MATHC_NO_POINTER_STRUCT_FUNCTIONS`: don't define functions that take pointer to structures.
-- `MATHC_NO_STRUCT_FUNCTIONS`: don't define functions that take structures as value.
-- `MATHC_NO_EASING_FUNCTIONS`: don't define easing functions.
+- `MATHC_INT_TYPE`:
+  - Define a new integer type for `mint_t`.
+- `MATHC_FLOAT_TYPE`:
+  - Define a new floating-point type for `mfloat_t`.
+- `MATHC_USE_INT64`:
+  - If `mint_t` is not already defined, define `mint_t` as `int64_t`.
+- `MATHC_USE_DOUBLE`:
+  - If `mfloat_t` is not defined, define `mfloat_t` as `double`.
+  - Also use the functiosn of the standard math library (`math.h`) with double precision.
+- `MATHC_USE_UNIONS`: enable anonymous unions inside structures. Only available on standard C11 or with extensions.
+- `MATHC_NO_POINTER_STRUCT_FUNCTIONS`: don't define the functions that take pointer to structures.
+- `MATHC_NO_STRUCT_FUNCTIONS`: don't define the functions that take structures as value.
+- `MATHC_NO_EASING_FUNCTIONS`: don't define the easing functions.
+- `MATHC_USE_CONFIG_HEADER`: if defined, `mathc.h` will try to include a header `config.h`. This macro can be passed as argument to the compile (for example `gcc -DMATHC_USE_CONFIG_HEADER`), and the configuration file `config.h` can be used to define any of the preprocessors above.
 
 ## Types
 
-By default, types are can be declared as `mfloat_t` arrays, `mint_t` arrays, or structures:
+By default, types are can be declared as arrays of `mfloat_t`, arrays of `mint_t`, or structures:
 
 ```c
 /* As float arrays */
@@ -56,10 +64,10 @@ struct vec4i rgba;
 
 ## Functions
 
-By default, MATHC has functions that take as argument `mfloat_t` arrays, `mint_t` arrays, structures as value, or pointers to structure:
+By default, MATHC has functions that take as argument arrays of `mfloat_t`, arrays of `mint_t`, structures as value, or pointers to structure. Functions that take structure as value have a prefix `s`. Functions that take structure pointers have a prefix `ps`:
 
 ```c
-/* As array */
+/* Arrays */
 mfloat_t position[VEC3_SIZE];
 mfloat_t offset[VEC3_SIZE];
 
@@ -67,12 +75,12 @@ vec2_add(position,
 	vec2(position, 0.0f, 0.0f),
 	vec2(offset, 1.0f, 1.0f));
 
-/* As structure value */
+/* Structures as value */
 struct vec2 position = svec2(0.0f, 0.0f);
 struct vec2 offset = svec2(1.0f, 1.0f);
 position = svec2_add(position, offset);
 
-/* As structure pointer */
+/* Pointers to structure */
 struct vec2 position;
 struct vec2 offset;
 psvec2(&position, 0.0f, 0.0f)
@@ -80,13 +88,30 @@ psvec2(&offset, 1.0f, 1.0f)
 psvec2_add(&position, &position, &offset);
 ```
 
-Functions that take structure as value have a prefix `s`. Functions that take structure pointers have a prefix `ps`.
+## Structures With Unions
+
+If the preprocessor `MATHC_USE_UNIONS` is defined, the elements in the structures can be accessed as an array using the field `v`:
+
+```c
+struct vec3 position = svec3(10.0f, 10.0f, 0.0f);
+
+position.x = position.x * 2.0f;
+position.y = position.y * 2.0f;
+
+/* Or accessing as an array */
+
+vec3_multiply_f(position.v, 2.0f)
+```
 
 ## Easing Functions
 
 The easing functions are an implementation of the functions presented in [easings.net](http://easings.net/), useful particularly for animations.
 
 Easing functions take a value inside the range `0.0-1.0` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range (Check the [easings.net](http://easings.net/) to see those functions).
+
+## Test
+
+The test program can be compiled with the script `test.sh` and it will run automatically. The test program will execute the math operations and compare the expected values with the actual values. Due the nature of floating-point numbers, the result of operations with floating-point numbers are compared using multiple threshold (*epsilon* value). The test program will print the total of tests that passed and the total of tests that failed.
 
 # License
 
