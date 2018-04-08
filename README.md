@@ -23,7 +23,7 @@ MATHC can be configured using preprocessors:
 - `MATHC_NO_POINTER_STRUCT_FUNCTIONS`: don't define the functions that take pointer to structures.
 - `MATHC_NO_STRUCT_FUNCTIONS`: don't define the functions that take structures as value.
 - `MATHC_NO_EASING_FUNCTIONS`: don't define the easing functions.
-- `MATHC_USE_CONFIG_HEADER`: if defined, `mathc.h` will try to include a header `config.h`. This macro can be passed as argument to the compile (for example `gcc -DMATHC_USE_CONFIG_HEADER`), and the configuration file `config.h` can be used to define any of the preprocessors above.
+- `MATHC_USE_CONFIG_HEADER`: if defined, `mathc.h` will try to include a header `config.h`. This macro can be passed as argument to the compiler (for example `gcc -DMATHC_USE_CONFIG_HEADER`), and the configuration file `config.h`, that must be created, can be used to define any of the preprocessors above.
 
 ## Types
 
