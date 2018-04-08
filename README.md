@@ -15,15 +15,10 @@ By default, `mint_t` is of type `int32_t` and `mfloat_t` is of type `float`.
 
 MATHC can be configured using preprocessors:
 
-- `MATHC_INT_TYPE`:
-  - Define a new integer type for `mint_t`.
-- `MATHC_FLOAT_TYPE`:
-  - Define a new floating-point type for `mfloat_t`.
-- `MATHC_USE_INT64`:
-  - If `mint_t` is not already defined, define `mint_t` as `int64_t`.
-- `MATHC_USE_DOUBLE`:
-  - If `mfloat_t` is not defined, define `mfloat_t` as `double`.
-  - Also use the functiosn of the standard math library (`math.h`) with double precision.
+- `MATHC_INT_TYPE`: define a new integer type for `mint_t`.
+- `MATHC_FLOAT_TYPE`: define a new floating-point type for `mfloat_t`.
+- `MATHC_USE_INT64`: if `mint_t` is not already defined, define `mint_t` as `int64_t`.
+- `MATHC_USE_DOUBLE`: if `mfloat_t` is not defined, define `mfloat_t` as `double`, and also use the functiosn of the standard math library (`math.h`) with double precision.
 - `MATHC_USE_UNIONS`: enable anonymous unions inside structures. Only available on standard C11 or with extensions.
 - `MATHC_NO_POINTER_STRUCT_FUNCTIONS`: don't define the functions that take pointer to structures.
 - `MATHC_NO_STRUCT_FUNCTIONS`: don't define the functions that take structures as value.
