@@ -25,55 +25,33 @@ the following restrictions:
 #include <stdbool.h>
 #include <stdint.h>
 #include <float.h>
+#ifdef MATHC_USE_CONFIG_HEADER
+#include <config.h>
+#endif
 
-/* Integer type */
-#ifndef mint_t
+/* Integer type (int32_t) */
+#ifndef MATHC_USE_INT64
+#define mint_t int32_t
+#define MINT_MAX INT32_MAX 
+#define MINT_MIN INT32_MIN 
+#endif
+
+/* Integer type (int64_t) */
 #ifdef MATHC_USE_INT64
 #define mint_t int64_t
-#else
-#define mint_t int32_t
-#endif
+#define MINT_MAX INT64_MAX 
+#define MINT_MIN INT64_MIN 
 #endif
 
-/* Floating-point type */
-#ifndef mfloat_t
-#ifdef MATHC_USE_DOUBLE
-#define mfloat_t double
-#else
+/* Replace the integer type with the user-defined type */
+#ifdef MATHC_INT_TYPE
+#undef mint_t
+#define mint_t MATHC_INT_TYPE
+#endif
+
+/* Floating-point type (float) */
+#ifndef MATHC_USE_DOUBLE
 #define mfloat_t float
-#endif
-#endif
-
-/* Array sizes for declarations */
-#define VEC2_SIZE 2
-#define VEC3_SIZE 3
-#define VEC4_SIZE 4
-#define QUAT_SIZE 4
-#define MAT2_SIZE 4
-#define MAT3_SIZE 9
-#define MAT4_SIZE 16
-
-/* Floating-point precision used internally */
-#ifdef MATHC_DOUBLE_PRECISION
-#define MPI 3.14159265358979323846
-#define MPI_2 1.57079632679489661923
-#define MPI_4 0.78539816339744830962
-#define MFLT_EPSILON DBL_EPSILON
-#define MABS fabs
-#define MMIN fmin
-#define MMAX fmax
-#define MSQRT sqrt
-#define MSIN sin
-#define MCOS cos
-#define MACOS acos
-#define MTAN tan
-#define MATAN2 atan2
-#define MPOW pow
-#define MFLOOR floor
-#define MCEIL ceil
-#define MROUND round
-#define MFLOAT_C(c) c
-#else
 #define MPI 3.1415926536f
 #define MPI_2 1.5707963268f
 #define MPI_4 0.7853981634f
@@ -94,47 +72,163 @@ the following restrictions:
 #define MFLOAT_C(c) c ## f
 #endif
 
+/* Floating-point type (double) */
+#ifdef MATHC_USE_DOUBLE
+#define mfloat_t double
+#define MPI 3.14159265358979323846
+#define MPI_2 1.57079632679489661923
+#define MPI_4 0.78539816339744830962
+#define MFLT_EPSILON DBL_EPSILON
+#define MABS fabs
+#define MMIN fmin
+#define MMAX fmax
+#define MSQRT sqrt
+#define MSIN sin
+#define MCOS cos
+#define MACOS acos
+#define MTAN tan
+#define MATAN2 atan2
+#define MPOW pow
+#define MFLOOR floor
+#define MCEIL ceil
+#define MROUND round
+#define MFLOAT_C(c) c
+#endif
+
+/* Replace the floating-point type with the user-defined type */
+#ifdef MATHC_FLOAT_TYPE
+#undef mfloat_t
+#define mfloat_t MATHC_FLOAT_TYPE
+#endif
+
+/* Array sizes for declarations */
+#define VEC2_SIZE 2
+#define VEC3_SIZE 3
+#define VEC4_SIZE 4
+#define QUAT_SIZE 4
+#define MAT2_SIZE 4
+#define MAT3_SIZE 9
+#define MAT4_SIZE 16
+
 struct vec2 {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mfloat_t x;
+			mfloat_t y;
+		};
+		mfloat_t v[VEC2_SIZE];
+	};
+#else
 	mfloat_t x;
 	mfloat_t y;
+#endif
 };
 
 struct vec3 {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mfloat_t x;
+			mfloat_t y;
+			mfloat_t z;
+		};
+		mfloat_t v[VEC3_SIZE];
+	};
+#else
 	mfloat_t x;
 	mfloat_t y;
 	mfloat_t z;
+#endif
 };
 
 struct vec4 {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mfloat_t x;
+			mfloat_t y;
+			mfloat_t z;
+			mfloat_t w;
+		};
+		mfloat_t v[VEC4_SIZE];
+	};
+#else
 	mfloat_t x;
 	mfloat_t y;
 	mfloat_t z;
 	mfloat_t w;
+#endif
 };
 
 struct vec2i {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mint_t x;
+			mint_t y;
+		};
+		mint_t v[VEC2_SIZE];
+	};
+#else
 	mint_t x;
 	mint_t y;
+#endif
 };
 
 struct vec3i {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mint_t x;
+			mint_t y;
+			mint_t z;
+		};
+		mint_t v[VEC3_SIZE];
+	};
+#else
 	mint_t x;
 	mint_t y;
 	mint_t z;
+#endif
 };
 
 struct vec4i {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mint_t x;
+			mint_t y;
+			mint_t z;
+			mint_t w;
+		};
+		mint_t v[VEC4_SIZE];
+	};
+#else
 	mint_t x;
 	mint_t y;
 	mint_t z;
 	mint_t w;
+#endif
 };
 
 struct quat {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mfloat_t x;
+			mfloat_t y;
+			mfloat_t z;
+			mfloat_t w;
+		};
+		mfloat_t v[QUAT_SIZE];
+	};
+#else
 	mfloat_t x;
 	mfloat_t y;
 	mfloat_t z;
 	mfloat_t w;
+#endif
 };
 
 /*
@@ -143,10 +237,22 @@ Matrix 2×2 representation:
 1/m21 3/m22
 */
 struct mat2 {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mfloat_t m11;
+			mfloat_t m21;
+			mfloat_t m12;
+			mfloat_t m22;
+		};
+		mfloat_t v[MAT2_SIZE];
+	};
+#else
 	mfloat_t m11;
 	mfloat_t m21;
 	mfloat_t m12;
 	mfloat_t m22;
+#endif
 };
 
 /*
@@ -156,6 +262,22 @@ Matrix 3×3 representation:
 2/m31 5/m32 8/m33
 */
 struct mat3 {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mfloat_t m11;
+			mfloat_t m21;
+			mfloat_t m31;
+			mfloat_t m12;
+			mfloat_t m22;
+			mfloat_t m32;
+			mfloat_t m13;
+			mfloat_t m23;
+			mfloat_t m33;
+		};
+		mfloat_t v[MAT3_SIZE];
+	};
+#else
 	mfloat_t m11;
 	mfloat_t m21;
 	mfloat_t m31;
@@ -165,6 +287,7 @@ struct mat3 {
 	mfloat_t m13;
 	mfloat_t m23;
 	mfloat_t m33;
+#endif
 };
 
 /*
@@ -175,6 +298,29 @@ Matrix 4×4 representation:
 3/m41 7/m42 11/m43 15/m44
 */
 struct mat4 {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mfloat_t m11;
+			mfloat_t m21;
+			mfloat_t m31;
+			mfloat_t m41;
+			mfloat_t m12;
+			mfloat_t m22;
+			mfloat_t m32;
+			mfloat_t m42;
+			mfloat_t m13;
+			mfloat_t m23;
+			mfloat_t m33;
+			mfloat_t m43;
+			mfloat_t m14;
+			mfloat_t m24;
+			mfloat_t m34;
+			mfloat_t m44;
+		};
+		mfloat_t v[MAT4_SIZE];
+	};
+#else
 	mfloat_t m11;
 	mfloat_t m21;
 	mfloat_t m31;
@@ -191,6 +337,7 @@ struct mat4 {
 	mfloat_t m24;
 	mfloat_t m34;
 	mfloat_t m44;
+#endif
 };
 
 #if !defined(MATHC_NO_POINTER_STRUCT_FUNCTIONS) || !defined(MATHC_NO_STRUCT_FUNCTIONS)
