@@ -1089,10 +1089,11 @@ mfloat_t *vec3_normalize(mfloat_t *result, mfloat_t *a)
 
 mfloat_t *vec3_project(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
-	mfloat_t s = vec3_dot(a, b) / vec3_dot(b, b);
-	result[0] = b[0] * s;
-	result[1] = b[1] * s;
-	result[2] = b[2] * s;
+	mfloat_t ab = vec3_dot(a, b);
+	mfloat_t bb = vec3_dot(b, b);
+	result[0] = b[0] * ab / bb;
+	result[1] = b[1] * ab / bb;
+	result[2] = b[2] * ab / bb;
 	return result;
 }
 
