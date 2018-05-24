@@ -2298,6 +2298,15 @@ mfloat_t *quat_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 	return result;
 }
 
+mfloat_t *quat_multiply_f(mfloat_t *result, mfloat_t *a, mfloat_t f)
+{
+	result[0] = a[0] * f;
+	result[1] = a[1] * f;
+	result[2] = a[2] * f;
+	result[3] = a[3] * f;
+	return result;
+}
+
 mfloat_t *quat_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
 	mfloat_t x = a[0];
