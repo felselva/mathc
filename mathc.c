@@ -2223,6 +2223,134 @@ mint_t *vec4i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p)
 	return result;
 }
 
+/* Rotation */
+static bool check_singularity1(mfloat_t theta)
+{
+	bool result = false;
+	if (MPI - theta < MPI / 180.0 || theta < MPI / 180.0) {
+		result = true;
+	}
+	return result;
+}
+
+static bool check_singularity2(mfloat_t theta)
+{
+	bool result = false;
+	if (fabs(theta - MPI_2) < MPI / 180.0) {
+		result = true;
+	}
+	return result;
+}
+
+mfloat_t *euler_xyx_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2((q[0] * q[1] + q[2] * q[3]), (q[1] * q[3] - q[0] * q[2]));
+	result[1] = MACOS(q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]);
+	result[2] = MATAN2((q[0] * q[1] - q[2] * q[3]), (q[0] * q[2] + q[1] * q[3]));
+	*singularity = check_singularity1(result[1]);
+	return result;
+}
+
+mfloat_t *euler_yzy_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2((q[0] * q[3] + q[1] * q[2]), (q[2] * q[3] - q[0] * q[1]));
+	result[1] = acos(q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]);
+	result[2] = MATAN2((q[1] * q[2] - q[0] * q[3]), (q[0] * q[1] + q[2] * q[3]));
+	*singularity = check_singularity1(result[1]);
+	return result;
+}
+
+mfloat_t *euler_zxz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2((q[0] * q[2] + q[1] * q[3]), (q[0] * q[3] - q[1] * q[2]));
+	result[1] = MACOS(q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]);
+	result[2] = MATAN2((q[0] * q[2] - q[1] * q[3]), (q[0] * q[3] + q[1] * q[2]));
+	*singularity = check_singularity1(result[1]);
+	return result;
+}
+
+mfloat_t *euler_xzx_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2((q[0] * q[2] - q[1] * q[3]), (q[0] * q[1] + q[2] * q[3]));
+	result[1] = MACOS(q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]);
+	result[2] = MATAN2((q[0] * q[2] + q[1] * q[3]), (q[2] * q[3] - q[0] * q[1]));
+	*singularity = check_singularity1(result[1]);
+	return result;
+}
+
+mfloat_t *euler_yxy_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2((q[0] * q[1] - q[2] * q[3]), (q[0] * q[3] + q[1] * q[2]));
+	result[1] = MACOS(q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]);
+	result[2] = MATAN2((q[0] * q[1] + q[2] * q[3]), (q[0] * q[3] - q[1] * q[2]));
+	*singularity = check_singularity1(result[1]);
+	return result;
+}
+
+mfloat_t *euler_zyz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2((q[1] * q[2] - q[0] * q[3]), (q[0] * q[2] + q[1] * q[3]));
+	result[1] = MACOS(q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]);
+	result[2] = MATAN2((q[0] * q[3] + q[1] * q[2]), (q[1] * q[3] - q[0] * q[2]));
+	*singularity = check_singularity1(result[1]);
+	return result;
+}
+
+mfloat_t *euler_xyz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2(2 * (q[0] * q[3] - q[1] * q[2]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
+	result[1] = MASIN(2 * (q[0] * q[2] + q[1] * q[3]));
+	result[2] = MATAN2(2 * (q[2] * q[3] - q[0] * q[1]), (q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
+	*singularity = check_singularity2(result[1]);
+	return result;
+}
+
+mfloat_t *euler_yzx_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2(2 * (q[1] * q[3] - q[0] * q[2]), (q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
+	result[1] = MASIN(2 * (q[0] * q[1] + q[2] * q[3]));
+	result[2] = MATAN2(2 * (q[0] * q[3] - q[2] * q[1]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
+	*singularity = check_singularity2(result[1]);
+	return result;
+}
+
+mfloat_t *euler_zxy_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2(2 * (q[2] * q[3] - q[0] * q[1]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
+	result[1] = MASIN(2 * (q[0] * q[3] + q[1] * q[2]));
+	result[2] = MATAN2(2 * (q[1] * q[3] - q[2] * q[0]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
+	*singularity = check_singularity2(result[1]);
+	return result;
+}
+
+mfloat_t *euler_xzy_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2(2 * (q[0] * q[3] + q[1] * q[2]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
+	result[1] = MASIN(2 * (q[2] * q[3] - q[0] * q[1]));
+	result[2] = MATAN2(2 * (q[0] * q[2] + q[1] * q[3]),
+	(q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
+	*singularity = check_singularity2(result[1]);
+	return result;
+}
+
+mfloat_t *euler_yxz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2(2 * (q[0] * q[2] + q[1] * q[3]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
+	result[1] = MASIN(2 * (q[0] * q[3] - q[1] * q[2]));
+	result[2] = MATAN2(2 * (q[0] * q[1] + q[2] * q[3]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
+	*singularity = check_singularity2(result[1]);
+	return result;
+}
+
+mfloat_t *euler_zyx_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
+{
+	result[0] = MATAN2(2 * (q[0] * q[1] + q[2] * q[3]), (q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
+	result[1] = MASIN(2 * (q[1] * q[3] - q[0] * q[2]));
+	result[2] = MATAN2(2 * (q[0] * q[3] + q[2] * q[1]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
+	*singularity = check_singularity2(result[1]);
+	return result;
+}
+
 /* Quaternion */
 bool quat_is_zero(mfloat_t *a)
 {

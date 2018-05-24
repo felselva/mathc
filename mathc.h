@@ -108,6 +108,7 @@ the following restrictions:
 #define VEC2_SIZE 2
 #define VEC3_SIZE 3
 #define VEC4_SIZE 4
+#define EULER_SIZE 3
 #define QUAT_SIZE 4
 #define MAT2_SIZE 4
 #define MAT3_SIZE 9
@@ -212,6 +213,76 @@ struct vec4i {
 	mint_t y;
 	mint_t z;
 	mint_t w;
+#endif
+};
+
+struct euler {
+#ifdef MATHC_USE_UNIONS
+	union {
+		struct {
+			mfloat_t z0;
+			mfloat_t y1;
+			mfloat_t x2;
+		};
+		struct {
+			mfloat_t z0;
+			mfloat_t y1;
+			mfloat_t z2;
+		};
+		struct {
+			mfloat_t z0;
+			mfloat_t x1;
+			mfloat_t y2;
+		};
+		struct {
+			mfloat_t z0;
+			mfloat_t x1;
+			mfloat_t z2;
+		};
+		struct {
+			mfloat_t y0;
+			mfloat_t x1;
+			mfloat_t z2;
+		};
+		struct {
+			mfloat_t y0;
+			mfloat_t x1;
+			mfloat_t y2;
+		};
+		struct {
+			mfloat_t y0;
+			mfloat_t z1;
+			mfloat_t x2;
+		};
+		struct {
+			mfloat_t y0;
+			mfloat_t z1;
+			mfloat_t y2;
+		};
+		struct {
+			mfloat_t x0;
+			mfloat_t y1;
+			mfloat_t z2;
+		};
+		struct {
+			mfloat_t x0;
+			mfloat_t y1;
+			mfloat_t x2;
+		};
+		struct {
+			mfloat_t x0;
+			mfloat_t z1;
+			mfloat_t y2;
+		};
+		struct {
+			mfloat_t x0;
+			mfloat_t z1;
+			mfloat_t x2;
+		};
+		mfloat_t v[EULER_SIZE];
+	};
+#else
+	mfloat_t v[EULER_SIZE];
 #endif
 };
 
@@ -622,6 +693,20 @@ mint_t *vec4i_min(mint_t *result, mint_t *a, mint_t *b);
 mint_t *vec4i_clamp(mint_t *result, mint_t *a, mint_t *min, mint_t *max);
 mint_t *vec4i_normalize(mint_t *result, mint_t *a);
 mint_t *vec4i_lerp(mint_t *result, mint_t *a, mint_t *b, mfloat_t p);
+
+/* Euler */
+mfloat_t *euler_xyx_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_yzy_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_zxz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_xzx_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_yxy_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_zyz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_xyz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_yzx_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_zxy_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_xzy_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_yxz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
+mfloat_t *euler_zyx_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity);
 
 /* Quaternion */
 bool quat_is_zero(mfloat_t *a);
@@ -2225,6 +2310,79 @@ MATHC_INLINE struct vec4i *psvec4i_normalize(struct vec4i *result, struct vec4i 
 MATHC_INLINE struct vec4i *psvec4i_lerp(struct vec4i *result, struct vec4i *a, struct vec4i *b, mfloat_t p)
 {
 	vec4i_lerp((mint_t *)result, (mint_t *)a, (mint_t *)b, p);
+	return result;
+}
+
+/* Euler */
+MATHC_INLINE struct euler *pseuler_xyx_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_xyx_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_yzy_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_yzy_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_zxz_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_zxz_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_xzx_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_xzx_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_yxy_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_yxy_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_zyz_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_zyz_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_xyz_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_xyz_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_yzx_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_yzx_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_zxy_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_zxy_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_xzy_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_xzy_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_yxz_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_yxz_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler *pseuler_zyx_from_quat(struct euler *result, struct quat *q, bool *singularity)
+{
+	euler_zyx_from_quat((mfloat_t *)result, (mfloat_t *)q, singularity);
 	return result;
 }
 
@@ -4425,6 +4583,92 @@ MATHC_INLINE struct vec4i svec4i_lerp(struct vec4i a, struct vec4i b, mint_t p)
 {
 	struct vec4i result;
 	vec4i_lerp((mint_t *)&result, (mint_t *)&a, (mint_t *)&b, p);
+	return result;
+}
+
+
+/* Euler */
+MATHC_INLINE struct euler seuler_xyx_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_xyx_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_yzy_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_yzy_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_zxz_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_zxz_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_xzx_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_xzx_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_yxy_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_yxy_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_zyz_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_zyz_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_xyz_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_xyz_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_yzx_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_yzx_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_zxy_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_zxy_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_xzy_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_xzy_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_yxz_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_yxz_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
+	return result;
+}
+
+MATHC_INLINE struct euler seuler_zyx_from_quat(struct quat q, bool *singularity)
+{
+	struct euler result;
+	euler_zyx_from_quat((mfloat_t *)&result, (mfloat_t *)&q, singularity);
 	return result;
 }
 

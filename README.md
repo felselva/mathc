@@ -5,6 +5,7 @@
 MATHC is a simple math library for 2D and 3D programming. It contains implementations for:
 
 - Vectors (2D, 3D and 4D) (integer and floating-point)
+- Euler (classic and non-classic angles)
 - Quaternions
 - Matrices (2×2, 3×3, and 4×4)
 - Easing functions
@@ -18,12 +19,33 @@ MATHC can be configured using preprocessors:
 - `MATHC_INT_TYPE`: define a new integer type for `mint_t`.
 - `MATHC_FLOAT_TYPE`: define a new floating-point type for `mfloat_t`.
 - `MATHC_USE_INT64`: if `mint_t` is not already defined, define `mint_t` as `int64_t`.
-- `MATHC_USE_DOUBLE`: if `mfloat_t` is not defined, define `mfloat_t` as `double`, and also use the functions of the standard math library (`math.h`) with double precision.
+- `MATHC_USE_DOUBLE`: if `mfloat_t` is not already defined, define `mfloat_t` as `double`.
+- `MATHC_USE_DOUBLE_PRECISION`: use the functions of the standard math library (`math.h`) with double precision. For example, use `sqrt()` instead of `sqrtf()`.
 - `MATHC_USE_UNIONS`: enable anonymous unions inside structures. Only available on standard C11 or with extensions.
 - `MATHC_NO_POINTER_STRUCT_FUNCTIONS`: don't define the functions that take pointer to structures.
 - `MATHC_NO_STRUCT_FUNCTIONS`: don't define the functions that take structures as value.
 - `MATHC_NO_EASING_FUNCTIONS`: don't define the easing functions.
-- `MATHC_USE_CONFIG_HEADER`: if defined, `mathc.h` will try to include a header `config.h`. This macro can be passed as argument to the compiler (for example `gcc -DMATHC_USE_CONFIG_HEADER`), and the configuration file `config.h`, that must be created, can be used to define any of the preprocessors above.
+- `MATHC_USE_CONFIG_HEADER`: if defined, `mathc.h` will try to include a header `config.h`.
+
+There are two ways to declare these preprocessors:
+
+- Declare them using the compiler's option `-D`. The problem of this approach is that the makes the command-line long.
+- Declare only the `MATHC_USE_CONFIG_HEADER` using the compiler's option `-D` and then declare the other preprocessors in the header `config.h`.
+
+Here is an **example** using the second approach:
+
+```c
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#include <GL\gl.h>
+
+#define mfloat_t GLfloat
+#define MATHC_USE_UNIONS
+#define MATHC_NO_EASING_FUNCTIONS
+
+#endif /* CONFIG_H */
+```
 
 ## Types
 

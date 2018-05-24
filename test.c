@@ -77,60 +77,66 @@ void printf_1f_test(struct cerror *error, char *msg, mfloat_t e, mfloat_t r)
 	}
 }
 
-void printf_2f_test(struct cerror *error, char *msg, struct vec2 e, struct vec2 r)
+void printf_2f_test(struct cerror *error, char *msg, mfloat_t e0, mfloat_t e1, mfloat_t r0, mfloat_t r1)
 {
-	if (svec2_is_nearly_equal(e, r, EPSILON_1)) {
+	struct vec2 ve = svec2(e0, e1);
+	struct vec2 vr = svec2(r0, r1);
+	if (svec2_is_nearly_equal(ve, vr, EPSILON_1)) {
 		error->passed = error->passed + 1;
-	} else if (svec2_is_nearly_equal(e, r, EPSILON_10)) {
+	} else if (svec2_is_nearly_equal(ve, vr, EPSILON_10)) {
 		error->passed_with_e10 = error->passed_with_e10 + 1;
-		printf("%s passed with epsilon * 10.0:\n\tExpected % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf\n", msg, e.x, e.y, r.x, r.y);
-	} else if (svec2_is_nearly_equal(e, r, EPSILON_100)) {
+		printf("%s passed with epsilon * 10.0:\n\tExpected % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf\n", msg, e0, e1, r0, r1);
+	} else if (svec2_is_nearly_equal(ve, vr, EPSILON_100)) {
 		error->passed_with_e100 = error->passed_with_e100 + 1;
-		printf("%s passed with epsilon * 100.0:\n\tExpected % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf\n", msg, e.x, e.y, r.x, r.y);
-	} else if (svec2_is_nearly_equal(e, r, EPSILON_1000)) {
+		printf("%s passed with epsilon * 100.0:\n\tExpected % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf\n", msg, e0, e1, r0, r1);
+	} else if (svec2_is_nearly_equal(ve, vr, EPSILON_1000)) {
 		error->passed_with_e1000 = error->passed_with_e1000 + 1;
-		printf("%s passed with epsilon * 1000.0:\n\tExpected % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf\n", msg, e.x, e.y, r.x, r.y);
+		printf("%s passed with epsilon * 1000.0:\n\tExpected % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf\n", msg, e0, e1, r0, r1);
 	} else {
 		error->failed = error->failed + 1;
-		printf("%s failed:\n\tExpected % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf\n", msg, e.x, e.y, r.x, r.y);
+		printf("%s failed:\n\tExpected % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf\n", msg, e0, e1, r0, r1);
 	}
 }
 
-void printf_3f_test(struct cerror *error, char *msg, struct vec3 e, struct vec3 r)
+void printf_3f_test(struct cerror *error, char *msg, mfloat_t e0, mfloat_t e1, mfloat_t e2, mfloat_t r0, mfloat_t r1, mfloat_t r2)
 {
-	if (svec3_is_nearly_equal(e, r, EPSILON_1)) {
+	struct vec3 ve = svec3(e0, e1, e2);
+	struct vec3 vr = svec3(r0, r1, r2);
+	if (svec3_is_nearly_equal(ve, vr, EPSILON_1)) {
 		error->passed = error->passed + 1;
-	} else if (svec3_is_nearly_equal(e, r, EPSILON_10)) {
+	} else if (svec3_is_nearly_equal(ve, vr, EPSILON_10)) {
 		error->passed_with_e10 = error->passed_with_e10 + 1;
-		printf("%s passed with epsilon * 10.0:\n\tExpected % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf\n", msg, e.x, e.y, e.z, r.x, r.y, r.z);
-	} else if (svec3_is_nearly_equal(e, r, EPSILON_100)) {
+		printf("%s passed with epsilon * 10.0:\n\tExpected % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf\n", msg, e0, e1, e2, r0, r1, r2);
+	} else if (svec3_is_nearly_equal(ve, vr, EPSILON_100)) {
 		error->passed_with_e100 = error->passed_with_e100 + 1;
-		printf("%s passed with epsilon * 100.0:\n\tExpected % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf\n", msg, e.x, e.y, e.z, r.x, r.y, r.z);
-	} else if (svec3_is_nearly_equal(e, r, EPSILON_1000)) {
-		printf("%s passed with epsilon * 1000.0:\n\tExpected % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf\n", msg, e.x, e.y, e.z, r.x, r.y, r.z);
+		printf("%s passed with epsilon * 100.0:\n\tExpected % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf\n", msg, e0, e1, e2, r0, r1, r2);
+	} else if (svec3_is_nearly_equal(ve, vr, EPSILON_1000)) {
+		printf("%s passed with epsilon * 1000.0:\n\tExpected % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf\n", msg, e0, e1, e2, r0, r1, r2);
 		error->passed_with_e1000 = error->passed_with_e1000 + 1;
 	} else {
-		printf("%s failed:\n\tExpected % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf\n", msg, e.x, e.y, e.z, r.x, r.y, r.z);
+		printf("%s failed:\n\tExpected % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf\n", msg, e0, e1, e2, r0, r1, r2);
 		error->failed = error->failed + 1;
 	}
 }
 
-void printf_4f_test(struct cerror *error, char *msg, struct vec4 e, struct vec4 r)
+void printf_4f_test(struct cerror *error, char *msg, mfloat_t e0, mfloat_t e1, mfloat_t e2, mfloat_t e3, mfloat_t r0, mfloat_t r1, mfloat_t r2, mfloat_t r3)
 {
-	if (svec4_is_nearly_equal(e, r, EPSILON_1)) {
+	struct vec4 ve = svec4(e0, e1, e2, e3);
+	struct vec4 vr = svec4(r0, r1, r2, r3);
+	if (svec4_is_nearly_equal(ve, vr, EPSILON_1)) {
 		error->passed = error->passed + 1;
-	} else if (svec4_is_nearly_equal(e, r, EPSILON_10)) {
+	} else if (svec4_is_nearly_equal(ve, vr, EPSILON_10)) {
 		error->passed_with_e10 = error->passed_with_e10 + 1;
-		printf("%s passed with epsilon * 10.0:\n\tExpected % .16lf, % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf, % .16lf\n", msg, e.x, e.y, e.z, e.w, r.x, r.y, r.z, r.w);
-	} else if (svec4_is_nearly_equal(e, r, EPSILON_100)) {
+		printf("%s passed with epsilon * 10.0:\n\tExpected % .16lf, % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf, % .16lf\n", msg, e0, e1, e2, e3, r0, r1, r2, r3);
+	} else if (svec4_is_nearly_equal(ve, vr, EPSILON_100)) {
 		error->passed_with_e100 = error->passed_with_e100 + 1;
-		printf("%s passed with epsilon * 100.0:\n\tExpected % .16lf, % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf, % .16lf\n", msg, e.x, e.y, e.z, e.w, r.x, r.y, r.z, r.w);
-	} else if (svec4_is_nearly_equal(e, r, EPSILON_1000)) {
+		printf("%s passed with epsilon * 100.0:\n\tExpected % .16lf, % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf, % .16lf\n", msg, e0, e1, e2, e3, r0, r1, r2, r3);
+	} else if (svec4_is_nearly_equal(ve, vr, EPSILON_1000)) {
 		error->passed_with_e1000 = error->passed_with_e1000 + 1;
-		printf("%s passed with epsilon * 1000.0:\n\tExpected % .16lf, % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf, % .16lf\n", msg, e.x, e.y, e.z, e.w, r.x, r.y, r.z, r.w);
+		printf("%s passed with epsilon * 1000.0:\n\tExpected % .16lf, % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf, % .16lf\n", msg, e0, e1, e2, e3, r0, r1, r2, r3);
 	} else {
 		error->failed = error->failed + 1;
-		printf("%s failed:\n\tExpected % .16lf, % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf, % .16lf\n", msg, e.x, e.y, e.z, e.w, r.x, r.y, r.z, r.w);
+		printf("%s failed:\n\tExpected % .16lf, % .16lf, % .16lf, % .16lf\n\t  Actual % .16lf, % .16lf, % .16lf, % .16lf\n", msg, e0, e1, e2, e3, r0, r1, r2, r3);
 	}
 }
 
@@ -143,64 +149,64 @@ void vec2_tests(struct cerror *error)
 	printf_bool_test(error, "Test `vec2_is_equal`", true, svec2_is_equal(svec2(MFLOAT_C(1.0) / MFLOAT_C(3.0), MFLOAT_C(7.0) / MFLOAT_C(3.0)), svec2(MFLOAT_C(1.0) / MFLOAT_C(3.0), MFLOAT_C(7.0) / MFLOAT_C(3.0))));
 	printf_bool_test(error, "Test `vec2_is_nearly_equal`", true, svec2_is_nearly_equal(svec2(MFLOAT_C(1.0) / MFLOAT_C(3.0), MFLOAT_C(7.0) / MFLOAT_C(3.0)), svec2(MFLOAT_C(1.0) / MFLOAT_C(3.0), MFLOAT_C(7.0) / MFLOAT_C(3.0)), EPSILON_1));
 	v = svec2(MFLOAT_C(2.0), MFLOAT_C(1.0));
-	printf_2f_test(error, "Test `vec2`", svec2(MFLOAT_C(2.0), MFLOAT_C(1.0)), v);
+	printf_2f_test(error, "Test `vec2`", MFLOAT_C(2.0), MFLOAT_C(1.0), v.x, v.y);
 	v = svec2_assign(svec2(MFLOAT_C(2.0), MFLOAT_C(1.0)));
-	printf_2f_test(error, "Test `vec2_assign`", svec2(MFLOAT_C(2.0), MFLOAT_C(1.0)), v);
+	printf_2f_test(error, "Test `vec2_assign`", MFLOAT_C(2.0), MFLOAT_C(1.0), v.x, v.y);
 	v = svec2_zero();
-	printf_2f_test(error, "Test `vec2_zero`", svec2(MFLOAT_C(0.0), MFLOAT_C(0.0)), v);
+	printf_2f_test(error, "Test `vec2_zero`", MFLOAT_C(0.0), MFLOAT_C(0.0), v.x, v.y);
 	v = svec2_add(svec2(MFLOAT_C(3.0), MFLOAT_C(1.0)), svec2(MFLOAT_C(1.0), MFLOAT_C(7.0)));
-	printf_2f_test(error, "Test `vec2_add`", svec2(MFLOAT_C(4.0), MFLOAT_C(8.0)), v);
+	printf_2f_test(error, "Test `vec2_add`", MFLOAT_C(4.0), MFLOAT_C(8.0), v.x, v.y);
 	v = svec2_subtract(svec2(MFLOAT_C(1.0), MFLOAT_C(20.0)), svec2(MFLOAT_C(3.0), MFLOAT_C(7.0)));
-	printf_2f_test(error, "Test `vec2_subtract`", svec2(MFLOAT_C(-2.0), MFLOAT_C(13.0)), v);
+	printf_2f_test(error, "Test `vec2_subtract`", MFLOAT_C(-2.0), MFLOAT_C(13.0), v.x, v.y);
 	v = svec2_scale(svec2(MFLOAT_C(1.0), MFLOAT_C(3.0)), MFLOAT_C(3.0));
-	printf_2f_test(error, "Test `vec2_scale`", svec2(MFLOAT_C(3.0), MFLOAT_C(9.0)), v);
+	printf_2f_test(error, "Test `vec2_scale`", MFLOAT_C(3.0), MFLOAT_C(9.0), v.x, v.y);
 	v = svec2_multiply(svec2(MFLOAT_C(1.0), MFLOAT_C(3.0)), svec2(MFLOAT_C(3.0), MFLOAT_C(5.0)));
-	printf_2f_test(error, "Test `vec2_multiply`", svec2(MFLOAT_C(3.0), MFLOAT_C(15.0)), v);
+	printf_2f_test(error, "Test `vec2_multiply`", MFLOAT_C(3.0), MFLOAT_C(15.0), v.x, v.y);
 	m = smat2(
 		MFLOAT_C(0.8), MFLOAT_C(0.7),
 		MFLOAT_C(0.5), MFLOAT_C(0.3));
 	v = svec2_multiply_mat2(svec2(MFLOAT_C(3.0), MFLOAT_C(5.0)), m);
-	printf_2f_test(error, "Test `vec2_multiply_mat2`", svec2(MFLOAT_C(5.9), MFLOAT_C(3.0)), v);
+	printf_2f_test(error, "Test `vec2_multiply_mat2`", MFLOAT_C(5.9), MFLOAT_C(3.0), v.x, v.y);
 	v = svec2_divide(svec2(MFLOAT_C(1.0), MFLOAT_C(3.0)), svec2(MFLOAT_C(3.0), MFLOAT_C(5.0)));
-	printf_2f_test(error, "Test `vec2_divide`", svec2(MFLOAT_C(1.0 / 3.0), MFLOAT_C(0.6)), v);
+	printf_2f_test(error, "Test `vec2_divide`", MFLOAT_C(1.0 / 3.0), MFLOAT_C(0.6), v.x, v.y);
 	v = svec2_snap(svec2(MFLOAT_C(20.0), MFLOAT_C(-15.5)), svec2(MFLOAT_C(16.0), MFLOAT_C(16.0)));
-	printf_2f_test(error, "Test `vec2_snap`", svec2(MFLOAT_C(16.0), MFLOAT_C(-16.0)), v);
+	printf_2f_test(error, "Test `vec2_snap`", MFLOAT_C(16.0), MFLOAT_C(-16.0), v.x, v.y);
 	v = svec2_negative(svec2(MFLOAT_C(3.0), MFLOAT_C(5.0)));
-	printf_2f_test(error, "Test `vec2_negative`", svec2(MFLOAT_C(-3.0), MFLOAT_C(-5.0)), v);
+	printf_2f_test(error, "Test `vec2_negative`", MFLOAT_C(-3.0), MFLOAT_C(-5.0), v.x, v.y);
 	v = svec2_inverse(svec2(MFLOAT_C(3.0), MFLOAT_C(5.0)));
-	printf_2f_test(error, "Test `vec2_inverse`", svec2(MFLOAT_C(1.0 / 3.0), MFLOAT_C(0.2)), v);
+	printf_2f_test(error, "Test `vec2_inverse`", MFLOAT_C(1.0 / 3.0), MFLOAT_C(0.2), v.x, v.y);
 	v = svec2_abs(svec2(MFLOAT_C(-7.0), MFLOAT_C(-3.0)));
-	printf_2f_test(error, "Test `vec2_abs`", svec2(7.0, MFLOAT_C(3.0)), v);
+	printf_2f_test(error, "Test `vec2_abs`", 7.0, MFLOAT_C(3.0), v.x, v.y);
 	v = svec2_floor(svec2(MFLOAT_C(-7.2), MFLOAT_C(-3.7)));
-	printf_2f_test(error, "Test `vec2_floor`", svec2(-8.0, MFLOAT_C(-4.0)), v);
+	printf_2f_test(error, "Test `vec2_floor`", -8.0, MFLOAT_C(-4.0), v.x, v.y);
 	v = svec2_ceil(svec2(MFLOAT_C(-7.2), MFLOAT_C(-3.7)));
-	printf_2f_test(error, "Test `vec2_ceil`", svec2(-7.0, MFLOAT_C(-3.0)), v);
+	printf_2f_test(error, "Test `vec2_ceil`", -7.0, MFLOAT_C(-3.0), v.x, v.y);
 	v = svec2_round(svec2(MFLOAT_C(-7.2), MFLOAT_C(-3.7)));
-	printf_2f_test(error, "Test `vec2_round`", svec2(-7.0, MFLOAT_C(-4.0)), v);
+	printf_2f_test(error, "Test `vec2_round`", -7.0, MFLOAT_C(-4.0), v.x, v.y);
 	v = svec2_max(svec2(MFLOAT_C(-7.2), MFLOAT_C(-3.7)), svec2(MFLOAT_C(1.0), MFLOAT_C(3.7)));
-	printf_2f_test(error, "Test `vec2_max`", svec2(MFLOAT_C(1.0), MFLOAT_C(3.7)), v);
+	printf_2f_test(error, "Test `vec2_max`", MFLOAT_C(1.0), MFLOAT_C(3.7), v.x, v.y);
 	v = svec2_min(svec2(MFLOAT_C(-7.2), MFLOAT_C(-3.7)), svec2(MFLOAT_C(1.0), MFLOAT_C(3.7)));
-	printf_2f_test(error, "Test `vec2_min`", svec2(MFLOAT_C(-7.2), MFLOAT_C(-3.7)), v);
+	printf_2f_test(error, "Test `vec2_min`", MFLOAT_C(-7.2), MFLOAT_C(-3.7), v.x, v.y);
 	v = svec2_clamp(svec2(MFLOAT_C(-9.1), MFLOAT_C(8.7)), svec2(MFLOAT_C(-1.3), MFLOAT_C(2.7)), svec2(MFLOAT_C(3.3), MFLOAT_C(5.7)));
-	printf_2f_test(error, "Test `vec2_clamp`", svec2(MFLOAT_C(-1.3), MFLOAT_C(5.7)), v);
+	printf_2f_test(error, "Test `vec2_clamp`", MFLOAT_C(-1.3), MFLOAT_C(5.7), v.x, v.y);
 	v = svec2_normalize(svec2(MFLOAT_C(1.0), MFLOAT_C(1.0)));
-	printf_2f_test(error, "Test `vec2_normalize`", svec2(MFLOAT_C(0.7071067811865475), MFLOAT_C(0.7071067811865475)), v);
+	printf_2f_test(error, "Test `vec2_normalize`", MFLOAT_C(0.7071067811865475), MFLOAT_C(0.7071067811865475), v.x, v.y);
 	v = svec2_project(svec2(MFLOAT_C(2.0), MFLOAT_C(2.0)), svec2(MFLOAT_C(0.5), MFLOAT_C(1.0)));
-	printf_2f_test(error, "Test `vec2_project`", svec2(MFLOAT_C(1.2), MFLOAT_C(2.4)), v);
+	printf_2f_test(error, "Test `vec2_project`", MFLOAT_C(1.2), MFLOAT_C(2.4), v.x, v.y);
 	v = svec2_slide(svec2(MFLOAT_C(1.0), MFLOAT_C(0.0)), svec2(MFLOAT_C(-0.7071067811865475), MFLOAT_C(-0.7071067811865475)));
-	printf_2f_test(error, "Test `vec2_slide`", svec2(MFLOAT_C(0.5), MFLOAT_C(-0.5)), v);
+	printf_2f_test(error, "Test `vec2_slide`", MFLOAT_C(0.5), MFLOAT_C(-0.5), v.x, v.y);
 	v = svec2_reflect(svec2(MFLOAT_C(1.0), MFLOAT_C(0.0)), svec2(MFLOAT_C(-0.7071067811865475), MFLOAT_C(-0.7071067811865475)));
-	printf_2f_test(error, "Test `vec2_reflect`", svec2(MFLOAT_C(0.0), MFLOAT_C(-1.0)), v);
+	printf_2f_test(error, "Test `vec2_reflect`", MFLOAT_C(0.0), MFLOAT_C(-1.0), v.x, v.y);
 	v = svec2_tangent(svec2(MFLOAT_C(1.0), MFLOAT_C(0.0)));
-	printf_2f_test(error, "Test `vec2_tangent`", svec2(MFLOAT_C(0.0), MFLOAT_C(-1.0)), v);
+	printf_2f_test(error, "Test `vec2_tangent`", MFLOAT_C(0.0), MFLOAT_C(-1.0), v.x, v.y);
 	v = svec2_rotate(svec2(MFLOAT_C(1.0), MFLOAT_C(0.0)), to_radians(MFLOAT_C(45.0)));
-	printf_2f_test(error, "Test `vec2_rotate`", svec2(MFLOAT_C(0.7071067811865475), MFLOAT_C(0.7071067811865475)), v);
+	printf_2f_test(error, "Test `vec2_rotate`", MFLOAT_C(0.7071067811865475), MFLOAT_C(0.7071067811865475), v.x, v.y);
 	v = svec2_lerp(svec2(MFLOAT_C(3.0), MFLOAT_C(3.0)), svec2(MFLOAT_C(9.0), MFLOAT_C(1.0)), MFLOAT_C(0.5));
-	printf_2f_test(error, "Test `vec2_lerp`", svec2(MFLOAT_C(6.0), MFLOAT_C(2.0)), v);
+	printf_2f_test(error, "Test `vec2_lerp`", MFLOAT_C(6.0), MFLOAT_C(2.0), v.x, v.y);
 	v = svec2_bezier3(svec2(MFLOAT_C(3.0), MFLOAT_C(3.0)), svec2(MFLOAT_C(9.0), MFLOAT_C(1.0)), svec2(MFLOAT_C(14.0), MFLOAT_C(7.0)), MFLOAT_C(0.5));
-	printf_2f_test(error, "Test `vec2_bezier3`", svec2(MFLOAT_C(8.75), MFLOAT_C(3.0)), v);
+	printf_2f_test(error, "Test `vec2_bezier3`", MFLOAT_C(8.75), MFLOAT_C(3.0), v.x, v.y);
 	v = svec2_bezier4(svec2(MFLOAT_C(3.0), MFLOAT_C(3.0)), svec2(MFLOAT_C(9.0), MFLOAT_C(1.0)), svec2(MFLOAT_C(14.0), MFLOAT_C(7.0)), svec2(MFLOAT_C(21.0), MFLOAT_C(9.0)), MFLOAT_C(0.5));
-	printf_2f_test(error, "Test `vec2_bezier4`", svec2(MFLOAT_C(11.625), MFLOAT_C(4.5)), v);
+	printf_2f_test(error, "Test `vec2_bezier4`", MFLOAT_C(11.625), MFLOAT_C(4.5), v.x, v.y);
 	printf_1f_test(error, "Test `vec2_dot`", MFLOAT_C(13.0), svec2_dot(svec2(MFLOAT_C(3.0), MFLOAT_C(2.0)), svec2(MFLOAT_C(1.0), MFLOAT_C(5.0))));
 	printf_1f_test(error, "Test `vec2_angle`", to_radians(MFLOAT_C(45.0)), svec2_angle(svec2(MFLOAT_C(2.0), MFLOAT_C(2.0))));
 	printf_1f_test(error, "Test `vec2_length`", MFLOAT_C(2.8284271247461903), svec2_length(svec2(MFLOAT_C(2.0), MFLOAT_C(2.0))));
@@ -218,61 +224,61 @@ void vec3_tests(struct cerror *error)
 	printf_bool_test(error, "Test `vec3_is_equal`", true, svec3_is_equal(svec3(MFLOAT_C(1.0) / MFLOAT_C(3.0), MFLOAT_C(7.0) / MFLOAT_C(3.0), MFLOAT_C(5.0) / MFLOAT_C(3.0)), svec3(MFLOAT_C(1.0) / MFLOAT_C(3.0), MFLOAT_C(7.0) / MFLOAT_C(3.0), MFLOAT_C(5.0) / MFLOAT_C(3.0))));
 	printf_bool_test(error, "Test `vec3_is_nearly_equal`", true, svec3_is_nearly_equal(svec3(MFLOAT_C(1.0) / MFLOAT_C(3.0), MFLOAT_C(7.0) / MFLOAT_C(3.0), MFLOAT_C(5.0) / MFLOAT_C(3.0)), svec3(MFLOAT_C(1.0) / MFLOAT_C(3.0), MFLOAT_C(7.0) / MFLOAT_C(3.0), MFLOAT_C(5.0) / MFLOAT_C(3.0)), EPSILON_1));
 	v = svec3(MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0));
-	printf_3f_test(error, "Test `vec3`", svec3(MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0)), v);
+	printf_3f_test(error, "Test `vec3`", MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0), v.x, v.y, v.z);
 	v = svec3_assign(svec3(MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0)));
-	printf_3f_test(error, "Test `vec3_assign`", svec3(MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0)), v);
+	printf_3f_test(error, "Test `vec3_assign`", MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0), v.x, v.y, v.z);
 	v = svec3_zero();
-	printf_3f_test(error, "Test `vec3_zero`", svec3(MFLOAT_C(0.0), MFLOAT_C(0.0), MFLOAT_C(0.0)), v);
+	printf_3f_test(error, "Test `vec3_zero`", MFLOAT_C(0.0), MFLOAT_C(0.0), MFLOAT_C(0.0), v.x, v.y, v.z);
 	v = svec3_add(svec3(MFLOAT_C(3.0), MFLOAT_C(1.0), MFLOAT_C(4.0)), svec3(MFLOAT_C(1.0), MFLOAT_C(7.0), MFLOAT_C(2.0)));
-	printf_3f_test(error, "Test `vec3_add`", svec3(MFLOAT_C(4.0), MFLOAT_C(8.0), MFLOAT_C(6.0)), v);
+	printf_3f_test(error, "Test `vec3_add`", MFLOAT_C(4.0), MFLOAT_C(8.0), MFLOAT_C(6.0), v.x, v.y, v.z);
 	v = svec3_subtract(svec3(MFLOAT_C(1.0), MFLOAT_C(20.0), MFLOAT_C(9.0)), svec3(MFLOAT_C(3.0), MFLOAT_C(7.0), MFLOAT_C(7.0)));
-	printf_3f_test(error, "Test `vec3_subtract`", svec3(MFLOAT_C(-2.0), MFLOAT_C(13.0), MFLOAT_C(2.0)), v);
+	printf_3f_test(error, "Test `vec3_subtract`", MFLOAT_C(-2.0), MFLOAT_C(13.0), MFLOAT_C(2.0), v.x, v.y, v.z);
 	v = svec3_scale(svec3(MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(5.0)), MFLOAT_C(3.0));
-	printf_3f_test(error, "Test `vec3_scale`", svec3(MFLOAT_C(3.0), MFLOAT_C(9.0), MFLOAT_C(15.0)), v);
+	printf_3f_test(error, "Test `vec3_scale`", MFLOAT_C(3.0), MFLOAT_C(9.0), MFLOAT_C(15.0), v.x, v.y, v.z);
 	v = svec3_multiply(svec3(MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(5.0)), svec3(MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(2.0)));
-	printf_3f_test(error, "Test `vec3_multiply`", svec3(MFLOAT_C(3.0), MFLOAT_C(15.0), MFLOAT_C(10.0)), v);
+	printf_3f_test(error, "Test `vec3_multiply`", MFLOAT_C(3.0), MFLOAT_C(15.0), MFLOAT_C(10.0), v.x, v.y, v.z);
 	m = smat3(
 		MFLOAT_C(1.0), MFLOAT_C(2.0), MFLOAT_C(3.0),
 		MFLOAT_C(4.0), MFLOAT_C(5.0), MFLOAT_C(6.0),
 		MFLOAT_C(7.0), MFLOAT_C(8.0), MFLOAT_C(9.0));
 	v = svec3_multiply_mat3(svec3(MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0)), m);
-	printf_3f_test(error, "Test `vec3_multiply_mat3`", svec3(MFLOAT_C(13.0), MFLOAT_C(31.0), MFLOAT_C(49.0)), v);
+	printf_3f_test(error, "Test `vec3_multiply_mat3`", MFLOAT_C(13.0), MFLOAT_C(31.0), MFLOAT_C(49.0), v.x, v.y, v.z);
 	v = svec3_divide(svec3(MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(5.0)), svec3(MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(2.0)));
-	printf_3f_test(error, "Test `vec3_divide`", svec3(MFLOAT_C(1.0 / 3.0), MFLOAT_C(0.6), MFLOAT_C(2.5)), v);
+	printf_3f_test(error, "Test `vec3_divide`", MFLOAT_C(1.0 / 3.0), MFLOAT_C(0.6), MFLOAT_C(2.5), v.x, v.y, v.z);
 	v = svec3_snap(svec3(MFLOAT_C(1.3), MFLOAT_C(-3.1), MFLOAT_C(4.9)), svec3(MFLOAT_C(0.5), MFLOAT_C(0.5), MFLOAT_C(0.5)));
-	printf_3f_test(error, "Test `vec3_snap`", svec3(MFLOAT_C(1.0), MFLOAT_C(-3.5), MFLOAT_C(4.5)), v);
+	printf_3f_test(error, "Test `vec3_snap`", MFLOAT_C(1.0), MFLOAT_C(-3.5), MFLOAT_C(4.5), v.x, v.y, v.z);
 	v = svec3_negative(svec3(MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(-7.0)));
-	printf_3f_test(error, "Test `vec3_negative`", svec3(MFLOAT_C(-3.0), MFLOAT_C(-5.0), MFLOAT_C(7.0)), v);
+	printf_3f_test(error, "Test `vec3_negative`", MFLOAT_C(-3.0), MFLOAT_C(-5.0), MFLOAT_C(7.0), v.x, v.y, v.z);
 	v = svec3_inverse(svec3(MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(7.0)));
-	printf_3f_test(error, "Test `vec3_inverse`", svec3(MFLOAT_C(1.0 / 3.0), MFLOAT_C(1.0 / 5.0), MFLOAT_C(1.0 / 7.0)), v);
+	printf_3f_test(error, "Test `vec3_inverse`", MFLOAT_C(1.0 / 3.0), MFLOAT_C(1.0 / 5.0), MFLOAT_C(1.0 / 7.0), v.x, v.y, v.z);
 	v = svec3_abs(svec3(MFLOAT_C(-7.0), MFLOAT_C(-3.0), MFLOAT_C(1.0)));
-	printf_3f_test(error, "Test `vec3_abs`", svec3(7.0, MFLOAT_C(3.0), MFLOAT_C(1.0)), v);
+	printf_3f_test(error, "Test `vec3_abs`", 7.0, MFLOAT_C(3.0), MFLOAT_C(1.0), v.x, v.y, v.z);
 	v = svec3_floor(svec3(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(9.1)));
-	printf_3f_test(error, "Test `vec3_floor`", svec3(-8.0, MFLOAT_C(-4.0), MFLOAT_C(9.0)), v);
+	printf_3f_test(error, "Test `vec3_floor`", -8.0, MFLOAT_C(-4.0), MFLOAT_C(9.0), v.x, v.y, v.z);
 	v = svec3_ceil(svec3(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(0.99)));
-	printf_3f_test(error, "Test `vec3_ceil`", svec3(-7.0, MFLOAT_C(-3.0), MFLOAT_C(1.0)), v);
+	printf_3f_test(error, "Test `vec3_ceil`", -7.0, MFLOAT_C(-3.0), MFLOAT_C(1.0), v.x, v.y, v.z);
 	v = svec3_round(svec3(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(0.01)));
-	printf_3f_test(error, "Test `vec3_round`", svec3(-7.0, MFLOAT_C(-4.0), MFLOAT_C(0.0)), v);
+	printf_3f_test(error, "Test `vec3_round`", -7.0, MFLOAT_C(-4.0), MFLOAT_C(0.0), v.x, v.y, v.z);
 	v = svec3_max(svec3(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(9.0)), svec3(MFLOAT_C(1.0), MFLOAT_C(3.7), MFLOAT_C(30.0)));
-	printf_3f_test(error, "Test `vec3_max`", svec3(MFLOAT_C(1.0), MFLOAT_C(3.7), MFLOAT_C(30.0)), v);
+	printf_3f_test(error, "Test `vec3_max`", MFLOAT_C(1.0), MFLOAT_C(3.7), MFLOAT_C(30.0), v.x, v.y, v.z);
 	v = svec3_min(svec3(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(9.0)), svec3(MFLOAT_C(1.0), MFLOAT_C(3.7), MFLOAT_C(30.0)));
-	printf_3f_test(error, "Test `vec3_min`", svec3(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(9.0)), v);
+	printf_3f_test(error, "Test `vec3_min`", MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(9.0), v.x, v.y, v.z);
 	v = svec3_clamp(svec3(MFLOAT_C(-9.1), MFLOAT_C(8.7), MFLOAT_C(0.4)), svec3(MFLOAT_C(-1.3), MFLOAT_C(2.7), MFLOAT_C(0.7)), svec3(MFLOAT_C(3.3), MFLOAT_C(5.7), MFLOAT_C(0.8)));
-	printf_3f_test(error, "Test `vec3_clamp`", svec3(MFLOAT_C(-1.3), MFLOAT_C(5.7), MFLOAT_C(0.7)), v);
+	printf_3f_test(error, "Test `vec3_clamp`", MFLOAT_C(-1.3), MFLOAT_C(5.7), MFLOAT_C(0.7), v.x, v.y, v.z);
 	v = svec3_normalize(svec3(MFLOAT_C(3.0), MFLOAT_C(1.0), MFLOAT_C(2.0)));
-	printf_3f_test(error, "Test `vec3_normalize`", svec3(MFLOAT_C(0.8017837257372732), MFLOAT_C(0.2672612419124244), MFLOAT_C(0.5345224838248488)), v);
+	printf_3f_test(error, "Test `vec3_normalize`", MFLOAT_C(0.8017837257372732), MFLOAT_C(0.2672612419124244), MFLOAT_C(0.5345224838248488), v.x, v.y, v.z);
 	v = svec3_project(svec3(MFLOAT_C(-1.0), MFLOAT_C(4.0), MFLOAT_C(2.0)), svec3(MFLOAT_C(1.0), MFLOAT_C(5.0), MFLOAT_C(3.0)));
-	printf_3f_test(error, "Test `vec3_project`", svec3(MFLOAT_C(0.7142857142857143), MFLOAT_C(3.5714285714285716), 2.1428571428571428), v);
+	printf_3f_test(error, "Test `vec3_project`", MFLOAT_C(0.7142857142857143), MFLOAT_C(3.5714285714285716), 2.1428571428571428, v.x, v.y, v.z);
 	v = svec3_slide(svec3(MFLOAT_C(1.0), MFLOAT_C(0.5), MFLOAT_C(-1.0)), svec3(MFLOAT_C(-0.1), MFLOAT_C(0.0), MFLOAT_C(1.0)));
-	printf_3f_test(error, "Test `vec3_slide`", svec3(MFLOAT_C(0.89),  MFLOAT_C(0.5),  MFLOAT_C(0.1)), v);
+	printf_3f_test(error, "Test `vec3_slide`", MFLOAT_C(0.89),  MFLOAT_C(0.5),  MFLOAT_C(0.1), v.x, v.y, v.z);
 	v = svec3_reflect(svec3(MFLOAT_C(1.0), MFLOAT_C(0.5), MFLOAT_C(-1.0)), svec3(MFLOAT_C(-0.1), MFLOAT_C(0.0), MFLOAT_C(1.0)));
-	printf_3f_test(error, "Test `vec3_reflect`", svec3(MFLOAT_C(0.78),  MFLOAT_C(0.5),  MFLOAT_C(1.2)), v);
+	printf_3f_test(error, "Test `vec3_reflect`", MFLOAT_C(0.78),  MFLOAT_C(0.5),  MFLOAT_C(1.2), v.x, v.y, v.z);
 	v = svec3_lerp(svec3(MFLOAT_C(3.0), MFLOAT_C(3.0), MFLOAT_C(3.0)), svec3(MFLOAT_C(9.0), MFLOAT_C(1.0), MFLOAT_C(30.0)), MFLOAT_C(0.5));
-	printf_3f_test(error, "Test `vec3_lerp`", svec3(MFLOAT_C(6.0),  MFLOAT_C(2.0),  MFLOAT_C(16.5)), v);
+	printf_3f_test(error, "Test `vec3_lerp`", MFLOAT_C(6.0),  MFLOAT_C(2.0),  MFLOAT_C(16.5), v.x, v.y, v.z);
 	v = svec3_bezier3(svec3(MFLOAT_C(-1.0), MFLOAT_C(-0.5), MFLOAT_C(0.2)), svec3(MFLOAT_C(1.5), MFLOAT_C(0.15), MFLOAT_C(0.5)), svec3(MFLOAT_C(1.0), MFLOAT_C(-1.0), MFLOAT_C(0.0)), MFLOAT_C(0.5));
-	printf_3f_test(error, "Test `vec3_bezier3`", svec3(MFLOAT_C(0.75), MFLOAT_C(-0.3), MFLOAT_C(0.3)), v);
+	printf_3f_test(error, "Test `vec3_bezier3`", MFLOAT_C(0.75), MFLOAT_C(-0.3), MFLOAT_C(0.3), v.x, v.y, v.z);
 	v = svec3_bezier4(svec3(MFLOAT_C(3.0), MFLOAT_C(3.0), MFLOAT_C(3.0)), svec3(MFLOAT_C(9.0), MFLOAT_C(7.0), MFLOAT_C(9.0)), svec3(MFLOAT_C(-4.0), MFLOAT_C(6.0), MFLOAT_C(7.0)), svec3(MFLOAT_C(-5.0), MFLOAT_C(1.0), MFLOAT_C(2.0)), MFLOAT_C(0.5));
-	printf_3f_test(error, "Test `vec3_bezier4`", svec3(MFLOAT_C(1.625), MFLOAT_C(5.375), MFLOAT_C(6.625)), v);
+	printf_3f_test(error, "Test `vec3_bezier4`", MFLOAT_C(1.625), MFLOAT_C(5.375), MFLOAT_C(6.625), v.x, v.y, v.z);
 	printf_1f_test(error, "Test `vec3_dot`", MFLOAT_C(44.0), svec3_dot(svec3(MFLOAT_C(1.0), MFLOAT_C(2.0), MFLOAT_C(3.0)), svec3(MFLOAT_C(6.0), MFLOAT_C(7.0), MFLOAT_C(8.0))));
 	printf_1f_test(error, "Test `vec3_length`", MFLOAT_C(3.4641016151377544), svec3_length(svec3(MFLOAT_C(2.0), MFLOAT_C(2.0), MFLOAT_C(2.0))));
 	printf_1f_test(error, "Test `vec3_length_squared`", MFLOAT_C(12.0), svec3_length_squared(svec3(MFLOAT_C(2.0), MFLOAT_C(2.0), MFLOAT_C(2.0))));
@@ -293,52 +299,63 @@ void vec4_tests(struct cerror *error)
 	v.z = MFLOAT_C(3.0);
 	v.w = MFLOAT_C(4.0);
 	v = svec4(MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(4.0));
-	printf_4f_test(error, "Test `vec4`", svec4(MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(4.0)), v);
+	printf_4f_test(error, "Test `vec4`", MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(4.0), v.x, v.y, v.z, v.w);
 	v = svec4_assign(svec4(MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(4.0)));
-	printf_4f_test(error, "Test `vec3_assign`", svec4(MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(4.0)), v);
+	printf_4f_test(error, "Test `vec3_assign`", MFLOAT_C(2.0), MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(4.0), v.x, v.y, v.z, v.w);
 	v = svec4_zero();
-	printf_4f_test(error, "Test `vec4_zero`", svec4(MFLOAT_C(0.0), MFLOAT_C(0.0), MFLOAT_C(0.0), MFLOAT_C(0.0)), v);
+	printf_4f_test(error, "Test `vec4_zero`", MFLOAT_C(0.0), MFLOAT_C(0.0), MFLOAT_C(0.0), MFLOAT_C(0.0), v.x, v.y, v.z, v.w);
 	v = svec4_add(svec4(MFLOAT_C(3.0), MFLOAT_C(1.0), MFLOAT_C(4.0), MFLOAT_C(2.0)), svec4(MFLOAT_C(1.0), MFLOAT_C(7.0), MFLOAT_C(2.0), MFLOAT_C(3.0)));
-	printf_4f_test(error, "Test `vec4_add`", svec4(MFLOAT_C(4.0), MFLOAT_C(8.0), MFLOAT_C(6.0), MFLOAT_C(5.0)), v);
+	printf_4f_test(error, "Test `vec4_add`", MFLOAT_C(4.0), MFLOAT_C(8.0), MFLOAT_C(6.0), MFLOAT_C(5.0), v.x, v.y, v.z, v.w);
 	v = svec4_subtract(svec4(MFLOAT_C(1.0), MFLOAT_C(20.0), MFLOAT_C(9.0), MFLOAT_C(10.0)), svec4(MFLOAT_C(3.0), MFLOAT_C(7.0), MFLOAT_C(7.0), MFLOAT_C(5.0)));
-	printf_4f_test(error, "Test `vec4_subtract`", svec4(MFLOAT_C(-2.0), MFLOAT_C(13.0), MFLOAT_C(2.0), MFLOAT_C(5.0)), v);
+	printf_4f_test(error, "Test `vec4_subtract`", MFLOAT_C(-2.0), MFLOAT_C(13.0), MFLOAT_C(2.0), MFLOAT_C(5.0), v.x, v.y, v.z, v.w);
 	v = svec4_scale(svec4(MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(2.0)), MFLOAT_C(3.0));
-	printf_4f_test(error, "Test `vec4_scale`", svec4(MFLOAT_C(3.0), MFLOAT_C(9.0), MFLOAT_C(15.0), MFLOAT_C(6.0)), v);
+	printf_4f_test(error, "Test `vec4_scale`", MFLOAT_C(3.0), MFLOAT_C(9.0), MFLOAT_C(15.0), MFLOAT_C(6.0), v.x, v.y, v.z, v.w);
 	v = svec4_multiply(svec4(MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(2.0)), svec4(MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(2.0), MFLOAT_C(2.0)));
-	printf_4f_test(error, "Test `vec4_multiply`", svec4(MFLOAT_C(3.0), MFLOAT_C(15.0), MFLOAT_C(10.0), MFLOAT_C(4.0)), v);
+	printf_4f_test(error, "Test `vec4_multiply`", MFLOAT_C(3.0), MFLOAT_C(15.0), MFLOAT_C(10.0), MFLOAT_C(4.0), v.x, v.y, v.z, v.w);
 	m = smat4(
 		MFLOAT_C(1.0), MFLOAT_C(5.0), MFLOAT_C(9.0), MFLOAT_C(13.0),
 		MFLOAT_C(2.0), MFLOAT_C(6.0), MFLOAT_C(10.0), MFLOAT_C(14.0),
 		MFLOAT_C(3.0), MFLOAT_C(7.0), MFLOAT_C(11.0), MFLOAT_C(15.0),
 		MFLOAT_C(4.0), MFLOAT_C(8.0), MFLOAT_C(12.0), MFLOAT_C(16.0));
 	v = svec4_multiply_mat4(svec4(MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(7.0), MFLOAT_C(9.0)), m);
-	printf_4f_test(error, "Test `vec4_multiply_mat4`", svec4(MFLOAT_C(208.0), MFLOAT_C(232.0), MFLOAT_C(256.0), MFLOAT_C(280.0)), v);
+	printf_4f_test(error, "Test `vec4_multiply_mat4`", MFLOAT_C(208.0), MFLOAT_C(232.0), MFLOAT_C(256.0), MFLOAT_C(280.0), v.x, v.y, v.z, v.w);
 	v = svec4_divide(svec4(MFLOAT_C(1.0), MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(2.0)), svec4(MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(2.0), MFLOAT_C(4.0)));
-	printf_4f_test(error, "Test `vec4_divide`", svec4(MFLOAT_C(1.0 / 3.0), MFLOAT_C(0.6), MFLOAT_C(2.5), MFLOAT_C(0.5)), v);
+	printf_4f_test(error, "Test `vec4_divide`", MFLOAT_C(1.0 / 3.0), MFLOAT_C(0.6), MFLOAT_C(2.5), MFLOAT_C(0.5), v.x, v.y, v.z, v.w);
 	v = svec4_snap(svec4(MFLOAT_C(1.3), MFLOAT_C(-3.1), MFLOAT_C(4.9), MFLOAT_C(5.6)), svec4(MFLOAT_C(0.5), MFLOAT_C(0.5), MFLOAT_C(0.5), MFLOAT_C(0.5)));
-	printf_4f_test(error, "Test `vec4_snap`", svec4(MFLOAT_C(1.0), MFLOAT_C(-3.5), MFLOAT_C(4.5), MFLOAT_C(5.5)), v);
+	printf_4f_test(error, "Test `vec4_snap`", MFLOAT_C(1.0), MFLOAT_C(-3.5), MFLOAT_C(4.5), MFLOAT_C(5.5), v.x, v.y, v.z, v.w);
 	v = svec4_negative(svec4(MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(-7.0), MFLOAT_C(0.01)));
-	printf_4f_test(error, "Test `vec4_negative`", svec4(MFLOAT_C(-3.0), MFLOAT_C(-5.0), MFLOAT_C(7.0), MFLOAT_C(-0.01)), v);
+	printf_4f_test(error, "Test `vec4_negative`", MFLOAT_C(-3.0), MFLOAT_C(-5.0), MFLOAT_C(7.0), MFLOAT_C(-0.01), v.x, v.y, v.z, v.w);
 	v = svec4_inverse(svec4(MFLOAT_C(3.0), MFLOAT_C(5.0), MFLOAT_C(7.0), MFLOAT_C(8.0)));
-	printf_4f_test(error, "Test `vec4_inverse`", svec4(MFLOAT_C(1.0 / 3.0), MFLOAT_C(1.0 / 5.0), MFLOAT_C(1.0 / 7.0), MFLOAT_C(1.0 / 8.0)), v);
+	printf_4f_test(error, "Test `vec4_inverse`", MFLOAT_C(1.0 / 3.0), MFLOAT_C(1.0 / 5.0), MFLOAT_C(1.0 / 7.0), MFLOAT_C(1.0 / 8.0), v.x, v.y, v.z, v.w);
 	v = svec4_abs(svec4(MFLOAT_C(-7.0), MFLOAT_C(-3.0), MFLOAT_C(1.0), MFLOAT_C(0.0001)));
-	printf_4f_test(error, "Test `vec4_abs`", svec4(7.0, MFLOAT_C(3.0), MFLOAT_C(1.0), MFLOAT_C(0.0001)), v);
+	printf_4f_test(error, "Test `vec4_abs`", 7.0, MFLOAT_C(3.0), MFLOAT_C(1.0), MFLOAT_C(0.0001), v.x, v.y, v.z, v.w);
 	v = svec4_floor(svec4(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(9.1), MFLOAT_C(1.0)));
-	printf_4f_test(error, "Test `vec4_floor`", svec4(-8.0, MFLOAT_C(-4.0), MFLOAT_C(9.0), MFLOAT_C(1.0)), v);
+	printf_4f_test(error, "Test `vec4_floor`", -8.0, MFLOAT_C(-4.0), MFLOAT_C(9.0), MFLOAT_C(1.0), v.x, v.y, v.z, v.w);
 	v = svec4_ceil(svec4(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(0.99), MFLOAT_C(1.0)));
-	printf_4f_test(error, "Test `vec4_ceil`", svec4(-7.0, MFLOAT_C(-3.0), MFLOAT_C(1.0), MFLOAT_C(1.0)), v);
+	printf_4f_test(error, "Test `vec4_ceil`", -7.0, MFLOAT_C(-3.0), MFLOAT_C(1.0), MFLOAT_C(1.0), v.x, v.y, v.z, v.w);
 	v = svec4_round(svec4(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(0.01), MFLOAT_C(1.0)));
-	printf_4f_test(error, "Test `vec4_round`", svec4(-7.0, MFLOAT_C(-4.0), MFLOAT_C(0.0), MFLOAT_C(1.0)), v);
+	printf_4f_test(error, "Test `vec4_round`", -7.0, MFLOAT_C(-4.0), MFLOAT_C(0.0), MFLOAT_C(1.0), v.x, v.y, v.z, v.w);
 	v = svec4_max(svec4(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(9.0), MFLOAT_C(2.0)), svec4(MFLOAT_C(1.0), MFLOAT_C(3.7), MFLOAT_C(30.0), MFLOAT_C(3.0)));
-	printf_4f_test(error, "Test `vec4_max`", svec4(MFLOAT_C(1.0), MFLOAT_C(3.7), MFLOAT_C(30.0), MFLOAT_C(3.0)), v);
+	printf_4f_test(error, "Test `vec4_max`", MFLOAT_C(1.0), MFLOAT_C(3.7), MFLOAT_C(30.0), MFLOAT_C(3.0), v.x, v.y, v.z, v.w);
 	v = svec4_min(svec4(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(9.0), MFLOAT_C(2.0)), svec4(MFLOAT_C(1.0), MFLOAT_C(3.7), MFLOAT_C(30.0), MFLOAT_C(3.0)));
-	printf_4f_test(error, "Test `vec4_min`", svec4(MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(9.0), MFLOAT_C(2.0)), v);
+	printf_4f_test(error, "Test `vec4_min`", MFLOAT_C(-7.2), MFLOAT_C(-3.7), MFLOAT_C(9.0), MFLOAT_C(2.0), v.x, v.y, v.z, v.w);
 	v = svec4_clamp(svec4(MFLOAT_C(-9.1), MFLOAT_C(8.7), MFLOAT_C(0.4), MFLOAT_C(1.0)), svec4(MFLOAT_C(-1.3), MFLOAT_C(2.7), MFLOAT_C(0.7), MFLOAT_C(0.5)), svec4(MFLOAT_C(3.3), MFLOAT_C(5.7), MFLOAT_C(0.8), MFLOAT_C(2.0)));
-	printf_4f_test(error, "Test `vec4_clamp`", svec4(MFLOAT_C(-1.3), MFLOAT_C(5.7), MFLOAT_C(0.7), MFLOAT_C(1.0)), v);
+	printf_4f_test(error, "Test `vec4_clamp`", MFLOAT_C(-1.3), MFLOAT_C(5.7), MFLOAT_C(0.7), MFLOAT_C(1.0), v.x, v.y, v.z, v.w);
 	v = svec4_normalize(svec4(MFLOAT_C(3.0), MFLOAT_C(1.0), MFLOAT_C(2.0), MFLOAT_C(4.0)));
-	printf_4f_test(error, "Test `vec4_normalize`", svec4(MFLOAT_C(0.5477225575051661), MFLOAT_C(0.1825741858350554), MFLOAT_C(0.3651483716701107), MFLOAT_C(0.7302967433402214)), v);
+	printf_4f_test(error, "Test `vec4_normalize`", MFLOAT_C(0.5477225575051661), MFLOAT_C(0.1825741858350554), MFLOAT_C(0.3651483716701107), MFLOAT_C(0.7302967433402214), v.x, v.y, v.z, v.w);
 	v = svec4_lerp(svec4(MFLOAT_C(3.0), MFLOAT_C(3.0), MFLOAT_C(3.0), MFLOAT_C(3.0)), svec4(MFLOAT_C(9.0), MFLOAT_C(1.0), MFLOAT_C(30.0), MFLOAT_C(7.0)), MFLOAT_C(0.5));
-	printf_4f_test(error, "Test `vec4_lerp`", svec4(MFLOAT_C(6.0),  MFLOAT_C(2.0),  MFLOAT_C(16.5), MFLOAT_C(5.0)), v);
+	printf_4f_test(error, "Test `vec4_lerp`", MFLOAT_C(6.0),  MFLOAT_C(2.0),  MFLOAT_C(16.5), MFLOAT_C(5.0), v.x, v.y, v.z, v.w);
+}
+
+void euler_tests(struct cerror *error)
+{
+	struct euler euler;
+	bool singularity;
+	euler = seuler_xyz_from_quat(squat_normalize(squat(MFLOAT_C(-0.544085), MFLOAT_C(-0.256040), MFLOAT_C(0.470073), MFLOAT_C(0.646101))), &singularity);
+	printf_3f_test(error, "Test `rot_xyz_from_quat`", MFLOAT_C(-1.0313022136688232), MFLOAT_C(-1.0016750097274780), MFLOAT_C(0.6562710404396057), euler.v[0], euler.v[1], euler.v[2]);
+	if (singularity) {
+		printf("\tSingularity test failed\n");
+	}
 }
 
 int main(void)
@@ -347,6 +364,7 @@ int main(void)
 	vec2_tests(&error);
 	vec3_tests(&error);
 	vec4_tests(&error);
+	euler_tests(&error);
 	printf("Total of failed tests: %d\n", error.failed);
 	printf("Total of tests that passed: %d\n", error.passed);
 	printf("Total of tests that passed, but with epsilon * 10.0: %d\n", error.passed_with_e10);
