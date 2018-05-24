@@ -29,29 +29,40 @@ the following restrictions:
 #include <config.h>
 #endif
 
-/* Integer type (int32_t) */
+/* Integer type */
 #ifndef MATHC_USE_INT64
 #define mint_t int32_t
 #define MINT_MAX INT32_MAX 
 #define MINT_MIN INT32_MIN 
 #endif
 
-/* Integer type (int64_t) */
 #ifdef MATHC_USE_INT64
 #define mint_t int64_t
 #define MINT_MAX INT64_MAX 
 #define MINT_MIN INT64_MIN 
 #endif
 
-/* Replace the integer type with the user-defined type */
 #ifdef MATHC_INT_TYPE
 #undef mint_t
 #define mint_t MATHC_INT_TYPE
 #endif
 
-/* Floating-point type (float) */
+/* Floating-point type */
 #ifndef MATHC_USE_DOUBLE
 #define mfloat_t float
+#endif
+
+#ifdef MATHC_USE_DOUBLE
+#define mfloat_t double
+#endif
+
+#ifdef MATHC_FLOAT_TYPE
+#undef mfloat_t
+#define mfloat_t MATHC_FLOAT_TYPE
+#endif
+
+/* Floating-point precision */
+#ifndef MATHC_USE_DOUBLE_PRECISION
 #define MPI 3.1415926536f
 #define MPI_2 1.5707963268f
 #define MPI_4 0.7853981634f
@@ -63,6 +74,7 @@ the following restrictions:
 #define MSIN sinf
 #define MCOS cosf
 #define MACOS acosf
+#define MASIN asinf
 #define MTAN tanf
 #define MATAN2 atan2f
 #define MPOW powf
@@ -70,11 +82,7 @@ the following restrictions:
 #define MCEIL ceilf
 #define MROUND roundf
 #define MFLOAT_C(c) c ## f
-#endif
-
-/* Floating-point type (double) */
-#ifdef MATHC_USE_DOUBLE
-#define mfloat_t double
+#else
 #define MPI 3.14159265358979323846
 #define MPI_2 1.57079632679489661923
 #define MPI_4 0.78539816339744830962
@@ -86,6 +94,7 @@ the following restrictions:
 #define MSIN sin
 #define MCOS cos
 #define MACOS acos
+#define MASIN asin
 #define MTAN tan
 #define MATAN2 atan2
 #define MPOW pow
@@ -93,12 +102,6 @@ the following restrictions:
 #define MCEIL ceil
 #define MROUND round
 #define MFLOAT_C(c) c
-#endif
-
-/* Replace the floating-point type with the user-defined type */
-#ifdef MATHC_FLOAT_TYPE
-#undef mfloat_t
-#define mfloat_t MATHC_FLOAT_TYPE
 #endif
 
 /* Array sizes for declarations */
