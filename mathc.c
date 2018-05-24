@@ -27,7 +27,7 @@ bool nearly_equal(mfloat_t a, mfloat_t b, mfloat_t epsilon)
 	if (a == b) {
 		result = true;
 	} else {
-		result = MABS(a - b) < epsilon;
+		result = MFABS(a - b) < epsilon;
 	}
 	return result;
 }
@@ -241,8 +241,8 @@ mfloat_t *vec2_inverse(mfloat_t *result, mfloat_t *a)
 
 mfloat_t *vec2_abs(mfloat_t *result, mfloat_t *a)
 {
-	result[0] = MABS(a[0]);
-	result[1] = MABS(a[1]);
+	result[0] = MFABS(a[0]);
+	result[1] = MFABS(a[1]);
 	return result;
 }
 
@@ -269,15 +269,15 @@ mfloat_t *vec2_round(mfloat_t *result, mfloat_t *a)
 
 mfloat_t *vec2_max(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
-	result[0] = MMAX(a[0], b[0]);
-	result[1] = MMAX(a[1], b[1]);
+	result[0] = MFMAX(a[0], b[0]);
+	result[1] = MFMAX(a[1], b[1]);
 	return result;
 }
 
 mfloat_t *vec2_min(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
-	result[0] = MMIN(a[0], b[0]);
-	result[1] = MMIN(a[1], b[1]);
+	result[0] = MFMIN(a[0], b[0]);
+	result[1] = MFMIN(a[1], b[1]);
 	return result;
 }
 
@@ -612,15 +612,15 @@ mint_t *vec2i_round(mint_t *result, mfloat_t *a)
 
 mint_t *vec2i_max(mint_t *result, mint_t *a, mint_t *b)
 {
-	result[0] = MMAX(a[0], b[0]);
-	result[1] = MMAX(a[1], b[1]);
+	result[0] = MFMAX(a[0], b[0]);
+	result[1] = MFMAX(a[1], b[1]);
 	return result;
 }
 
 mint_t *vec2i_min(mint_t *result, mint_t *a, mint_t *b)
 {
-	result[0] = MMIN(a[0], b[0]);
-	result[1] = MMIN(a[1], b[1]);
+	result[0] = MFMIN(a[0], b[0]);
+	result[1] = MFMIN(a[1], b[1]);
 	return result;
 }
 
@@ -988,9 +988,9 @@ mfloat_t *vec3_inverse(mfloat_t *result, mfloat_t *a)
 
 mfloat_t *vec3_abs(mfloat_t *result, mfloat_t *a)
 {
-	result[0] = MABS(a[0]);
-	result[1] = MABS(a[1]);
-	result[2] = MABS(a[2]);
+	result[0] = MFABS(a[0]);
+	result[1] = MFABS(a[1]);
+	result[2] = MFABS(a[2]);
 	return result;
 }
 
@@ -1020,17 +1020,17 @@ mfloat_t *vec3_round(mfloat_t *result, mfloat_t *a)
 
 mfloat_t *vec3_max(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
-	result[0] = MMAX(a[0], b[0]);
-	result[1] = MMAX(a[1], b[1]);
-	result[2] = MMAX(a[2], b[2]);
+	result[0] = MFMAX(a[0], b[0]);
+	result[1] = MFMAX(a[1], b[1]);
+	result[2] = MFMAX(a[2], b[2]);
 	return result;
 }
 
 mfloat_t *vec3_min(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
-	result[0] = MMIN(a[0], b[0]);
-	result[1] = MMIN(a[1], b[1]);
-	result[2] = MMIN(a[2], b[2]);
+	result[0] = MFMIN(a[0], b[0]);
+	result[1] = MFMIN(a[1], b[1]);
+	result[2] = MFMIN(a[2], b[2]);
 	return result;
 }
 
@@ -1380,17 +1380,17 @@ mint_t *vec3i_round(mint_t *result, mfloat_t *a)
 
 mint_t *vec3i_max(mint_t *result, mint_t *a, mint_t *b)
 {
-	result[0] = MMAX(a[0], b[0]);
-	result[1] = MMAX(a[1], b[1]);
-	result[2] = MMAX(a[2], b[2]);
+	result[0] = MFMAX(a[0], b[0]);
+	result[1] = MFMAX(a[1], b[1]);
+	result[2] = MFMAX(a[2], b[2]);
 	return result;
 }
 
 mint_t *vec3i_min(mint_t *result, mint_t *a, mint_t *b)
 {
-	result[0] = MMIN(a[0], b[0]);
-	result[1] = MMIN(a[1], b[1]);
-	result[2] = MMIN(a[2], b[2]);
+	result[0] = MFMIN(a[0], b[0]);
+	result[1] = MFMIN(a[1], b[1]);
+	result[2] = MFMIN(a[2], b[2]);
 	return result;
 }
 
@@ -1788,10 +1788,10 @@ mfloat_t *vec4_inverse(mfloat_t *result, mfloat_t *a)
 
 mfloat_t *vec4_abs(mfloat_t *result, mfloat_t *a)
 {
-	result[0] = MABS(a[0]);
-	result[1] = MABS(a[1]);
-	result[2] = MABS(a[2]);
-	result[3] = MABS(a[3]);
+	result[0] = MFABS(a[0]);
+	result[1] = MFABS(a[1]);
+	result[2] = MFABS(a[2]);
+	result[3] = MFABS(a[3]);
 	return result;
 }
 
@@ -1824,19 +1824,19 @@ mfloat_t *vec4_round(mfloat_t *result, mfloat_t *a)
 
 mfloat_t *vec4_max(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
-	result[0] = MMAX(a[0], b[0]);
-	result[1] = MMAX(a[1], b[1]);
-	result[2] = MMAX(a[2], b[2]);
-	result[3] = MMAX(a[3], b[3]);
+	result[0] = MFMAX(a[0], b[0]);
+	result[1] = MFMAX(a[1], b[1]);
+	result[2] = MFMAX(a[2], b[2]);
+	result[3] = MFMAX(a[3], b[3]);
 	return result;
 }
 
 mfloat_t *vec4_min(mfloat_t *result, mfloat_t *a, mfloat_t *b)
 {
-	result[0] = MMIN(a[0], b[0]);
-	result[1] = MMIN(a[1], b[1]);
-	result[2] = MMIN(a[2], b[2]);
-	result[3] = MMIN(a[3], b[3]);
+	result[0] = MFMIN(a[0], b[0]);
+	result[1] = MFMIN(a[1], b[1]);
+	result[2] = MFMIN(a[2], b[2]);
+	result[3] = MFMIN(a[3], b[3]);
 	return result;
 }
 
@@ -2148,19 +2148,19 @@ mint_t *vec4i_round(mint_t *result, mfloat_t *a)
 
 mint_t *vec4i_max(mint_t *result, mint_t *a, mint_t *b)
 {
-	result[0] = MMAX(a[0], b[0]);
-	result[1] = MMAX(a[1], b[1]);
-	result[2] = MMAX(a[2], b[2]);
-	result[3] = MMAX(a[3], b[3]);
+	result[0] = MFMAX(a[0], b[0]);
+	result[1] = MFMAX(a[1], b[1]);
+	result[2] = MFMAX(a[2], b[2]);
+	result[3] = MFMAX(a[3], b[3]);
 	return result;
 }
 
 mint_t *vec4i_min(mint_t *result, mint_t *a, mint_t *b)
 {
-	result[0] = MMIN(a[0], b[0]);
-	result[1] = MMIN(a[1], b[1]);
-	result[2] = MMIN(a[2], b[2]);
-	result[3] = MMIN(a[3], b[3]);
+	result[0] = MFMIN(a[0], b[0]);
+	result[1] = MFMIN(a[1], b[1]);
+	result[2] = MFMIN(a[2], b[2]);
+	result[3] = MFMIN(a[3], b[3]);
 	return result;
 }
 
@@ -2236,7 +2236,7 @@ static bool check_singularity1(mfloat_t theta)
 static bool check_singularity2(mfloat_t theta)
 {
 	bool result = false;
-	if (fabs(theta - MPI_2) < MPI / 180.0) {
+	if (MFABS(theta - MPI_2) < MPI / 180.0) {
 		result = true;
 	}
 	return result;
@@ -2298,55 +2298,54 @@ mfloat_t *euler_zyz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
 
 mfloat_t *euler_xyz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
 {
-	result[0] = MATAN2(2 * (q[0] * q[3] - q[1] * q[2]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
-	result[1] = MASIN(2 * (q[0] * q[2] + q[1] * q[3]));
-	result[2] = MATAN2(2 * (q[2] * q[3] - q[0] * q[1]), (q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
+	result[0] = MATAN2(MFLOAT_C(2.0) * (q[0] * q[3] - q[1] * q[2]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
+	result[1] = MASIN(MFLOAT_C(2.0) * (q[0] * q[2] + q[1] * q[3]));
+	result[2] = MATAN2(MFLOAT_C(2.0) * (q[2] * q[3] - q[0] * q[1]), (q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
 	*singularity = check_singularity2(result[1]);
 	return result;
 }
 
 mfloat_t *euler_yzx_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
 {
-	result[0] = MATAN2(2 * (q[1] * q[3] - q[0] * q[2]), (q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
-	result[1] = MASIN(2 * (q[0] * q[1] + q[2] * q[3]));
-	result[2] = MATAN2(2 * (q[0] * q[3] - q[2] * q[1]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
+	result[0] = MATAN2(MFLOAT_C(2.0) * (q[1] * q[3] - q[0] * q[2]), (q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
+	result[1] = MASIN(MFLOAT_C(2.0) * (q[0] * q[1] + q[2] * q[3]));
+	result[2] = MATAN2(MFLOAT_C(2.0) * (q[0] * q[3] - q[2] * q[1]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
 	*singularity = check_singularity2(result[1]);
 	return result;
 }
 
 mfloat_t *euler_zxy_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
 {
-	result[0] = MATAN2(2 * (q[2] * q[3] - q[0] * q[1]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
-	result[1] = MASIN(2 * (q[0] * q[3] + q[1] * q[2]));
-	result[2] = MATAN2(2 * (q[1] * q[3] - q[2] * q[0]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
+	result[0] = MATAN2(MFLOAT_C(2.0) * (q[2] * q[3] - q[0] * q[1]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
+	result[1] = MASIN(MFLOAT_C(2.0) * (q[0] * q[3] + q[1] * q[2]));
+	result[2] = MATAN2(MFLOAT_C(2.0) * (q[1] * q[3] - q[2] * q[0]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
 	*singularity = check_singularity2(result[1]);
 	return result;
 }
 
 mfloat_t *euler_xzy_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
 {
-	result[0] = MATAN2(2 * (q[0] * q[3] + q[1] * q[2]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
-	result[1] = MASIN(2 * (q[2] * q[3] - q[0] * q[1]));
-	result[2] = MATAN2(2 * (q[0] * q[2] + q[1] * q[3]),
-	(q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
+	result[0] = MATAN2(MFLOAT_C(2.0) * (q[0] * q[3] + q[1] * q[2]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
+	result[1] = MASIN(MFLOAT_C(2.0) * (q[2] * q[3] - q[0] * q[1]));
+	result[2] = MATAN2(MFLOAT_C(2.0) * (q[0] * q[2] + q[1] * q[3]), (q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
 	*singularity = check_singularity2(result[1]);
 	return result;
 }
 
 mfloat_t *euler_yxz_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
 {
-	result[0] = MATAN2(2 * (q[0] * q[2] + q[1] * q[3]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
-	result[1] = MASIN(2 * (q[0] * q[3] - q[1] * q[2]));
-	result[2] = MATAN2(2 * (q[0] * q[1] + q[2] * q[3]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
+	result[0] = MATAN2(MFLOAT_C(2.0) * (q[0] * q[2] + q[1] * q[3]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
+	result[1] = MASIN(MFLOAT_C(2.0) * (q[0] * q[3] - q[1] * q[2]));
+	result[2] = MATAN2(MFLOAT_C(2.0) * (q[0] * q[1] + q[2] * q[3]), (q[3] * q[3] - q[0] * q[0] + q[1] * q[1] - q[2] * q[2]));
 	*singularity = check_singularity2(result[1]);
 	return result;
 }
 
 mfloat_t *euler_zyx_from_quat(mfloat_t *result, mfloat_t *q, bool *singularity)
 {
-	result[0] = MATAN2(2 * (q[0] * q[1] + q[2] * q[3]), (q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
-	result[1] = MASIN(2 * (q[1] * q[3] - q[0] * q[2]));
-	result[2] = MATAN2(2 * (q[0] * q[3] + q[2] * q[1]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
+	result[0] = MATAN2(MFLOAT_C(2.0) * (q[0] * q[1] + q[2] * q[3]), (q[3] * q[3] + q[0] * q[0] - q[1] * q[1] - q[2] * q[2]));
+	result[1] = MASIN(MFLOAT_C(2.0) * (q[1] * q[3] - q[0] * q[2]));
+	result[2] = MATAN2(MFLOAT_C(2.0) * (q[0] * q[3] + q[2] * q[1]), (q[3] * q[3] - q[0] * q[0] - q[1] * q[1] + q[2] * q[2]));
 	*singularity = check_singularity2(result[1]);
 	return result;
 }
@@ -2514,7 +2513,7 @@ mfloat_t *quat_normalize(mfloat_t *result, mfloat_t *a)
 
 mfloat_t *quat_power(mfloat_t *result, mfloat_t *a, mfloat_t exponent)
 {
-	if (MABS(a[3]) < MFLOAT_C(1.0) - MFLT_EPSILON) {
+	if (MFABS(a[3]) < MFLOAT_C(1.0) - MFLT_EPSILON) {
 		mfloat_t alpha = MACOS(a[3]);
 		mfloat_t new_alpha = alpha * exponent;
 		mfloat_t s = MSIN(new_alpha) / MSIN(alpha);
@@ -2659,7 +2658,7 @@ mfloat_t quat_dot(mfloat_t *a, mfloat_t *b)
 mfloat_t quat_angle(mfloat_t *a, mfloat_t *b)
 {
 	mfloat_t s = MSQRT(quat_length_squared(a) * quat_length_squared(b));
-	if (MABS(s) > MFLT_EPSILON) {
+	if (MFABS(s) > MFLT_EPSILON) {
 		s = MFLOAT_C(1.0) / s;
 	} else {
 		s = MFLOAT_C(0.0);

@@ -67,9 +67,9 @@ the following restrictions:
 #define MPI_2 1.5707963268f
 #define MPI_4 0.7853981634f
 #define MFLT_EPSILON FLT_EPSILON
-#define MABS fabsf
-#define MMIN fminf
-#define MMAX fmaxf
+#define MFABS fabsf
+#define MFMIN fminf
+#define MFMAX fmaxf
 #define MSQRT sqrtf
 #define MSIN sinf
 #define MCOS cosf
@@ -87,9 +87,9 @@ the following restrictions:
 #define MPI_2 1.57079632679489661923
 #define MPI_4 0.78539816339744830962
 #define MFLT_EPSILON DBL_EPSILON
-#define MABS fabs
-#define MMIN fmin
-#define MMAX fmax
+#define MFABS fabs
+#define MFMIN fmin
+#define MFMAX fmax
 #define MSQRT sqrt
 #define MSIN sin
 #define MCOS cos
