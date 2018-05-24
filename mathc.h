@@ -690,7 +690,7 @@ mfloat_t *mat3_rotation_x(mfloat_t *result, mfloat_t angle);
 mfloat_t *mat3_rotation_y(mfloat_t *result, mfloat_t angle);
 mfloat_t *mat3_rotation_z(mfloat_t *result, mfloat_t angle);
 mfloat_t *mat3_rotation_axis(mfloat_t *result, mfloat_t *a, mfloat_t angle);
-mfloat_t *mat3_rotation_quaternion(mfloat_t *result, mfloat_t *q);
+mfloat_t *mat3_rotation_quat(mfloat_t *result, mfloat_t *q);
 mfloat_t *mat3_scaling(mfloat_t *result, mfloat_t *v);
 mfloat_t *mat3_negative(mfloat_t *result, mfloat_t *m);
 mfloat_t *mat3_scale(mfloat_t *result, mfloat_t *m, mfloat_t scalar);
@@ -720,7 +720,7 @@ mfloat_t *mat4_rotation_x(mfloat_t *result, mfloat_t angle);
 mfloat_t *mat4_rotation_y(mfloat_t *result, mfloat_t angle);
 mfloat_t *mat4_rotation_z(mfloat_t *result, mfloat_t angle);
 mfloat_t *mat4_rotation_axis(mfloat_t *result, mfloat_t *a, mfloat_t angle);
-mfloat_t *mat4_rotation_quaternion(mfloat_t *result, mfloat_t *q);
+mfloat_t *mat4_rotation_quat(mfloat_t *result, mfloat_t *q);
 mfloat_t *mat4_look_at(mfloat_t *result, mfloat_t *position, mfloat_t *target, mfloat_t *up_axis);
 mfloat_t *mat4_translation(mfloat_t *result, mfloat_t *v);
 mfloat_t *mat4_scaling(mfloat_t *result, mfloat_t *v);
@@ -2571,9 +2571,9 @@ MATHC_INLINE struct mat3 *psmat3_rotation_axis(struct mat3 *result, struct vec3 
 	return result;
 }
 
-MATHC_INLINE struct mat3 *psmat3_rotation_quaternion(struct mat3 *result, struct quat *q)
+MATHC_INLINE struct mat3 *psmat3_rotation_quat(struct mat3 *result, struct quat *q)
 {
-	mat3_rotation_quaternion((mfloat_t *)result, (mfloat_t *)q);
+	mat3_rotation_quat((mfloat_t *)result, (mfloat_t *)q);
 	return result;
 }
 
@@ -2723,9 +2723,9 @@ MATHC_INLINE struct mat4 *psmat4_rotation_axis(struct mat4 *result, struct mat4 
 	return result;
 }
 
-MATHC_INLINE struct mat4 *psmat4_rotation_quaternion(struct mat4 *result, struct mat4 *q)
+MATHC_INLINE struct mat4 *psmat4_rotation_quat(struct mat4 *result, struct mat4 *q)
 {
-	mat4_rotation_quaternion((mfloat_t *)result, (mfloat_t *)q);
+	mat4_rotation_quat((mfloat_t *)result, (mfloat_t *)q);
 	return result;
 }
 
@@ -4806,10 +4806,10 @@ MATHC_INLINE struct mat3 smat3_rotation_axis(struct vec3 a, mfloat_t angle)
 	return result;
 }
 
-MATHC_INLINE struct mat3 smat3_rotation_quaternion(struct quat q)
+MATHC_INLINE struct mat3 smat3_rotation_quat(struct quat q)
 {
 	struct mat3 result;
-	mat3_rotation_quaternion((mfloat_t *)&result, (mfloat_t *)&q);
+	mat3_rotation_quat((mfloat_t *)&result, (mfloat_t *)&q);
 	return result;
 }
 
@@ -4981,10 +4981,10 @@ MATHC_INLINE struct mat4 smat4_rotation_axis(struct mat4 a, mfloat_t angle)
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_rotation_quaternion(struct mat4 q)
+MATHC_INLINE struct mat4 smat4_rotation_quat(struct mat4 q)
 {
 	struct mat4 result;
-	mat4_rotation_quaternion((mfloat_t *)&result, (mfloat_t *)&q);
+	mat4_rotation_quat((mfloat_t *)&result, (mfloat_t *)&q);
 	return result;
 }
 

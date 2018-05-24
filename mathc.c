@@ -2968,7 +2968,7 @@ mfloat_t *mat3_rotation_axis(mfloat_t *result, mfloat_t *a, mfloat_t angle)
 	return result;
 }
 
-mfloat_t *mat3_rotation_quaternion(mfloat_t *result, mfloat_t *q)
+mfloat_t *mat3_rotation_quat(mfloat_t *result, mfloat_t *q)
 {
 	mfloat_t xx = q[0] * q[0];
 	mfloat_t yy = q[1] * q[1];
@@ -3596,7 +3596,7 @@ mfloat_t *mat4_rotation_axis(mfloat_t *result, mfloat_t *a, mfloat_t angle)
 	return result;
 }
 
-mfloat_t *mat4_rotation_quaternion(mfloat_t *result, mfloat_t *q)
+mfloat_t *mat4_rotation_quat(mfloat_t *result, mfloat_t *q)
 {
 	mfloat_t xx = q[0] * q[0];
 	mfloat_t yy = q[1] * q[1];
