@@ -128,7 +128,10 @@ Easing functions take a value inside the range `0.0-1.0` and usually will return
 
 ## Test
 
-The test program can be compiled with the script `test.sh` and it will run automatically. The test program will execute the math operations and compare the expected values with the actual values. Due the nature of floating-point numbers, the result of operations with floating-point numbers are compared using multiple threshold (*epsilon* value). The test program will print the total of tests that passed and the total of tests that failed.
+The test program can be compiled with the script `test.sh` and `test_mathc` will be generated.
+
+- If `test_mathc` is executed without any argument will print all tests, showing the expected results, the actual results, and the difference between the expected and the actual results.
+- If `test_mathc` is executed with a number as first argument, the number will be used as a tolerance threshold, and the program will only print the tests on which the difference between the expected and the actual result is above the tolerance threshold.
 
 # License
 
