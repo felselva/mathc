@@ -636,6 +636,7 @@ mfloat_t *quat_scale(mfloat_t *result, mfloat_t *a, mfloat_t scalar);
 mfloat_t *quat_multiply(mfloat_t *result, mfloat_t *a, mfloat_t *b);
 mfloat_t *quat_multiply_f(mfloat_t *result, mfloat_t *a, mfloat_t f);
 mfloat_t *quat_divide(mfloat_t *result, mfloat_t *a, mfloat_t *b);
+mfloat_t *quat_divide_f(mfloat_t *result, mfloat_t *a, mfloat_t f);
 mfloat_t *quat_negative(mfloat_t *result, mfloat_t *a);
 mfloat_t *quat_conjugate(mfloat_t *result, mfloat_t *a);
 mfloat_t *quat_inverse(mfloat_t *result, mfloat_t *a);
@@ -2293,6 +2294,12 @@ MATHC_INLINE struct quat *psquat_multiply_f(struct quat *result, struct quat *a,
 MATHC_INLINE struct quat *psquat_divide(struct quat *result, struct quat *a, struct quat *b)
 {
 	quat_divide((mfloat_t *)result, (mfloat_t *)a, (mfloat_t *)b);
+	return result;
+}
+
+MATHC_INLINE struct quat *psquat_divide_f(struct quat *result, struct quat *a, mfloat_t f)
+{
+	quat_divide_f((mfloat_t *)result, (mfloat_t *)a, f);
 	return result;
 }
 
@@ -4495,6 +4502,13 @@ MATHC_INLINE struct quat squat_divide(struct quat a, struct quat b)
 {
 	struct quat result;
 	quat_divide((mfloat_t *)&result, (mfloat_t *)&a, (mfloat_t *)&b);
+	return result;
+}
+
+MATHC_INLINE struct quat squat_divide_f(struct quat a, mfloat_t f)
+{
+	struct quat result;
+	quat_divide_f((mfloat_t *)&result, (mfloat_t *)&a, f);
 	return result;
 }
 
