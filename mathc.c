@@ -3828,7 +3828,7 @@ mfloat_t cubic_ease_in(mfloat_t p)
 
 mfloat_t cubic_ease_out(mfloat_t p)
 {
-	mfloat_t f = (p - MFLOAT_C(1.0));
+	mfloat_t f = p - MFLOAT_C(1.0);
 	return f * f * f + MFLOAT_C(1.0);
 }
 
