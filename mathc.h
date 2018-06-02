@@ -5253,7 +5253,7 @@ MATHC_INLINE struct mat4 smat4_rotation_axis(struct mat4 a, mfloat_t angle)
 	return result;
 }
 
-MATHC_INLINE struct mat4 smat4_rotation_quat(struct mat4 q)
+MATHC_INLINE struct mat4 smat4_rotation_quat(struct quat q)
 {
 	struct mat4 result;
 	mat4_rotation_quat((mfloat_t *)&result, (mfloat_t *)&q);
