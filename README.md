@@ -98,6 +98,7 @@ struct {
 mat4_identity(matrices.position);
 mat4_translation(matrices.position,
 	vec3(position, 0.0, 0.0, 0.0));
+
 /* Rotation */
 mat4_identity(matrices.rotation);
 mat4_rotation_x(matrices.rotation, to_radians(30.0));
