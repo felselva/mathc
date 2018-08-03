@@ -154,11 +154,6 @@ typedef double mfloat_t;
 #endif
 #endif
 
-#if defined(MATHC_USE_FLOATING_POINT)
-#define MRADIANS(degrees) (degrees * MPI / MFLOAT_C(180.0))
-#define MDEGREES(radians) (radians * MFLOAT_C(180.0) / MPI)
-#endif
-
 #if defined(MATHC_USE_STRUCT_FUNCTIONS) || defined(MATHC_USE_POINTER_STRUCT_FUNCTIONS)
 #if defined(MATHC_USE_INT)
 struct vec2i {
@@ -396,6 +391,8 @@ struct mat4 {
 #endif
 
 #if defined(MATHC_USE_FLOATING_POINT)
+#define MRADIANS(degrees) (degrees * MPI / MFLOAT_C(180.0))
+#define MDEGREES(radians) (radians * MFLOAT_C(180.0) / MPI)
 bool nearly_equal(mfloat_t a, mfloat_t b, mfloat_t epsilon);
 mfloat_t to_radians(mfloat_t degrees);
 mfloat_t to_degrees(mfloat_t radians);

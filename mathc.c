@@ -34,12 +34,12 @@ bool nearly_equal(mfloat_t a, mfloat_t b, mfloat_t epsilon)
 
 mfloat_t to_radians(mfloat_t degrees)
 {
-	return degrees * MPI / MFLOAT_C(180.0);
+	return MRADIANS(degrees);
 }
 
 mfloat_t to_degrees(mfloat_t radians)
 {
-	return radians * MFLOAT_C(180.0) / MPI;
+	return MDEGREES(radians);
 }
 #endif
 
