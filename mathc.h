@@ -397,6 +397,7 @@ bool nearly_equal(mfloat_t a, mfloat_t b, mfloat_t epsilon);
 mfloat_t to_radians(mfloat_t degrees);
 mfloat_t to_degrees(mfloat_t radians);
 #endif
+
 #if defined(MATHC_USE_INT)
 bool vec2i_is_zero(mint_t *v0);
 bool vec2i_is_equal(mint_t *v0, mint_t *v1);
