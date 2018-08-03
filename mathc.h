@@ -55,7 +55,6 @@ the following restrictions:
 #define VEC2_SIZE 2
 #define VEC3_SIZE 3
 #define VEC4_SIZE 4
-#define EULER_SIZE 3
 #define QUAT_SIZE 4
 #define MAT2_SIZE 4
 #define MAT3_SIZE 9
