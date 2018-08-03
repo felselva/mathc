@@ -1253,4 +1253,37 @@ struct mat4 *psmat4_perspective_infinite(struct mat4 *result, mfloat_t fov_y, mf
 #endif
 #endif
 
+#if defined(MATHC_USE_FLOATING_POINT) && defined(MATHC_USE_EASING_FUNCTIONS)
+mfloat_t quadratic_ease_out(mfloat_t f);
+mfloat_t quadratic_ease_in(mfloat_t f);
+mfloat_t quadratic_ease_in_out(mfloat_t f);
+mfloat_t cubic_ease_out(mfloat_t f);
+mfloat_t cubic_ease_in(mfloat_t f);
+mfloat_t cubic_ease_in_out(mfloat_t f);
+mfloat_t quartic_ease_out(mfloat_t f);
+mfloat_t quartic_ease_in(mfloat_t f);
+mfloat_t quartic_ease_in_out(mfloat_t f);
+mfloat_t quintic_ease_out(mfloat_t f);
+mfloat_t quintic_ease_in(mfloat_t f);
+mfloat_t quintic_ease_in_out(mfloat_t f);
+mfloat_t sine_ease_out(mfloat_t f);
+mfloat_t sine_ease_in(mfloat_t f);
+mfloat_t sine_ease_in_out(mfloat_t f);
+mfloat_t circular_ease_out(mfloat_t f);
+mfloat_t circular_ease_in(mfloat_t f);
+mfloat_t circular_ease_in_out(mfloat_t f);
+mfloat_t exponential_ease_out(mfloat_t f);
+mfloat_t exponential_ease_in(mfloat_t f);
+mfloat_t exponential_ease_in_out(mfloat_t f);
+mfloat_t elastic_ease_out(mfloat_t f);
+mfloat_t elastic_ease_in(mfloat_t f);
+mfloat_t elastic_ease_in_out(mfloat_t f);
+mfloat_t back_ease_out(mfloat_t f);
+mfloat_t back_ease_in(mfloat_t f);
+mfloat_t back_ease_in_out(mfloat_t f);
+mfloat_t bounce_ease_out(mfloat_t f);
+mfloat_t bounce_ease_in(mfloat_t f);
+mfloat_t bounce_ease_in_out(mfloat_t f);
+#endif
+
 #endif
