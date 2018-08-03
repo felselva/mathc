@@ -1,134 +1,66 @@
 # MATHC
 
-[![Build Status](https://travis-ci.org/ferreiradaselva/mathc.svg?branch=master)](https://travis-ci.org/ferreiradaselva/mathc)
+MATHC is a simple math library for 2D and 3D programming.
 
-Important: MATHC version 2 is currently under development with improvements. You can check out on branch `mathc2`.
+## Features
 
-MATHC is a simple math library for 2D and 3D game programming. It contains implementations for:
-
-- 2D vectors
-- 3D vectors
+- Vectors (2D, 3D and 4D) (integer type and floating-point type)
 - Quaternions
-- Matrices
+- Matrices (2×2, 3×3, and 4×4)
 - Easing functions
 
-It support C99 standard or later. MATCH was made with focus on simplicity.
+## Versioning
 
-## Release
+Starting on version 2, the development of MATHC uses calendar versioning, with a tag `YYYY.MM.DD.MICRO` for each stable release, representing year, month and day, and `MICRO` for fixes. If a release breaks backward compatibility, then it is mentioned in the release notes.
 
-The CHANGELOG and RELEASE NOTES can be found in [CHANGELOG.md](CHANGELOG.md#020---2017-11-11).
+## Configuring
 
-## Reference
+MATHC can be configured using these preprocessors:
 
-The reference is the file `REFERENCE.md`.
+- `MATHC_NO_INT`: disable implementations using `mint_t`.
+- `MATHC_USE_INT8`: define `mint_t` as `int8_t`.
+- `MATHC_USE_INT16`: define `mint_t` as `int16_t`.
+- `MATHC_USE_INT32`: define `mint_t` as `int32_t`. This is the default.
+- `MATHC_USE_INT64`: define `mint_t` as `int64_t`.
+- `MATHC_INT_TYPE`: set a custom type for `mint_t`.
+- `MATHC_NO_FLOATING_POINT`: disable implementations using `mfloat_t`.
+- `MATHC_USE_SINGLE_FLOATING_POINT`: define `mfloat_t` as `float`. This is the default.
+- `MATHC_USE_DOUBLE_FLOATING_POINT`: define `mfloat_t` as `double`.
+- `MATHC_FLOATING_POINT_TYPE`: set a custom type for `mfloat_t`.
+- `MATHC_USE_UNIONS`: define anonymous unions inside structures.
+- `MATHC_NO_POINTER_STRUCT_FUNCTIONS`: don't define the functions that take pointer to structures.
+- `MATHC_NO_STRUCT_FUNCTIONS`: don't define the functions that take structures as value.
+- `MATHC_NO_EASING_FUNCTIONS`: don't define the easing functions.
 
-There are examples on my other repository using this math library:
+You can define these preprocessors them using the compiler's option `-D` or using the compiler's option `-include` to include a configuration header and with the configuration macros defined inside it.
 
-[CGDFW examples](https://github.com/ferreiradaselva/cgdfw/tree/master/examples)
-
-## Contributing
-
-Check the file `CONTRIBUTING.md` for contribution rules and contributions of interest.
-
-## Float
-
-Every structure and function uses `float`, because it is the most used type on 2D and 3D programming with OpenGL.
-
-**The type `float` is less precise with large numbers, why not use `double`?** Because every `double` value would be converted to `float` before sending to OpenGL, anyway. Which means your physics would run with high precision, but the rendering would still be affected by the `float` imprecision. Instead, *the good practice* to solve the problem with large numbers is to truncate the world position back to `[0.0f, 0.0f, 0.0f]` when the world distance to the center is too large. If the world is too big that even when truncating there are stil large numbers, the correct approach is to divide the world in chunks.
-
-## Passing Arguments as Value or Pointer
-
-For every function **that takes a structure**, there are two versions. One that you pass structures as value and other that you pass as pointer. The functions that pass the value by pointer have a prefix `p` before the type name (pvector2, pvector3, pquaternion and pmatrix) and the result is the `*result` argument or a returned `float`.
-
-You can decide which one you want to use.
-
-Examples:
+Example of a configuration header that makes `mint_t` a `int16_t`, `mfloat_t` a `GLfloat` and uses the standard math functions with double floating-point precision:
 
 ```c
-/* Pass by value and return a value */
-struct mat projection = matrix_ortho(-100.0f, 100.0f, 100.0f, -100.0f);
-struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
-	to_vector3(0.0f, 0.0f, 0.0f));
-struct mat pv = matrix_multiply_matrix(projection, view);
+#include <gl.h>
 
-/* Pass by pointer */
-struct vec pos = {0};
-struct vec target = {0};
-struct mat projection = {0};
-struct mat view = {0};
-struct mat multiplied_matrix = {0};
-
-to_pvector3(0.0f, 0.0f, 1.0f, &pos);
-to_pvector3(0.0f, 0.0f, 0.0f, &target);
-to_pvector3(0.0f, 1.0f, 0.0f, &up);
-pmatrix_ortho(-100.0f, 100.0f, 100.0f, -100.0f, &projection);
-pmatrix_look_at(&pos, &target, &view);
-pmatrix_multiply_matrix(&projection, &view, &multiplied_matrix);
+#define MATHC_USE_INT16
+#define MATHC_FLOATING_POINT_TYPE GLfloat
+#define MATHC_USE_DOUBLE_FLOATING_POINT
 ```
 
-## Vectors
+## Types
 
-All vectors (2D, 3D and quaternions) use the same structure type `struct vec`. The `z` component is still useful for 2D vectors, as it is used by OpenGL for depth testing. This means the only extra component on 2D and 3D vectors is the `w` component, which is used by quaternions.
+By default, types are can be declared as arrays of `mint_t`, arrays of `mfloat_t`, or structures.
 
-Examples:
+## Functions
 
-```c
-/* Rotate a 2D vector 90º */
-struct vec direction = to_vector2(0.0f, -1.0f);
-direction = vector2_rotate(90.0f * M_PIF / 180.0f);
-
-/* Get the angle (radians) of a 2D vector */
-float angle = vector2_angle(direction);
-
-/* Create a 3D vector */
-struct vec position = to_vector3(0.0f, 0.0f, 0.0f);
-
-/* Create a quaternion */
-struct vec quaternion = to_quaternion(0.0f, 0.0f, 0.0f, 1.0f);
-/* Spherical interpolation between two quaternions */
-struct vec interpolated = quaternion_spherical_linear_interpolation(a, b, 0.5f);
-```
-
-You don't need to create your OpenGL buffer (VBO) to take 4 elements. When using `glMapBufferRange()`/`glMapBuffer()` and `glUnmapBuffer()`, you can pass only the used elements to the VBO, that has element count of your choice.
-
-## Matrices
-
-All matrices are 4×4. There are functions for setting up projection matrices, view matrices and model matrices.
-
-Model matrices are used to modify vertices on client-side or GPU-side. If you want to modify on client-side, you can use the functions `matrix_multiply_f4()` or `pmatrix_multiply_f4()` to modify an array with 4 `float` elements. Example:
-
-```c
-float v[4] = {0.0f, 10.0f, 0.0f, 1.0f}; /* Compoments X, Y, Z and W */
-struct mat rotation = matrix_rotation_z(to_radians(45.0f));
-matrix_multiply_f4(rotation, v);
-```
-
-If you want to modify on GPU-side, you can use the functions `matrix_to_array()` or `pmatrix_to_array()` to push the matrix to an array with 16 `float` elements. Example:
-
-```c
-float v[MAT_SIZE]; /* MAT_SIZE is a macro in mathc.h with value 16 */
-struct mat projection = matrix_ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.0f, 1.0f);
-struct mat view = matrix_look_at(to_vector3(0.0f, 0.0f, 1.0f),
-	to_vector3(0.0f, 0.0f, 0.0f));
-struct mat pv = matrix_multiply_matrix(projection, view);
-matrix_to_array(pv, v);
-/*
-After rotation, the new values of `v` are:
-[-7.071068f, 7.071068f, 0.000000f, 1.000000f]
-*/
-```
+By default, MATHC has functions that take as argument arrays of `mint_t`, arrays of `mfloat_t`, structures as value, or pointer to structures. Functions that take structure as value have a prefix `s`. Functions that take structure pointer have a prefix `ps`.
 
 ## Easing Functions
 
-The easing functions are an implementation of the functions presented in [easings.net](http://easings.net/). They are mainly useful for animations.
+The easing functions are an implementation of the functions presented in [easings.net](http://easings.net/), useful particularly for animations.
 
-Easing functions take a value that range from `0.0f` to `1.0f` and usually will return a value inside that same range. However, in some of the easing functions, the returned value extrapolate that range.
+Easing functions take a value inside the range `0.0-1.0` and usually will return a value inside that same range.
 
-## LICENSE
+## License
 
-The source code of this project is licensed under the terms of the ZLIB license:
-
-Copyright (C) 2016 Felipe Ferreira da Silva
+Copyright © 2018 Felipe Ferreira da Silva
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 
