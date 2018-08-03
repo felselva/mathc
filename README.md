@@ -58,6 +58,60 @@ The easing functions are an implementation of the functions presented in [easing
 
 Easing functions take a value inside the range `0.0-1.0` and usually will return a value inside that same range.
 
+## Usage
+
+Creating a "look at" view matrix, useful for 3D programming:
+
+```c
+mfloat_t position[VEC3_SIZE];
+mfloat_t target[VEC3_SIZE];
+mfloat_t up[VEC3_SIZE];
+mfloat_t view[MAT4_SIZE];
+
+mat4_look_at(view,
+	vec3(position, 0.0, 0.0, 10.0),
+	vec3(target, 0.0, 0.0, 0.0),
+	vec3(up, 0.0, 1.0, 0.0));
+```
+
+Creating a perspective projection matrix:
+
+```c
+mfloat_t perspective[MAT4_SIZE];
+
+mat4_perspective(perspective, to_radians(60.0), 1.0, 0.1, 100.0);
+```
+
+Creating a model matrix:
+
+```c
+mfloat_t position[VEC3_SIZE];
+mfloat_t scaling[VEC3_SIZE];
+struct {
+	mfloat_t position[MAT4_SIZE];
+	mfloat_t rotation[MAT4_SIZE];
+	mfloat_t scaling[MAT4_SIZE];
+	mfloat_t model[MAT4_SIZE];
+} matrices;
+
+/* Position */
+mat4_identity(matrices.position);
+mat4_translation(matrices.position,
+	vec3(position, 0.0, 0.0, 0.0));
+/* Rotation */
+mat4_identity(matrices.rotation);
+mat4_rotation_x(matrices.rotation, to_radians(30.0));
+
+/* Scaling */
+mat4_identity(matrices.scaling);
+mat4_translation(matrices.scaling,
+	vec3(scaling, 1.0, 1.0, 1.0));
+
+/* Model matrix */
+mat4_multiply(matrices.model, matrices.scaling, matrices.rotation);
+mat4_multiply(matrices.model, matrices.position, matrices.model);
+```
+
 ## License
 
 Copyright © 2018 Felipe Ferreira da Silva
