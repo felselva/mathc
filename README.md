@@ -17,7 +17,7 @@ Donations can be sent to `ferreiradaselva@protonmail.com` via PayPal.
 
 ## Versioning
 
-Starting on version 2, the development of MATHC uses calendar versioning, with a tag `YYYY.MM.DD` for each stable release, representing year, month and day. If a release breaks backward compatibility, then it is mentioned in the release notes.
+Starting on version 2, the development of MATHC uses calendar versioning, with a tag `YYYY.MM.DD.MICRO` for each stable release. If a release breaks backward compatibility, then it is mentioned in the release notes.
 
 ## Configuring
 
