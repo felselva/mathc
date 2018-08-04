@@ -11,7 +11,7 @@ MATHC is a simple math library for 2D and 3D programming.
 
 ## Versioning
 
-Starting on version 2, the development of MATHC uses calendar versioning, with a tag `YYYY.MM.DD.MICRO` for each stable release, representing year, month and day, and `MICRO` for fixes. If a release breaks backward compatibility, then it is mentioned in the release notes.
+Starting on version 2, the development of MATHC uses calendar versioning, with a tag `YYYY.MM.DD` for each stable release, representing year, month and day. If a release breaks backward compatibility, then it is mentioned in the release notes.
 
 ## Configuring
 

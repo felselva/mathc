@@ -26,8 +26,7 @@ the following restrictions:
 
 #define MATHC_VERSION_YYYY 2018
 #define MATHC_VERSION_MM 08
-#define MATHC_VERSION_DD 02
-#define MATHC_VERSION_MICRO 0
+#define MATHC_VERSION_DD 04
 
 #if !defined(MATHC_NO_INT)
 #define MATHC_USE_INT
