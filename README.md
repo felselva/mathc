@@ -9,6 +9,12 @@ MATHC is a simple math library for 2D and 3D programming.
 - Matrices (2×2, 3×3, and 4×4)
 - Easing functions
 
+## Contributions And Donations
+
+You can help with the development of MATHC testing the library, sending in-scope math functions, reporting errors and giving feedback.
+
+Donations can be sent to `ferreiradaselva@protonmail.com` via Paypal.
+
 ## Versioning
 
 Starting on version 2, the development of MATHC uses calendar versioning, with a tag `YYYY.MM.DD` for each stable release, representing year, month and day. If a release breaks backward compatibility, then it is mentioned in the release notes.
