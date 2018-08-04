@@ -13,7 +13,7 @@ MATHC is a simple math library for 2D and 3D programming.
 
 You can help with the development of MATHC testing the library, sending in-scope math functions, reporting errors and giving feedback.
 
-Donations can be sent to `ferreiradaselva@protonmail.com` via Paypal.
+Donations can be sent to `ferreiradaselva@protonmail.com` via PayPal.
 
 ## Versioning
 
