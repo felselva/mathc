@@ -52,7 +52,7 @@ Example of a configuration header that makes `mint_t` a `int16_t`, `mfloat_t` a 
 
 ## Types
 
-By default, types are can be declared as arrays of `mint_t`, arrays of `mfloat_t`, or structures.
+By default, vectors and matrices can be declared as arrays of `mint_t`, arrays of `mfloat_t`, or structures.
 
 ## Functions
 
