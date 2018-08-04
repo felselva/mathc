@@ -3214,29 +3214,29 @@ mfloat_t *mat4_lerp(mfloat_t *result, mfloat_t *m0, mfloat_t *m1, mfloat_t f)
 
 mfloat_t *mat4_look_at(mfloat_t *result, mfloat_t *position, mfloat_t *target, mfloat_t *up)
 {
-	mfloat_t forward[VEC3_SIZE];
-	mfloat_t side[VEC3_SIZE];
+	mfloat_t tmp_forward[VEC3_SIZE];
+	mfloat_t tmp_side[VEC3_SIZE];
 	mfloat_t tmp_up[VEC3_SIZE];
-	vec3_subtract(forward, target, position);
-	vec3_normalize(forward, forward);
-	vec3_cross(side, forward, up);
-	vec3_normalize(side, side);
-	vec3_cross(tmp_up, side, forward);
-	result[0] = side[0];
-	result[1] = side[1];
-	result[2] = side[2];
-	result[3] = -vec3_dot(side, position);
-	result[4] = tmp_up[0];
+	vec3_subtract(tmp_forward, target, position);
+	vec3_normalize(tmp_forward, tmp_forward);
+	vec3_cross(tmp_side, tmp_forward, up);
+	vec3_normalize(tmp_side, tmp_side);
+	vec3_cross(tmp_up, tmp_side, tmp_forward);
+	result[0] = tmp_side[0];
+	result[1] = tmp_up[0];
+	result[2] = -tmp_forward[0];
+	result[3] = MFLOAT_C(0.0);
+	result[4] = tmp_side[1];
 	result[5] = tmp_up[1];
-	result[6] = tmp_up[2];
-	result[7] = -vec3_dot(tmp_up, position);
-	result[8] = forward[0];
-	result[9] = forward[1];
-	result[10] = forward[2];
-	result[11] = -vec3_dot(forward, position);
-	result[12] = MFLOAT_C(0.0);
-	result[13] = MFLOAT_C(0.0);
-	result[14] = MFLOAT_C(0.0);
+	result[6] = -tmp_forward[1];
+	result[7] = MFLOAT_C(0.0);
+	result[8] = tmp_side[2];
+	result[9] = tmp_up[2];
+	result[10] = -tmp_forward[2];
+	result[11] = MFLOAT_C(0.0);
+	result[12] = -vec3_dot(tmp_side, position);
+	result[13] = -vec3_dot(tmp_up, position);
+	result[14] = vec3_dot(tmp_forward, position);
 	result[15] = MFLOAT_C(1.0);
 	return result;
 }
