@@ -99,7 +99,7 @@ typedef int64_t mint_t;
 
 #if defined(MATHC_USE_FLOATING_POINT)
 #if defined(MATHC_FLOATING_POINT_TYPE)
-typedef MATHC_FLOATING_POINT_TYPE mint_t;
+typedef MATHC_FLOATING_POINT_TYPE mfloat_t;
 #endif
 #if !defined(MATHC_USE_SINGLE_FLOATING_POINT) && !defined(MATHC_USE_DOUBLE_FLOATING_POINT)
 #define MATHC_USE_SINGLE_FLOATING_POINT
