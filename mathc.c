@@ -248,7 +248,7 @@ mint_t *vec2i_tangent(mint_t *result, mint_t *v0)
 
 bool vec3i_is_zero(mint_t *v0)
 {
-	return v0[0] == 0 && v0[1] == 0;
+	return v0[0] == 0 && v0[1] == 0 && v0[2] == 0;
 }
 
 bool vec3i_is_equal(mint_t *v0, mint_t *v1)
@@ -759,7 +759,7 @@ mint_t *vec4i_clamp(mint_t *result, mint_t *v0, mint_t *v1, mint_t *v2)
 #if defined(MATHC_USE_FLOATING_POINT)
 bool vec2_is_zero(mfloat_t *v0)
 {
-	return v0[0] < MFLT_EPSILON && v0[1] < MFLT_EPSILON;
+	return MFABS(v0[0]) < MFLT_EPSILON && MFABS(v0[1]) < MFLT_EPSILON;
 }
 
 bool vec2_is_equal(mfloat_t *v0, mfloat_t *v1)
@@ -1076,7 +1076,7 @@ mfloat_t vec2_distance_squared(mfloat_t *v0, mfloat_t *v1)
 
 bool vec3_is_zero(mfloat_t *v0)
 {
-	return v0[0] < MFLT_EPSILON && v0[1] < MFLT_EPSILON && v0[2] < MFLT_EPSILON;
+	return MFABS(v0[0]) < MFLT_EPSILON && MFABS(v0[1]) < MFLT_EPSILON && MFABS(v0[2]) < MFLT_EPSILON;
 }
 
 bool vec3_is_equal(mfloat_t *v0, mfloat_t *v1)
@@ -1416,7 +1416,7 @@ mfloat_t vec3_distance_squared(mfloat_t *v0, mfloat_t *v1)
 
 bool vec4_is_zero(mfloat_t *v0)
 {
-	return v0[0] < MFLT_EPSILON && v0[1] < MFLT_EPSILON && v0[2] < MFLT_EPSILON && v0[3] < MFLT_EPSILON;
+	return MFABS(v0[0]) < MFLT_EPSILON && MFABS(v0[1]) < MFLT_EPSILON && MFABS(v0[2]) < MFLT_EPSILON && MFABS(v0[3]) < MFLT_EPSILON;
 }
 
 bool vec4_is_equal(mfloat_t *v0, mfloat_t *v1)
@@ -1698,7 +1698,7 @@ mfloat_t *vec4_lerp(mfloat_t *result, mfloat_t *v0, mfloat_t *v1, mfloat_t f)
 
 bool quat_is_zero(mfloat_t *q0)
 {
-	return q0[0] < MFLT_EPSILON && q0[1] < MFLT_EPSILON && q0[2] < MFLT_EPSILON && q0[3] < MFLT_EPSILON;
+	return MFABS(q0[0]) < MFLT_EPSILON && MFABS(q0[1]) < MFLT_EPSILON && MFABS(q0[2]) < MFLT_EPSILON && MFABS(q0[3]) < MFLT_EPSILON;
 }
 
 bool quat_is_equal(mfloat_t *q0, mfloat_t *q1)
