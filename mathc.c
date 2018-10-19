@@ -2364,7 +2364,7 @@ mfloat_t *mat3_rotation_x(mfloat_t *result, mfloat_t f)
 	result[4] = c;
 	result[5] = s;
 	result[7] = -s;
-	result[8] = -c;
+	result[8] = c;
 	return result;
 }
 
