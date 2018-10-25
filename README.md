@@ -9,9 +9,11 @@ MATHC is a simple math library for 2D and 3D programming.
 - Matrices (2×2, 3×3, and 4×4)
 - Easing functions
 
-## Contributions And Donations
+## Contributions and Development
 
 You can help with the development of MATHC testing the library, sending in-scope math functions, reporting errors and giving feedback.
+
+I work little on the library nowadays, but I am always open to suggestions and contributions.
 
 ## Versioning
 
@@ -36,7 +38,7 @@ MATHC can be configured using these preprocessors:
 - `MATHC_NO_STRUCT_FUNCTIONS`: don't define the functions that take structures as value.
 - `MATHC_NO_EASING_FUNCTIONS`: don't define the easing functions.
 
-You can define these preprocessors them using the compiler's option `-D` or using the compiler's option `-include` to include a configuration header and with the configuration macros defined inside it.
+You can define these preprocessors using the compiler's option `-D` or using the compiler's option `-include` to include a configuration header with the configuration preprocessors inside it.
 
 Example of a configuration header that makes `mint_t` a `int16_t`, `mfloat_t` a `GLfloat` and uses the standard math functions with double floating-point precision:
 
