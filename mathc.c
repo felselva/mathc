@@ -5120,7 +5120,7 @@ struct mat4 smat4_lerp(struct mat4 m0, struct mat4 m1, mfloat_t f)
 	return result;
 }
 
-struct mat4 smat4_g(struct vec3 position, struct vec3 target, struct vec3 up)
+struct mat4 smat4_look_at(struct vec3 position, struct vec3 target, struct vec3 up)
 {
 	struct mat4 result;
 	mat4_look_at((mfloat_t *)&result, (mfloat_t *)&position, (mfloat_t *)&target, (mfloat_t *)&up);
