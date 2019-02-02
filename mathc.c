@@ -20,6 +20,18 @@ the following restrictions:
 
 #include "mathc.h"
 
+#if defined(MATHC_USE_INT)
+mint_t clampi(mint_t value, mint_t min, mint_t max)
+{
+	if (value < min) {
+		value = min;
+	} else if (value > max) {
+		value = max;
+	}
+	return value;
+}
+#endif
+
 #if defined(MATHC_USE_FLOATING_POINT)
 bool nearly_equal(mfloat_t a, mfloat_t b, mfloat_t epsilon)
 {
@@ -40,6 +52,16 @@ mfloat_t to_radians(mfloat_t degrees)
 mfloat_t to_degrees(mfloat_t radians)
 {
 	return MDEGREES(radians);
+}
+
+mfloat_t clampf(mfloat_t value, mfloat_t min, mfloat_t max)
+{
+	if (value < min) {
+		value = min;
+	} else if (value > max) {
+		value = max;
+	}
+	return value;
 }
 #endif
 

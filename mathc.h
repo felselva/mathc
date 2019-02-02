@@ -390,12 +390,17 @@ struct mat4 {
 #endif
 #endif
 
+#if defined(MATHC_USE_INT)
+mint_t clampi(mint_t value, mint_t min, mint_t max);
+#endif
+
 #if defined(MATHC_USE_FLOATING_POINT)
 #define MRADIANS(degrees) (degrees * MPI / MFLOAT_C(180.0))
 #define MDEGREES(radians) (radians * MFLOAT_C(180.0) / MPI)
 bool nearly_equal(mfloat_t a, mfloat_t b, mfloat_t epsilon);
 mfloat_t to_radians(mfloat_t degrees);
 mfloat_t to_degrees(mfloat_t radians);
+mfloat_t clampf(mfloat_t value, mfloat_t min, mfloat_t max);
 #endif
 
 #if defined(MATHC_USE_INT)
