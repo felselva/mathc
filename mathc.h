@@ -562,6 +562,7 @@ mfloat_t vec3_dot(mfloat_t *v0, mfloat_t *v1);
 mfloat_t *vec3_project(mfloat_t *result, mfloat_t *v0, mfloat_t *v1);
 mfloat_t *vec3_slide(mfloat_t *result, mfloat_t *v0, mfloat_t *normal);
 mfloat_t *vec3_reflect(mfloat_t *result, mfloat_t *v0, mfloat_t *normal);
+mfloat_t *vec3_rotate(mfloat_t *result, mfloat_t *v0, mfloat_t *ra, mfloat_t f);
 mfloat_t *vec3_lerp(mfloat_t *result, mfloat_t *v0, mfloat_t *v1, mfloat_t f);
 mfloat_t *vec3_bezier3(mfloat_t *result, mfloat_t *v0, mfloat_t *v1, mfloat_t *v2, mfloat_t f);
 mfloat_t *vec3_bezier4(mfloat_t *result, mfloat_t *v0, mfloat_t *v1, mfloat_t *v2, mfloat_t *v3, mfloat_t f);
