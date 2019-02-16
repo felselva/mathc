@@ -1384,18 +1384,26 @@ mfloat_t *vec3_reflect(mfloat_t *result, mfloat_t *v0, mfloat_t *normal)
 
 mfloat_t *vec3_rotate(mfloat_t *result, mfloat_t *v0, mfloat_t *ra, mfloat_t f)
 {
-	mfloat_t cs = MCOS(f);
-	mfloat_t sn = MSIN(f);
-	mfloat_t x = v0[0];
-	mfloat_t y = v0[1];
-	mfloat_t z = v0[2];
+	mfloat_t cs;
+	mfloat_t sn;
+	mfloat_t x;
+	mfloat_t y;
+	mfloat_t z;
+	mfloat_t rx;
+	mfloat_t ry;
+	mfloat_t rz;
+	cs = MCOS(f);
+	sn = MSIN(f);
+	x = v0[0];
+	y = v0[1];
+	z = v0[2];
 	vec3_normalize(ra, ra);
-	mfloat_t rx = ra[0];
-	mfloat_t ry = ra[1];
-	mfloat_t rz = ra[2];
-	result[0] = x * (cs + rx * rx*(1 - cs)) + y * (rx*ry*(1 - cs) - rz * sn) + z * (rx*rz*(1 - cs) + ry * sn);
-	result[1] = x * (ry*rx*(1 - cs) + rz * sn) + y * (cs + ry * ry*(1 - cs)) + z * (ry*rz*(1 - cs) - rx * sn);
-	result[2] = x * (rz*rx*(1 - cs) - ry * sn) + y * (rz*ry*(1 - cs) + rx * sn) + z * (cs + rz * rz*(1 - cs));
+	rx = ra[0];
+	ry = ra[1];
+	rz = ra[2];
+	result[0] = x * (cs + rx * rx * (1 - cs)) + y * (rx * ry * (1 - cs) - rz * sn) + z * (rx * rz * (1 - cs) + ry * sn);
+	result[1] = x * (ry * rx * (1 - cs) + rz * sn) + y * (cs + ry * ry * (1 - cs)) + z * (ry * rz * (1 - cs) - rx * sn);
+	result[2] = x * (rz * rx * (1 - cs) - ry * sn) + y * (rz * ry * (1 - cs) + rx * sn) + z * (cs + rz * rz * (1 - cs));
 	return result;
 }
 
@@ -4375,6 +4383,13 @@ struct vec3 svec3_reflect(struct vec3 v0, struct vec3 normal)
 	return result;
 }
 
+struct vec3 svec3_rotate(struct vec3 v0, struct vec3 ra, mfloat_t f);
+{
+	struct vec3 result;
+	vec3_lerp((mfloat_t *)&result, (mfloat_t *)&v0, (mfloat_t *)&ra, f);
+	return result;
+}
+
 struct vec3 svec3_lerp(struct vec3 v0, struct vec3 v1, mfloat_t f)
 {
 	struct vec3 result;
@@ -5938,6 +5953,11 @@ struct vec3 *psvec3_slide(struct vec3 *result, struct vec3 *v0, struct vec3 *nor
 struct vec3 *psvec3_reflect(struct vec3 *result, struct vec3 *v0, struct vec3 *normal)
 {
 	return (struct vec3 *)vec3_reflect((mfloat_t *)result, (mfloat_t *)v0, (mfloat_t *)normal);
+}
+
+struct vec3 *psvec3_rotate(struct vec3 *result, struct vec3 *v0, struct vec3 *ra, mfloat_t f);
+{
+	return (struct vec3 *)vec3_lerp((mfloat_t *)result, (mfloat_t *)v0, (mfloat_t *)ra, f);
 }
 
 struct vec3 *psvec3_lerp(struct vec3 *result, struct vec3 *v0, struct vec3 *v1, mfloat_t f)
