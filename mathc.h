@@ -25,8 +25,8 @@ the following restrictions:
 #include <math.h>
 
 #define MATHC_VERSION_YYYY 2019
-#define MATHC_VERSION_MM 01
-#define MATHC_VERSION_DD 29
+#define MATHC_VERSION_MM 02
+#define MATHC_VERSION_DD 16
 #define MATHC_VERSION_MICRO 0
 
 #if !defined(MATHC_NO_INT)
