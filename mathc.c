@@ -1103,11 +1103,11 @@ bool vec2_linear_independent(mfloat_t *v0, mfloat_t *v1)
 
 mfloat_t** vec2_orthonormalization(mfloat_t result[2][2], mfloat_t basis[2][2])
 {
-	int N = sizeof(result[0]);
+	int N = sizeof(basis[0]);
 	mfloat_t *v0 = malloc(N);
 	mfloat_t *v1 = malloc(N);
-	memcpy(v0, result[0], N);
-	memcpy(v1, result[1], N);
+	memcpy(v0, basis[0], N);
+	memcpy(v1, basis[1], N);
 
 	if (!vec2_linear_independent(v0, v1))
 	{
@@ -1117,7 +1117,7 @@ mfloat_t** vec2_orthonormalization(mfloat_t result[2][2], mfloat_t basis[2][2])
 	}
 
 	mfloat_t proju1[2];
-	mfloat_t *u0 = malloc(v0);
+	mfloat_t *u0 = malloc(N);
 	mfloat_t *u1 = malloc(N);
 	memcpy(u0, v0, N);
 
@@ -1394,8 +1394,8 @@ mfloat_t vec3_dot(mfloat_t *v0, mfloat_t *v1)
 
 mfloat_t *vec3_project(mfloat_t *result, mfloat_t *v0, mfloat_t *v1)
 {
-	mfloat_t d = vec2_dot(v1, v1);
-	mfloat_t s = vec2_dot(v0, v1) / d;
+	mfloat_t d = vec3_dot(v1, v1);
+	mfloat_t s = vec3_dot(v0, v1) / d;
 	result[0] = v1[0] * s;
 	result[1] = v1[1] * s;
 	result[2] = v1[2] * s;
@@ -1497,6 +1497,58 @@ mfloat_t vec3_distance(mfloat_t *v0, mfloat_t *v1)
 mfloat_t vec3_distance_squared(mfloat_t *v0, mfloat_t *v1)
 {
 	return (v0[0] - v1[0]) * (v0[0] - v1[0]) + (v0[1] - v1[1]) * (v0[1] - v1[1]) + (v0[2] - v1[2]) * (v0[2] - v1[2]);
+}
+
+bool vec3_linear_independent(mfloat_t *v0, mfloat_t *v1, mfloat_t *v2)
+{
+	return v0[0] * v1[1] * v2[2] + v0[1] * v1[2] * v2[0] + v0[2] * v1[0] * v2[1]
+		- v0[2] * v1[1] * v2[0] - v0[1] * v1[0] * v2[2] - v0[0] * v1[2] * v2[1];
+}
+
+mfloat_t** vec3_orthonormalization(mfloat_t result[3][3], mfloat_t basis[3][3])
+{
+	int N = sizeof(basis[0]);
+	mfloat_t *v0 = malloc(N);
+	mfloat_t *v1 = malloc(N);
+	mfloat_t *v2 = malloc(N);
+
+	memcpy(v0, basis[0], N);
+	memcpy(v1, basis[1], N);
+	memcpy(v2, basis[2], N);
+
+	if (!vec3_linear_independent(v0, v1, v2))
+	{
+		free(v0);
+		free(v1);
+		free(v2);
+		return result;
+	}
+
+	mfloat_t proj[3];
+	mfloat_t *u0 = malloc(N);
+	mfloat_t *u1 = malloc(N);
+	mfloat_t *u2 = malloc(N);
+	memcpy(u0, v0, N);
+	vec3_project(proj, v1, u0);
+	vec3_subtract(u1, v1, proj);
+
+	vec3_project(proj, v2, u0);
+	vec3_subtract(u2, v2, proj);
+	vec3_project(proj, v2, u1);
+	vec3_subtract(u2, u2, proj);
+
+	vec3_normalize(result[0], u0);
+	vec3_normalize(result[1], u1);
+	vec3_normalize(result[2], u2);
+
+	free(v0);
+	free(v1);
+	free(v2);
+	free(u0);
+	free(u1);
+	free(u2);
+
+	return result;
 }
 
 bool vec4_is_zero(mfloat_t *v0)
