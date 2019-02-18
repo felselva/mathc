@@ -572,6 +572,8 @@ mfloat_t vec3_length(mfloat_t *v0);
 mfloat_t vec3_length_squared(mfloat_t *v0);
 mfloat_t vec3_distance(mfloat_t *v0, mfloat_t *v1);
 mfloat_t vec3_distance_squared(mfloat_t *v0, mfloat_t *v1);
+bool vec3_linear_independent(mfloat_t *v0, mfloat_t *v1, mfloat_t *v2);
+mfloat_t** vec3_orthonormalization(mfloat_t result[3][3], mfloat_t basis[3][3]);
 bool vec4_is_zero(mfloat_t *v0);
 bool vec4_is_equal(mfloat_t *v0, mfloat_t *v1);
 mfloat_t *vec4(mfloat_t *result, mfloat_t x, mfloat_t y, mfloat_t z, mfloat_t w);
