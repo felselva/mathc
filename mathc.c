@@ -1096,6 +1096,44 @@ mfloat_t vec2_distance_squared(mfloat_t *v0, mfloat_t *v1)
 	return (v0[0] - v1[0]) * (v0[0] - v1[0]) + (v0[1] - v1[1]) * (v0[1] - v1[1]);
 }
 
+bool vec2_linear_independent(mfloat_t *v0, mfloat_t *v1)
+{
+	return (v0[0] * v1[1] - v1[0] * v0[1]) != 0;
+}
+
+mfloat_t** vec2_orthonormalization(mfloat_t result[2][2], mfloat_t basis[2][2])
+{
+	int N = sizeof(result[0]);
+	mfloat_t *v0 = malloc(N);
+	mfloat_t *v1 = malloc(N);
+	memcpy(v0, result[0], N);
+	memcpy(v1, result[1], N);
+
+	if (!vec2_linear_independent(v0, v1))
+	{
+		free(v0);
+		free(v1);
+		return result;
+	}
+
+	mfloat_t proju1[2];
+	mfloat_t *u0 = malloc(v0);
+	mfloat_t *u1 = malloc(N);
+	memcpy(u0, v0, N);
+
+	vec2_project(proju1, v1, v0);
+	vec2_subtract(u1, v1, proju1);
+	vec2_normalize(result[0], u0);
+	vec2_normalize(result[1], u1);
+
+	free(v0);
+	free(v1);
+	free(u0);
+	free(u1);
+
+	return result;
+}
+
 bool vec3_is_zero(mfloat_t *v0)
 {
 	return MFABS(v0[0]) < MFLT_EPSILON && MFABS(v0[1]) < MFLT_EPSILON && MFABS(v0[2]) < MFLT_EPSILON;
