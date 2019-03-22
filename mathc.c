@@ -19,6 +19,7 @@ the following restrictions:
 */
 
 #include "mathc.h"
+#include <string.h>
 
 #if defined(MATHC_USE_INT)
 mint_t clampi(mint_t value, mint_t min, mint_t max)
@@ -1328,15 +1329,15 @@ mfloat_t *vec3_clamp(mfloat_t *result, mfloat_t *v0, mfloat_t *v1, mfloat_t *v2)
 	return result;
 }
 
-mfloat_t *vec3_cross(mfloat_t *result, mfloat_t *v0, mfloat_t *v1)
+mfloat_t *vec3_cross(mfloat_t *result, const mfloat_t *v0, const mfloat_t *v1)
 {
 	mfloat_t cross[VEC3_SIZE];
 	cross[0] = v0[1] * v1[2] - v0[2] * v1[1];
 	cross[1] = v0[2] * v1[0] - v0[0] * v1[2];
 	cross[2] = v0[0] * v1[1] - v0[1] * v1[0];
-	result[0] = cross[0];
-	result[1] = cross[1];
-	result[2] = cross[2];
+	
+	memcpy(result, cross, sizeof(cross));
+	
 	return result;
 }
 
