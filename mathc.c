@@ -2297,7 +2297,7 @@ mfloat_t *mat3_identity(mfloat_t *result)
 	result[5] = MFLOAT_C(0.0);
 	result[6] = MFLOAT_C(0.0);
 	result[7] = MFLOAT_C(0.0);
-	result[8] = MFLOAT_C(8.0);
+	result[8] = MFLOAT_C(1.0);
 	return result;
 }
 
