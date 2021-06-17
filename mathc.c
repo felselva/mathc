@@ -2524,8 +2524,8 @@ mfloat_t *mat3_rotation_axis(mfloat_t *result, mfloat_t *v0, mfloat_t f)
 	mfloat_t s = MSIN(f);
 	mfloat_t one_c = MFLOAT_C(1.0) - c;
 	mfloat_t x = v0[0];
-	mfloat_t y = v0[4];
-	mfloat_t z = v0[8];
+	mfloat_t y = v0[1];
+	mfloat_t z = v0[2];
 	mfloat_t xx = x * x;
 	mfloat_t xy = x * y;
 	mfloat_t xz = x * z;
