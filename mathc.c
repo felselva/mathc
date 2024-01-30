@@ -1507,7 +1507,7 @@ mfloat_t** vec3_orthonormalization(mfloat_t result[3][3], mfloat_t basis[3][3])
 	mfloat_t v0[3];
 	mfloat_t v1[3];
 	mfloat_t v2[3];
-	
+
 	for(int32_t i = 0; i < 3; ++i) {
 		v0[i] = basis[0][i];
 		v1[i] = basis[1][i];
@@ -2465,7 +2465,36 @@ mfloat_t *mat3_multiply_f(mfloat_t *result, mfloat_t *m0, mfloat_t f)
 
 mfloat_t *mat3_inverse(mfloat_t *result, mfloat_t *m0)
 {
-	result = m0;
+	mfloat_t inverse[MAT3_SIZE];
+	mfloat_t inverted_determinant;
+	mfloat_t m11 = m0[0];
+	mfloat_t m21 = m0[1];
+	mfloat_t m31 = m0[2];
+	mfloat_t m12 = m0[3];
+	mfloat_t m22 = m0[4];
+	mfloat_t m32 = m0[5];
+	mfloat_t m13 = m0[6];
+	mfloat_t m23 = m0[7];
+	mfloat_t m33 = m0[8];
+	inverse[0] = m22 * m33 - m32 * m23;
+	inverse[3] = m13 * m32 - m12 * m33;
+	inverse[6] = m12 * m23 - m13 * m22;
+	inverse[1] = m23 * m31 - m21 * m33;
+	inverse[4] = m11 * m33 - m13 * m31;
+	inverse[7] = m21 * m13 - m11 * m23;
+	inverse[2] = m21 * m32 - m31 * m22;
+	inverse[5] = m31 * m12 - m11 * m32;
+	inverse[8] = m11 * m22 - m21 * m12;
+	inverted_determinant = MFLOAT_C(1.0) / (m11 * inverse[0] + m21 * inverse[3] + m31 * inverse[6]);
+	result[0] = inverse[0] * inverted_determinant;
+	result[1] = inverse[1] * inverted_determinant;
+	result[2] = inverse[2] * inverted_determinant;
+	result[3] = inverse[3] * inverted_determinant;
+	result[4] = inverse[4] * inverted_determinant;
+	result[5] = inverse[5] * inverted_determinant;
+	result[6] = inverse[6] * inverted_determinant;
+	result[7] = inverse[7] * inverted_determinant;
+	result[8] = inverse[8] * inverted_determinant;
 	return result;
 }
 
