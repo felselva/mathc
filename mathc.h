@@ -163,6 +163,14 @@ struct vec2i {
 			mint_t x;
 			mint_t y;
 		};
+		struct {
+			mint_t s;
+			mint_t t;
+		};
+		struct {
+			mint_t start;
+			mint_t end;
+		};
 		mint_t v[VEC2_SIZE];
 	};
 #else
@@ -178,6 +186,16 @@ struct vec3i {
 			mint_t x;
 			mint_t y;
 			mint_t z;
+		};
+		struct {
+			mint_t r;
+			mint_t g;
+			mint_t b;
+		};
+		struct {
+			mint_t red;
+			mint_t green;
+			mint_t blue;
 		};
 		mint_t v[VEC3_SIZE];
 	};
@@ -196,6 +214,30 @@ struct vec4i {
 			mint_t y;
 			mint_t z;
 			mint_t w;
+		};
+		struct {
+			mint_t x_;
+			mint_t y_;
+			mint_t width;
+			mint_t height;
+		};
+		struct {
+			mint_t r;
+			mint_t g;
+			mint_t b;
+			mint_t a;
+		};
+		struct {
+			mint_t red;
+			mint_t green;
+			mint_t blue;
+			mint_t alpha;
+		};
+		struct {
+			mint_t vstart;
+			mint_t vcount;
+			mint_t istart;
+			mint_t icount;
 		};
 		mint_t v[VEC4_SIZE];
 	};
@@ -216,6 +258,10 @@ struct vec2 {
 			mfloat_t x;
 			mfloat_t y;
 		};
+		struct {
+			mfloat_t s;
+			mfloat_t t;
+		};
 		mfloat_t v[VEC2_SIZE];
 	};
 #else
@@ -231,6 +277,16 @@ struct vec3 {
 			mfloat_t x;
 			mfloat_t y;
 			mfloat_t z;
+		};
+		struct {
+			mfloat_t r;
+			mfloat_t g;
+			mfloat_t b;
+		};
+		struct {
+			mfloat_t red;
+			mfloat_t green;
+			mfloat_t blue;
 		};
 		mfloat_t v[VEC3_SIZE];
 	};
@@ -250,6 +306,24 @@ struct vec4 {
 			mfloat_t z;
 			mfloat_t w;
 		};
+		struct {
+        	mfloat_t left;
+        	mfloat_t top;
+        	mfloat_t width;
+        	mfloat_t height;
+    	};
+    	struct {
+        	mfloat_t r;
+        	mfloat_t g;
+        	mfloat_t b;
+        	mfloat_t a;
+    	};
+    	struct {
+        	mfloat_t red;
+        	mfloat_t green;
+        	mfloat_t blue;
+        	mfloat_t alpha;
+    	};
 		mfloat_t v[VEC4_SIZE];
 	};
 #else
